@@ -7,12 +7,14 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "format": "prettier --write *.{json,js,mjs,md} src"
   },
   "dependencies": {
     "@types/react": "^18.3.9",
     "next": "14.2.13",
     "prettier": "^3.3.3",
+    "prettier-plugin-jsdoc": "^1.3.0",
     "prettier-plugin-organize-imports": "^4.1.0",
     "react": "^18",
     "react-dom": "^18",
