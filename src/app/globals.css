@@ -53,14 +53,17 @@ body#main-page > * {
   @apply text-slate-400;
   @apply font-medium;
   @apply flex-1;
-  @apply h-full;
   @apply w-auto;
-  @apply min-w-[60%];
+  @apply max-w-fit;
+  @apply max-h-[60vh];
   @apply bg-slate-200;
   @apply rounded-2xl;
+  @apply m-6;
+}
+.garment-img.empty {
   @apply px-6;
   @apply py-4;
-  @apply m-6;
+  @apply min-w-[60%];
 }
 
 .prompt {
