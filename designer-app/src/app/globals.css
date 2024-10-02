@@ -19,9 +19,75 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+body > * {
+  @apply opacity-0;
+}
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+body#main-page {
+  @apply flex;
+  @apply flex-col;
+  @apply justify-end;
+  @apply items-center;
+  @apply justify-items-center;
+  @apply min-h-screen;
+  @apply text-lg;
+  @apply p-8;
+  @apply pb-20;
+  @apply sm:p-20;
+  @apply font-[family-name:var(--font-rubik)];
+}
+body#main-page > * {
+  @apply opacity-100;
+}
+
+.garment-img {
+  @apply flex;
+  @apply items-center;
+  @apply justify-center;
+  @apply text-slate-400;
+  @apply font-medium;
+  @apply flex-1;
+  @apply w-auto;
+  @apply max-w-fit;
+  @apply max-h-[60vh];
+  @apply bg-slate-200;
+  @apply rounded-2xl;
+  @apply m-6;
+}
+.garment-img.empty {
+  @apply px-6;
+  @apply py-4;
+  @apply min-w-[60%];
+}
+
+.prompt {
+  @apply flex;
+  @apply gap-3;
+  @apply w-full;
+}
+
+.prompt-input {
+  @apply w-full;
+  @apply px-3;
+  @apply py-2;
+  @apply bg-slate-300;
+  @apply placeholder-slate-600;
+  @apply text-slate-900;
+  @apply rounded-md;
+}
+
+.btn-prompt-generate {
+  @apply px-4;
+  @apply py-2;
+  @apply font-medium;
+  @apply bg-green-300;
+  @apply text-green-900;
+  @apply rounded-md;
+  @apply whitespace-nowrap;
 }
