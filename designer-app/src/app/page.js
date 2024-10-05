@@ -2,6 +2,7 @@
 
 import axios from "axios";
 import { Fragment, useEffect, useState } from "react";
+import Header from "../app/components/Header";
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
@@ -9,8 +10,7 @@ export default function Home() {
   const [imgSrc, setImgSrc] = useState("");
   const [generating, setGenerating] = useState(false);
 
-  if (mounted) document.body.id = "main-page";
-
+  if (mounted) document.body.id = "main-page"
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -34,11 +34,15 @@ export default function Home() {
 
   return (
     <Fragment>
+      
+      <Header />
+
       {imgSrc ? (
         <img className="garment-img" src={imgSrc} alt="Generated garment" />
       ) : (
         <div className="garment-img empty">No Image Yet...</div>
       )}
+
       <div className="prompt">
         <input
           className="prompt-input"
@@ -49,6 +53,11 @@ export default function Home() {
           {generating ? "Loading..." : "Generate"}
         </button>
       </div>
+
+      <div className="absolute right-0 top-1/2 transform -translate-y-1/2">
+        <button className="btn-collection">View Collection</button>
+      </div>
+
     </Fragment>
   );
 }

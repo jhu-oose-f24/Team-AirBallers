@@ -3,14 +3,16 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #FAF9F6;
+  --foreground: #634133;
+  --accent: #800020;
+  --secondary: #9C9C9C;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
-    --foreground: #ededed;
+    --foreground: #FAF9F6;
   }
 }
 
@@ -19,6 +21,7 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
 body > * {
   @apply opacity-0;
 }
@@ -30,64 +33,65 @@ body > * {
 }
 
 body#main-page {
-  @apply flex;
-  @apply flex-col;
-  @apply justify-end;
-  @apply items-center;
-  @apply justify-items-center;
-  @apply min-h-screen;
-  @apply text-lg;
-  @apply p-8;
-  @apply pb-20;
-  @apply sm:p-20;
-  @apply font-[family-name:var(--font-rubik)];
+  @apply mt-20 flex flex-col justify-end items-center justify-items-center min-h-screen text-lg p-8 pb-20 sm:p-20 font-[family-name:var(--font-rubik)];
 }
+
 body#main-page > * {
   @apply opacity-100;
 }
 
 .garment-img {
-  @apply flex;
-  @apply items-center;
-  @apply justify-center;
-  @apply text-slate-400;
-  @apply font-medium;
-  @apply flex-1;
-  @apply w-auto;
-  @apply max-w-fit;
-  @apply max-h-[60vh];
-  @apply bg-slate-200;
-  @apply rounded-2xl;
-  @apply m-6;
+  @apply flex items-center justify-center text-slate-400 font-medium flex-1 w-auto max-w-fit max-h-[60vh] bg-[var(--secondary)] rounded-2xl m-6;
+  margin-top: -2rem;
 }
+
 .garment-img.empty {
-  @apply px-6;
-  @apply py-4;
-  @apply min-w-[60%];
+  @apply px-6 py-4 min-w-[60%] bg-[var(--accent)] text-[var(--background)];
+  background-color: var(--foreground);
 }
 
 .prompt {
-  @apply flex;
-  @apply gap-3;
-  @apply w-full;
+  @apply flex items-center gap-2 w-auto mt-6;
+  margin-bottom: 1.5rem
 }
 
 .prompt-input {
-  @apply w-full;
-  @apply px-3;
-  @apply py-2;
-  @apply bg-slate-300;
-  @apply placeholder-slate-600;
-  @apply text-slate-900;
-  @apply rounded-md;
+  @apply w-auto px-3 py-2 bg-[var(--background)] text-[var(--foreground)] placeholder-[var(--secondary)] rounded-md border-2 border-[var(--foreground)];
+}
+
+.prompt-input:focus {
+  @apply border-[var(--accent)] shadow-lg;
+}
+
+.btn-collection {
+  @apply px-4 py-2 font-medium bg-[var(--background)] text-[var(--foreground)] border-2 border-[var(--foreground)] rounded-md mr-6;
+  transition: all 0.3s ease;
+}
+.btn-collection:hover {
+  @apply bg-[var(--accent)] text-[var(--foreground)] border-[var(--accent)] transform translate-y-[-3px];
 }
 
 .btn-prompt-generate {
-  @apply px-4;
-  @apply py-2;
-  @apply font-medium;
-  @apply bg-green-300;
-  @apply text-green-900;
-  @apply rounded-md;
-  @apply whitespace-nowrap;
+  @apply px-4 py-2 font-medium bg-green-300 text-green-900 rounded-md whitespace-nowrap;
+}
+
+.header {
+  @apply flex justify-between items-center w-full p-4 bg-[var(--background)] border-b-2 border-[var(--foreground)] fixed top-0 left-0 z-50;
+}
+
+.title {
+  @apply text-2xl font-bold text-[var(--foreground)] pl-4;
+}
+
+.auth-buttons {
+  @apply flex gap-4;
+}
+
+.btn-login {
+  @apply px-4 py-2 font-medium text-[var(--foreground)] bg-[var(--background)] border-2 border-[var(--foreground)] rounded-md;
+  transition: all 0.3s ease;
+}
+
+.btn-login:hover {
+  @apply bg-[var(--accent)] text-[var(--foreground)] border-[var(--accent)] transform translate-y-[-3px];
 }
