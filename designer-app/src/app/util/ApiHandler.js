@@ -34,6 +34,9 @@ const METHODS = /** @type {const} */ ([
   "OPTIONS",
 ]);
 
+// app.use(cors({ credentials: true }));
+// app.use(helmet());
+
 /** @type {function(): ApiHandlerBuilder} */
 function ApiHandler() {
   /** @ts-ignore @type {ApiHandlerBuilder} */
