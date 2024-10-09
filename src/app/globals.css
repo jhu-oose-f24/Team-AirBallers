@@ -33,7 +33,10 @@ body > * {
 }
 
 body#main-page {
-  @apply mt-20 flex flex-col justify-end items-center justify-items-center min-h-screen text-lg p-8 pb-20 sm:p-20 font-[family-name:var(--font-rubik)];
+  @apply mt-20 flex flex-col justify-end items-center justify-items-center min-h-screen;
+  @apply text-lg;
+  @apply p-8 pb-20 sm:p-20;
+  @apply font-[family-name:var(--font-rubik)];
 }
 
 body#main-page > * {
@@ -41,7 +44,9 @@ body#main-page > * {
 }
 
 .garment-img {
-  @apply flex items-center justify-center text-slate-400 font-medium flex-1 w-auto max-w-fit max-h-[60vh] bg-[var(--secondary)] rounded-2xl m-6;
+  @apply flex items-center justify-center flex-1;
+  @apply text-slate-400 font-medium w-auto;
+  @apply max-w-fit max-h-[60vh] bg-[var(--secondary)] rounded-2xl m-6;
   margin-top: -2rem;
 }
 
