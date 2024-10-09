@@ -2,7 +2,9 @@ import * as fal from "@fal-ai/serverless-client";
 import dotenv from "dotenv";
 
 dotenv.config();
-const preprompt = "Let the image be just the t-shirt, on a constrast background (depending on the t shirt color). Make sure the t-shirt is fully visiable as to be put on a designer website "
+const preprompt = ` Let the image be just the t-shirt, 
+                    on a constrast background (depending on the t shirt color). 
+                    Make sure the t-shirt is fully visiable as to be put on a designer website.`
 
 async function generateImage(prompt) {
   try {
