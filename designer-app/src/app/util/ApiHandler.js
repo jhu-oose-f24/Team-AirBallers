@@ -6,16 +6,25 @@
  * @typedef {(
  *   req: import("next").NextApiRequest,
  *   res: import("next").NextApiResponse,
- * ) => Promise<void>} ApiHandler
+ * ) => void | Promise<void>} ApiHandler
  *
  *
  * @typedef {(handler: ApiHandler) => ApiHandlerBuilder} ApiHandlerSetter
  *
  * @typedef {{
+ *   [M in ApiMethod]: ApiHandler;
+ * } & {
+ *   set: (
+ *     builder: ApiHandlerBuilder,
+ *     method: ApiMethod,
+ *     handler: ApiHandler,
+ *   ) => ApiHandlerBuilder;
+ * }} ApiDefinedHandlers
+ *
+ *
+ * @typedef {{
  *   [M in ApiMethod]: ApiHandlerSetter;
  * } & {
- *   handlers: { [M in ApiMethod]: ApiHandler };
- *   set: (method: ApiMethod, handler: ApiHandler) => ApiHandlerBuilder;
  *   build: () => ApiHandler;
  *   buildWithConfig: (config: ApiConfig) => {
  *     handler: ApiHandler;
@@ -34,31 +43,31 @@ const METHODS = /** @type {const} */ ([
   "OPTIONS",
 ]);
 
+// TODO: define middleware ?
 // app.use(cors({ credentials: true }));
 // app.use(helmet());
 
-/** @type {function(): ApiHandlerBuilder} */
-function ApiHandler() {
+export default function ApiHandler() {
+  /** @ts-ignore @type {ApiDefinedHandlers} */
+  const handlers = {
+    set(builder, method, handler) {
+      this[method] = handler;
+      return builder;
+    },
+  };
+
   /** @ts-ignore @type {ApiHandlerBuilder} */
   const routeBuilder = {
-    /** @ts-ignore @type {{ [M in ApiMethod]: ApiHandler }} */
-    handlers: {},
-
-    set(method, handler) {
-      this.handlers[method] = handler;
-      return this;
-    },
-
-    /** @returns {ApiHandler} */
     build() {
       return async (req, res) => {
-        const method = this.handlers[req.method];
+        /** @type {ApiHandler} */
+        const handler = handlers[req.method];
 
-        if (!method) {
+        if (!handler) {
           res.status(405).json({ error: `Method ${req.method} not allowed` });
           return;
         }
-        await method?.(req, res);
+        await handler?.(req, res);
       };
     },
 
@@ -71,10 +80,10 @@ function ApiHandler() {
   };
 
   METHODS.forEach((method) => {
-    routeBuilder[method] = (handler) => routeBuilder.set(method, handler);
+    routeBuilder[method] = (handler) => {
+      return handlers.set(routeBuilder, method, handler);
+    };
   });
 
   return routeBuilder;
 }
-
-export { ApiHandler as default };
