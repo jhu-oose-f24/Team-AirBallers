@@ -9,7 +9,7 @@ export default class DesctiptionGenerator {
   static async createFrom(userPrompt) {
     try {
       return await PromptGenerator.generateFrom(
-        PromptGenerator.PROMPT_ASSET.CREATIVE,
+        PromptGenerator.ASSETS.CREATIVE(),
         userPrompt,
       );
     } catch (error) {

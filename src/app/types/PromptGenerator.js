@@ -14,29 +14,30 @@ const apiOpenAI = axios.create({
   },
 });
 
+function resolveAsset(promptAsset = "") {
+  const fullPath = path.resolve(`src/app/assets/${promptAsset}.md`);
+  return readFileSync(fullPath, { encoding: "utf-8" });
+}
+
 /** @hideconstructor */
 export default class PromptGenerator {
-  static PROMPT_ASSET = {
-    CREATIVE: "creativePrompt",
-    SPEC: "specPrompt",
+  static ASSETS = {
+    CREATIVE: () => resolveAsset("creativePrompt"),
+    IMAGE: () => resolveAsset("imagePrompt"),
+    SPEC: () => resolveAsset("specPrompt"),
   };
 
   /**
-   * @param {string} promptAsset
+   * @param {string} systemPrompt
    * @param {string} userPrompt // TODO: use class
    * @returns {Promise<string>} // TODO: use class
    */
-  static async generateFrom(promptAsset, userPrompt, model = defaultModel) {
-    const systemMessage = readFileSync(
-      path.resolve(`src/app/assets/${promptAsset}.md`),
-      { encoding: "utf-8" },
-    );
-
+  static async generateFrom(systemPrompt, userPrompt, model = defaultModel) {
     return await apiOpenAI
       .post("/chat/completions", {
         model,
         messages: [
-          { role: "system", content: systemMessage },
+          { role: "system", content: systemPrompt },
           { role: "user", content: userPrompt },
         ],
       })
