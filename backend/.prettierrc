@@ -1,7 +1,0 @@
-{
-  "plugins": [
-    "prettier-plugin-organize-imports",
-    "prettier-plugin-jsdoc"
-  ],
-  "endOfLine": "crlf"
-}

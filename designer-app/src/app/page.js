@@ -20,10 +20,9 @@ export default function Home() {
 
     setGenerating(true);
     axios
-      .post("http://localhost:4000/prompt", { prompt })
-      .then((res) => {
-        const { url } = res.data.data;
-        setImgSrc(url);
+      .post("/api/prompt", { prompt })
+      .then(({ data }) => {
+        setImgSrc(data.url);
         setGenerating(false);
       })
       .catch((err) => {
