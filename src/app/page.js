@@ -1,8 +1,8 @@
 "use client";
 
+import Header from "@/app/components/Header";
 import axios from "axios";
 import { Fragment, useEffect, useState } from "react";
-import Header from "../app/components/Header";
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
@@ -10,7 +10,8 @@ export default function Home() {
   const [imgSrc, setImgSrc] = useState("");
   const [generating, setGenerating] = useState(false);
 
-  if (mounted) document.body.id = "main-page"
+  if (mounted) document.body.id = "main-page";
+
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -21,19 +22,13 @@ export default function Home() {
     setGenerating(true);
     axios
       .post("/api/prompt", { prompt })
-      .then(({ data }) => {
-        setImgSrc(data.url);
-        setGenerating(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setGenerating(false);
-      });
+      .then(({ data }) => setImgSrc(data.url))
+      .catch((err) => console.log(err))
+      .finally(() => setGenerating(false));
   }
 
   return (
     <Fragment>
-      
       <Header />
 
       {imgSrc ? (
@@ -56,7 +51,6 @@ export default function Home() {
       <div className="absolute right-0 top-1/2 transform -translate-y-1/2">
         <button className="btn-collection">View Collection</button>
       </div>
-
     </Fragment>
   );
 }
