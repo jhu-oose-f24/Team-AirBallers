@@ -9,7 +9,7 @@ export default class SpecificationGenerator {
   static async createFrom(description) {
     try {
       return await PromptGenerator.generateFrom(
-        PromptGenerator.PROMPT_ASSET.SPEC,
+        PromptGenerator.ASSETS.SPEC(),
         description,
       );
     } catch (error) {

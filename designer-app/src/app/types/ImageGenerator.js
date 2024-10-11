@@ -1,12 +1,12 @@
+import PromptGenerator from "@/app/types/PromptGenerator";
 import * as fal from "@fal-ai/serverless-client";
-
-const prePrompt =
-  "Let the image be just the t-shirt, on a constrast background (depending on the t shirt color). Make sure the t-shirt is fully visible as to be put on a designer website.";
 
 /** @hideconstructor */
 export default class ImageGenerator {
   /** @param {string} description // TODO: use class */
   static async createFrom(description) {
+    const prePrompt = PromptGenerator.ASSETS.IMAGE();
+
     try {
       const result = await fal.subscribe("fal-ai/flux/schnell", {
         input: {
