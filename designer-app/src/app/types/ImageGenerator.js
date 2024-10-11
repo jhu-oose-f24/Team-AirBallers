@@ -4,11 +4,11 @@ import * as fal from "@fal-ai/serverless-client";
 /** @hideconstructor */
 export default class ImageGenerator {
   /** @param {string} description // TODO: use class */
-  static async createFrom(description) {
+  static async createFrom(description, model = "fal-ai/flux/schnell" ) {
     const prePrompt = PromptGenerator.ASSETS.IMAGE();
 
     try {
-      const result = await fal.subscribe("fal-ai/flux/schnell", {
+      const result = await fal.subscribe(model, {
         input: {
           prompt: `${prePrompt}\n${description}`,
         },
