@@ -48,24 +48,24 @@ This project uses [prettier](https://github.com/prettier/prettier), along with p
 cd  ../path/to/designer-app
 ```
 
-2. Then, to access the vault, run the following command to log in from the browser:
+2. Then run the following command to log in to the vault from the browser:
 
 ```bash
-npx dotenv-vault@latest login -y
+yarn env-login
 ```
 
 3. There, either sign up or log in, using the email you were invited to the project with. Once logged in, you can close the browser window.
 
 ## Keeping .env synchronized
 
-To pull up-to-date .env, run the command:
+To get the up-to-date .env, run:
 
 ```bash
-npx dotenv-vault@latest pull
+yarn env-pull
 ```
 
-And whenever you make changes to the .env file, run the command:
+And whenever you make changes to the .env file, run:
 
 ```bash
-npx dotenv-vault@latest push
+yarn env-push
 ```
