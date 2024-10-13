@@ -23,27 +23,33 @@ export default class MeasurementSpec {
   unit = UNIT.CM;
 
   /**
-   * @param {number} value
-   * @param {[number, number]} range
    * @param {Unit} unit
+   * @param {[number, number]} range
+   * @param {number} value
    */
-  constructor(value, range, unit) {
+  constructor(unit, range, value = undefined) {
     const [min, max] = range;
     const clampedValue = Math.min(Math.max(value, min), max);
+
+    this.unit = unit;
     this.range = range;
     this.value = clampedValue;
-    this.unit = unit;
   }
 
-  static getSchema() {
-    const number = typeof 0;
-    const unitEnum = Object.values(UNIT).join(" | ");
+  /**
+   * @param {Unit} unit
+   * @param {[number, number]} range
+   */
+  static defineSchema(unit, range) {
+    return new this(unit, range).getSchema();
+  }
 
+  getSchema() {
     return {
       class: MeasurementSpec.name,
-      value: number,
-      range: [number, number],
-      unit: unitEnum,
+      value: "number",
+      range: [...this.range],
+      unit: this.unit,
     };
   }
 }
