@@ -24,7 +24,9 @@ export default class PromptGenerator {
   static ASSETS = {
     CREATIVE: () => resolveAsset("creativePrompt"),
     IMAGE: () => resolveAsset("imagePrompt"),
-    SPEC: () => resolveAsset("specPrompt"),
+    SPEC: (schemaStr = "") => {
+      return resolveAsset("specPrompt").replace("JSON_SCHEMA", schemaStr);
+    },
   };
 
   /**
