@@ -8,13 +8,13 @@ datasource db {
 }
 
 model User {
-  id                String              @id @default(auto()) @map("_id") @db.ObjectId
-  createdAt         DateTime            @db.Date
+  id                String             @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt         DateTime           @db.Date
   password          String
-  updatedAt         DateTime            @db.Date
-  username          String              @unique
-  prompts           Prompt[]            // One user can have multiple prompts
-  garmentCollections GarmentCollection[] // One user can have multiple garment collections
+  updatedAt         DateTime           @db.Date
+  username          String             @unique
+  prompts           Prompt[]           // One user can have multiple prompts
+  garmentCollection GarmentCollection? // One-to-one relation with GarmentCollection
 }
 
 model Prompt {
@@ -53,12 +53,12 @@ model PromptGarmentImage {
 }
 
 model GarmentCollection {
-  id                String              @id @default(auto()) @map("_id") @db.ObjectId
-  garments          AbstractGarment[]   // Garments that belong to this collection
-  user              User                @relation(fields: [userId], references: [id])
-  userId            String              @db.ObjectId // Removed @unique to allow multiple collections
-  createdAt         DateTime            @default(now()) @db.Date
-  updatedAt         DateTime            @updatedAt @db.Date
+  id                String           @id @default(auto()) @map("_id") @db.ObjectId
+  garments          AbstractGarment[] // Garments that belong to this collection
+  user              User             @relation(fields: [userId], references: [id])
+  userId            String           @db.ObjectId @unique
+  createdAt         DateTime         @default(now()) @db.Date
+  updatedAt         DateTime         @updatedAt @db.Date
 }
 
 model AbstractGarment {
