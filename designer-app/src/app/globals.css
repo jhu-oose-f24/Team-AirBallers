@@ -51,7 +51,8 @@ body#main-page > * {
 }
 
 .garment-img.empty {
-  @apply px-6 py-4 min-w-[60%] bg-[var(--accent)] text-[var(--background)];
+  @apply px-6 py-4 min-w-[60%] bg-[var(--accent)];
+  @apply text-[var(--background)];
   background-color: var(--foreground);
 }
 
@@ -61,7 +62,9 @@ body#main-page > * {
 }
 
 .prompt-input {
-  @apply w-auto px-3 py-2 bg-[var(--background)] text-[var(--foreground)] placeholder-[var(--secondary)] rounded-md border-2 border-[var(--foreground)];
+  @apply w-auto px-3 py-2
+  @apply bg-[var(--background)] text-[var(--foreground)] placeholder-[var(--secondary)];
+  @apply rounded-md border-2 border-[var(--foreground)];
 }
 
 .prompt-input:focus {
@@ -69,23 +72,32 @@ body#main-page > * {
 }
 
 .btn-collection {
-  @apply px-4 py-2 font-medium bg-[var(--background)] text-[var(--foreground)] border-2 border-[var(--foreground)] rounded-md mr-6;
+  @apply px-4 py-2;
+  @apply text-[var(--foreground)] font-medium bg-[var(--background)];
+  @apply border-2 border-[var(--foreground)] rounded-md mr-6;
   transition: all 0.3s ease;
 }
 .btn-collection:hover {
-  @apply bg-[var(--accent)] text-[var(--foreground)] border-[var(--accent)] transform translate-y-[-3px];
+  @apply bg-[var(--accent)] text-[var(--foreground)];
+  @apply border-[var(--accent)] transform translate-y-[-3px];
 }
 
 .btn-prompt-generate {
-  @apply px-4 py-2 font-medium bg-green-300 text-green-900 rounded-md whitespace-nowrap;
+  @apply px-4 py-2;
+  @apply font-medium bg-green-300 text-green-900;w
+  @apply rounded-md whitespace-nowrap;
 }
 
 .header {
-  @apply flex justify-between items-center w-full p-4 bg-[var(--background)] border-b-2 border-[var(--foreground)] fixed top-0 left-0 z-50;
+  @apply flex justify-between items-center w-full p-4;
+  @apply bg-[var(--background)];
+  @apply border-b-2 border-[var(--foreground)];
+  @apply fixed top-0 left-0 z-50;
 }
 
 .title {
-  @apply text-2xl font-bold text-[var(--foreground)] pl-4;
+  @apply text-2xl font-bold text-[var(--foreground)];
+  @apply pl-4;
 }
 
 .auth-buttons {
@@ -93,10 +105,13 @@ body#main-page > * {
 }
 
 .btn-login {
-  @apply px-4 py-2 font-medium text-[var(--foreground)] bg-[var(--background)] border-2 border-[var(--foreground)] rounded-md;
+  @apply px-4 py-2;
+  @apply font-medium text-[var(--foreground)] bg-[var(--background)];
+  @apply border-2 border-[var(--foreground)] rounded-md;
   transition: all 0.3s ease;
 }
 
 .btn-login:hover {
-  @apply bg-[var(--accent)] text-[var(--foreground)] border-[var(--accent)] transform translate-y-[-3px];
+  @apply bg-[var(--accent)] text-[var(--foreground)];
+  @apply border-[var(--accent)] transform translate-y-[-3px];
 }
