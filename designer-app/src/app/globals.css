@@ -62,7 +62,7 @@ body#main-page > * {
 }
 
 .prompt-input {
-  @apply w-auto px-3 py-2
+  @apply w-auto px-3 py-2;
   @apply bg-[var(--background)] text-[var(--foreground)] placeholder-[var(--secondary)];
   @apply rounded-md border-2 border-[var(--foreground)];
 }
@@ -84,7 +84,7 @@ body#main-page > * {
 
 .btn-prompt-generate {
   @apply px-4 py-2;
-  @apply font-medium bg-green-300 text-green-900;w
+  @apply font-medium bg-green-300 text-green-900;
   @apply rounded-md whitespace-nowrap;
 }
 
