@@ -9,18 +9,23 @@ export default class EnumSpec {
    * @param {string} value
    * @param {string[]} enumValues
    */
-  constructor(value, enumValues) {
+  constructor(enumValues, value = undefined) {
     this.enumValues = enumValues;
     if (enumValues.includes(value)) {
       this.value = value;
     }
   }
 
-  static getSchema() {
+  /** @param {string[]} enumValues */
+  static defineSchema(enumValues) {
+    return new this(enumValues).getSchema();
+  }
+
+  getSchema() {
     return {
       class: EnumSpec.name,
       value: "string",
-      enumValues: "string[]",
+      enumValues: [...this.enumValues],
     };
   }
 }

@@ -1,4 +1,10 @@
 import PromptGenerator from "@/app/types/PromptGenerator";
+import ShirtSchema from "@/app/types/shirtSpecSchema";
+import { format } from "prettier";
+
+async function formatSchema(schema = {}) {
+  return await format(JSON.stringify(schema), { parser: "json" });
+}
 
 /** @hideconstructor */
 export default class SpecificationGenerator {
@@ -8,8 +14,10 @@ export default class SpecificationGenerator {
    */
   static async createFrom(description) {
     try {
+      const schemaStr = await formatSchema(ShirtSchema); // TODO: accept other schemas
+
       return await PromptGenerator.generateFrom(
-        PromptGenerator.ASSETS.SPEC(),
+        PromptGenerator.ASSETS.SPEC(schemaStr),
         description,
       );
     } catch (error) {
