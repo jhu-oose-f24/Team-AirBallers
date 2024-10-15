@@ -1,6 +1,8 @@
 # Team-AirBallers
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).The frontend is designed with figma, yet to be fully implemented. Here's a snippet of some components to be used:
+
+![](https://github.com/user-attachments/assets/b1fb76fb-4381-4eac-882e-27e7fd88c65e)
 
 ## Install Node.js and Yarn (if not already installed)
 
