@@ -4,7 +4,7 @@ import * as fal from "@fal-ai/serverless-client";
 /** @hideconstructor */
 export default class ImageGenerator {
   /** @param {string} description // TODO: use class */
-  static async createFrom(description, model = "fal-ai/flux/schnell" ) {
+  static async createFrom(description, model = "fal-ai/flux/schnell") {
     const prePrompt = PromptGenerator.ASSETS.IMAGE();
 
     try {
