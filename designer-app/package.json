@@ -14,8 +14,8 @@
     "env-push": "npx dotenv-vault@latest push"
   },
   "dependencies": {
-    "@prisma/client": "^5.20.0",
     "@fal-ai/serverless-client": "^0.14.3",
+    "@prisma/client": "^5.20.0",
     "@types/node": "^22.7.4",
     "@types/react": "^18.3.9",
     "axios": "^1.7.7",
