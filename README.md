@@ -44,6 +44,8 @@ This project uses [prettier](https://github.com/prettier/prettier), along with p
 
 ## Setting up personal dotenv-vault
 
+If you haven't yet been invited to the dotenv-vault for this project, send us a message via slack with your preferred email and we'll invite you to access our .env secrets. On first .env pull, follow the steps below.
+
 1. Make sure to go to the root project directory:
 
 ```bash
@@ -56,17 +58,23 @@ cd  ../path/to/designer-app
 yarn env-login
 ```
 
-3. There, either sign up or log in, using the email you were invited to the project with. Once logged in, you can close the browser window.
+3. There, either sign up or log in, using the email you were invited to the project with. Once logged in, you can close the browser window and follow the last steps [below](#keeping-env-synchronized) to pull the secrets.
 
 ## Keeping .env synchronized
 
-To get the up-to-date .env, run:
+Make sure you are in the root project directory:
+
+```bash
+cd  ../path/to/designer-app
+```
+
+To pull the up-to-date .env, run:
 
 ```bash
 yarn env-pull
 ```
 
-And whenever you make changes to the .env file, run:
+And whenever you make changes to the .env file, push the changes to the shared vault by running:
 
 ```bash
 yarn env-push
