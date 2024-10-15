@@ -3,17 +3,35 @@
 @tailwind utilities;
 
 :root {
-  --background: #FAF9F6;
+  --background: #faf9f6;
   --foreground: #634133;
   --accent: #800020;
-  --secondary: #9C9C9C;
+  --secondary: #9c9c9c;
+
+  /* TODO: dynamically generate in components */
+  --disabled-color-darkest: hsl(40, 10%, 50%);
+  --disabled-color-darker: hsl(40, 10%, 55%);
+  --disabled-color-dark: hsl(40, 10%, 60%);
+  --disabled-color-light: hsl(40, 20%, 75%);
+  --disabled-color-lighter: hsl(40, 30%, 85%);
+  --disabled-color-lightest: hsl(40, 100%, 95%);
+
+  --color-darkest: hsl(14, 100%, 15%);
+  --color-darker: hsl(14, 100%, 25%);
+  --color-dark: hsl(14, 60%, 50%);
+  --color-light: hsl(14, 100%, 75%);
+  --color-lighter: hsl(14, 100%, 80%);
+  --color-lightest: hsl(14, 100%, 95%);
+
+  --color-active-border: hsl(14, 100%, 75%);
+  --color-active-fill: hsl(14, 100%, 90%);
+
+  --color-input-text: hsl(14, 100%, 10%);
+  --color-input-placeholder: hsl(14, 55%, 45%);
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #FAF9F6;
-  }
+  /* TODO: support for dark mode */
 }
 
 body {
@@ -32,42 +50,47 @@ body > * {
   }
 }
 
-body#main-page {
-  @apply mt-20 flex flex-col justify-end items-center justify-items-center min-h-screen;
+body#main-page,
+body#collection-page {
+  @apply flex flex-col justify-end items-center justify-items-center min-h-screen;
   @apply text-lg;
-  @apply p-8 pb-20 sm:p-20;
+  @apply pt-20 pb-4 px-4;
   @apply font-[family-name:var(--font-rubik)];
 }
+body#collection-page {
+  @apply justify-start;
+}
 
-body#main-page > * {
+body#main-page > *,
+body#collection-page > * {
   @apply opacity-100;
 }
 
 .garment-img {
   @apply flex items-center justify-center flex-1;
   @apply text-slate-400 font-medium w-auto;
-  @apply max-w-fit max-h-[60vh] bg-[var(--secondary)] rounded-2xl m-6;
-  margin-top: -2rem;
+  @apply max-w-fit max-h-[60vh] bg-[var(--secondary)] rounded-2xl m-6 mt-[-2rem];
 }
 
 .garment-img.empty {
   @apply px-6 py-4 min-w-[60%] bg-[var(--accent)];
   @apply text-[var(--background)];
-  background-color: var(--foreground);
+  @apply bg-foreground;
 }
 
 .prompt {
-  @apply flex items-center gap-2 w-auto mt-6;
-  margin-bottom: 1.5rem
+  @apply flex items-center gap-2 w-auto mt-6 mb-[1.5rem];
 }
 
-.prompt-input {
+.prompt-input,
+.edit-input {
   @apply w-auto px-3 py-2;
   @apply bg-[var(--background)] text-[var(--foreground)] placeholder-[var(--secondary)];
   @apply rounded-md border-2 border-[var(--foreground)];
 }
 
-.prompt-input:focus {
+.prompt-input:focus,
+.edit-input:focus {
   @apply border-[var(--accent)] shadow-lg;
 }
 
@@ -114,4 +137,12 @@ body#main-page > * {
 .btn-login:hover {
   @apply bg-[var(--accent)] text-[var(--foreground)];
   @apply border-[var(--accent)] transform translate-y-[-3px];
+}
+
+body#collection-page .collection-grid {
+  @apply flex flex-wrap gap-[1rem];
+}
+
+body#collection-page .collection-grid > * {
+  @apply max-w-[calc(25%-1rem*(3/4))];
 }
