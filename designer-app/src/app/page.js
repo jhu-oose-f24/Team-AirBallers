@@ -2,12 +2,16 @@
 
 import Header from "@/app/components/Header";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import { Fragment, useEffect, useState } from "react";
 
 export default function Home() {
+  const router = useRouter();
+
   const [mounted, setMounted] = useState(false);
   const [prompt, setPrompt] = useState("");
   const [imgSrc, setImgSrc] = useState("");
+  const [garmentId, setGarmentId] = useState(null);
   const [generating, setGenerating] = useState(false);
 
   if (mounted) document.body.id = "main-page";
@@ -19,23 +23,56 @@ export default function Home() {
   function getResponse() {
     if (generating) return;
 
+    let apiUrl = "/api/prompt";
+    let body = { prompt };
+
+    if (garmentId) {
+      apiUrl = "api/prompt/edit";
+    }
+
     setGenerating(true);
     axios
-      .post("/api/prompt", { prompt })
-      .then(({ data }) => setImgSrc(data.url))
+      .post(apiUrl, { prompt })
+      .then(({ data }) => {
+        setGarmentId(data.id);
+        setImgSrc(data.url);
+      })
       .catch((err) => console.log(err))
       .finally(() => setGenerating(false));
   }
 
   return (
     <Fragment>
-      <Header />
+      <Header title="Designer-App" />
 
       {imgSrc ? (
         <img className="garment-img" src={imgSrc} alt="Generated garment" />
       ) : (
         <div className="garment-img empty">No Image Yet...</div>
       )}
+
+      <div
+        className="absolute flex flex-col left-[1rem] top-1/2 transform -translate-y-1/2"
+        style={{ display: !garmentId && "none" }}
+      >
+        <b>Edit (Coming Soon)</b>
+        <label htmlFor="sleeve-edit">Sleeve Length</label>
+        <input
+          id="sleeve-edit"
+          className="edit-input sleeve max-w-[11rem]"
+          placeholder="Length in cm."
+          // onChange={(e) => setPrompt(e.target.value)}
+          disabled
+        />
+        <label htmlFor="color-edit">Color</label>
+        <input
+          id="color-edit"
+          className="edit-input color max-w-[11rem]"
+          placeholder="e.g. #12AB34"
+          // onChange={(e) => setPrompt(e.target.value)}
+          disabled
+        />
+      </div>
 
       <div className="prompt">
         <input
@@ -49,7 +86,12 @@ export default function Home() {
       </div>
 
       <div className="absolute right-0 top-1/2 transform -translate-y-1/2">
-        <button className="btn-collection">View Collection</button>
+        <button
+          className="btn-collection"
+          onClick={() => router.push("/collection", { scroll: false })}
+        >
+          View Collection
+        </button>
       </div>
     </Fragment>
   );

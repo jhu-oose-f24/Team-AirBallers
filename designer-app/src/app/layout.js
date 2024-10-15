@@ -15,6 +15,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <meta name="darkreader-lock" content="only-light" />
       <body className={`${rubik.variable} antialiased`}>{children}</body>
     </html>
   );
