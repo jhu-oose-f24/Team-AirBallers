@@ -11,15 +11,16 @@ import Link from "next/link";
 export default function Header(props) {
   const { title = "TITLE" } = props;
 
+  const handleClick = (e) => {
+    e.preventDefault(); // Prevent the default link behavior
+    window.location.reload(); // Trigger a full page reload
+  };
+
   return (
     <header className="header">
-      <Link href="/" scroll={false}>
+      <a href="/" onClick={handleClick}>
         <h1 className="title">{title}</h1>
-      </Link>
-
-      {/* <div className="auth-buttons">
-        <button className="btn-login">Login/Sign up</button>
-      </div> */}
+      </a>
     </header>
   );
 }
