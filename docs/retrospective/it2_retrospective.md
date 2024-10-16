@@ -1,0 +1,7 @@
+## Iteration 2 - Retrospective
+
+In iteration 2, one of the first large tasks was coalescing the separate backend and frontend projects into one, using the combined client and server capabilities of next.js along with a more secure dotenv vault set up. We also managed to save generated garments in the MongoDB database using Prisma schemas and display the collection of generated garments to the user. One feature we weren't quite able to finalize was a work-in-progress edit feature for garments.
+
+One challenge we experienced last iteration was defining the structure of the prompts, specs and garments to be stored in the database, which are still to be further refined. We also came across the issue of incrementally expanding the editable specs of a garment: if few characteristics are defined, subsequent re-generations of the visualized garments can vary widely in any of the not-predefined characteristics. This presented an obstacle for the edit feature and made us rethink our approach to it for last iteration.
+
+This iteration, we plan on making progress on implementing the frontend designed in Figma, as well as creating shared documents to discuss the high-level features for both the planned pages and behavior of the UI, as well as a more formalized database structure (putting the schemas together more efficiently). These outlines will help consolidate our efforts moving forward and make for more efficient and well-rounded features by the end of this iteration.
