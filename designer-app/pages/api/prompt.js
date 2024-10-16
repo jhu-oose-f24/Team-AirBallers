@@ -19,14 +19,22 @@ export default ApiHandler()
       // TODO: different users
       const [user] = await prisma.user.findMany();
 
+      // TODO: is it necessary to create separate objects for spec & image?
+      const promptImage = await prisma.promptGarmentImage.create({
+        data: { imageURL: url },
+      });
+      const promptSpec = await prisma.promptGarmentSpec.create({
+        data: { description },
+      });
+
       const newPrompt = await prisma.prompt.create({
         data: {
           userId: user.id,
           originalPrompt: userPrompt,
           generatedPrompt: description,
           imageURL: url,
-          garmentSpecId: user.id, // TODO: not used, need to create spec
-          garmentImageId: user.id, // TODO: not used, need to create image
+          garmentSpecId: promptSpec.id,
+          garmentImageId: promptImage.id,
         },
       });
 
