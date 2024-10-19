@@ -1,5 +1,5 @@
-import PromptGenerator from "@/app/types/PromptGenerator";
-import ShirtSchema from "@/app/types/shirtSpecSchema";
+import PromptGenerator from "@/types/PromptGenerator";
+import ShirtSchema from "@/types/shirtSpecSchema";
 import { format } from "prettier";
 
 async function formatSchema(schema = {}) {

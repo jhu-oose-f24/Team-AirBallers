@@ -50,14 +50,14 @@ body > * {
   }
 }
 
-body#main-page,
-body#collection-page {
+body#main-page #__next,
+body#collection-page #__next {
   @apply flex flex-col justify-end items-center justify-items-center min-h-screen;
   @apply text-lg;
   @apply pt-20 pb-4 px-4;
   @apply font-[family-name:var(--font-rubik)];
 }
-body#collection-page {
+body#collection-page #__next {
   @apply justify-start;
 }
 
