@@ -1,9 +1,9 @@
 "use client";
 
-import Header from "@/app/components/Header";
+import Header from "@/components/Header";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Home() {
   const router = useRouter();
@@ -42,7 +42,7 @@ export default function Home() {
   }
 
   return (
-    <Fragment>
+    <>
       <Header title="Designer-App" />
 
       {imgSrc ? (
@@ -93,6 +93,6 @@ export default function Home() {
           View Collection
         </button>
       </div>
-    </Fragment>
+    </>
   );
 }
