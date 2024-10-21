@@ -2,79 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #faf9f6;
-  --foreground: #634133;
-  --accent: #800020;
-  --secondary: #9c9c9c;
-
-  /* TODO: dynamically generate in components */
-  --disabled-color-darkest: hsl(40, 10%, 50%);
-  --disabled-color-darker: hsl(40, 10%, 55%);
-  --disabled-color-dark: hsl(40, 10%, 60%);
-  --disabled-color-light: hsl(40, 20%, 75%);
-  --disabled-color-lighter: hsl(40, 30%, 85%);
-  --disabled-color-lightest: hsl(40, 100%, 95%);
-
-  --color-darkest: hsl(14, 100%, 15%);
-  --color-darker: hsl(14, 100%, 25%);
-  --color-dark: hsl(14, 60%, 50%);
-  --color-light: hsl(14, 100%, 75%);
-  --color-lighter: hsl(14, 100%, 80%);
-  --color-lightest: hsl(14, 100%, 95%);
-
-  --color-active-border: hsl(14, 100%, 75%);
-  --color-active-fill: hsl(14, 100%, 90%);
-
-  --color-input-text: hsl(14, 100%, 10%);
-  --color-input-placeholder: hsl(14, 55%, 45%);
-}
-
-@media (prefers-color-scheme: dark) {
-  /* TODO: support for dark mode */
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-body > * {
-  @apply opacity-0;
-}
-
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
 }
 
-body#main-page #__next,
-body#collection-page #__next {
-  @apply flex flex-col justify-end items-center justify-items-center min-h-screen;
-  @apply text-lg;
-  @apply pt-20 pb-4 px-4;
-  @apply font-[family-name:var(--font-rubik)];
-}
-body#collection-page #__next {
-  @apply justify-start;
-}
-
-body#main-page > *,
-body#collection-page > * {
-  @apply opacity-100;
+body#home #__next {
+  @apply justify-end;
 }
 
 .garment-img {
-  @apply flex items-center justify-center flex-1;
+  @apply flex flex-1 items-center justify-center;
   @apply text-slate-400 font-medium w-auto;
-  @apply max-w-fit max-h-[60vh] bg-[var(--secondary)] rounded-2xl m-6 mt-[-2rem];
+  @apply max-w-fit max-h-[60vh];
+  @apply bg-[--secondary];
+  @apply rounded-2xl m-6 mt-[-2rem];
 }
 
 .garment-img.empty {
-  @apply px-6 py-4 min-w-[60%] bg-[var(--accent)];
-  @apply text-[var(--background)];
+  @apply px-6 py-4 min-w-[60%] bg-[--accent];
+  @apply text-background;
   @apply bg-foreground;
 }
 
@@ -85,23 +33,23 @@ body#collection-page > * {
 .prompt-input,
 .edit-input {
   @apply w-auto px-3 py-2;
-  @apply bg-[var(--background)] text-[var(--foreground)] placeholder-[var(--secondary)];
-  @apply rounded-md border-2 border-[var(--foreground)];
+  @apply bg-background text-foreground placeholder-[--secondary];
+  @apply rounded-md border-2 border-foreground;
 }
 
 .prompt-input:focus,
 .edit-input:focus {
-  @apply border-[var(--accent)] shadow-lg;
+  @apply border-[--accent] shadow-lg;
 }
 
 .btn-collection {
   @apply px-4 py-2;
-  @apply text-[var(--foreground)] font-medium bg-[var(--background)];
-  @apply border-2 border-[var(--foreground)] rounded-md mr-6;
+  @apply text-foreground font-medium bg-background;
+  @apply border-2 border-foreground rounded-md mr-6;
   transition: all 0.3s ease;
 }
 .btn-collection:hover {
-  @apply bg-[var(--accent)] text-[var(--foreground)];
+  @apply bg-[var(--accent)] text-foreground;
   @apply border-[var(--accent)] transform translate-y-[-3px];
 }
 
@@ -113,13 +61,13 @@ body#collection-page > * {
 
 .header {
   @apply flex justify-between items-center w-full p-4;
-  @apply bg-[var(--background)];
-  @apply border-b-2 border-[var(--foreground)];
+  @apply bg-background;
+  @apply border-b-2 border-foreground;
   @apply fixed top-0 left-0 z-50;
 }
 
 .title {
-  @apply text-2xl font-bold text-[var(--foreground)];
+  @apply text-2xl font-bold text-foreground;
   @apply pl-4;
 }
 
@@ -129,14 +77,14 @@ body#collection-page > * {
 
 .btn-login {
   @apply px-4 py-2;
-  @apply font-medium text-[var(--foreground)] bg-[var(--background)];
-  @apply border-2 border-[var(--foreground)] rounded-md;
+  @apply font-medium text-foreground bg-background;
+  @apply border-2 border-foreground rounded-md;
   transition: all 0.3s ease;
 }
 
 .btn-login:hover {
-  @apply bg-[var(--accent)] text-[var(--foreground)];
-  @apply border-[var(--accent)] transform translate-y-[-3px];
+  @apply bg-[--accent] text-foreground;
+  @apply border-[--accent] transform translate-y-[-3px];
 }
 
 body#collection-page .collection-grid {

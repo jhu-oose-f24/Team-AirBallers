@@ -1,0 +1,16 @@
+body {
+  @apply text-foreground;
+  @apply bg-background;
+}
+
+body #__next {
+  @apply opacity-0;
+  @apply flex flex-col items-center justify-items-center;
+  @apply text-lg font-[family-name:--font-rubik];
+  @apply min-h-screen;
+  @apply pt-20 pb-4 px-4;
+}
+body[id] #__next {
+  @apply transition-opacity duration-100 delay-100;
+  @apply opacity-100;
+}

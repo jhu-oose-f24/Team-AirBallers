@@ -14,7 +14,7 @@ export default function Home() {
   const [garmentId, setGarmentId] = useState(null);
   const [generating, setGenerating] = useState(false);
 
-  if (mounted) document.body.id = "main-page";
+  if (mounted) document.body.id = "home";
 
   useEffect(() => {
     setMounted(true);
