@@ -1,6 +1,8 @@
 "use client";
 
 import Header from "@/components/Header";
+import PatchButton from "@/components/PatchButton";
+import { IconSparkles } from "@tabler/icons-react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -83,6 +85,11 @@ export default function Home() {
         <button className="btn-prompt-generate" onClick={getResponse}>
           {generating ? "Loading..." : "Generate"}
         </button>
+        <PatchButton
+          color="aquamarine"
+          icon={<IconSparkles />}
+          label="Generate"
+        />
       </div>
 
       <div className="absolute right-0 top-1/2 transform -translate-y-1/2">
