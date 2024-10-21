@@ -6,8 +6,8 @@ export default function Document() {
     <Html lang="en" suppressHydrationWarning>
       <Head>
         <meta name="darkreader-lock" content="only-light" />
-        <title>Designer-App</title>
-        <desc>Design your own garments with AI</desc>
+        <meta name="title" content="Designer-App" />
+        <meta name="description" content="Design your own garments with AI" />
       </Head>
       <body className={`${rubik.variable} antialiased`}>
         <Main />
