@@ -3,5 +3,7 @@
 /**
  * @typedef {{
  *   color?: React.CSSProperties["color"];
+ *   label?: string;
+ *   icon?: JSX.Element;
  * }} PatchButtonProps
  */

@@ -1,6 +1,5 @@
 "use client";
 
-import { IconFocusCentered } from "@tabler/icons-react";
 import chroma from "chroma-js";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
@@ -8,7 +7,7 @@ import styles from "../styles/PatchButton.module.css";
 
 /** @param {PatchButtonProps} props */
 const PatchButton = (props) => {
-  const { color } = props;
+  const { color, label, icon } = props;
 
   /** @type {UseState<CustomCSSProperties>} */
   const [palette, setPalette] = useState({});
@@ -46,10 +45,8 @@ const PatchButton = (props) => {
       <div className={styles.border}>
         {stitches}
         <div className={styles.content}>
-          <span className={styles.icon}>
-            <IconFocusCentered />
-          </span>
-          <span className={styles.label}>Button Label</span>
+          {icon && <span className={styles.icon}>{icon}</span>}
+          {label && <span className={styles.label}>{label}</span>}
         </div>
       </div>
     </button>
