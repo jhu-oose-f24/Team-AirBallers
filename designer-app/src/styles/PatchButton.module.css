@@ -1,0 +1,97 @@
+.btn.patch {
+  --btn-depth: 0.3rem;
+  --btn-font-size: 1.3rem;
+  --btn-line-height: calc(var(--btn-font-size) * 1.2);
+  --btn-content-radius: 0.3rem;
+  --btn-border-pad: 0.45rem;
+  --btn-border-width: 0.2rem;
+  --btn-stitch-width: 0.14rem;
+  --btn-padding: 0.6rem 0.9rem;
+  --btn-label-pad: 0.2rem;
+  --btn-gap: 0.4rem;
+
+  --btn-root-pad: var(--btn-border-width) var(--btn-border-width)
+    calc(var(--btn-border-width) + var(--btn-depth));
+
+  --patch-radius: calc(
+    var(--btn-content-radius) + var(--btn-border-pad) + var(--btn-border-width)
+  );
+
+  @apply mt-[--btn-border-width] p-[--btn-root-pad];
+  @apply rounded-[--patch-radius];
+  @apply bg-color-darkest;
+}
+.btn.patch:hover:not(:active):not(:disabled) {
+  --btn-depth: 0.5rem;
+  @apply mt-0;
+}
+.btn.patch:not(:disabled) {
+  @apply cursor-pointer;
+}
+.btn.patch:disabled {
+  @apply [--color-darkest:--disabled-color-darkest];
+  @apply [--color-lighter:--disabled-color-lighter];
+  @apply [--color-darker:--disabled-color-darker];
+}
+.btn.patch,
+.btn.patch * {
+  @apply transition-all duration-100;
+}
+.btn.patch * {
+  @apply pointer-events-none;
+}
+
+.btn.patch .border {
+  --border-radius: calc(var(--btn-content-radius) + var(--btn-border-pad));
+  @apply rounded-[--border-radius];
+  @apply bg-color-lighter;
+  @apply relative;
+  @apply overflow-hidden;
+}
+.btn.patch:hover:not(:disabled) .border {
+  @apply bg-color-light;
+}
+
+.btn.patch svg.stitch-overlay {
+  --overlay-size: calc(100% - 2 * var(--btn-border-pad));
+  @apply absolute box-border;
+  @apply fill-none;
+  @apply overflow-visible;
+  @apply p-[--btn-border-pad];
+  @apply w-full h-full;
+}
+.btn.patch svg.stitch-overlay > rect.stitches {
+  --stitch-size: calc(100% - var(--btn-stitch-width));
+  @apply stroke-color-darker;
+  @apply [stroke-width:--btn-stitch-width];
+  @apply [stroke-linecap:round];
+  @apply [stroke-dasharray:5];
+  @apply [rx:--btn-content-radius];
+}
+
+.btn.patch .content {
+  @apply flex items-center gap-[--btn-gap];
+  @apply rounded-[--btn-content-radius];
+  @apply p-[--btn-padding] m-[--btn-border-pad];
+  @apply bg-color-lighter;
+}
+.btn.patch:active:not(:disabled) .content {
+  @apply bg-color-active-fill;
+}
+
+.btn.patch span.icon {
+  @apply w-[--btn-line-height] h-[--btn-line-height];
+  @apply text-color-darkest;
+}
+.btn.patch span.icon svg {
+  @apply stroke-[2.7];
+}
+.btn.patch span.icon * {
+  @apply !duration-[10ms] !delay-0;
+}
+
+.btn.patch span.label {
+  @apply px-[--btn-label-pad];
+  @apply [line-height:--btn-line-height];
+  @apply [font-size:--btn-font-size] text-color-darkest font-medium;
+}
