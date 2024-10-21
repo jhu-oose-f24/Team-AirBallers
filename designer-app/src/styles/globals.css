@@ -81,12 +81,12 @@ body#collection-page > * {
 }
 
 .prompt {
-  @apply flex items-center gap-2 w-auto mt-6 mb-[1.5rem];
+  @apply flex items-center justify-between gap-2 w-[80%] mx-auto mt-6 mb-[1.5rem];
 }
 
 .prompt-input,
 .edit-input {
-  @apply w-auto px-3 py-2;
+  @apply flex-grow px-3 py-2;
   @apply bg-[var(--background)] text-[var(--foreground)] placeholder-[var(--secondary)];
   @apply rounded-md border-2 border-[var(--foreground)];
 }
@@ -153,7 +153,6 @@ body#collection-page .collection-grid > * {
 
 /* SIDEMENU */
 
-/* Side Menu Styles */
 .side-menu {
   position: fixed;
   top: 0;
