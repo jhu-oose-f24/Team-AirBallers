@@ -1,7 +1,7 @@
-import EditableDescriptionGenerator from "@/app/types/EditableDescriptionGenerator";
-import ImageGenerator from "@/app/types/ImageGenerator";
-import ApiHandler from "@/app/util/ApiHandler";
-import prisma from "@/app/util/db";
+import EditableDescriptionGenerator from "@/types/EditableDescriptionGenerator";
+import ImageGenerator from "@/types/ImageGenerator";
+import ApiHandler from "@/util/ApiHandler";
+import prisma from "@/util/db";
 
 export default ApiHandler()
   .POST(async (req, res) => {

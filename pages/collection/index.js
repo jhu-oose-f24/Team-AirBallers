@@ -1,12 +1,12 @@
 "use client";
 
-import Header from "@/app/components/Header";
+import Header from "@/components/Header";
 import axios from "axios";
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 /**
  * @typedef {Awaited<
- *   ReturnType<import("@/app/util/db.js")["default"]["prompt"]["findMany"]>
+ *   ReturnType<import("@/util/db.js")["default"]["prompt"]["findMany"]>
  * >} GarmentList
  */
 export default function Home() {
@@ -32,7 +32,7 @@ export default function Home() {
   }, []);
 
   return (
-    <Fragment>
+    <>
       <Header title="< Garment Collection" />
 
       <div className="collection-grid">
@@ -40,6 +40,6 @@ export default function Home() {
           <img key={idx} src={garment.imageURL} />
         ))}
       </div>
-    </Fragment>
+    </>
   );
 }

@@ -1,5 +1,5 @@
-import ApiHandler from "@/app/util/ApiHandler";
-import prisma from "@/app/util/db";
+import ApiHandler from "@/util/ApiHandler";
+import prisma from "@/util/db";
 
 export default ApiHandler()
   .GET(async (req, res) => {

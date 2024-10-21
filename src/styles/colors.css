@@ -1,0 +1,30 @@
+:root {
+  --background: #faf9f6;
+  --foreground: #634133;
+  --accent: #800020;
+  --secondary: #9c9c9c;
+
+  /* TODO: dynamically generate in components */
+  --disabled-color-darkest: hsl(40, 10%, 50%);
+  --disabled-color-darker: hsl(40, 10%, 55%);
+  --disabled-color-dark: hsl(40, 10%, 60%);
+  --disabled-color-light: hsl(40, 20%, 75%);
+  --disabled-color-lighter: hsl(40, 30%, 85%);
+  --disabled-color-lightest: hsl(40, 100%, 95%);
+
+  --color-darkest: hsl(14, 100%, 15%);
+  --color-darker: hsl(14, 100%, 25%);
+  --color-dark: hsl(14, 60%, 50%);
+  --color-light: hsl(14, 100%, 75%);
+  --color-lighter: hsl(14, 100%, 80%);
+  --color-lightest: hsl(14, 100%, 95%);
+
+  --color-active-fill: hsl(14, 100%, 90%);
+
+  --color-input-text: hsl(14, 100%, 10%);
+  --color-input-placeholder: hsl(14, 55%, 45%);
+}
+
+@media (prefers-color-scheme: dark) {
+  /* TODO: support for dark mode */
+}
