@@ -1,0 +1,96 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+body#home #__next {
+  @apply justify-end;
+}
+
+.garment-img {
+  @apply flex flex-1 items-center justify-center;
+  @apply text-slate-400 font-medium w-auto;
+  @apply max-w-fit max-h-[60vh];
+  @apply bg-[--secondary];
+  @apply rounded-2xl m-6 mt-[-2rem];
+}
+
+.garment-img.empty {
+  @apply px-6 py-4 min-w-[60%] bg-[--accent];
+  @apply text-background;
+  @apply bg-foreground;
+}
+
+.prompt {
+  @apply flex items-center gap-2 w-auto mt-6 mb-[1.5rem];
+}
+
+.prompt-input,
+.edit-input {
+  @apply w-auto px-3 py-2;
+  @apply bg-background text-foreground placeholder-[--secondary];
+  @apply rounded-md border-2 border-foreground;
+}
+
+.prompt-input:focus,
+.edit-input:focus {
+  @apply border-[--accent] shadow-lg;
+}
+
+.btn-collection {
+  @apply px-4 py-2;
+  @apply text-foreground font-medium bg-background;
+  @apply border-2 border-foreground rounded-md mr-6;
+  transition: all 0.3s ease;
+}
+.btn-collection:hover {
+  @apply bg-[var(--accent)] text-foreground;
+  @apply border-[var(--accent)] transform translate-y-[-3px];
+}
+
+.btn-prompt-generate {
+  @apply px-4 py-2;
+  @apply font-medium bg-green-300 text-green-900;
+  @apply rounded-md whitespace-nowrap;
+}
+
+.header {
+  @apply flex justify-between items-center w-full p-4;
+  @apply bg-background;
+  @apply border-b-2 border-foreground;
+  @apply fixed top-0 left-0 z-50;
+}
+
+.title {
+  @apply text-2xl font-bold text-foreground;
+  @apply pl-4;
+}
+
+.auth-buttons {
+  @apply flex gap-4;
+}
+
+.btn-login {
+  @apply px-4 py-2;
+  @apply font-medium text-foreground bg-background;
+  @apply border-2 border-foreground rounded-md;
+  transition: all 0.3s ease;
+}
+
+.btn-login:hover {
+  @apply bg-[--accent] text-foreground;
+  @apply border-[--accent] transform translate-y-[-3px];
+}
+
+body#collection-page .collection-grid {
+  @apply flex flex-wrap gap-[1rem];
+}
+
+body#collection-page .collection-grid > * {
+  @apply max-w-[calc(25%-1rem*(3/4))];
+}

@@ -1,4 +1,4 @@
-import PromptGenerator from "@/app/types/PromptGenerator";
+import PromptGenerator from "@/types/PromptGenerator";
 
 /** @hideconstructor */
 export default class DesctiptionGenerator {

@@ -15,7 +15,7 @@ const apiOpenAI = axios.create({
 });
 
 function resolveAsset(promptAsset = "") {
-  const fullPath = path.resolve(`src/app/assets/${promptAsset}.md`);
+  const fullPath = path.resolve(`src/assets/${promptAsset}.md`);
   return readFileSync(fullPath, { encoding: "utf-8" });
 }
 
