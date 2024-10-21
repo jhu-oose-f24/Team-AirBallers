@@ -1,4 +1,6 @@
-import "../src/styles/globals.css";
+import "@/styles/colors.css";
+import "@/styles/globals.css";
+import "@/styles/layout.css";
 import { Rubik } from "next/font/google";
 
 export const rubik = Rubik({
