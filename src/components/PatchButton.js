@@ -1,13 +1,14 @@
 "use client";
 
+import Stitches from "@/components/Stitches";
 import chroma from "chroma-js";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
-import styles from "../styles/PatchButton.module.css";
+import btnStyles from "../styles/PatchButton.module.css";
 
 /** @param {PatchButtonProps} props */
 const PatchButton = (props) => {
-  const { color, label, icon } = props;
+  const { color, label, icon, onClick, loading, disabled } = props;
 
   /** @type {UseState<CustomCSSProperties>} */
   const [palette, setPalette] = useState({});
@@ -21,32 +22,36 @@ const PatchButton = (props) => {
     setPalette({
       "--hue": color,
 
-      "--color-darkest": chroma.hsl(hue, 1.0, 0.15).css(),
-      "--color-darker": chroma.hsl(hue, 1.0, 0.25).css(),
-      "--color-dark": chroma.hsl(hue, 0.6, 0.5).css(),
-      "--color-light": chroma.hsl(hue, 1.0, 0.75).css(),
-      "--color-lighter": chroma.hsl(hue, 1.0, 0.8).css(),
-      "--color-lightest": chroma.hsl(hue, 1.0, 0.95).css(),
-      "--color-active-fill": chroma.hsl(hue, 1.0, 0.9).css(),
+      "--primary-darkest": chroma.hsl(hue, 1.0, 0.15).css(),
+      "--primary-darker": chroma.hsl(hue, 1.0, 0.25).css(),
+      "--primary-dark": chroma.hsl(hue, 0.6, 0.5).css(),
+      "--primary-light": chroma.hsl(hue, 1.0, 0.75).css(),
+      "--primary-lighter": chroma.hsl(hue, 1.0, 0.8).css(),
+      "--primary-lightest": chroma.hsl(hue, 1.0, 0.95).css(),
+      "--primary-active-fill": chroma.hsl(hue, 1.0, 0.9).css(),
     });
   }
 
-  const stitches = (
-    <svg
-      className={styles["stitch-overlay"]}
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <rect className={styles.stitches} width="100%" height="100%" />
-    </svg>
-  );
-
   return (
-    <button className={clsx(styles.btn, styles.patch)} style={{ ...palette }}>
-      <div className={styles.border}>
-        {stitches}
-        <div className={styles.content}>
-          {icon && <span className={styles.icon}>{icon}</span>}
-          {label && <span className={styles.label}>{label}</span>}
+    <button
+      className={clsx(
+        btnStyles.btn,
+        btnStyles.patch,
+        loading && btnStyles.loading,
+      )}
+      style={disabled ? null : { ...palette }}
+      onClick={loading || disabled ? null : onClick}
+      disabled={disabled}
+    >
+      <div className={btnStyles.border}>
+        <Stitches
+          type="border"
+          svgClass={btnStyles["stitch-wrapper"]}
+          pathClass={btnStyles.stitches}
+        />
+        <div className={btnStyles.content}>
+          {icon && <span className={btnStyles.icon}>{icon}</span>}
+          {label && <span className={btnStyles.label}>{label}</span>}
         </div>
       </div>
     </button>
