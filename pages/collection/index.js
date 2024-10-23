@@ -27,7 +27,7 @@ export default function Home() {
 
     axios
       .get("/api/collection")
-      .then(({ data }) => setGarments(data))
+      .then(({ data }) => setGarments(data.reverse())) // Reverse the order of garments here
       .catch((err) => console.log(err));
   }, []);
 

@@ -1,6 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
+import { Bars3Icon } from "@heroicons/react/24/solid";
+import SideMenu from "./SideMenu";
 
 /**
  * @param {{
@@ -10,17 +13,26 @@ import Link from "next/link";
  */
 export default function Header(props) {
   const { title = "TITLE" } = props;
+  const [isOpen, setIsOpen] = useState(false);
 
-  const handleClick = (e) => {
-    e.preventDefault(); // Prevent the default link behavior
-    window.location.reload(); // Trigger a full page reload
-  };
+  const toggleMenu = () => setIsOpen(!isOpen);
 
   return (
     <header className="header">
-      <a href="/" onClick={handleClick}>
+
+      <button className="btn-hamburger" onClick={toggleMenu}>
+        <Bars3Icon className="h-8 w-8 text-black" />
+      </button>
+
+      <SideMenu isOpen={isOpen} toggleMenu={toggleMenu} />
+
+      <Link href="/" scroll={false}>
         <h1 className="title">{title}</h1>
-      </a>
+      </Link>
+
+      <div className="auth-buttons">
+        <button className="btn-login">Login/Sign up</button>
+      </div>
     </header>
   );
 }

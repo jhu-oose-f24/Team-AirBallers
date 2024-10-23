@@ -1,6 +1,7 @@
 body {
+  --fabric-tile: url("../assets/fabric-bg.svg");
   @apply text-foreground;
-  @apply bg-background;
+  @apply bg-repeat bg-[image:--fabric-tile] bg-[size:64px];
 }
 
 body #__next {
