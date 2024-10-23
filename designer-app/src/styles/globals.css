@@ -124,7 +124,7 @@ body#collection-page > * {
 
 .title {
   @apply text-2xl font-bold text-[var(--foreground)];
-  @apply pl-4;
+  @apply justify-center;
 }
 
 .auth-buttons {
