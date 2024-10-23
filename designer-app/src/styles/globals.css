@@ -16,41 +16,40 @@ body#home #__next {
   @apply flex flex-1 items-center justify-center;
   @apply text-slate-400 font-medium w-auto;
   @apply max-w-fit max-h-[60vh];
-  @apply bg-[--secondary];
   @apply rounded-2xl m-6 mt-[-2rem];
+  @apply bg-accent;
 }
 
 .garment-img.empty {
-  @apply px-6 py-4 min-w-[60%] bg-[--accent];
-  @apply text-background;
-  @apply bg-foreground;
+  @apply px-6 py-4 min-w-[60%];
+  @apply text-primary;
 }
 
 .prompt {
-  @apply flex items-center gap-2 w-auto mt-6 mb-[1.5rem];
+  @apply flex items-center justify-between gap-2 w-[80%] mx-auto mt-6 mb-[1.5rem];
 }
 
 .prompt-input,
 .edit-input {
-  @apply w-auto px-3 py-2;
-  @apply bg-background text-foreground placeholder-[--secondary];
+  @apply flex-grow px-3 py-2;
+  @apply bg-background-main text-foreground placeholder-secondary;
   @apply rounded-md border-2 border-foreground;
 }
 
 .prompt-input:focus,
 .edit-input:focus {
-  @apply border-[--accent] shadow-lg;
+  @apply border-primary shadow-lg;
 }
 
 .btn-collection {
   @apply px-4 py-2;
-  @apply text-foreground font-medium bg-background;
+  @apply text-foreground font-medium bg-background-main;
   @apply border-2 border-foreground rounded-md mr-6;
   transition: all 0.3s ease;
 }
 .btn-collection:hover {
-  @apply bg-[var(--accent)] text-foreground;
-  @apply border-[var(--accent)] transform translate-y-[-3px];
+  @apply bg-primary text-foreground;
+  @apply border-primary transform translate-y-[-3px];
 }
 
 .btn-prompt-generate {
@@ -59,16 +58,21 @@ body#home #__next {
   @apply rounded-md whitespace-nowrap;
 }
 
+/* HEADER */
+
 .header {
-  @apply flex justify-between items-center w-full p-4;
-  @apply bg-background;
-  @apply border-b-2 border-foreground;
+  @apply w-full;
+  @apply p-4;
+  @apply bg-background-main;
+  @apply flex justify-between items-center;
+  @apply outline outline-[0.4rem] outline-background-alt;
+  @apply border-b-[0.15rem] border-secondary;
   @apply fixed top-0 left-0 z-50;
 }
 
 .title {
   @apply text-2xl font-bold text-foreground;
-  @apply pl-4;
+  @apply justify-center;
 }
 
 .auth-buttons {
@@ -77,14 +81,14 @@ body#home #__next {
 
 .btn-login {
   @apply px-4 py-2;
-  @apply font-medium text-foreground bg-background;
+  @apply font-medium text-foreground bg-background-main;
   @apply border-2 border-foreground rounded-md;
   transition: all 0.3s ease;
 }
 
 .btn-login:hover {
-  @apply bg-[--accent] text-foreground;
-  @apply border-[--accent] transform translate-y-[-3px];
+  @apply bg-primary text-foreground;
+  @apply border-primary transform translate-y-[-3px];
 }
 
 body#collection-page .collection-grid {
@@ -93,4 +97,30 @@ body#collection-page .collection-grid {
 
 body#collection-page .collection-grid > * {
   @apply max-w-[calc(25%-1rem*(3/4))];
+}
+
+/* SIDEMENU */
+
+.side-menu {
+  position: fixed;
+  top: 0;
+  left: -300px;
+  width: 300px;
+  height: 100%;
+  background-color: #faf9f6;
+  transition: transform 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 10px;
+}
+
+/* Open State */
+.side-menu.open {
+  transform: translateX(300px);
+}
+
+/* Closed State */
+.side-menu.closed {
+  transform: translateX(0);
 }

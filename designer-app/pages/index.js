@@ -91,15 +91,6 @@ export default function Home() {
           label="Generate"
         />
       </div>
-
-      <div className="absolute right-0 top-1/2 transform -translate-y-1/2">
-        <button
-          className="btn-collection"
-          onClick={() => router.push("/collection", { scroll: false })}
-        >
-          View Collection
-        </button>
-      </div>
     </>
   );
 }
