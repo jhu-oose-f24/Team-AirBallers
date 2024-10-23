@@ -27,12 +27,12 @@ body#home #__next {
 }
 
 .prompt {
-  @apply flex items-center gap-2 w-auto mt-6 mb-[1.5rem];
+  @apply flex items-center justify-between gap-2 w-[80%] mx-auto mt-6 mb-[1.5rem];
 }
 
 .prompt-input,
 .edit-input {
-  @apply w-auto px-3 py-2;
+  @apply flex-grow px-3 py-2;
   @apply bg-background text-foreground placeholder-[--secondary];
   @apply rounded-md border-2 border-foreground;
 }
@@ -59,6 +59,8 @@ body#home #__next {
   @apply rounded-md whitespace-nowrap;
 }
 
+/* HEADER */
+
 .header {
   @apply flex justify-between items-center w-full p-4;
   @apply bg-background;
@@ -68,7 +70,7 @@ body#home #__next {
 
 .title {
   @apply text-2xl font-bold text-foreground;
-  @apply pl-4;
+  @apply justify-center;
 }
 
 .auth-buttons {
@@ -93,4 +95,30 @@ body#collection-page .collection-grid {
 
 body#collection-page .collection-grid > * {
   @apply max-w-[calc(25%-1rem*(3/4))];
+}
+
+/* SIDEMENU */
+
+.side-menu {
+  position: fixed;
+  top: 0;
+  left: -300px;
+  width: 300px;
+  height: 100%;
+  background-color: #faf9f6;
+  transition: transform 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 10px;
+}
+
+/* Open State */
+.side-menu.open {
+  transform: translateX(300px);
+}
+
+/* Closed State */
+.side-menu.closed {
+  transform: translateX(0);
 }
