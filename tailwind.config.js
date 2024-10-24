@@ -20,6 +20,11 @@ export default {
           light: "var(--primary-light)",
           lighter: "var(--primary-lighter)",
           lightest: "var(--primary-lightest)",
+
+          "active-fill": "var(--primary-active-fill)",
+
+          "input-text": "var(--primary-input-text)",
+          "input-placeholder": "var(--primary-input-placeholder)",
         },
 
         secondary: "var(--secondary)",
@@ -33,11 +38,6 @@ export default {
           "color-lighter": "var(--disabled-primary-lighter)",
           "color-lightest": "var(--disabled-primary-lightest)",
         },
-
-        "primary-active-fill": "var(--primary-active-fill)",
-
-        "color-input-text": "var(--color-input-text)",
-        "color-input-placeholder": "var(--color-input-placeholder)",
       },
     },
   },
