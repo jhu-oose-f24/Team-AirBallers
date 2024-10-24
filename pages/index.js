@@ -86,7 +86,7 @@ export default function Home() {
           {generating ? "Loading..." : "Generate"}
         </button>
         <PatchButton
-          color="aquamarine"
+          tint="aquamarine"
           icon={<IconSparkles />}
           label="Generate"
         />
