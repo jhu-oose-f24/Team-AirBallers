@@ -23,8 +23,8 @@
 
   --primary-active-fill: hsl(14, 100%, 90%);
 
-  --color-input-text: hsl(14, 100%, 10%);
-  --color-input-placeholder: hsl(14, 55%, 45%);
+  --primary-input-text: hsl(14, 100%, 10%);
+  --primary-input-placeholder: hsl(14, 55%, 45%);
 }
 
 @media (prefers-color-scheme: dark) {
