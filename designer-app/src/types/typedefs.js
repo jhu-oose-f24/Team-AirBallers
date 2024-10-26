@@ -8,3 +8,5 @@
  *   [x: string]: any;
  * }} CustomCSSProperties
  */
+
+/** @typedef {React.InputHTMLAttributes & React.TextareaHTMLAttributes} GeneralInputProps */
