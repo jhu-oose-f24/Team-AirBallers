@@ -36,10 +36,6 @@
 .btn.patch:not(:disabled) {
   @apply cursor-pointer;
 }
-.btn.patch:active,
-.btn.patch:disabled {
-  --btn-cur-depth: 0.2rem;
-}
 .btn.patch:disabled {
   @apply [--primary-darkest:--disabled-primary-darkest];
   @apply [--primary-lighter:--disabled-primary-lighter];
@@ -47,7 +43,10 @@
 }
 
 .btn.patch,
-.btn.patch * {
+.btn.patch svg *,
+.btn.patch .border,
+.btn.patch .content,
+.btn.patch .label {
   @apply transition-all duration-100;
 }
 .btn.patch * {
@@ -97,9 +96,6 @@
 .btn.patch span.icon svg {
   @apply max-w-[--btn-line-height] max-h-[--btn-line-height];
   @apply stroke-[2.7];
-}
-.btn.patch svg * {
-  @apply !duration-[10ms] !delay-0;
 }
 
 .btn.patch span.label {
