@@ -1,9 +1,12 @@
 .btn-wrapper {
+  --btn-depth: 0.3rem;
+  --btn-margin-top: calc(-1 * var(--btn-depth));
   @apply flex flex-col;
+  @apply mt-[--btn-margin-top];
 }
 
 .btn.patch {
-  --btn-depth: 0.3rem;
+  --btn-cur-depth: var(--btn-depth);
   --btn-font-size: 1.3rem;
   --btn-line-height: calc(var(--btn-font-size) * 1.2);
   --btn-content-radius: 0.3rem;
@@ -13,29 +16,31 @@
   --btn-y-padding: 0.6rem;
   --btn-label-pad: 0.2rem;
   --btn-gap: 0.4rem;
-  --btn-margin-top: calc(0.5rem - var(--btn-depth));
-
-  --btn-root-pad: var(--btn-border-width) var(--btn-border-width)
-    calc(var(--btn-border-width) + var(--btn-depth));
+  --btn-cur-margin-top: calc(0.5rem - var(--btn-cur-depth));
+  --btn-root-depth: calc(var(--btn-border-width) + var(--btn-cur-depth));
 
   --patch-radius: calc(
     var(--btn-content-radius) + var(--btn-border-pad) + var(--btn-border-width)
   );
 
-  @apply mt-[--btn-margin-top] p-[--btn-root-pad];
+  @apply mt-[--btn-cur-margin-top];
+  @apply p-[--btn-border-width] pb-[--btn-root-depth];
   @apply rounded-[--patch-radius];
   @apply bg-primary-darkest;
   @apply font-medium;
   @apply h-full;
 }
 .btn.patch:hover:not(:active):not(:disabled) {
-  --btn-depth: 0.5rem;
+  --btn-cur-depth: 0.4rem;
 }
 .btn.patch:not(:disabled) {
   @apply cursor-pointer;
 }
+.btn.patch:active,
 .btn.patch:disabled {
-  --btn-depth: 0.2rem;
+  --btn-cur-depth: 0.2rem;
+}
+.btn.patch:disabled {
   @apply [--primary-darkest:--disabled-primary-darkest];
   @apply [--primary-lighter:--disabled-primary-lighter];
   @apply [--primary-darker:--disabled-primary-darker];

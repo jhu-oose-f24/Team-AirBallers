@@ -4,7 +4,7 @@ import Stitches from "@/components/Stitches";
 import chroma from "chroma-js";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
-import btnStyles from "../styles/PatchButton.module.css";
+import css from "../styles/PatchButton.module.css";
 
 /** @param {PatchButtonProps} props */
 const PatchButton = (props) => {
@@ -18,6 +18,7 @@ const PatchButton = (props) => {
     tint,
     height,
     width,
+    stretch,
 
     size, // shorthand sets props below (and more)
     fontSize,
@@ -26,11 +27,10 @@ const PatchButton = (props) => {
   } = props;
 
   /**
-   * @typedef {StitchProps & CustomCSSProperties} SizePreset
+   * @typedef {Partial<StitchProps & CustomCSSProperties>} SizePreset
    * @type {{ [x in PatchButtonProps["size"]]: SizePreset }}
    */
   const SIZE_PRESETS = {
-    // @ts-ignore
     xs: {
       "--btn-x-padding": "0.5rem",
       "--btn-y-padding": "0.3rem",
@@ -40,7 +40,6 @@ const PatchButton = (props) => {
       stitchSpacing: "short",
       fontWeight: 600,
     },
-    // @ts-ignore
     sm: {
       "--btn-x-padding": "0.7rem",
       "--btn-y-padding": "0.45rem",
@@ -48,7 +47,6 @@ const PatchButton = (props) => {
       "--btn-border-pad": "0.4rem",
       stitchLength: "short",
     },
-    // @ts-ignore
     lg: {
       "--btn-x-padding": "1.1rem",
       "--btn-y-padding": "0.7rem",
@@ -63,20 +61,25 @@ const PatchButton = (props) => {
   /** @type {UseState<CustomCSSProperties>} */
   const [moddedStyle, setModdedStyle] = useState({});
 
-  useEffect(updateStyle, [fontSize, height, width, xPad, yPad, size]);
+  const sizeDeps = [fontSize, height, width, stretch, xPad, yPad, size];
+  useEffect(updateStyle, sizeDeps);
   useEffect(genPalette, [tint]);
 
   function updateStyle() {
     setModdedStyle({
       "--btn-x-padding": xPad || (width && "0.4rem"),
-      "--btn-y-padding": yPad || (height && "0px"),
+      "--btn-y-padding": yPad || ((stretch || height) && "0px"),
       "--btn-font-size": fontSize,
       ...(SIZE_PRESETS[size] || {}),
     });
   }
 
-  /** @param {number[]} color */
-  function HSL(...[h, s, l]) {
+  /**
+   * @param {number} h - Hue
+   * @param {number} s - Saturation
+   * @param {number} l - Lightness
+   */
+  function HSL(h, s, l) {
     return chroma.hsl(h, s, l).css("hsl");
   }
 
@@ -100,30 +103,38 @@ const PatchButton = (props) => {
     });
   }
 
+  /** @type {React.KeyboardEventHandler} */
+  function enterClick(event) {
+    console.log(event.currentTarget?.querySelector("button"));
+    if (event.key === "Enter") {
+      event.currentTarget?.querySelector("button")?.click();
+    }
+  }
+
   return (
-    <div className={btnStyles["btn-wrapper"]} style={{ height, width }}>
+    <div
+      className={css["btn-wrapper"]}
+      style={{ height, width, alignSelf: stretch && "stretch" }}
+      onKeyDown={enterClick}
+    >
       <button
-        className={clsx(
-          btnStyles.btn,
-          btnStyles.patch,
-          loading && btnStyles.loading,
-        )}
+        className={clsx(css.btn, css.patch, loading && css.loading)}
         style={{ ...(disabled ? {} : tintPalette), ...moddedStyle }}
         onClick={loading || disabled ? null : onClick}
         disabled={disabled}
       >
-        <div className={btnStyles.border}>
+        <div className={css.border}>
           <Stitches
             type="border"
-            svgClass={btnStyles["stitch-wrapper"]}
-            pathClass={btnStyles.stitches}
+            svgClass={css["stitch-wrapper"]}
+            pathClass={css.stitches}
             stitchLength={SIZE_PRESETS[size]?.stitchLength}
             stitchSpacing={SIZE_PRESETS[size]?.stitchSpacing}
             stitchWidth={SIZE_PRESETS[size]?.stitchWidth}
           />
-          <div className={btnStyles.content}>
-            {icon && <span className={btnStyles.icon}>{icon}</span>}
-            {label && <span className={btnStyles.label}>{label}</span>}
+          <div className={css.content}>
+            {icon && <span className={css.icon}>{icon}</span>}
+            {label && <span className={css.label}>{label}</span>}
           </div>
         </div>
       </button>
