@@ -61,14 +61,18 @@ const InputField = (props) => {
   const InputElement = textArea ? "textarea" : "input";
 
   return (
-    <div className={css["input-wrapper"]} style={{ width, ...style }}>
-      {label && id ? (
-        <label className={css["input-label"]} htmlFor={id}>
-          {label}
-        </label>
-      ) : (
-        <span className={css["input-label"]}>{label}</span>
-      )}
+    <div
+      className={clsx(css["input-wrapper"], className)}
+      style={{ width, ...style }}
+    >
+      {label &&
+        (id ? (
+          <label className={css["input-label"]} htmlFor={id}>
+            {label}
+          </label>
+        ) : (
+          <span className={css["input-label"]}>{label}</span>
+        ))}
 
       <div className={css["input-border"]}>
         <div className={css["input-content"]} onClick={focusOnField}>
@@ -77,11 +81,7 @@ const InputField = (props) => {
           <div className={css["field-wrapper"]}>
             <InputElement
               id={id}
-              className={clsx(
-                className,
-                css.field,
-                hideValue && css["hide-value"],
-              )}
+              className={clsx(css.field, hideValue && css["hide-value"])}
               rows={1}
               placeholder={placeholder}
               value={value}
