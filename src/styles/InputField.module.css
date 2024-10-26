@@ -1,0 +1,103 @@
+.input-wrapper {
+  @apply flex flex-col;
+  @apply text-[1.1rem] font-medium;
+}
+
+.input-wrapper * {
+  @apply transition-all duration-100;
+}
+
+.input-label {
+}
+
+.input-border {
+  --input-depth: 0.3rem;
+  --input-font-size: 1.4rem;
+  --input-line-height: calc(var(--input-font-size) * 1.2);
+  --input-content-radius: 0.7rem;
+  --input-border-width: 0.2rem;
+  --input-x-padding: 0.6rem;
+  --input-y-padding: 0.6rem;
+  --input-label-pad: 0.2rem;
+  --input-gap: 0.4rem;
+  --input-margin-top: calc(0.5rem - var(--input-depth));
+  --input-highlight-offset: calc(-1 * var(--input-border-width));
+  --input-root-pad: calc(var(--input-border-width) + var(--input-depth));
+  --patch-radius: calc(var(--input-border-width) + var(--input-content-radius));
+  --icon-group-size: calc(var(--input-line-height) + 0.45rem);
+
+  @apply p-[--input-border-width] pb-[--input-root-pad];
+  @apply rounded-[--patch-radius];
+  @apply bg-primary-darkest;
+  @apply font-medium;
+}
+
+.input-content {
+  @apply flex justify-center items-center;
+  @apply px-[--input-x-padding] py-[--input-y-padding];
+  @apply gap-[--input-gap];
+  @apply rounded-[--input-content-radius];
+  @apply bg-primary-light;
+  @apply overflow-hidden;
+}
+.input-content:has(input:focus),
+.input-content:has(textarea:focus),
+.input-content:has(input:-webkit-autofill),
+.input-content:has(textarea:-webkit-autofill) {
+  @apply outline outline-primary-lightest;
+  @apply [outline-width:--input-border-width];
+  @apply [outline-offset:--input-highlight-offset];
+}
+.input-content:has(input:not(:disabled)):hover,
+.input-content:has(textarea:not(:disabled)):hover {
+  @apply bg-primary-lighter;
+}
+.input-content:has(input:focus),
+.input-content:has(textarea:focus) {
+  @apply bg-primary-light;
+  @apply outline-white;
+}
+/* TODO: autofill color styling */
+
+.field-wrapper {
+  @apply w-full;
+  @apply flex flex-col;
+  @apply gap-[0.3rem] mx-[0.2rem];
+  @apply bg-transparent;
+}
+
+input.field {
+  @apply h-[--input-line-height];
+  @apply text-ellipsis whitespace-nowrap overflow-hidden;
+}
+textarea.field {
+  @apply h-[--input-line-height] min-h-max;
+  @apply resize-none;
+}
+input.field,
+textarea.field {
+  @apply w-full;
+  @apply [line-height:--input-line-height];
+  @apply [font-size:--input-font-size] text-primary-darkest;
+  @apply !outline-none !shadow-none !bg-transparent;
+}
+input.field::placeholder,
+textarea.field::placeholder {
+  @apply text-primary-input-placeholder;
+}
+input.field.hide-value,
+textarea.field.hide-value {
+  @apply [-webkit-text-security:disc];
+}
+
+.icon-group {
+  @apply text-primary-darker;
+}
+.icon-group:empty {
+  @apply hidden;
+}
+
+.icon-group > svg {
+  @apply w-[--icon-group-size] h-[--icon-group-size];
+  @apply stroke-[2];
+}
