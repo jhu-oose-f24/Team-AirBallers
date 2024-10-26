@@ -1,6 +1,5 @@
 .input-wrapper {
   @apply flex flex-col;
-  @apply text-[1.1rem] font-medium;
 }
 
 .input-wrapper * {
@@ -8,6 +7,7 @@
 }
 
 .input-label {
+  @apply text-[1.1rem] font-medium;
 }
 
 .input-border {
@@ -29,7 +29,6 @@
   @apply p-[--input-border-width] pb-[--input-root-pad];
   @apply rounded-[--patch-radius];
   @apply bg-primary-darkest;
-  @apply font-medium;
 }
 
 .input-content {
@@ -48,8 +47,8 @@
   @apply [outline-width:--input-border-width];
   @apply [outline-offset:--input-highlight-offset];
 }
-.input-content:has(input:not(:disabled)):hover,
-.input-content:has(textarea:not(:disabled)):hover {
+.input-content:has(input:not(:disabled):not(:focus)):hover,
+.input-content:has(textarea:not(:disabled):not(:focus)):hover {
   @apply bg-primary-lighter;
 }
 .input-content:has(input:focus),
@@ -77,6 +76,7 @@ textarea.field {
 input.field,
 textarea.field {
   @apply w-full;
+  @apply font-medium;
   @apply [line-height:--input-line-height];
   @apply [font-size:--input-font-size] text-primary-darkest;
   @apply !outline-none !shadow-none !bg-transparent;
