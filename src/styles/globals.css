@@ -8,47 +8,38 @@
   }
 }
 
-body#home #__next {
-  @apply justify-end;
+/* ====================== Overlay Scrollbar ====================== */
+
+.os-scrollbar {
+  --scrollbar-end-padding: 0.5rem;
+  --scrollbar-track-padding: 0.3rem;
+  --scrollbar-width: 0.9rem;
+
+  @apply !transition-all !duration-100 !ease-in-out;
+}
+.os-scrollbar.os-scrollbar-vertical {
+  @apply px-[--scrollbar-track-padding] py-[--scrollbar-end-padding];
+  @apply w-[--scrollbar-width];
+}
+.os-scrollbar.os-scrollbar-horizontal {
+  @apply px-[--scrollbar-end-padding] py-[--scrollbar-track-padding];
+  @apply h-[--scrollbar-width];
+  @apply mb-[0.1rem];
+}
+.os-scrollbar:has(:hover) {
+  --scrollbar-track-padding: 0.25rem;
+  --scrollbar-width: 1rem;
 }
 
-.garment-img {
-  @apply flex flex-1 items-center justify-center;
-  @apply text-slate-400 font-medium w-auto;
-  @apply max-w-fit max-h-[60vh];
-  @apply rounded-2xl m-6 mt-[-2rem];
-  @apply bg-accent;
+.os-scrollbar-handle {
+  @apply !bg-primary-darker/50;
+  @apply [transition:inherit];
 }
-
-.garment-img.empty {
-  @apply px-6 py-4 min-w-[60%];
-  @apply text-primary;
+.os-scrollbar:has(:hover) .os-scrollbar-handle {
+  @apply !bg-primary-darker/65;
 }
-
-.prompt {
-  @apply flex items-end justify-between gap-2 w-[80%] mx-auto mt-6 mb-[1.5rem];
-}
-
-.prompt-input,
-.edit-input {
-  @apply flex-grow;
-}
-
-.btn-collection {
-  @apply px-4 py-2;
-  @apply text-foreground font-medium bg-background-main;
-  @apply border-2 border-foreground rounded-md mr-6;
-  transition: all 0.3s ease;
-}
-.btn-collection:hover {
-  @apply bg-primary text-foreground;
-  @apply border-primary transform translate-y-[-3px];
-}
-
-.btn-prompt-generate {
-  @apply px-4 py-2;
-  @apply font-medium bg-green-300 text-green-900;
-  @apply rounded-md whitespace-nowrap;
+.os-scrollbar:has(:active) .os-scrollbar-handle {
+  @apply !bg-primary-darker;
 }
 
 /* HEADER */
@@ -63,7 +54,7 @@ body#home #__next {
   @apply fixed top-0 left-0 z-10;
 }
 
-.title {
+.header .title {
   @apply text-2xl font-bold text-foreground;
   @apply justify-center;
 }

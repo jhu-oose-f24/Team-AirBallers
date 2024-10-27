@@ -1,4 +1,5 @@
 // This file is used to define component prop types
+
 /**
  * @typedef {"long" | "normal" | "short"} StitchDash
  *
@@ -14,6 +15,7 @@
 
 /**
  * @typedef {{
+ *   className?: string;
  *   onClick?: React.MouseEventHandler;
  *   loading?: boolean;
  *   disabled?: boolean;
@@ -27,7 +29,8 @@
  *   fontSize?: React.CSSProperties["fontSize"];
  *   xPad?: React.CSSProperties["paddingInline"];
  *   yPad?: React.CSSProperties["paddingBlock"];
- * }} PatchButtonProps
+ *   style?: React.CSSProperties;
+* }} ButtonProps
  */
 
 /**
@@ -51,4 +54,13 @@
  *   error?: string;
  *   style?: React.CSSProperties;
  * }} InputFieldProps
+ */
+
+/**
+ * @typedef {{
+ *   openState: UseState<boolean>;
+ *   children?: React.ReactNode;
+ *   onAfterOpen?: ReactModal.OnAfterOpenCallback;
+ *   onAfterClose?: () => void;
+ * }} ModalProps
  */
