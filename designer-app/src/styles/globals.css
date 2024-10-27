@@ -31,7 +31,7 @@ body#home #__next {
 
 .prompt-input,
 .edit-input {
-  @apply flex-grow;;
+  @apply flex-grow;
 }
 
 .btn-collection {
@@ -60,7 +60,7 @@ body#home #__next {
   @apply flex justify-between items-center;
   @apply outline outline-[0.4rem] outline-background-alt;
   @apply border-b-[0.15rem] border-secondary;
-  @apply fixed top-0 left-0 z-50;
+  @apply fixed top-0 left-0 z-10;
 }
 
 .title {

@@ -2,6 +2,7 @@ import "@/styles/colors.css";
 import "@/styles/globals.css";
 import "@/styles/layout.css";
 import { Rubik } from "next/font/google";
+import "overlayscrollbars/overlayscrollbars.css";
 
 export const rubik = Rubik({
   subsets: ["latin-ext"],
