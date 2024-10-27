@@ -15,7 +15,7 @@ const Stitches = (props) => {
   } = props;
 
   /** @type {{ [k in props["stitchLength"]]: number }} */
-  const dashLength = { long: 4, normal: 2.5, short: 1.5 };
+  const dashLength = { long: 4, normal: 2.5, short: 1.8 };
   const stitchesClass = clsx(css.stitches, pathClass);
 
   const multDash = (mult = 0) => `calc(var(--stitch-width) * ${mult})`;

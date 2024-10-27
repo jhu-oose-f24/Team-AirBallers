@@ -9,6 +9,7 @@ svg.stitch-wrapper {
   @apply fill-none;
   @apply px-[--overlay-pad] pt-[--overlay-pad];
   @apply overflow-visible;
+  @apply pointer-events-none;
 }
 svg.stitch-wrapper:has(rect.stitches) {
   @apply h-full;
@@ -23,6 +24,7 @@ svg.stitch-wrapper:has(line.stitches) {
   @apply [stroke-width:--stitch-width];
   @apply [stroke-linecap:round];
   @apply [stroke-dasharray:--stitch-dashes];
+  @apply pointer-events-none;
 }
 line.stitches {
   @apply h-[--stitch-width];
