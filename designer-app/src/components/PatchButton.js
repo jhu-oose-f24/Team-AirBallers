@@ -80,7 +80,8 @@ const PatchButton = (props) => {
    * @param {number} l - Lightness
    */
   function HSL(h, s, l) {
-    return chroma.hsl(h, s, l).css("hsl");
+    const [H, S, L] = chroma.hsl(h, s, l).hsl();
+    return `${H}deg ${Math.round(S * 100)}% ${Math.round(L * 100)}%`;
   }
 
   function genPalette() {
@@ -124,6 +125,10 @@ const PatchButton = (props) => {
         disabled={disabled}
       >
         <div className={css.border}>
+          <div className={css.content}>
+            {icon && <span className={css.icon}>{icon}</span>}
+            {label && <span className={css.label}>{label}</span>}
+          </div>
           <Stitches
             type="border"
             svgClass={css["stitch-wrapper"]}
@@ -132,10 +137,6 @@ const PatchButton = (props) => {
             stitchSpacing={SIZE_PRESETS[size]?.stitchSpacing}
             stitchWidth={SIZE_PRESETS[size]?.stitchWidth}
           />
-          <div className={css.content}>
-            {icon && <span className={css.icon}>{icon}</span>}
-            {label && <span className={css.label}>{label}</span>}
-          </div>
         </div>
       </button>
     </div>
