@@ -1,7 +1,9 @@
 .btn-wrapper {
   --btn-depth: 0.3rem;
+  --btn-margin-top: calc(0.5rem - var(--btn-depth));
+
   @apply flex flex-col;
-  @apply -mt-[--btn-depth];
+  @apply -mt-[--btn-margin-top];
 }
 
 .btn.patch {
@@ -29,9 +31,10 @@
   @apply font-medium;
   @apply h-full;
 }
-.btn.patch:hover:not(:active):not(:disabled) {
+.btn.patch:hover:not(.active):not(:active):not(:disabled) {
   --btn-cur-depth: 0.4rem;
 }
+.btn.patch.active,
 .btn.patch:active {
   --btn-cur-depth: 0.2rem;
 }
@@ -42,6 +45,10 @@
   @apply [--primary-darkest:--disabled-primary-darkest];
   @apply [--primary-lighter:--disabled-primary-lighter];
   @apply [--primary-darker:--disabled-primary-darker];
+}
+.btn.patch:focus-visible {
+  @apply outline outline-[0.2rem] outline-primary-darker;
+  @apply outline-offset-[0.15rem];
 }
 
 .btn.patch,
@@ -76,13 +83,14 @@
 }
 
 .btn.patch .content {
-  @apply flex justify-center items-center;
+  @apply flex justify-center items-center w-full;
   @apply px-[--btn-x-padding] py-[--btn-y-padding];
   @apply m-[--btn-border-pad] gap-[--btn-gap];
   @apply rounded-[--btn-content-radius];
   @apply bg-primary-lighter;
   @apply overflow-hidden;
 }
+.btn.patch.active:not(:disabled) .content,
 .btn.patch:active:not(:disabled) .content {
   @apply bg-primary-active-fill;
 }

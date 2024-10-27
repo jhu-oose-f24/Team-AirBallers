@@ -1,14 +1,17 @@
 "use client";
 
 import Stitches from "@/components/Stitches";
+import { pause } from "@/utils";
 import chroma from "chroma-js";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
-import css from "../styles/PatchButton.module.css";
+import css from "../styles/Button.module.css";
 
-/** @param {PatchButtonProps} props */
-const PatchButton = (props) => {
+/** @param {ButtonProps} props */
+const Button = (props) => {
   const {
+    className,
+
     onClick,
     loading,
     disabled,
@@ -28,7 +31,7 @@ const PatchButton = (props) => {
 
   /**
    * @typedef {Partial<StitchProps & CustomCSSProperties>} SizePreset
-   * @type {{ [x in PatchButtonProps["size"]]: SizePreset }}
+   * @type {{ [x in ButtonProps["size"]]: SizePreset }}
    */
   const SIZE_PRESETS = {
     xs: {
@@ -104,17 +107,20 @@ const PatchButton = (props) => {
     });
   }
 
-  /** @type {React.KeyboardEventHandler} */
-  function enterClick(event) {
-    console.log(event.currentTarget?.querySelector("button"));
+  /** @param {React.KeyboardEvent} event */
+  async function enterClick(event) {
+    const btn = event.currentTarget?.querySelector("button");
     if (event.key === "Enter") {
-      event.currentTarget?.querySelector("button")?.click();
+      btn?.classList.add(css["active"]);
+      btn?.click();
+      await pause(200);
+      btn?.classList.remove(css["active"]);
     }
   }
 
   return (
     <div
-      className={css["btn-wrapper"]}
+      className={clsx(css["btn-wrapper"], className)}
       style={{ height, width, alignSelf: stretch && "stretch" }}
       onKeyDown={enterClick}
     >
@@ -143,4 +149,4 @@ const PatchButton = (props) => {
   );
 };
 
-export default PatchButton;
+export default Button;
