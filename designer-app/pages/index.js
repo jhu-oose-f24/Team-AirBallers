@@ -2,7 +2,7 @@
 
 import Header from "@/components/Header";
 import InputField from "@/components/InputField";
-import PatchButton from "@/components/PatchButton";
+import Button from "@/components/Button";
 import { IconSearch, IconSparkles } from "@tabler/icons-react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -83,13 +83,14 @@ export default function Home() {
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
         />
-        <PatchButton
+        <Button
           tint="aquamarine"
           icon={<IconSparkles />}
           label="Generate"
           loading={generating}
           onClick={getResponse}
-          yPad="0.45rem"
+          xPad="0.7rem"
+          yPad="0.35rem"
           disabled={!prompt}
         />
       </div>
