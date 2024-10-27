@@ -21,7 +21,6 @@
   --input-label-pad: 0.2rem;
   --input-gap: 0.4rem;
   --input-margin-top: calc(0.5rem - var(--input-depth));
-  --input-highlight-offset: calc(-1 * var(--input-border-width));
   --input-root-pad: calc(var(--input-border-width) + var(--input-depth));
   --patch-radius: calc(var(--input-border-width) + var(--input-content-radius));
   --icon-group-size: calc(var(--input-line-height) + 0.45rem);
@@ -45,7 +44,7 @@
 .input-content:has(textarea:-webkit-autofill) {
   @apply outline outline-primary-lightest;
   @apply [outline-width:--input-border-width];
-  @apply [outline-offset:--input-highlight-offset];
+  @apply -outline-offset-[--input-border-width];
 }
 .input-content:has(input:not(:disabled):not(:focus)):hover,
 .input-content:has(textarea:not(:disabled):not(:focus)):hover {
