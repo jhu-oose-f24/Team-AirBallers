@@ -1,8 +1,7 @@
 .btn-wrapper {
   --btn-depth: 0.3rem;
-  --btn-margin-top: calc(-1 * var(--btn-depth));
   @apply flex flex-col;
-  @apply mt-[--btn-margin-top];
+  @apply -mt-[--btn-depth];
 }
 
 .btn.patch {
@@ -32,6 +31,9 @@
 }
 .btn.patch:hover:not(:active):not(:disabled) {
   --btn-cur-depth: 0.4rem;
+}
+.btn.patch:active {
+  --btn-cur-depth: 0.2rem;
 }
 .btn.patch:not(:disabled) {
   @apply cursor-pointer;
@@ -68,7 +70,6 @@
 
 .btn.patch svg.stitch-wrapper {
   @apply p-[--btn-border-pad];
-  @apply z-[1];
 }
 .btn.patch svg.stitch-wrapper rect.stitches {
   @apply [rx:--btn-content-radius];
