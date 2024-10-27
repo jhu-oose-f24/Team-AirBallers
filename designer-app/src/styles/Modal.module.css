@@ -1,64 +1,58 @@
 .modal-overlay {
   @apply fixed inset-0 z-50;
-  @apply bg-background-alt/60;
+  @apply bg-background-alt/70;
   @apply font-[family-name:--font-rubik];
 }
 
 .modal-patch {
-  --modal-depth: 0.3rem;
-  --modal-border-pad: 1rem;
-  --modal-border-width: 0.2rem;
-  --modal-content-radius: 0.4rem;
-  --modal-content-pad: 0.5rem;
-  --modal-root-depth: calc(var(--modal-border-width) + var(--modal-depth));
+  --m-depth: 0.3rem;
+  --m-border-pad: 1rem;
+  --m-border-width: 0.2rem;
+  --m-content-radius: 0.4rem;
+  --m-root-depth: calc(var(--m-border-width) + var(--m-depth));
+  --m-border-radius: calc(var(--m-content-radius) + var(--m-border-pad));
+  --m-patch-radius: calc(var(--m-border-radius) + var(--m-border-width));
 
-  --modal-border-radius: calc(
-    var(--modal-content-radius) + var(--modal-border-pad)
-  );
-
-  --modal-patch-radius: calc(
-    var(--modal-border-radius) + var(--modal-border-width)
-  );
-
-  @apply absolute;
-  @apply rounded-[--modal-patch-radius];
-  @apply p-[--modal-border-width] pb-[--modal-root-depth];
+  @apply flex flex-col absolute;
+  @apply h-fit max-h-[90%] max-w-[80%] overflow-hidden;
+  @apply rounded-[--m-patch-radius];
+  @apply p-[--m-border-width] pb-[--m-root-depth];
   @apply bg-primary-darkest;
-
-  /* padding-bottom: var(--modal-shadow-offset); */
-  /* height: fit-content; */
-  /* max-height: var(--modal-max-height); */
-  /* width: var(--modal-width); */
-  /* max-width: calc(100vw - 2 * 2.6rem); */
 }
 
 .modal-border {
-  @apply rounded-[--modal-border-radius];
+  @apply flex flex-col relative;
+  @apply rounded-[--m-border-radius];
+  @apply h-full max-h-full max-w-full overflow-hidden;
   @apply bg-primary-light;
-  @apply overflow-hidden;
-  @apply relative;
 }
 
 .modal-patch svg.stitch-wrapper {
-  @apply p-[--modal-border-pad] inset-0;
+  @apply p-[--m-border-pad] inset-0;
 }
 .modal-patch svg.stitch-wrapper rect.stitches {
-  @apply [rx:--modal-content-radius];
+  @apply [rx:--m-content-radius];
   @apply stroke-primary-dark;
 }
 
 .modal-content {
-  @apply rounded-[--modal-content-radius];
-  @apply m-[--modal-border-pad];
-  @apply p-[--modal-content-pad];
+  @apply flex flex-col;
+  @apply rounded-[--m-content-radius];
+  @apply h-full max-h-full max-w-full overflow-hidden;
+  @apply m-[--m-border-pad];
   @apply bg-primary-lightest;
-  @apply overflow-hidden;
+}
+
+.modal-inner-container {
+  @apply h-full max-h-full max-w-full overflow-hidden;
+  @apply px-[1rem] pt-[0.7rem] pb-[1rem];
+  @apply mx-[0.1rem];
 }
 
 .modal-header {
-  @apply flex items-center gap-[0.2rem];
-  @apply p-[0.3rem];
-  @apply overflow-hidden;
+  @apply flex justify-between items-center;
+  @apply min-h-fit overflow-hidden;
+  @apply p-[0.7rem] pb-[0.5rem];
 }
 
 .modal-header .title {

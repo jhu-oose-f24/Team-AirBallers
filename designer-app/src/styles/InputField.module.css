@@ -12,7 +12,7 @@
 
 .input-border {
   --input-depth: 0.3rem;
-  --input-font-size: 1.4rem;
+  --input-font-size: 1.2rem;
   --input-line-height: calc(var(--input-font-size) * 1.2);
   --input-content-radius: 0.7rem;
   --input-border-width: 0.2rem;

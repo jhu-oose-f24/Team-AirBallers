@@ -28,4 +28,5 @@ svg.stitch-wrapper:has(line.stitches) {
 }
 line.stitches {
   @apply h-[--stitch-width];
+  @apply [stroke-dashoffset:-50%];
 }
