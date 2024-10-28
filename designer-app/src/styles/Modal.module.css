@@ -1,0 +1,105 @@
+.modal-overlay {
+  @apply fixed inset-0 z-50;
+  @apply bg-background-alt/70;
+  @apply font-[family-name:--font-rubik];
+}
+
+.modal-patch {
+  --m-depth: 0.3rem;
+  --m-border-pad: 1rem;
+  --m-border-width: 0.2rem;
+  --m-content-radius: 0.4rem;
+  --m-root-depth: calc(var(--m-border-width) + var(--m-depth));
+  --m-border-radius: calc(var(--m-content-radius) + var(--m-border-pad));
+  --m-patch-radius: calc(var(--m-border-radius) + var(--m-border-width));
+
+  @apply flex flex-col absolute;
+  @apply h-fit max-h-[90%] max-w-[80%] overflow-hidden;
+  @apply rounded-[--m-patch-radius];
+  @apply p-[--m-border-width] pb-[--m-root-depth];
+  @apply bg-primary-darkest;
+}
+
+.modal-border {
+  @apply flex flex-col relative;
+  @apply rounded-[--m-border-radius];
+  @apply h-full max-h-full max-w-full overflow-hidden;
+  @apply bg-primary-light;
+}
+
+.modal-patch svg.stitch-wrapper {
+  @apply p-[--m-border-pad] inset-0;
+}
+.modal-patch svg.stitch-wrapper rect.stitches {
+  @apply [rx:--m-content-radius];
+  @apply stroke-primary-dark;
+}
+
+.modal-content {
+  @apply flex flex-col;
+  @apply rounded-[--m-content-radius];
+  @apply h-full max-h-full max-w-full overflow-hidden;
+  @apply m-[--m-border-pad];
+  @apply bg-primary-lightest;
+}
+
+.modal-inner-container {
+  @apply h-full max-h-full max-w-full overflow-hidden;
+  @apply px-[1rem] pt-[0.7rem] pb-[1rem];
+  @apply mx-[0.1rem];
+}
+
+.modal-header {
+  @apply flex justify-between items-center;
+  @apply min-h-fit overflow-hidden;
+  @apply p-[0.7rem] pb-[0.5rem];
+}
+
+.modal-header .title {
+  @apply text-[1.8rem] font-medium;
+  @apply px-[0.3rem];
+  @apply text-ellipsis whitespace-nowrap overflow-hidden;
+}
+
+/* ========================= Transitions ========================= */
+
+.modal-overlay {
+  @apply transition-opacity duration-200 ease-in-out;
+  @apply opacity-0;
+}
+.modal-overlay.after-open {
+  @apply opacity-100;
+}
+.modal-overlay.before-close {
+  @apply opacity-0;
+}
+
+.modal-patch {
+  @apply transition-all duration-500 ease-in-modal;
+  @apply top-full left-1/2 -translate-x-1/2 -translate-y-1/2;
+}
+.modal-overlay.after-open .modal-patch {
+  @apply top-1/2;
+}
+.modal-overlay.before-close .modal-patch {
+  @apply ease-out-modal;
+  @apply top-full;
+}
+
+/* 
+
+Could be used for modal anchored to top left
+
+@media screen(md) {
+  .modal-patch {
+    @apply !top-[1rem] -left-[1rem] -translate-x-full translate-y-0;
+  }
+  .modal-overlay.after-open .modal-patch {
+    @apply left-[1rem] translate-x-0;
+  }
+  .modal-overlay.before-close .modal-patch {
+    @apply -left-[1rem] -translate-x-full;
+  }
+} 
+  
+*/
