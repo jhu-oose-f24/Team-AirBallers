@@ -30,7 +30,15 @@
  *   xPad?: React.CSSProperties["paddingInline"];
  *   yPad?: React.CSSProperties["paddingBlock"];
  *   style?: React.CSSProperties;
-* }} ButtonProps
+ * }} ButtonProps
+ */
+
+/**
+ * @typedef {{
+ *   height?: React.CSSProperties["height"];
+ *   type: "round" | "cross";
+ *   onClick?: React.MouseEventHandler;
+ * }} ClothButtonProps
  */
 
 /**
