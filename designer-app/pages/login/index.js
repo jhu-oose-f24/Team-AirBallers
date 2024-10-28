@@ -8,6 +8,7 @@ export default function Login() {
   const router = useRouter();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState(null);
 
   const handleLogin = (event) => {
@@ -24,6 +25,10 @@ export default function Login() {
     }
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevState) => !prevState);
+  };
+
   return (
     <div className="login-container">
       <Header title="Login Page" />
@@ -35,12 +40,21 @@ export default function Login() {
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
+        <button
+            type="button"
+            onClick={togglePasswordVisibility}
+            className="text-blue-500 text-xs self-start mb-[-10px]"
+          >
+            {showPassword ? "Hide" : "Show"} Password
+          </button>
+
         <input
-          type="password"
+          type={showPassword ? "text" : "password"}
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
+
         <button type="submit">Login</button>
         {error && <div className="error-message">{error}</div>}
       </form>
