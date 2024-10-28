@@ -29,7 +29,7 @@ export default function Signup() {
     }
     const errors = validatePassword(password);
     if (errors.length > 0) {
-      setPasswordErrors(errors);
+      setPasswordErrors(errors); // StrongPass123!
       setGeneralError(null);
       return;
     }
@@ -95,7 +95,7 @@ export default function Signup() {
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
           <button type="submit">Sign Up</button>
-          
+
           {generalError && (
             <div className="error-message mt-2">{generalError}</div>
           )}
