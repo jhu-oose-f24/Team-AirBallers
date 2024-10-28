@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Bars3Icon } from "@heroicons/react/24/solid";
 import SideMenu from "./SideMenu";
 
+
 /**
  * @param {{
  *   title: string;
@@ -15,7 +16,10 @@ export default function Header(props) {
   const { title = "TITLE" } = props;
   const [isOpen, setIsOpen] = useState(false);
 
-  const toggleMenu = () => setIsOpen(!isOpen);
+  const toggleMenu = () => {
+    const newState = !isOpen;
+    setIsOpen(newState);
+  };
 
   return (
     <header className="header">

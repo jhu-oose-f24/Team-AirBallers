@@ -12,6 +12,16 @@ body#home #__next {
   @apply justify-end;
 }
 
+.content-container {
+  transition: transform 0.3s ease-in-out;
+  min-height: 100vh;
+  overflow-x: hidden; /* Prevents horizontal scroll during sliding */
+}
+
+.body-shift {
+  transform: translateX(300px);
+}
+
 .garment-img {
   @apply flex flex-1 items-center justify-center;
   @apply text-slate-400 font-medium w-auto;
@@ -42,6 +52,7 @@ body#home #__next {
 }
 
 .btn-collection {
+  @apply flex flex-col;
   @apply px-4 py-2;
   @apply text-foreground font-medium bg-background-main;
   @apply border-2 border-foreground rounded-md mr-6;
@@ -102,25 +113,40 @@ body#collection-page .collection-grid > * {
 /* SIDEMENU */
 
 .side-menu {
+  @apply flex flex-col justify-between h-full;
+  @apply bg-background-main;
   position: fixed;
   top: 0;
   left: -300px;
   width: 300px;
-  height: 100%;
-  background-color: #faf9f6;
   transition: transform 0.3s ease-in-out;
   display: flex;
   flex-direction: column;
   padding: 20px;
-  gap: 10px;
+  overflow-y: auto;
 }
 
-/* Open State */
 .side-menu.open {
   transform: translateX(300px);
 }
 
-/* Closed State */
 .side-menu.closed {
   transform: translateX(0);
+}
+
+.garment-list {
+  @apply flex flex-col gap-4; /* Space between images */
+  overflow-y: auto; /* Allows scroll if items overflow */
+  max-height: 80%;
+  max-width: 90%;
+}
+
+.garment-list-img {
+  width: 100%;
+  height: auto;
+  max-height: 150px;
+  object-fit: contain;
+  object-position: top;
+  border-radius: 8px;
+  object-fit: contain;
 }

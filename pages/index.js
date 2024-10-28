@@ -14,6 +14,12 @@ export default function Home() {
   const [garmentId, setGarmentId] = useState(null);
   const [generating, setGenerating] = useState(false);
 
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  function handleMenuToggle(isOpen) {
+    setIsMenuOpen(isOpen);
+  }
+
   if (mounted) document.body.id = "home";
 
   useEffect(() => {
@@ -43,7 +49,7 @@ export default function Home() {
 
   return (
     <>
-      <Header title="Designer-App" />
+      <Header title="Designer-App"/>
 
       {imgSrc ? (
         <img className="garment-img" src={imgSrc} alt="Generated garment" />
