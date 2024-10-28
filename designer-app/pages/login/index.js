@@ -11,16 +11,16 @@ export default function Login() {
   const [error, setError] = useState(null);
 
   const handleLogin = (event) => {
-    event.preventDefault(); // Prevent form reload
+    event.preventDefault();
     if (username && password) {
-      // Simulate login (replace with actual API call if needed)
-      if (username === "admin" && password === "password") {
-        router.push("/collection");
+      // SIMULATE LOG-IN HERE (REPLACE WITH ACTUAL API CALL)
+      if (username === "admin" && password === "1234") {
+        router.push("/collection"); // EVENTUALLY WE'LL REDIRECT THEM TO THEIR COLLECTION
       } else {
         setError("Invalid username or password.");
       }
     } else {
-      setError("Please fill in both fields.");
+      setError("Please fill in all fields.");
     }
   };
 
@@ -45,13 +45,14 @@ export default function Login() {
         {error && <div className="error-message">{error}</div>}
       </form>
 
-      {/* Back Button to Navigate to Home */}
-      <button
-        className="btn-back mt-4"
-        onClick={() => router.push("/")}
-      >
-        Back to Home
-      </button>
+
+      <div className="sign-up-prompt">
+        <span>Don't have an account?</span>
+        <button className="btn-signup" onClick={() => router.push("/signup")}>
+          Sign up
+        </button>
+      </div>
+
     </div>
   );
 }
