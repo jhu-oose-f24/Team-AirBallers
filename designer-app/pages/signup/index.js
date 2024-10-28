@@ -15,7 +15,7 @@ export default function Signup() {
   const [passwordErrors, setPasswordErrors] = useState([]);
 
   const handleSignup = (event) => {
-    event.preventDefault();
+    event.preventDefault(); // EVENTUALLY WANT TO CHECK THAT EMAIL IS UNIQUE
 
     if ((!firstName) || (!lastName) || (!email) || (!password) || (!confirmpassword)) {
       setGeneralError("Please fill in all fields.");
@@ -61,7 +61,7 @@ export default function Signup() {
   return (
     <div className="login-wrapper">
       <div className="login-container">
-        <Header title="Sign Up Page" />
+        <Header title="Sign Up" />
         <h1 className="text-center text-2xl font-bold">Sign Up</h1>
         <form onSubmit={handleSignup} className="flex flex-col gap-4">
           <input
