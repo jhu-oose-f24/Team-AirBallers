@@ -1,6 +1,9 @@
 "use client";
 
 import Header from "@/components/Header";
+import InputField from "@/components/InputField";
+import Button from "@/components/Button";
+import { IconSearch, IconSparkles } from "@tabler/icons-react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -8,16 +11,13 @@ import { useEffect, useState } from "react";
 export default function Home() {
   const router = useRouter();
 
-  const [mounted, setMounted] = useState(false);
   const [prompt, setPrompt] = useState("");
   const [imgSrc, setImgSrc] = useState("");
   const [garmentId, setGarmentId] = useState(null);
   const [generating, setGenerating] = useState(false);
 
-  if (mounted) document.body.id = "home";
-
   useEffect(() => {
-    setMounted(true);
+    document.body.id = "home";
   }, []);
 
   function getResponse() {
@@ -75,14 +75,24 @@ export default function Home() {
       </div>
 
       <div className="prompt">
-        <input
+        <InputField
+          textArea
           className="prompt-input"
           placeholder="Any ideas in mind?"
+          iconLeft={<IconSearch />}
+          value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
         />
-        <button className="btn-prompt-generate" onClick={getResponse}>
-          {generating ? "Loading..." : "Generate"}
-        </button>
+        <Button
+          tint="aquamarine"
+          icon={<IconSparkles />}
+          label="Generate"
+          loading={generating}
+          onClick={getResponse}
+          xPad="0.7rem"
+          yPad="0.35rem"
+          disabled={!prompt}
+        />
       </div>
     </>
   );
