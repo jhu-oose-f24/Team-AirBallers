@@ -61,10 +61,6 @@
   @apply text-ellipsis whitespace-nowrap overflow-hidden;
 }
 
-.modal-header .close-btn {
-  @apply h-[2.4rem] w-[2.5rem];
-}
-
 /* ========================= Transitions ========================= */
 
 .modal-overlay {
