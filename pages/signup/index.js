@@ -109,6 +109,11 @@ export default function Signup() {
               </ul>
             </div>
           )}
+          <button 
+            type="button"
+            onClick={() => router.push("/login")}
+            className="mt-4 text-blue-500 hover:underline"
+          >Back to Login</button>
         </form>
       </div>
     </div>
