@@ -19,7 +19,7 @@ body[id] #__next {
 /* ========================== Home Page ========================== */
 
 body#home #__next {
-  @apply justify-end;
+  justify-content: center;
 }
 
 .garment-img {
@@ -60,3 +60,42 @@ body#home #__next {
   @apply font-medium bg-green-300 text-green-900;
   @apply rounded-md whitespace-nowrap;
 }
+
+/* ========================== Log In Page ========================== */
+
+.login-wrapper {
+  @apply flex items-center justify-center h-screen bg-transparent;
+}
+
+.login-container {
+  @apply bg-white p-6 rounded-xl shadow-lg;
+  @apply w-[22rem] flex flex-col items-center gap-4;
+}
+
+button[type="submit"] {
+  @apply px-2 py-1 font-medium text-gray-800 bg-white;
+  @apply border-2 border-gray-300 rounded-md;
+  @apply transition-all cursor-pointer;
+}
+
+button[type="submit"]:hover {
+  @apply bg-blue-100 text-gray-800 border-blue-300 transform translate-y-[-2px];
+}
+
+.sign-up-prompt {
+  @apply flex items-center gap-2 mt-4;
+}
+
+.btn-signup {
+  @apply px-2 py-1 font-medium text-white bg-blue-500;
+  @apply border-2 border-blue-500 rounded-md;
+  @apply transition-all cursor-pointer;
+}
+
+.btn-signup:hover {
+  @apply bg-blue-600 border-blue-600 shadow-lg shadow-blue-300;
+  transform: translateY(-2px);
+}
+
+/* ========================== Sign Up Page ========================== */
+
