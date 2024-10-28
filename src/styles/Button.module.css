@@ -34,8 +34,8 @@
 .btn.patch:hover:not(.active):not(:active):not(:disabled) {
   --btn-cur-depth: 0.4rem;
 }
-.btn.patch.active,
-.btn.patch:active {
+.btn.patch.active:not(:disabled),
+.btn.patch:active:not(:disabled) {
   --btn-cur-depth: 0.2rem;
 }
 .btn.patch:not(:disabled) {
