@@ -1,3 +1,5 @@
+import plugin from "tailwindcss/plugin";
+
 /** @type {import("tailwindcss").Config} */
 export default {
   content: [
@@ -45,5 +47,13 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(({ matchUtilities, theme }) => {
+      matchUtilities({
+        "bg-gradient": (angle) => ({
+          backgroundImage: `linear-gradient(${angle}, var(--tw-gradient-stops));`,
+        }),
+      });
+    }),
+  ],
 };
