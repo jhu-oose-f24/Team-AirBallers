@@ -31,7 +31,7 @@ export default function Login() {
 
   return (
     <div className="login-container">
-      <Header title="Login Page" />
+      <Header title="Log In" />
       <h1 className="text-center text-2xl font-bold">Login</h1>
       <form onSubmit={handleLogin} className="flex flex-col gap-4">
         <input
@@ -40,6 +40,12 @@ export default function Login() {
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
+        <input
+          type={showPassword ? "text" : "password"}
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
         <button
             type="button"
             onClick={togglePasswordVisibility}
@@ -47,13 +53,6 @@ export default function Login() {
           >
             {showPassword ? "Hide" : "Show"} Password
           </button>
-
-        <input
-          type={showPassword ? "text" : "password"}
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
 
         <button type="submit">Login</button>
         {error && <div className="error-message">{error}</div>}
