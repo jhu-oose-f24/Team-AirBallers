@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Bars3Icon } from "@heroicons/react/24/solid";
+import { useRouter } from "next/navigation";
 import SideMenu from "./SideMenu";
 
 
@@ -21,6 +22,11 @@ export default function Header(props) {
     setIsOpen(newState);
   };
 
+  const router = useRouter();
+  const handleLoginClick = () => {
+    router.push("/login");
+  };
+
   return (
     <header className="header">
 
@@ -35,7 +41,9 @@ export default function Header(props) {
       </Link>
 
       <div className="auth-buttons">
-        <button className="btn-login">Login/Sign up</button>
+        <button className="btn-login" onClick={handleLoginClick}>
+          Login/Sign up
+        </button>
       </div>
     </header>
   );

@@ -1,3 +1,5 @@
+import plugin from "tailwindcss/plugin";
+
 /** @type {import("tailwindcss").Config} */
 export default {
   content: [
@@ -8,38 +10,50 @@ export default {
     extend: {
       colors: {
         background: {
-          main: "var(--background-main)",
-          alt: "var(--background-alt)",
+          main: "hsl(var(--background-main))",
+          alt: "hsl(var(--background-alt))",
         },
-        foreground: "var(--foreground)",
+        foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "var(--primary)",
-          darkest: "var(--primary-darkest)",
-          darker: "var(--primary-darker)",
-          dark: "var(--primary-dark)",
-          light: "var(--primary-light)",
-          lighter: "var(--primary-lighter)",
-          lightest: "var(--primary-lightest)",
+          DEFAULT: "hsl(var(--primary))",
+          darkest: "hsl(var(--primary-darkest))",
+          darker: "hsl(var(--primary-darker))",
+          dark: "hsl(var(--primary-dark))",
+          light: "hsl(var(--primary-light))",
+          lighter: "hsl(var(--primary-lighter))",
+          lightest: "hsl(var(--primary-lightest))",
+
+          "active-fill": "hsl(var(--primary-active-fill))",
+
+          "input-text": "hsl(var(--primary-input-text))",
+          "input-placeholder": "hsl(var(--primary-input-placeholder))",
         },
 
-        secondary: "var(--secondary)",
-        accent: "var(--accent)",
+        secondary: "hsl(var(--secondary))",
+        accent: "hsl(var(--accent))",
 
         disabled: {
-          "color-darkest": "var(--disabled-primary-darkest)",
-          "color-darker": "var(--disabled-primary-darker)",
-          "color-dark": "var(--disabled-primary-dark)",
-          "color-light": "var(--disabled-primary-light)",
-          "color-lighter": "var(--disabled-primary-lighter)",
-          "color-lightest": "var(--disabled-primary-lightest)",
+          "color-darkest": "hsl(var(--disabled-primary-darkest))",
+          "color-darker": "hsl(var(--disabled-primary-darker))",
+          "color-dark": "hsl(var(--disabled-primary-dark))",
+          "color-light": "hsl(var(--disabled-primary-light))",
+          "color-lighter": "hsl(var(--disabled-primary-lighter))",
+          "color-lightest": "hsl(var(--disabled-primary-lightest))",
         },
-
-        "primary-active-fill": "var(--primary-active-fill)",
-
-        "color-input-text": "var(--color-input-text)",
-        "color-input-placeholder": "var(--color-input-placeholder)",
+      },
+      transitionTimingFunction: {
+        "in-modal": "cubic-bezier(0.1, 1.3, 0.5, 1)",
+        "out-modal": "cubic-bezier(0.2, 0, 0, 1.3)",
       },
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(({ matchUtilities, theme }) => {
+      matchUtilities({
+        "bg-gradient": (angle) => ({
+          backgroundImage: `linear-gradient(${angle}, var(--tw-gradient-stops));`,
+        }),
+      });
+    }),
+  ],
 };
