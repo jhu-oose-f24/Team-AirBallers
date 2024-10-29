@@ -2,9 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+@layer base {
+  svg * {
+    @apply pointer-events-none;
   }
 }
 
@@ -40,6 +40,57 @@
 }
 .os-scrollbar:has(:active) .os-scrollbar-handle {
   @apply !bg-primary-darker;
+}
+
+/* =========================== Tooltip =========================== */
+
+.tooltip {
+  --arrow-half-width: 0.5rem;
+  --arrow-height: 0.5rem;
+
+  @apply !bg-primary-darkest !text-primary-lightest;
+  @apply !rounded-[0.6rem];
+  @apply !outline !outline-primary-dark;
+  @apply ![outline-width:0.25rem] !-outline-offset-[0.25rem];
+}
+
+.tooltip .tippy-content {
+  @apply px-[0.8rem] py-[0.4rem];
+  @apply font-[450] text-[1rem];
+}
+
+.tooltip .tippy-arrow:before {
+  @apply !border-transparent;
+}
+.tooltip[data-placement^="top"] .tippy-arrow:before,
+.tooltip[data-placement^="bottom"] .tippy-arrow:before {
+  @apply ![border-left-width:--arrow-half-width];
+  @apply ![border-right-width:--arrow-half-width];
+}
+.tooltip[data-placement^="left"] .tippy-arrow:before,
+.tooltip[data-placement^="right"] .tippy-arrow:before {
+  @apply ![border-top-width:--arrow-half-width];
+  @apply ![border-bottom-width:--arrow-half-width];
+}
+.tooltip[data-placement^="top"] .tippy-arrow:before {
+  @apply ![border-top-width:--arrow-height];
+  @apply ![border-bottom-width:0px];
+  @apply !border-t-primary-dark;
+}
+.tooltip[data-placement^="bottom"] .tippy-arrow:before {
+  @apply ![border-top-width:0px];
+  @apply ![border-bottom-width:--arrow-height];
+  @apply !border-b-primary-dark;
+}
+.tooltip[data-placement^="left"] .tippy-arrow:before {
+  @apply ![border-left-width:--arrow-height];
+  @apply ![border-right-width:0px];
+  @apply !border-l-primary-dark;
+}
+.tooltip[data-placement^="right"] .tippy-arrow:before {
+  @apply ![border-left-width:0px];
+  @apply ![border-right-width:--arrow-height];
+  @apply !border-r-primary-dark;
 }
 
 /* HEADER */
