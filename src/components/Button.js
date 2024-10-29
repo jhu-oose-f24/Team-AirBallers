@@ -1,7 +1,8 @@
 "use client";
 
 import Stitches from "@/components/Stitches";
-import { pause } from "@/utils";
+import { pause } from "@/util/misc";
+import { paletteFrom } from "@/util/tint";
 import chroma from "chroma-js";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
@@ -64,18 +65,19 @@ const Button = (props) => {
   /** @type {UseState<CustomCSSProperties>} */
   const [moddedStyle, setModdedStyle] = useState({});
 
-  const sizeDeps = [fontSize, height, width, stretch, xPad, yPad, size];
-  useEffect(updateStyle, sizeDeps);
-  useEffect(genPalette, [tint]);
-
-  function updateStyle() {
+  const customSize = [height, width, xPad, yPad];
+  useEffect(() => {
     setModdedStyle({
       "--btn-x-padding": xPad || (width && "0.4rem"),
       "--btn-y-padding": yPad || ((stretch || height) && "0px"),
       "--btn-font-size": fontSize,
       ...(SIZE_PRESETS[size] || {}),
     });
-  }
+  }, [fontSize, stretch, size, ...customSize]);
+
+  useEffect(() => {
+    setTintPalette(paletteFrom(tint));
+  }, [tint]);
 
   /**
    * @param {number} h - Hue
