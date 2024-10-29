@@ -1,8 +1,8 @@
 "use client";
 
+import Button from "@/components/Button";
 import Header from "@/components/Header";
 import InputField from "@/components/InputField";
-import Button from "@/components/Button";
 import { IconSearch, IconSparkles } from "@tabler/icons-react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -77,6 +77,7 @@ export default function Home() {
       <div className="prompt">
         <InputField
           textArea
+          wrapText
           className="prompt-input"
           placeholder="Any ideas in mind?"
           iconLeft={<IconSearch />}
