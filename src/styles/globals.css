@@ -8,48 +8,27 @@
   }
 }
 
-body#home #__next {
-  @apply justify-end;
-}
+/* ====================== Overlay Scrollbar ====================== */
 
-.content-container {
-  transition: transform 0.3s ease-in-out;
-  min-height: 100vh;
-  overflow-x: hidden; /* Prevents horizontal scroll during sliding */
-}
+.os-scrollbar {
+  --scrollbar-end-padding: 0.5rem;
+  --scrollbar-track-padding: 0.3rem;
+  --scrollbar-width: 0.9rem;
 
-.body-shift {
-  transform: translateX(300px);
+  @apply !transition-all !duration-100 !ease-in-out;
 }
-
-.garment-img {
-  @apply flex flex-1 items-center justify-center;
-  @apply text-slate-400 font-medium w-auto;
-  @apply max-w-fit max-h-[60vh];
-  @apply rounded-2xl m-6 mt-[-2rem];
-  @apply bg-accent;
+.os-scrollbar.os-scrollbar-vertical {
+  @apply px-[--scrollbar-track-padding] py-[--scrollbar-end-padding];
+  @apply w-[--scrollbar-width];
 }
-
-.garment-img.empty {
-  @apply px-6 py-4 min-w-[60%];
-  @apply text-primary;
+.os-scrollbar.os-scrollbar-horizontal {
+  @apply px-[--scrollbar-end-padding] py-[--scrollbar-track-padding];
+  @apply h-[--scrollbar-width];
+  @apply mb-[0.1rem];
 }
-
-.prompt {
-  @apply flex items-center justify-between gap-2 w-[80%] mx-auto mt-6 mb-[1.5rem];
-}
-
-.prompt-input,
-.edit-input {
-  @apply flex-grow px-3 py-2;
-  @apply bg-background-main text-foreground placeholder-secondary;
-  @apply rounded-md border-2 border-foreground;
-}
-
-.prompt-input:focus,
-.edit-input:focus {
-  @apply border-primary shadow-lg;
-}
+.os-scrollbar:has(:hover) {
+  --scrollbar-track-padding: 0.25rem;
+  --scrollbar-width: 1rem;
 
 .btn-collection {
   @apply flex flex-col;
@@ -58,15 +37,16 @@ body#home #__next {
   @apply border-2 border-foreground rounded-md mr-6;
   transition: all 0.3s ease;
 }
-.btn-collection:hover {
-  @apply bg-primary text-foreground;
-  @apply border-primary transform translate-y-[-3px];
-}
 
-.btn-prompt-generate {
-  @apply px-4 py-2;
-  @apply font-medium bg-green-300 text-green-900;
-  @apply rounded-md whitespace-nowrap;
+.os-scrollbar-handle {
+  @apply !bg-primary-darker/50;
+  @apply [transition:inherit];
+}
+.os-scrollbar:has(:hover) .os-scrollbar-handle {
+  @apply !bg-primary-darker/65;
+}
+.os-scrollbar:has(:active) .os-scrollbar-handle {
+  @apply !bg-primary-darker;
 }
 
 /* HEADER */
@@ -78,10 +58,10 @@ body#home #__next {
   @apply flex justify-between items-center;
   @apply outline outline-[0.4rem] outline-background-alt;
   @apply border-b-[0.15rem] border-secondary;
-  @apply fixed top-0 left-0 z-50;
+  @apply fixed top-0 left-0 z-10;
 }
 
-.title {
+.header .title {
   @apply text-2xl font-bold text-foreground;
   @apply justify-center;
 }
@@ -108,6 +88,42 @@ body#collection-page .collection-grid {
 
 body#collection-page .collection-grid > * {
   @apply max-w-[calc(25%-1rem*(3/4))];
+}
+
+/* LOGIN */
+
+.login-wrapper {
+  @apply flex items-center justify-center h-screen bg-transparent;
+}
+
+.login-container {
+  @apply bg-white p-6 rounded-xl shadow-lg;
+  @apply w-[22rem] flex flex-col items-center gap-4;
+}
+
+button[type="submit"] {
+  @apply px-2 py-1 font-medium text-gray-800 bg-white;
+  @apply border-2 border-gray-300 rounded-md;
+  @apply transition-all cursor-pointer;
+}
+
+button[type="submit"]:hover {
+  @apply bg-blue-100 text-gray-800 border-blue-300 transform translate-y-[-2px];
+}
+
+.sign-up-prompt {
+  @apply flex items-center gap-2 mt-4;
+}
+
+.btn-signup {
+  @apply px-2 py-1 font-medium text-white bg-blue-500;
+  @apply border-2 border-blue-500 rounded-md;
+  @apply transition-all cursor-pointer;
+}
+
+.btn-signup:hover {
+  @apply bg-blue-600 border-blue-600 shadow-lg shadow-blue-300;
+  transform: translateY(-2px);
 }
 
 /* SIDEMENU */

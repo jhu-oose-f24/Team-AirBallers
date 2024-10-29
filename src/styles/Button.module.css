@@ -1,0 +1,115 @@
+.btn-wrapper {
+  --btn-depth: 0.3rem;
+  --btn-margin-top: calc(0.5rem - var(--btn-depth));
+
+  @apply flex flex-col;
+  @apply -mt-[--btn-margin-top];
+}
+
+.btn.patch {
+  --btn-cur-depth: var(--btn-depth);
+  --btn-font-size: 1.3rem;
+  --btn-line-height: calc(var(--btn-font-size) * 1.2);
+  --btn-content-radius: 0.3rem;
+  --btn-border-pad: 0.45rem;
+  --btn-border-width: 0.2rem;
+  --btn-x-padding: 0.9rem;
+  --btn-y-padding: 0.6rem;
+  --btn-label-pad: 0.2rem;
+  --btn-gap: 0.4rem;
+  --btn-cur-margin-top: calc(0.5rem - var(--btn-cur-depth));
+  --btn-root-depth: calc(var(--btn-border-width) + var(--btn-cur-depth));
+
+  --patch-radius: calc(
+    var(--btn-content-radius) + var(--btn-border-pad) + var(--btn-border-width)
+  );
+
+  @apply mt-[--btn-cur-margin-top];
+  @apply p-[--btn-border-width] pb-[--btn-root-depth];
+  @apply rounded-[--patch-radius];
+  @apply bg-primary-darkest;
+  @apply font-medium;
+  @apply h-full;
+}
+.btn.patch:hover:not(.active):not(:active):not(:disabled) {
+  --btn-cur-depth: 0.4rem;
+}
+.btn.patch.active:not(:disabled),
+.btn.patch:active:not(:disabled) {
+  --btn-cur-depth: 0.2rem;
+}
+.btn.patch:not(:disabled) {
+  @apply cursor-pointer;
+}
+.btn.patch:disabled {
+  @apply [--primary-darkest:--disabled-primary-darkest];
+  @apply [--primary-lighter:--disabled-primary-lighter];
+  @apply [--primary-darker:--disabled-primary-darker];
+}
+.btn.patch:focus-visible {
+  @apply outline outline-[0.2rem] outline-primary-darker;
+  @apply outline-offset-[0.15rem];
+}
+
+.btn.patch,
+.btn.patch svg *,
+.btn.patch .border,
+.btn.patch .content,
+.btn.patch .label {
+  @apply transition-all duration-100;
+}
+.btn.patch * {
+  @apply pointer-events-none;
+}
+
+.btn.patch .border {
+  --border-radius: calc(var(--btn-content-radius) + var(--btn-border-pad));
+  @apply flex;
+  @apply h-full;
+  @apply rounded-[--border-radius];
+  @apply bg-primary-lighter;
+  @apply overflow-hidden;
+  @apply relative;
+}
+.btn.patch:hover:not(:disabled) .border {
+  @apply bg-primary-light;
+}
+
+.btn.patch svg.stitch-wrapper {
+  @apply p-[--btn-border-pad];
+}
+.btn.patch svg.stitch-wrapper rect.stitches {
+  @apply [rx:--btn-content-radius];
+}
+
+.btn.patch .content {
+  @apply flex justify-center items-center w-full;
+  @apply px-[--btn-x-padding] py-[--btn-y-padding];
+  @apply m-[--btn-border-pad] gap-[--btn-gap];
+  @apply rounded-[--btn-content-radius];
+  @apply bg-primary-lighter;
+  @apply overflow-hidden;
+}
+.btn.patch.active:not(:disabled) .content,
+.btn.patch:active:not(:disabled) .content {
+  @apply bg-primary-active-fill;
+}
+.btn.patch.loading .content > * {
+  @apply opacity-0;
+}
+
+.btn.patch span.icon {
+  @apply max-w-[--btn-line-height] max-h-[--btn-line-height];
+  @apply text-primary-darkest;
+}
+.btn.patch span.icon svg {
+  @apply max-w-[--btn-line-height] max-h-[--btn-line-height];
+  @apply stroke-[2.7];
+}
+
+.btn.patch span.label {
+  @apply px-[--btn-label-pad];
+  @apply [line-height:--btn-line-height];
+  @apply [font-size:--btn-font-size] text-primary-darkest;
+  @apply text-ellipsis whitespace-nowrap overflow-hidden;
+}
