@@ -1,14 +1,18 @@
 "use client";
 
 import Stitches from "@/components/Stitches";
+import Tooltip from "@/components/Tooltip";
+import { useOnResize } from "@/util/hooks";
+import { paletteFrom } from "@/util/tint";
 import {
-  IconAlertCircle,
+  IconAlertCircleFilled,
   IconEye,
   IconEyeClosed,
   IconLock,
 } from "@tabler/icons-react";
 import clsx from "clsx";
-import React, { useState } from "react";
+import { OverlayScrollbarsComponent } from "overlayscrollbars-react";
+import { useEffect, useState } from "react";
 import css from "../styles/InputField.module.css";
 
 /** @param {InputFieldProps} props */
@@ -19,27 +23,57 @@ const InputField = (props) => {
     placeholder,
     value,
     defaultValue,
+    autoComplete,
+
     label,
     iconLeft,
     iconRight,
+
     width,
-    autoComplete,
+
     onChange,
-    password,
-    hideValue,
     disabled,
     readOnly,
-    textArea,
     error,
+
+    password,
+    hideValue,
+
+    textArea,
+    wrapText,
+
     style,
   } = props;
 
+  /** @type {UseState<CustomCSSProperties>} */
+  const [tintPalette, setTintPalette] = useState({});
   const [pwVisible, setPwVisible] = useState(false);
+
+  /** @type {UseState<Element>} */
+  const [fieldRef, setFieldRef] = useState(null);
+  /** @type {UseState<Element>} */
+  const [rootRef, setRootRef] = useState(null);
+  /** @type {UseState<Element>} */
+  const [iconsRightRef, setIconsRightRef] = useState(null);
+
   const pwType = pwVisible ? "text" : "password";
 
+  useOnResize(() => textAreaResize(fieldRef), [fieldRef]);
+
+  useEffect(() => {
+    setTintPalette(paletteFrom(error && "crimson"));
+  }, [error]);
+
+  const icons = [iconLeft, iconRight];
+  const inputState = [disabled, password, pwVisible, error];
+  useEffect(() => {
+    textAreaResize(fieldRef);
+  }, [fieldRef, width, ...icons, ...inputState]);
+
   /** @type {React.MouseEventHandler} */
-  function focusOnField(event) {
-    const field = event.currentTarget.querySelector("input");
+  function focusOnField() {
+    /** @type {HTMLInputElement | HTMLTextAreaElement} */
+    const field = rootRef.querySelector("input, textarea");
     field?.focus();
   }
 
@@ -51,19 +85,43 @@ const InputField = (props) => {
 
   /** @param {EventTarget} input */
   function textAreaResize(input) {
-    if (!(input instanceof HTMLTextAreaElement)) return;
+    if (!wrapText || !(input instanceof HTMLTextAreaElement)) return;
+
+    const inputScroll = input.parentElement;
+    const prevScroll = inputScroll?.scrollTop;
 
     input.style.height = "inherit";
     input.style.height = `${input.scrollHeight}px`;
+
+    if (prevScroll) inputScroll.scrollTo({ top: prevScroll });
   }
 
-  /** @ts-ignore @type {React.FunctionComponent<GeneralInputProps>} */
+  /** @type {TooltipOffset} */
+  function getTooltipOffset({ placement }) {
+    let skidding = 0;
+    let distance = 15;
+
+    if (placement.includes("start")) {
+      skidding = -10;
+    } else if (placement.includes("end")) {
+      skidding = 10;
+    }
+
+    const { y: iconsY } = iconsRightRef?.getBoundingClientRect();
+    const { y: fieldY } = rootRef?.getBoundingClientRect();
+    distance += iconsY - fieldY;
+
+    return [skidding, distance];
+  }
+
+  /** @ts-ignore @type {GeneralInput} */
   const InputElement = textArea ? "textarea" : "input";
 
   return (
     <div
       className={clsx(css["input-wrapper"], className)}
-      style={{ width, ...style }}
+      style={{ width, ...style, ...tintPalette }}
+      ref={setRootRef}
     >
       {label &&
         (id ? (
@@ -79,24 +137,39 @@ const InputField = (props) => {
           <span className={css["icon-group"]}>{iconLeft}</span>
 
           <div className={css["field-wrapper"]}>
-            <InputElement
-              id={id}
-              className={clsx(css.field, hideValue && css["hide-value"])}
-              rows={1}
-              placeholder={placeholder}
-              value={value}
-              onChange={handleOnChange}
-              onKeyDown={(e) => textAreaResize(e.target)}
-              type={password ? pwType : undefined}
-              defaultValue={defaultValue}
-              autoComplete={autoComplete}
-              disabled={disabled}
-              readOnly={readOnly}
-            />
+            <OverlayScrollbarsComponent
+              className={css.scroller}
+              options={{
+                overflow: {
+                  x: "hidden",
+                  y: textArea ? "scroll" : "hidden",
+                },
+                scrollbars: {
+                  autoHide: "scroll",
+                },
+              }}
+              defer
+            >
+              <InputElement
+                id={id}
+                className={clsx(css.field, hideValue && css["hide-value"])}
+                rows={1}
+                placeholder={placeholder}
+                value={value}
+                onChange={handleOnChange}
+                onKeyDown={(e) => textAreaResize(e.target)}
+                type={password ? pwType : undefined}
+                defaultValue={defaultValue}
+                autoComplete={autoComplete}
+                disabled={disabled}
+                readOnly={readOnly}
+                ref={setFieldRef}
+              />
+            </OverlayScrollbarsComponent>
             <Stitches type="line" stitchWidth="0.16rem" />
           </div>
 
-          <span className={css["icon-group"]}>
+          <span className={css["icon-group"]} ref={setIconsRightRef}>
             {!disabled && iconRight}
             {password &&
               value &&
@@ -105,7 +178,18 @@ const InputField = (props) => {
               ) : (
                 <IconEye onClick={() => setPwVisible(true)} />
               ))}
-            {error && <IconAlertCircle />}
+            {error && (
+              <Tooltip
+                disabled={!rootRef}
+                content={error}
+                appendTo={rootRef}
+                hideOnClick
+                placement="top-end"
+                offset={getTooltipOffset}
+              >
+                <IconAlertCircleFilled className="cursor-pointer" />
+              </Tooltip>
+            )}
             {disabled && <IconLock />}
           </span>
         </div>

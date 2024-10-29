@@ -59,6 +59,7 @@
  *   disabled?: boolean;
  *   readOnly?: boolean;
  *   textArea?: boolean;
+ *   wrapText?: boolean;
  *   error?: string;
  *   style?: React.CSSProperties;
  * }} InputFieldProps
