@@ -38,6 +38,7 @@
   @apply rounded-[--input-content-radius];
   @apply bg-primary-light;
   @apply overflow-hidden;
+  @apply cursor-text;
 }
 .input-content:has(textarea) {
   @apply items-end;
@@ -104,6 +105,14 @@ input.field.hide-value,
 textarea.field.hide-value {
   @apply [-webkit-text-security:disc];
 }
+input.field::selection,
+textarea.field::selection {
+  @apply bg-primary-dark text-primary-light;
+}
+input.field:focus::selection,
+textarea.field:focus::selection {
+  @apply bg-primary-darkest text-primary-lighter;
+}
 
 .icon-group {
   @apply flex gap-[0.4rem];
@@ -112,10 +121,7 @@ textarea.field.hide-value {
 .icon-group:empty {
   @apply hidden;
 }
-.icon-group:focus > *,
-.icon-group > *:focus,
-.icon-group:focus-visible > *,
-.icon-group > *:focus-visible {
+.icon-group > * {
   @apply !outline-none !border-none !shadow-none;
 }
 

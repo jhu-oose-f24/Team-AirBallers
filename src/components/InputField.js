@@ -97,21 +97,11 @@ const InputField = (props) => {
   }
 
   /** @type {TooltipOffset} */
-  function getTooltipOffset({ placement }) {
-    let skidding = 0;
-    let distance = 15;
-
-    if (placement.includes("start")) {
-      skidding = -10;
-    } else if (placement.includes("end")) {
-      skidding = 10;
-    }
-
+  function getTooltipOffset() {
     const { y: iconsY } = iconsRightRef?.getBoundingClientRect();
     const { y: fieldY } = rootRef?.getBoundingClientRect();
-    distance += iconsY - fieldY;
 
-    return [skidding, distance];
+    return [0, 15 + iconsY - fieldY];
   }
 
   /** @ts-ignore @type {GeneralInput} */
@@ -183,11 +173,15 @@ const InputField = (props) => {
                 disabled={!rootRef}
                 content={error}
                 appendTo={rootRef}
-                hideOnClick
                 placement="top-end"
+                trigger="mouseenter click"
                 offset={getTooltipOffset}
               >
-                <IconAlertCircleFilled className="cursor-pointer" />
+                <IconAlertCircleFilled
+                  className="cursor-pointer"
+                  tabIndex={-1}
+                  onClick={(e) => e.stopPropagation()}
+                />
               </Tooltip>
             )}
             {disabled && <IconLock />}
