@@ -19,7 +19,7 @@ body[id] #__next {
 /* ========================== Home Page ========================== */
 
 body#home #__next {
-  justify-content: center;
+  @apply justify-end;
 }
 
 .garment-img {
