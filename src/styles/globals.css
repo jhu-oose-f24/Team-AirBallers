@@ -58,7 +58,7 @@
   --arrow-half-width: 0.5rem;
   --arrow-height: 0.5rem;
   --arrow-padding: 0.4rem;
-  
+
   --arrow-wrapper-width: calc(
     2 * var(--arrow-half-width) + 2 * var(--arrow-padding)
   );

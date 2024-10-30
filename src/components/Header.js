@@ -1,10 +1,9 @@
 "use client";
 
+import { IconLogin, IconMenu2 } from "@tabler/icons-react";
 import Link from "next/link";
-import { useState } from "react";
-import { IconMenu2, IconLogin } from "@tabler/icons-react";
-import Button from "./Button";
 import { useRouter } from "next/navigation";
+import Button from "./Button";
 
 /**
  * @param {{
@@ -22,10 +21,7 @@ export default function Header(props) {
 
   return (
     <header className="header">
-      <button
-        onClick={onMenuClick}
-        className="menu-button"
-      >
+      <button onClick={onMenuClick} className="menu-button">
         <IconMenu2 />
       </button>
 
