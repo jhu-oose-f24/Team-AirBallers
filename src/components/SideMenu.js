@@ -32,18 +32,6 @@ export default function SideMenu({ isOpen, toggleMenu }) {
 
     return (
         <div className={`side-menu ${isOpen ? "open" : "closed"}`}>
-            {/* <button className="btn-hamburger" onClick={toggleMenu}>
-                <Bars3Icon className="h-8 w-8 text-black" />
-            </button> */}
-
-            <Button
-                tint="aquamarine"
-                icon={<IconMenu2 />}
-                onClick={toggleMenu}
-                width={"3.5rem"}
-                height={"3.5rem"}
-            />
-            
             <div className="garment-list">
                 {garments.length > 0 ? (
                 garments.map((garment, idx) => (
@@ -51,7 +39,6 @@ export default function SideMenu({ isOpen, toggleMenu }) {
                         key={idx}
                         image={garment.imageURL}
                         onClick={() => router.push(`/garment/${garment.id}`)}
-                        tint="aquamarine"
                     />
                 ))
                 ) : (
