@@ -2,14 +2,16 @@ body {
   --fabric-tile: url("../assets/fabric-bg.svg");
   @apply text-foreground;
   @apply bg-repeat bg-[image:--fabric-tile] bg-[size:64px];
+  @apply h-screen overflow-hidden;
 }
 
 body #__next {
   @apply opacity-0;
   @apply flex flex-col items-center justify-items-center;
   @apply text-lg font-[family-name:--font-rubik];
-  @apply min-h-screen;
-  @apply pt-20 pb-4 px-4;
+  @apply pt-[5rem] pb-[1rem] px-[1rem];
+  @apply overflow-hidden;
+  @apply h-full;
 }
 body[id] #__next {
   @apply transition-opacity duration-100 delay-100;
@@ -19,7 +21,6 @@ body[id] #__next {
 /* ========================== Home Page ========================== */
 
 body#home #__next {
-  @apply justify-end;
 }
 
 .garment-img {
@@ -62,7 +63,7 @@ body#home #__next {
 }
 
 .page-wrapper {
-  @apply w-full h-full flex-1 justify-end;
+  @apply w-full h-full flex flex-1;
   @apply w-full transition-transform duration-300 ease-in-out;
 }
 
@@ -71,7 +72,8 @@ body#home #__next {
 }
 
 .page-content {
-  @apply w-full h-full flex-1;
+  @apply w-full h-full flex flex-col flex-1;
+  @apply justify-end  items-center;
 }
 
 /* ========================== Side Menu ========================== */
@@ -79,19 +81,18 @@ body#home #__next {
 .side-menu {
   @apply flex flex-col justify-between;
   @apply bg-background-main;
-  @apply fixed top-[5rem] -left-[300px];
-  @apply w-[300px] h-[calc(100vh-5rem)];
-  @apply transition-transform duration-300 ease-in-out;
+  @apply w-[18rem] h-full;
+  @apply transition-all duration-300 ease-in-out;
   @apply p-5;
   @apply overflow-y-auto;
 }
 
 .side-menu.open {
-  @apply translate-x-[300px];
+  @apply ml-0;
 }
 
 .side-menu.closed {
-  @apply translate-x-0;
+  @apply -ml-[18rem];
 }
 
 .garment-list {
