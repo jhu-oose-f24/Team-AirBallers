@@ -46,6 +46,13 @@
 
 /**
  * @typedef {{
+ *   state: UseState<boolean>;
+ *   disabled?: boolean;
+ * }} ToggleProps
+ */
+
+/**
+ * @typedef {{
  *   id?: string;
  *   className?: string;
  *   placeholder?: string;
