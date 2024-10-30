@@ -113,3 +113,7 @@
   @apply [font-size:--btn-font-size] text-primary-darkest;
   @apply text-ellipsis whitespace-nowrap overflow-hidden;
 }
+
+.btn.patch span.image {
+  @apply h-[1.2em] w-auto mr-2 object-contain;
+}

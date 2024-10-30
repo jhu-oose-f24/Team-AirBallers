@@ -1,7 +1,8 @@
 // src/app/components/SideMenu.js
 import React from "react";
-import { Bars3Icon } from "@heroicons/react/24/solid";
+import { IconMenu2 } from "@tabler/icons-react";
 import axios from "axios";
+import Button from "@/components/Button";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
@@ -31,18 +32,26 @@ export default function SideMenu({ isOpen, toggleMenu }) {
 
     return (
         <div className={`side-menu ${isOpen ? "open" : "closed"}`}>
-            <button className="btn-hamburger" onClick={toggleMenu}>
+            {/* <button className="btn-hamburger" onClick={toggleMenu}>
                 <Bars3Icon className="h-8 w-8 text-black" />
-            </button>
+            </button> */}
+
+            <Button
+                tint="aquamarine"
+                icon={<IconMenu2 />}
+                onClick={toggleMenu}
+                width={"3.5rem"}
+                height={"3.5rem"}
+            />
             
             <div className="garment-list">
                 {garments.length > 0 ? (
                 garments.map((garment, idx) => (
-                    <img
-                    key={idx}
-                    src={garment.imageURL}
-                    alt={`Garment ${idx + 1}`}
-                    className="garment-img"
+                    <Button
+                        key={idx}
+                        image={garment.imageURL}
+                        onClick={() => router.push(`/garment/${garment.id}`)}
+                        tint="aquamarine"
                     />
                 ))
                 ) : (
@@ -50,12 +59,13 @@ export default function SideMenu({ isOpen, toggleMenu }) {
                 )}
             </div>
 
-            <button
-                className="btn-collection"
+            <Button
+                tint="aquamarine"
+                label="View Full Collection"
                 onClick={() => router.push("/collection", { scroll: false })}
-            >
-                View Full Collection
-            </button>
+                xPad="0.7rem"
+                yPad="0.35rem"
+            />
         </div>
   );
 }

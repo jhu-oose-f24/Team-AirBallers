@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { Bars3Icon } from "@heroicons/react/24/solid";
+import { IconMenu2, IconLogin } from "@tabler/icons-react";
+import Button from "./Button";
 import { useRouter } from "next/navigation";
 import SideMenu from "./SideMenu";
 
@@ -30,9 +31,14 @@ export default function Header(props) {
   return (
     <header className="header">
 
-      <button className="btn-hamburger" onClick={toggleMenu}>
-        <Bars3Icon className="h-8 w-8 text-black" />
-      </button>
+      <Button
+        tint="aquamarine"
+        icon={<IconMenu2 />}
+        onClick={toggleMenu}
+        width={"3.5rem"}
+        height={"3.5rem"}
+        // size="sm"
+      />
 
       <SideMenu isOpen={isOpen} toggleMenu={toggleMenu} />
 
@@ -40,11 +46,14 @@ export default function Header(props) {
         <h1 className="title">{title}</h1>
       </Link>
 
-      <div className="auth-buttons">
-        <button className="btn-login" onClick={handleLoginClick}>
-          Login/Sign up
-        </button>
-      </div>
+      <Button
+        tint="aquamarine"
+        icon={<IconLogin />}
+        label="Login"
+        onClick={handleLoginClick}
+        size="sm"
+      />
+
     </header>
   );
 }
