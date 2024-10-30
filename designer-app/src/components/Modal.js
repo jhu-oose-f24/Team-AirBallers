@@ -50,6 +50,7 @@ const Modal = (props) => {
             stitchWidth="0.2rem"
             stitchLength="long"
             stitchSpacing="short"
+            centered
           />
           <OverlayScrollbarsComponent
             className={css["modal-inner-container"]}

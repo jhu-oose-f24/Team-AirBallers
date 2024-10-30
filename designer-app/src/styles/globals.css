@@ -2,9 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+@layer base {
+  svg * {
+    @apply pointer-events-none;
   }
 }
 
@@ -16,6 +16,7 @@
   --scrollbar-width: 0.9rem;
 
   @apply !transition-all !duration-100 !ease-in-out;
+  @apply !cursor-default;
 }
 .os-scrollbar.os-scrollbar-vertical {
   @apply px-[--scrollbar-track-padding] py-[--scrollbar-end-padding];
@@ -51,6 +52,75 @@
   @apply !bg-primary-darker;
 }
 
+/* =========================== Tooltip =========================== */
+
+.tooltip {
+  --arrow-half-width: 0.5rem;
+  --arrow-height: 0.5rem;
+  --arrow-padding: 0.4rem;
+  
+  --arrow-wrapper-width: calc(
+    2 * var(--arrow-half-width) + 2 * var(--arrow-padding)
+  );
+
+  @apply !bg-primary-darkest !text-primary-lightest;
+  @apply !rounded-[0.6rem];
+  @apply !outline !outline-primary-dark;
+  @apply ![outline-width:0.25rem] !-outline-offset-[0.25rem];
+}
+
+.tooltip .tippy-content {
+  @apply px-[0.8rem] py-[0.4rem];
+  @apply font-[450] text-[1rem];
+}
+
+.tooltip[data-placement^="top"] .tippy-arrow,
+.tooltip[data-placement^="bottom"] .tippy-arrow {
+  @apply !px-[--arrow-padding];
+  @apply w-[--arrow-wrapper-width];
+}
+.tooltip[data-placement^="left"] .tippy-arrow,
+.tooltip[data-placement^="right"] .tippy-arrow {
+  @apply !py-[--arrow-padding];
+  @apply h-[--arrow-wrapper-width];
+}
+
+.tooltip .tippy-arrow:before {
+  @apply !border-transparent;
+}
+.tooltip[data-placement^="top"] .tippy-arrow:before,
+.tooltip[data-placement^="bottom"] .tippy-arrow:before {
+  @apply ![border-left-width:--arrow-half-width];
+  @apply ![border-right-width:--arrow-half-width];
+  @apply !left-1/2 !-translate-x-1/2;
+}
+.tooltip[data-placement^="left"] .tippy-arrow:before,
+.tooltip[data-placement^="right"] .tippy-arrow:before {
+  @apply ![border-top-width:--arrow-half-width];
+  @apply ![border-bottom-width:--arrow-half-width];
+  @apply !top-1/2 !-translate-y-1/2;
+}
+.tooltip[data-placement^="top"] .tippy-arrow:before {
+  @apply ![border-top-width:--arrow-height];
+  @apply ![border-bottom-width:0px];
+  @apply !border-t-primary-dark;
+}
+.tooltip[data-placement^="bottom"] .tippy-arrow:before {
+  @apply ![border-top-width:0px];
+  @apply ![border-bottom-width:--arrow-height];
+  @apply !border-b-primary-dark;
+}
+.tooltip[data-placement^="left"] .tippy-arrow:before {
+  @apply ![border-left-width:--arrow-height];
+  @apply ![border-right-width:0px];
+  @apply !border-l-primary-dark;
+}
+.tooltip[data-placement^="right"] .tippy-arrow:before {
+  @apply ![border-left-width:0px];
+  @apply ![border-right-width:--arrow-height];
+  @apply !border-r-primary-dark;
+}
+
 /* HEADER */
 
 .header {
@@ -78,40 +148,4 @@ body#collection-page .collection-grid {
 
 body#collection-page .collection-grid > * {
   @apply max-w-[calc(25%-1rem*(3/4))];
-}
-
-/* LOGIN */
-
-.login-wrapper {
-  @apply flex items-center justify-center h-screen bg-transparent;
-}
-
-.login-container {
-  @apply bg-white p-6 rounded-xl shadow-lg;
-  @apply w-[22rem] flex flex-col items-center gap-4;
-}
-
-button[type="submit"] {
-  @apply px-2 py-1 font-medium text-gray-800 bg-white;
-  @apply border-2 border-gray-300 rounded-md;
-  @apply transition-all cursor-pointer;
-}
-
-button[type="submit"]:hover {
-  @apply bg-blue-100 text-gray-800 border-blue-300 transform translate-y-[-2px];
-}
-
-.sign-up-prompt {
-  @apply flex items-center gap-2 mt-4;
-}
-
-.btn-signup {
-  @apply px-2 py-1 font-medium text-white bg-blue-500;
-  @apply border-2 border-blue-500 rounded-md;
-  @apply transition-all cursor-pointer;
-}
-
-.btn-signup:hover {
-  @apply bg-blue-600 border-blue-600 shadow-lg shadow-blue-300;
-  transform: translateY(-2px);
 }

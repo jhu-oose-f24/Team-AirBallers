@@ -15,7 +15,7 @@ export default function Signup() {
   const [passwordErrors, setPasswordErrors] = useState([]);
 
   const handleSignup = (event) => {
-    event.preventDefault();
+    event.preventDefault(); // EVENTUALLY WANT TO CHECK THAT EMAIL IS UNIQUE
 
     if ((!firstName) || (!lastName) || (!email) || (!password) || (!confirmpassword)) {
       setGeneralError("Please fill in all fields.");
@@ -29,7 +29,7 @@ export default function Signup() {
     }
     const errors = validatePassword(password);
     if (errors.length > 0) {
-      setPasswordErrors(errors);
+      setPasswordErrors(errors); // StrongPass123!
       setGeneralError(null);
       return;
     }
@@ -61,7 +61,7 @@ export default function Signup() {
   return (
     <div className="login-wrapper">
       <div className="login-container">
-        <Header title="Sign Up Page" />
+        <Header title="Sign Up" />
         <h1 className="text-center text-2xl font-bold">Sign Up</h1>
         <form onSubmit={handleSignup} className="flex flex-col gap-4">
           <input
@@ -95,7 +95,7 @@ export default function Signup() {
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
           <button type="submit">Sign Up</button>
-          
+
           {generalError && (
             <div className="error-message mt-2">{generalError}</div>
           )}
@@ -109,6 +109,11 @@ export default function Signup() {
               </ul>
             </div>
           )}
+          <button 
+            type="button"
+            onClick={() => router.push("/login")}
+            className="mt-4 text-blue-500 hover:underline"
+          >Back to Login</button>
         </form>
       </div>
     </div>
