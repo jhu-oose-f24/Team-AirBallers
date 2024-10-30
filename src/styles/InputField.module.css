@@ -2,7 +2,8 @@
   @apply flex flex-col;
 }
 
-.input-wrapper * {
+.input-border,
+.input-border * {
   @apply transition-all duration-100;
 }
 
@@ -37,6 +38,10 @@
   @apply rounded-[--input-content-radius];
   @apply bg-primary-light;
   @apply overflow-hidden;
+  @apply cursor-text;
+}
+.input-content:has(textarea) {
+  @apply items-end;
 }
 .input-content:has(input:focus),
 .input-content:has(textarea:focus),
@@ -55,22 +60,37 @@
   @apply bg-primary-light;
   @apply outline-white;
 }
+
 /* TODO: autofill color styling */
 
 .field-wrapper {
   @apply w-full;
   @apply flex flex-col;
+  @apply max-h-[12rem];
   @apply gap-[0.3rem] mx-[0.2rem];
   @apply bg-transparent;
 }
 
+.scroller {
+  @apply mr-[-0.5rem] pr-[0.5rem];
+}
+
+.scroller [data-overlayscrollbars-contents]:has(input.field) {
+  @apply !mb-[-4px];
+}
+.scroller [data-overlayscrollbars-contents]:has(textarea.field) {
+  @apply !mb-[-8px];
+}
+.scroller [class*="os-scrollbar-vertical"] {
+  --scrollbar-end-padding: 0.1rem;
+}
+
 input.field {
   @apply h-[--input-line-height];
-  @apply text-ellipsis whitespace-nowrap overflow-hidden;
 }
 textarea.field {
   @apply h-[--input-line-height] min-h-max;
-  @apply resize-none;
+  @apply resize-none overflow-hidden;
 }
 input.field,
 textarea.field {
@@ -88,12 +108,24 @@ input.field.hide-value,
 textarea.field.hide-value {
   @apply [-webkit-text-security:disc];
 }
+input.field::selection,
+textarea.field::selection {
+  @apply bg-primary-dark text-primary-light;
+}
+input.field:focus::selection,
+textarea.field:focus::selection {
+  @apply bg-primary-darkest text-primary-lighter;
+}
 
 .icon-group {
+  @apply flex gap-[0.4rem];
   @apply text-primary-darker;
 }
 .icon-group:empty {
   @apply hidden;
+}
+.icon-group > * {
+  @apply !outline-none !border-none !shadow-none;
 }
 
 .icon-group > svg {

@@ -1,0 +1,79 @@
+.toggle {
+  --toggle-border-pad: 0.9rem;
+  --toggle-handle-height: 2.3rem;
+  --toggle-track-pad: 0.8rem;
+  --toggle-label-offset: calc(
+    var(--toggle-track-pad) + var(--toggle-border-pad)
+  );
+
+  @apply flex justify-center items-center;
+  @apply p-[--toggle-border-pad];
+  @apply h-[3.5rem] w-[7rem];
+  @apply bg-primary-darkest;
+  @apply rounded-full;
+  @apply transition-all duration-200 ease-out-modal;
+  @apply cursor-pointer;
+  @apply relative;
+}
+.toggle.active {
+  --toggle-border-pad: 0.5rem;
+  --toggle-handle-height: 2.6rem;
+  --toggle-track-pad: 1.2rem;
+}
+.toggle:not(.active),
+.toggle:not(.active) .handle-btn {
+  @apply [--primary-darkest:--disabled-primary-darkest];
+  @apply [--primary-darker:--disabled-primary-darker];
+  @apply [--primary-dark:--disabled-primary-dark];
+  @apply [--primary-light:--disabled-primary-light];
+  @apply [--primary-lighter:--disabled-primary-lighter];
+  @apply [--primary-lightest:--disabled-primary-lightest];
+}
+
+.track {
+  @apply flex items-center;
+  @apply w-full h-full;
+  @apply bg-primary-light/80;
+  @apply rounded-[inherit];
+  @apply [transition:inherit];
+  @apply relative;
+}
+.toggle.active .track {
+  @apply bg-primary-dark;
+}
+
+.track .label,
+.handle-btn {
+  @apply absolute;
+  @apply top-1/2;
+  @apply -translate-x-1/2 -translate-y-1/2;
+  @apply [transition:inherit];
+}
+
+.track .label {
+  --label-pos: calc(100% - var(--toggle-label-offset));
+  @apply left-[--label-pos];
+  @apply text-primary-darkest font-medium;
+}
+.toggle.active .track .label {
+  --label-pos: var(--toggle-label-offset);
+}
+
+.handle-btn {
+  --handle-pos: calc(0.5rem + var(--toggle-handle-height) / 2);
+  @apply left-[--handle-pos];
+}
+.toggle.active .handle-btn {
+  --handle-pos: calc(100% - 0.35rem - var(--toggle-handle-height) / 2);
+}
+.toggle.disabled .handle-btn * {
+  @apply !pointer-events-none;
+}
+
+.handle-btn .lock-icon {
+  @apply stroke-primary-darkest stroke-[0.16rem];
+  @apply h-[1.4rem] w-[1.4rem];
+}
+.toggle.active .handle-btn .lock-icon {
+  @apply h-[1.6rem] w-[1.6rem];
+}
