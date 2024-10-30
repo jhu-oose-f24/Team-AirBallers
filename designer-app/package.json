@@ -18,6 +18,7 @@
     "@heroicons/react": "^2.1.5",
     "@prisma/client": "^5.20.0",
     "@tabler/icons-react": "^3.19.0",
+    "@tippyjs/react": "^4.2.6",
     "@types/node": "^22.7.4",
     "@types/react": "^18.3.9",
     "axios": "^1.7.7",
