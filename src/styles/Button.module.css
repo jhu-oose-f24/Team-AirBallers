@@ -43,8 +43,11 @@
 }
 .btn.patch:disabled {
   @apply [--primary-darkest:--disabled-primary-darkest];
-  @apply [--primary-lighter:--disabled-primary-lighter];
   @apply [--primary-darker:--disabled-primary-darker];
+  @apply [--primary-dark:--disabled-primary-dark];
+  @apply [--primary-light:--disabled-primary-light];
+  @apply [--primary-lighter:--disabled-primary-lighter];
+  @apply [--primary-lightest:--disabled-primary-lightest];
 }
 .btn.patch:focus-visible {
   @apply outline outline-[0.2rem] outline-primary-darker;

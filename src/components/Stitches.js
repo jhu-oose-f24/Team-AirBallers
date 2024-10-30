@@ -12,11 +12,12 @@ const Stitches = (props) => {
     stitchWidth,
     stitchLength = "normal",
     stitchSpacing = "normal",
+    centered,
   } = props;
 
   /** @type {{ [k in props["stitchLength"]]: number }} */
   const dashLength = { long: 5, normal: 2.5, short: 1.8 };
-  const stitchesClass = clsx(css.stitches, pathClass);
+  const stitchesClass = clsx(css.stitches, centered && css.centered, pathClass);
 
   const multDash = (mult = 0) => `calc(var(--stitch-width) * ${mult})`;
 

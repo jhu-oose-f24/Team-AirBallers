@@ -10,6 +10,7 @@
  *   stitchWidth?: string;
  *   stitchLength?: StitchDash;
  *   stitchSpacing?: StitchDash;
+ *   centered?: boolean;
  * }} StitchProps
  */
 
@@ -34,10 +35,12 @@
  */
 
 /**
- * @typedef {{
+ * @typedef {Omit<React.ButtonHTMLAttributes<any>, "type"> & {
  *   height?: React.CSSProperties["height"];
  *   type: "round" | "cross";
- *   onClick?: React.MouseEventHandler;
+ *   borderWidth?: React.CSSProperties["outlineWidth"];
+ *   tint?: React.CSSProperties["color"];
+ *   icon?: any;
  * }} ClothButtonProps
  */
 
