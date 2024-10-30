@@ -1,16 +1,20 @@
 "use client";
 
+import Button from "@/components/Button";
 import Header from "@/components/Header";
-import Button from "@/components/Button"
-import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function Login() {
   const router = useRouter();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false)
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(null);
+
+  useEffect(() => {
+    document.body.id = "login";
+  }, []);
 
   const handleLogin = (event) => {
     event.preventDefault();
@@ -48,22 +52,16 @@ export default function Login() {
           onChange={(e) => setPassword(e.target.value)}
         />
         <button
-            type="button"
-            onClick={togglePasswordVisibility}
-            className="text-blue-500 text-xs self-start mb-[-10px]"
-          >
-            {showPassword ? "Hide" : "Show"} Password
-          </button>
+          type="button"
+          onClick={togglePasswordVisibility}
+          className="text-blue-500 text-xs self-start mb-[-10px]"
+        >
+          {showPassword ? "Hide" : "Show"} Password
+        </button>
 
-        <Button
-          label="Log In"
-          onClick={handleLogin}
-          size="sm"
-          tint="#3498db"
-        />
+        <Button label="Log In" onClick={handleLogin} size="sm" tint="#3498db" />
         {error && <div className="error-message">{error}</div>}
       </form>
-
 
       <div className="sign-up-prompt">
         <span>Don't have an account?</span>
@@ -74,7 +72,6 @@ export default function Login() {
           tint="#3498db"
         />
       </div>
-
     </div>
   );
 }
