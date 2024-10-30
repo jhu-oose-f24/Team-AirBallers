@@ -81,6 +81,9 @@
 .scroller [data-overlayscrollbars-contents]:has(textarea.field) {
   @apply !mb-[-8px];
 }
+.scroller [class*="os-scrollbar-vertical"] {
+  --scrollbar-end-padding: 0.1rem;
+}
 
 input.field {
   @apply h-[--input-line-height];
