@@ -82,6 +82,8 @@ button[type="submit"]:hover {
   @apply bg-blue-100 text-gray-800 border-blue-300 transform translate-y-[-2px];
 }
 
+/* ========================== Sign Up Page ========================== */
+
 .sign-up-prompt {
   @apply flex items-center gap-2 mt-4;
 }
@@ -96,6 +98,3 @@ button[type="submit"]:hover {
   @apply bg-blue-600 border-blue-600 shadow-lg shadow-blue-300;
   transform: translateY(-2px);
 }
-
-/* ========================== Sign Up Page ========================== */
-
