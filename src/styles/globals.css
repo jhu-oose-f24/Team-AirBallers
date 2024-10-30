@@ -26,9 +26,11 @@
   @apply h-[--scrollbar-width];
   @apply mb-[0.1rem];
 }
+
 .os-scrollbar:has(:hover) {
   --scrollbar-track-padding: 0.25rem;
   --scrollbar-width: 1rem;
+}
 
 .btn-collection {
   @apply flex flex-col;
@@ -68,18 +70,6 @@
 
 .auth-buttons {
   @apply flex gap-4;
-}
-
-.btn-login {
-  @apply px-4 py-2;
-  @apply font-medium text-foreground bg-background-main;
-  @apply border-2 border-foreground rounded-md;
-  transition: all 0.3s ease;
-}
-
-.btn-login:hover {
-  @apply bg-primary text-foreground;
-  @apply border-primary transform translate-y-[-3px];
 }
 
 body#collection-page .collection-grid {
@@ -155,14 +145,4 @@ button[type="submit"]:hover {
   overflow-y: auto; /* Allows scroll if items overflow */
   max-height: 80%;
   max-width: 90%;
-}
-
-.garment-list-img {
-  width: 100%;
-  height: auto;
-  max-height: 150px;
-  object-fit: contain;
-  object-position: top;
-  border-radius: 8px;
-  object-fit: contain;
 }
