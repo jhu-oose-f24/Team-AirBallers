@@ -15,10 +15,12 @@
   @apply p-[--btn-outer-border] pb-[--btn-root-depth];
   @apply rounded-[--patch-radius];
   @apply bg-primary-darkest;
+  @apply [transition:inherit];
   @apply z-[1];
 }
 .btn.clothing.round {
   --btn-outer-border: 0.2rem;
+  --btn-outer-outline: 0.2rem;
   --btn-outer-pad: 0px;
   --btn-inner-radius: 100vmax;
   --btn-inner-pad: 0.15rem;
@@ -28,6 +30,7 @@
 }
 .btn.clothing.cross {
   --btn-outer-border: 0.2rem;
+  --btn-outer-outline: 0.2rem;
   --btn-outer-pad: 0.5rem;
   --btn-inner-radius: 0.3rem;
   --btn-inner-pad: 0.27rem;
@@ -39,9 +42,10 @@
 
 .btn.clothing .gradient {
   @apply absolute;
+  @apply h-[200%] w-[200%];
   @apply top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
   @apply from-primary-lighter from-50% to-primary-lightest to-50%;
-  @apply h-[200%] w-[200%];
+  @apply [transition:inherit];
 }
 .btn.clothing:active .gradient {
   @apply rotate-[-5deg];
@@ -62,8 +66,9 @@
   @apply h-[2.8rem] aspect-square;
   @apply p-[--btn-outer-pad];
   @apply rounded-[--btn-outer-radius];
-  @apply outline outline-primary-lightest [outline-width:--btn-outer-border];
-  @apply -outline-offset-[--btn-outer-border];
+  @apply outline outline-primary-lightest [outline-width:--btn-outer-outline];
+  @apply -outline-offset-[--btn-outer-outline];
+  @apply [transition:inherit];
 }
 
 .btn.clothing .inner {
@@ -73,10 +78,12 @@
   @apply p-[--btn-inner-pad];
   @apply rounded-[--btn-inner-radius];
   @apply bg-primary-lightest;
-  @apply !transition-none;
 }
 .btn.clothing.cross .inner {
   @apply flex-1;
+}
+.btn.clothing .inner.slits-hidden {
+  @apply hidden;
 }
 
 .btn.clothing .inner .slit {

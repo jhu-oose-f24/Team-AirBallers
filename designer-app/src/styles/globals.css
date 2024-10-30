@@ -16,6 +16,7 @@
   --scrollbar-width: 0.9rem;
 
   @apply !transition-all !duration-100 !ease-in-out;
+  @apply !cursor-default;
 }
 .os-scrollbar.os-scrollbar-vertical {
   @apply px-[--scrollbar-track-padding] py-[--scrollbar-end-padding];
