@@ -1,6 +1,7 @@
 "use client";
 
 import Header from "@/components/Header";
+import Button from "@/components/Button"
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -54,16 +55,24 @@ export default function Login() {
             {showPassword ? "Hide" : "Show"} Password
           </button>
 
-        <button type="submit">Login</button>
+        <Button
+          label="Log In"
+          onClick={handleLogin}
+          size="sm"
+          tint="#3498db"
+        />
         {error && <div className="error-message">{error}</div>}
       </form>
 
 
       <div className="sign-up-prompt">
         <span>Don't have an account?</span>
-        <button className="btn-signup" onClick={() => router.push("/signup")}>
-          Sign up
-        </button>
+        <Button
+          label="Sign Up"
+          onClick={() => router.push("/signup")}
+          size="xs"
+          tint="#3498db"
+        />
       </div>
 
     </div>
