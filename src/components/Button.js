@@ -3,7 +3,6 @@
 import Stitches from "@/components/Stitches";
 import { pause } from "@/util/misc";
 import { paletteFrom } from "@/util/tint";
-import chroma from "chroma-js";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
 import css from "../styles/Button.module.css";
@@ -79,42 +78,11 @@ const Button = (props) => {
     setTintPalette(paletteFrom(tint));
   }, [tint]);
 
-  /**
-   * @param {number} h - Hue
-   * @param {number} s - Saturation
-   * @param {number} l - Lightness
-   */
-  function HSL(h, s, l) {
-    const [H, S, L] = chroma.hsl(h, s, l).hsl();
-    return `${H}deg ${Math.round(S * 100)}% ${Math.round(L * 100)}%`;
-  }
-
-  function genPalette() {
-    if (!chroma.valid(tint)) {
-      setTintPalette({});
-      return;
-    }
-
-    const hue = chroma(tint).hsl()[0];
-    setTintPalette({
-      "--hue": tint,
-
-      "--primary-darkest": HSL(hue, 1.0, 0.15),
-      "--primary-darker": HSL(hue, 1.0, 0.25),
-      "--primary-dark": HSL(hue, 0.6, 0.5),
-      "--primary-light": HSL(hue, 1.0, 0.75),
-      "--primary-lighter": HSL(hue, 1.0, 0.8),
-      "--primary-lightest": HSL(hue, 1.0, 0.95),
-      "--primary-active-fill": HSL(hue, 1.0, 0.9),
-    });
-  }
-
   /** @param {React.KeyboardEvent} event */
   async function enterClick(event) {
     const btn = event.currentTarget?.querySelector("button");
     if (event.key === "Enter") {
       btn?.classList.add(css["active"]);
-      btn?.click();
       await pause(200);
       btn?.classList.remove(css["active"]);
     }
