@@ -15,7 +15,6 @@
   },
   "dependencies": {
     "@fal-ai/serverless-client": "^0.14.3",
-    "@heroicons/react": "^2.1.5",
     "@prisma/client": "^5.20.0",
     "@tabler/icons-react": "^3.19.0",
     "@tippyjs/react": "^4.2.6",
