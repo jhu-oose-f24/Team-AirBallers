@@ -116,28 +116,22 @@ button[type="submit"]:hover {
   transform: translateY(-2px);
 }
 
-/* SIDEMENU */
-
 .side-menu {
-  @apply flex flex-col justify-between h-full;
+  @apply flex flex-col justify-between;
   @apply bg-background-main;
-  position: fixed;
-  top: 0;
-  left: -300px;
-  width: 300px;
-  transition: transform 0.3s ease-in-out;
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-  overflow-y: auto;
+  @apply fixed top-[5rem] -left-[300px];
+  @apply w-[300px] h-[calc(100vh-5rem)];
+  @apply transition-transform duration-300 ease-in-out;
+  @apply p-5;
+  @apply overflow-y-auto;
 }
 
 .side-menu.open {
-  transform: translateX(300px);
+  @apply translate-x-[300px];
 }
 
 .side-menu.closed {
-  transform: translateX(0);
+  @apply translate-x-0;
 }
 
 .garment-list {
@@ -145,4 +139,6 @@ button[type="submit"]:hover {
   overflow-y: auto; /* Allows scroll if items overflow */
   max-height: 80%;
   max-width: 90%;
+  scrollbar-gutter: stable;
+  padding-right: 4px;
 }

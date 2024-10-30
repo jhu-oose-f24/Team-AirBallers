@@ -60,3 +60,45 @@ body#home #__next {
   @apply font-medium bg-green-300 text-green-900;
   @apply rounded-md whitespace-nowrap;
 }
+
+.page-wrapper {
+  @apply w-full h-full flex-1 justify-end;
+  @apply w-full transition-transform duration-300 ease-in-out;
+}
+
+.page-wrapper.shifted {
+  @apply translate-x-[300px];
+}
+
+.page-content {
+  @apply w-full h-full flex-1;
+}
+
+/* ========================== Side Menu ========================== */
+
+.side-menu {
+  @apply flex flex-col justify-between;
+  @apply bg-background-main;
+  @apply fixed top-[5rem] -left-[300px];
+  @apply w-[300px] h-[calc(100vh-5rem)];
+  @apply transition-transform duration-300 ease-in-out;
+  @apply p-5;
+  @apply overflow-y-auto;
+}
+
+.side-menu.open {
+  @apply translate-x-[300px];
+}
+
+.side-menu.closed {
+  @apply translate-x-0;
+}
+
+.garment-list {
+  @apply flex flex-col gap-4; /* Space between images */
+  overflow-y: auto; /* Allows scroll if items overflow */
+  max-height: 80%;
+  max-width: 90%;
+  scrollbar-gutter: stable;
+  padding-right: 4px;
+}
