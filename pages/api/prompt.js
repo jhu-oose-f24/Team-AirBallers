@@ -41,6 +41,7 @@ export default ApiHandler()
       res.status(200).json({ url, id: newPrompt.id });
     } catch (err) {
       res.status(500).json(err);
+      console.error("Error creating prompt:", err);
     }
   })
   .build();
