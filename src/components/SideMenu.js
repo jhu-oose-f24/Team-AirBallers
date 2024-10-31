@@ -1,8 +1,10 @@
-// src/app/components/SideMenu.js
+"use client";
+
 import Button from "@/components/Button";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import { OverlayScrollbarsComponent } from "overlayscrollbars-react";
+import { useEffect, useState } from "react";
 
 /**
  * @typedef {Awaited<
@@ -12,12 +14,7 @@ import React, { useEffect, useState } from "react";
 export default function SideMenu({ isOpen, toggleMenu }) {
   const router = useRouter();
 
-  /**
-   * @type {[
-   *   GarmentList,
-   *   React.Dispatch<React.SetStateAction<GarmentList>>,
-   * ]}
-   */
+  /** @type {UseState<GarmentList>} */
   const [garments, setGarments] = useState([]);
 
   useEffect(() => {
@@ -29,19 +26,20 @@ export default function SideMenu({ isOpen, toggleMenu }) {
 
   return (
     <div className={`side-menu ${isOpen ? "open" : "closed"}`}>
-      <div className="garment-list">
+      <OverlayScrollbarsComponent className="garment-list" defer>
         {garments.length > 0 ? (
           garments.map((garment, idx) => (
             <Button
               key={idx}
               image={garment.imageURL}
-              onClick={() => router.push(`/garment/${garment.id}`)}
+              // TODO: move to collection page
+              // onClick={() => router.push(`/garment/${garment.id}`)}
             />
           ))
         ) : (
           <p>No garments available</p>
         )}
-      </div>
+      </OverlayScrollbarsComponent>
 
       <Button
         tint="aquamarine"

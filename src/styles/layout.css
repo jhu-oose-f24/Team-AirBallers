@@ -9,7 +9,7 @@ body #__next {
   @apply opacity-0;
   @apply flex flex-col items-center justify-items-center;
   @apply text-lg font-[family-name:--font-rubik];
-  @apply pt-[5rem] pb-[1rem] px-[1rem];
+  @apply pt-[5.5rem];
   @apply overflow-hidden;
   @apply h-full;
 }
@@ -74,16 +74,20 @@ body#home #__next {
 .page-content {
   @apply w-full h-full flex flex-col flex-1;
   @apply justify-end  items-center;
+  @apply relative;
 }
 
 /* ========================== Side Menu ========================== */
 
 .side-menu {
+  --width: 19rem;
+
   @apply flex flex-col justify-between;
   @apply bg-background-main;
-  @apply w-[18rem] h-full;
+  @apply w-[--width] h-full;
   @apply transition-all duration-300 ease-in-out;
-  @apply p-5;
+  @apply px-[1.4rem] py-[1rem] gap-[1rem];
+  @apply border-r-[0.3rem] border-r-background-alt;
   @apply overflow-y-auto;
 }
 
@@ -92,16 +96,17 @@ body#home #__next {
 }
 
 .side-menu.closed {
-  @apply -ml-[18rem];
+  @apply -ml-[--width];
+  @apply invisible;
 }
 
 .garment-list {
-  @apply flex flex-col gap-4; /* Space between images */
-  overflow-y: auto; /* Allows scroll if items overflow */
-  max-height: 80%;
-  max-width: 90%;
-  scrollbar-gutter: stable;
-  padding-right: 4px;
+  @apply !-mx-[1rem];
+}
+
+.garment-list [data-overlayscrollbars-contents] {
+  @apply flex flex-col gap-[0.8rem];
+  @apply !px-[1rem] !py-[1rem];
 }
 
 /* ========================== Log In Page ========================== */
