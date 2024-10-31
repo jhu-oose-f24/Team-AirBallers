@@ -9,7 +9,7 @@ body #__next {
   @apply opacity-0;
   @apply flex flex-col items-center justify-items-center;
   @apply text-lg font-[family-name:--font-rubik];
-  @apply pt-[5.5rem];
+  @apply pt-[6rem];
   @apply overflow-hidden;
   @apply h-full;
 }
@@ -107,6 +107,20 @@ body#home #__next {
 .garment-list [data-overlayscrollbars-contents] {
   @apply flex flex-col gap-[0.8rem];
   @apply !px-[1rem] !py-[1rem];
+}
+
+/* ======================== Collection Page ======================== */
+
+body#collection-page .collection-grid {
+  @apply p-[1rem];
+}
+
+body#collection-page .collection-grid [data-overlayscrollbars-contents] {
+  @apply flex flex-wrap gap-[1rem] overflow-y-auto;
+}
+
+body#collection-page .collection-grid [data-overlayscrollbars-contents] > * {
+  @apply max-w-[calc(25%-1rem*(3/4))];
 }
 
 /* ========================== Log In Page ========================== */

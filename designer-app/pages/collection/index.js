@@ -1,12 +1,12 @@
-"use client"
+"use client";
 
 import Header from "@/components/Header";
 import { useBodyID } from "@/util/hooks";
 import axios from "axios";
+import { OverlayScrollbarsComponent } from "overlayscrollbars-react";
 import { useEffect, useState } from "react";
 
 export default function Home() {
-  /** @type {UseState<GarmentList>} */
   const [garments, setGarments] = useState([]);
 
   useBodyID("collection-page");
@@ -22,11 +22,11 @@ export default function Home() {
     <>
       <Header title="< Garment Collection" />
 
-      <div className="collection-grid grid gap-4 p-4 min-h-screen overflow-y-auto">
+      <OverlayScrollbarsComponent className="collection-grid" defer>
         {garments.map((garment, idx) => (
-          <img key={idx} src={garment.imageURL} className="w-full h-auto" />
+          <img key={idx} src={garment.imageURL} />
         ))}
-      </div>
+      </OverlayScrollbarsComponent>
     </>
   );
 }

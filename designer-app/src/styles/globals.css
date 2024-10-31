@@ -121,7 +121,7 @@
   @apply !border-r-primary-dark;
 }
 
-/* HEADER */
+/* HEADER (TODO: move style to component) */
 
 .header {
   @apply w-full;
@@ -140,12 +140,4 @@
 
 .auth-buttons {
   @apply flex gap-4;
-}
-
-body#collection-page .collection-grid {
-  @apply flex flex-wrap gap-[1rem];
-}
-
-body#collection-page .collection-grid > * {
-  @apply max-w-[calc(25%-1rem*(3/4))];
 }
