@@ -1,3 +1,4 @@
+import { PrismaClient } from "@prisma/client";
 import DescriptionGenerator from "./DescriptionGenerator";
 
 export default class EditableDescriptionGenerator {
@@ -46,9 +47,9 @@ export default class EditableDescriptionGenerator {
         return this.description;
     }
 
-    getDescription() {
-        return this.description;
-    }
+  getDescription() {
+    return this.description;
+  }
 
     toJSON() {
         return {

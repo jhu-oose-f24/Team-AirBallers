@@ -18,6 +18,7 @@ const Button = (props) => {
 
     label,
     icon,
+    image,
     tint,
     height,
     width,
@@ -103,6 +104,7 @@ const Button = (props) => {
         <div className={css.border}>
           <div className={css.content}>
             {icon && <span className={css.icon}>{icon}</span>}
+            {image && <img src={image} alt="" className={css.image} />}
             {label && <span className={css.label}>{label}</span>}
           </div>
           <Stitches
