@@ -19,12 +19,11 @@ Pants necessities:
 1. Fabric
 2. Rise (high-rise, low-rise, mid-rise)
 3. Cut (skinny, straight, bootcut, relaxed, tapered)
-5. Color 
-6. Pattern (if any)
+4. Color
+5. Pattern (if any)
 6. Seams (flat-felled, overlock, chain stitch)
 7. Wash and fade (light, medium, dark)
 8. Distressing (if any)
-
 
 For measurements, make sure to report numbers (if necessary) as centimeters.
 Additionally, keep the response to 1500 words maximum
