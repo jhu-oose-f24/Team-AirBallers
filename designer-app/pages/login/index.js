@@ -2,8 +2,9 @@
 
 import Button from "@/components/Button";
 import Header from "@/components/Header";
+import { useBodyID } from "@/util/hooks";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function Login() {
   const router = useRouter();
@@ -12,9 +13,7 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    document.body.id = "login";
-  }, []);
+  useBodyID("login");
 
   const handleLogin = (event) => {
     event.preventDefault();
