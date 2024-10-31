@@ -14,5 +14,17 @@ T-shirt neccesities:
 8. Details and Embellishments
 9. Color (make sure to include the hex color value)
 
+Pants necessities:
+
+1. Fabric
+2. Rise (high-rise, low-rise, mid-rise)
+3. Cut (skinny, straight, bootcut, relaxed, tapered)
+5. Color 
+6. Pattern (if any)
+6. Seams (flat-felled, overlock, chain stitch)
+7. Wash and fade (light, medium, dark)
+8. Distressing (if any)
+
+
 For measurements, make sure to report numbers (if necessary) as centimeters.
 Additionally, keep the response to 1500 words maximum
