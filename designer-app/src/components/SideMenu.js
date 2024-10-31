@@ -1,28 +1,55 @@
 // src/app/components/SideMenu.js
-import React from "react";
-import { Bars3Icon } from "@heroicons/react/24/solid";
+import Button from "@/components/Button";
+import axios from "axios";
 import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
 
+/**
+ * @typedef {Awaited<
+ *   ReturnType<import("@/util/db.js")["default"]["prompt"]["findMany"]>
+ * >} GarmentList
+ */
 export default function SideMenu({ isOpen, toggleMenu }) {
-    const router = useRouter();
+  const router = useRouter();
 
-    return (
-        <div className={`side-menu ${isOpen ? "open" : "closed"}`}>
-            <button className="btn-hamburger" onClick={toggleMenu}>
-                <Bars3Icon className="h-8 w-8 text-black" />
-            </button>
-            <p>Menu Item 1</p>
-            <p>Menu Item 2</p>
-            <p>Menu Item 3</p>
+  /**
+   * @type {[
+   *   GarmentList,
+   *   React.Dispatch<React.SetStateAction<GarmentList>>,
+   * ]}
+   */
+  const [garments, setGarments] = useState([]);
 
-            <div className="absolute right-0 top-1/2 transform -translate-y-1/2">
-            <button
-            className="btn-collection"
-            onClick={() => router.push("/collection", { scroll: false })}
-            >
-            View Collection
-            </button>
-        </div>
-        </div>
+  useEffect(() => {
+    axios
+      .get("/api/collection")
+      .then(({ data }) => setGarments(data.reverse())) // Reverse the order of garments here
+      .catch((err) => console.log(err));
+  }, []);
+
+  return (
+    <div className={`side-menu ${isOpen ? "open" : "closed"}`}>
+      <div className="garment-list">
+        {garments.length > 0 ? (
+          garments.map((garment, idx) => (
+            <Button
+              key={idx}
+              image={garment.imageURL}
+              onClick={() => router.push(`/garment/${garment.id}`)}
+            />
+          ))
+        ) : (
+          <p>No garments available</p>
+        )}
+      </div>
+
+      <Button
+        tint="aquamarine"
+        label="View Full Collection"
+        onClick={() => router.push("/collection", { scroll: false })}
+        xPad="0.7rem"
+        yPad="0.35rem"
+      />
+    </div>
   );
 }

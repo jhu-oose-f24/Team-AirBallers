@@ -2,14 +2,16 @@ body {
   --fabric-tile: url("../assets/fabric-bg.svg");
   @apply text-foreground;
   @apply bg-repeat bg-[image:--fabric-tile] bg-[size:64px];
+  @apply h-screen overflow-hidden;
 }
 
 body #__next {
   @apply opacity-0;
   @apply flex flex-col items-center justify-items-center;
   @apply text-lg font-[family-name:--font-rubik];
-  @apply min-h-screen;
-  @apply pt-20 pb-4 px-4;
+  @apply pt-[5rem] pb-[1rem] px-[1rem];
+  @apply overflow-hidden;
+  @apply h-full;
 }
 body[id] #__next {
   @apply transition-opacity duration-100 delay-100;
@@ -19,7 +21,6 @@ body[id] #__next {
 /* ========================== Home Page ========================== */
 
 body#home #__next {
-  @apply justify-end;
 }
 
 .garment-img {
@@ -59,6 +60,48 @@ body#home #__next {
   @apply px-4 py-2;
   @apply font-medium bg-green-300 text-green-900;
   @apply rounded-md whitespace-nowrap;
+}
+
+.page-wrapper {
+  @apply w-full h-full flex flex-1;
+  @apply w-full transition-transform duration-300 ease-in-out;
+}
+
+.page-wrapper.shifted {
+  @apply translate-x-[300px];
+}
+
+.page-content {
+  @apply w-full h-full flex flex-col flex-1;
+  @apply justify-end  items-center;
+}
+
+/* ========================== Side Menu ========================== */
+
+.side-menu {
+  @apply flex flex-col justify-between;
+  @apply bg-background-main;
+  @apply w-[18rem] h-full;
+  @apply transition-all duration-300 ease-in-out;
+  @apply p-5;
+  @apply overflow-y-auto;
+}
+
+.side-menu.open {
+  @apply ml-0;
+}
+
+.side-menu.closed {
+  @apply -ml-[18rem];
+}
+
+.garment-list {
+  @apply flex flex-col gap-4; /* Space between images */
+  overflow-y: auto; /* Allows scroll if items overflow */
+  max-height: 80%;
+  max-width: 90%;
+  scrollbar-gutter: stable;
+  padding-right: 4px;
 }
 
 /* ========================== Log In Page ========================== */

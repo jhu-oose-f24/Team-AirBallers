@@ -22,6 +22,7 @@
  *   disabled?: boolean;
  *   label?: string;
  *   icon?: JSX.Element;
+ *   image?: string;
  *   tint?: React.CSSProperties["color"];
  *   height?: React.CSSProperties["height"];
  *   width?: React.CSSProperties["width"];
