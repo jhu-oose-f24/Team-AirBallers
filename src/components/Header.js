@@ -8,7 +8,7 @@ import Button from "./Button";
 /**
  * @param {{
  *   title: string;
- *   onMenuClick: () => void;
+ *   onMenuClick?: () => void;
  * }} props
  */
 export default function Header(props) {
