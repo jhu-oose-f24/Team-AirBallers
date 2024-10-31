@@ -1,6 +1,10 @@
 # Team-AirBallers
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).The frontend is designed with figma, yet to be fully implemented. Here's a snippet of some components to be used:
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+
+The Designer-App (final name TBD) allows you to use AI to generate and be creative with garments given a simple prompt. You can visualize the clothing and edit them as well (WIP). Your creations are saved in collections, which can be customized and organized to your liking (coming soon).
+
+The frontend is designed with figma. Here's a snippet of some components to be used:
 
 ![](https://github.com/user-attachments/assets/b1fb76fb-4381-4eac-882e-27e7fd88c65e)
 
