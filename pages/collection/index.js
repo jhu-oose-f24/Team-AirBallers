@@ -1,6 +1,7 @@
 "use client";
 
 import Header from "@/components/Header";
+import { useBodyID } from "@/util/hooks";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -10,21 +11,12 @@ import { useEffect, useState } from "react";
  * >} GarmentList
  */
 export default function Home() {
-  const [mounted, setMounted] = useState(false);
-
-  /**
-   * @type {[
-   *   GarmentList,
-   *   React.Dispatch<React.SetStateAction<GarmentList>>,
-   * ]}
-   */
+  /** @type {UseState<GarmentList>} */
   const [garments, setGarments] = useState([]);
 
-  if (mounted) document.body.id = "collection-page";
+  useBodyID("collection-page");
 
   useEffect(() => {
-    setMounted(true);
-
     axios
       .get("/api/collection")
       .then(({ data }) => setGarments(data.reverse())) // Reverse the order of garments here

@@ -12,3 +12,11 @@ export const useOnResize = (effect, deps) => {
     return () => window.removeEventListener("resize", effect);
   }, deps);
 };
+
+export const useBodyID = (id = "") => {
+  useEffect(() => {
+    document.body.id = id;
+
+    return () => document.body.removeAttribute("id");
+  }, []);
+};

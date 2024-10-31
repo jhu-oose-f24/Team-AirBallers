@@ -3,11 +3,12 @@
 import Button from "@/components/Button";
 import Header from "@/components/Header";
 import InputField from "@/components/InputField";
+import SideMenu from "@/components/SideMenu";
+import { useBodyID } from "@/util/hooks";
 import { IconSearch, IconSparkles } from "@tabler/icons-react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import SideMenu from "@/components/SideMenu";
+import { useState } from "react";
 
 export default function Home() {
   const router = useRouter();
@@ -16,16 +17,13 @@ export default function Home() {
   const [imgSrc, setImgSrc] = useState("");
   const [garmentId, setGarmentId] = useState(null);
   const [generating, setGenerating] = useState(false);
-
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+  useBodyID("home");
 
-  useEffect(() => {
-    document.body.id = "home";
-  }, []);
+  function toggleMenu() {
+    setIsMenuOpen(!isMenuOpen);
+  }
 
   function getResponse() {
     if (generating) return;
@@ -86,7 +84,7 @@ export default function Home() {
           <div className="prompt">
             <InputField
               textArea
-          wrapText
+              wrapText
               className="prompt-input"
               placeholder="Any ideas in mind?"
               iconLeft={<IconSearch />}
