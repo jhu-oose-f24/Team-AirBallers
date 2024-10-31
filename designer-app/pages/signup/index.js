@@ -1,7 +1,8 @@
 "use client";
 
 import Header from "@/components/Header";
-import { use, useState } from "react";
+import { useState } from "react";
+import { useBodyID } from "@/util/hooks";
 import { useRouter } from "next/navigation";
 
 export default function Signup() {
@@ -13,6 +14,8 @@ export default function Signup() {
   const [confirmpassword, setConfirmPassword] = useState("");
   const [generalError, setGeneralError] = useState(null);
   const [passwordErrors, setPasswordErrors] = useState([]);
+
+  useBodyID("signup");
 
   const handleSignup = (event) => {
     event.preventDefault(); // EVENTUALLY WANT TO CHECK THAT EMAIL IS UNIQUE

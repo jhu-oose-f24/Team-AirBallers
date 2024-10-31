@@ -6,7 +6,7 @@ body {
 }
 
 body #__next {
-  @apply opacity-100;
+  @apply opacity-0;
   @apply flex flex-col items-center justify-items-center;
   @apply text-lg font-[family-name:--font-rubik];
   @apply pt-[6rem];
@@ -125,6 +125,13 @@ body#collection-page .collection-grid [data-overlayscrollbars-contents] > * {
 
 /* ========================== Log In Page ========================== */
 
+body#login {
+  @apply opacity-100;
+  @apply flex items-center justify-center;
+  @apply bg-gray-100;
+  @apply h-screen;
+}
+
 .login-wrapper {
   @apply flex items-center justify-center h-screen bg-transparent;
 }
@@ -145,6 +152,13 @@ button[type="submit"]:hover {
 }
 
 /* ========================== Sign Up Page ========================== */
+
+body#signup {
+  @apply opacity-100;
+  @apply flex items-center justify-center;
+  @apply bg-blue-100;
+  @apply h-screen;
+}
 
 .sign-up-prompt {
   @apply flex items-center gap-2 mt-4;
