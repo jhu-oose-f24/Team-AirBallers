@@ -1,23 +1,30 @@
 "use client";
 
+import Button from "@/components/Button";
 import Header from "@/components/Header";
+import InputField from "@/components/InputField";
+import { IconSearch, IconSparkles } from "@tabler/icons-react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import SideMenu from "@/components/SideMenu";
 
 export default function Home() {
   const router = useRouter();
 
-  const [mounted, setMounted] = useState(false);
   const [prompt, setPrompt] = useState("");
   const [imgSrc, setImgSrc] = useState("");
   const [garmentId, setGarmentId] = useState(null);
   const [generating, setGenerating] = useState(false);
 
-  if (mounted) document.body.id = "home";
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
 
   useEffect(() => {
-    setMounted(true);
+    document.body.id = "home";
   }, []);
 
   function getResponse() {
@@ -43,55 +50,61 @@ export default function Home() {
 
   return (
     <>
-      <Header title="Designer-App" />
+      <Header title="Designer-App" onMenuClick={toggleMenu} />
+      <div className="page-wrapper">
+        <SideMenu isOpen={isMenuOpen} toggleMenu={toggleMenu} />
+        <div className="page-content">
+          {imgSrc ? (
+            <img className="garment-img" src={imgSrc} alt="Generated garment" />
+          ) : (
+            <div className="garment-img empty">No Image Yet...</div>
+          )}
 
-      {imgSrc ? (
-        <img className="garment-img" src={imgSrc} alt="Generated garment" />
-      ) : (
-        <div className="garment-img empty">No Image Yet...</div>
-      )}
+          <div
+            className="absolute flex flex-col left-[1rem] top-1/2 transform -translate-y-1/2"
+            style={{ display: !garmentId && "none" }}
+          >
+            <b>Edit (Coming Soon)</b>
+            <label htmlFor="sleeve-edit">Sleeve Length</label>
+            <input
+              id="sleeve-edit"
+              className="edit-input sleeve max-w-[11rem]"
+              placeholder="Length in cm."
+              // onChange={(e) => setPrompt(e.target.value)}
+              disabled
+            />
+            <label htmlFor="color-edit">Color</label>
+            <input
+              id="color-edit"
+              className="edit-input color max-w-[11rem]"
+              placeholder="e.g. #12AB34"
+              // onChange={(e) => setPrompt(e.target.value)}
+              disabled
+            />
+          </div>
 
-      <div
-        className="absolute flex flex-col left-[1rem] top-1/2 transform -translate-y-1/2"
-        style={{ display: !garmentId && "none" }}
-      >
-        <b>Edit (Coming Soon)</b>
-        <label htmlFor="sleeve-edit">Sleeve Length</label>
-        <input
-          id="sleeve-edit"
-          className="edit-input sleeve max-w-[11rem]"
-          placeholder="Length in cm."
-          // onChange={(e) => setPrompt(e.target.value)}
-          disabled
-        />
-        <label htmlFor="color-edit">Color</label>
-        <input
-          id="color-edit"
-          className="edit-input color max-w-[11rem]"
-          placeholder="e.g. #12AB34"
-          // onChange={(e) => setPrompt(e.target.value)}
-          disabled
-        />
-      </div>
-
-      <div className="prompt">
-        <input
-          className="prompt-input"
-          placeholder="Any ideas in mind?"
-          onChange={(e) => setPrompt(e.target.value)}
-        />
-        <button className="btn-prompt-generate" onClick={getResponse}>
-          {generating ? "Loading..." : "Generate"}
-        </button>
-      </div>
-
-      <div className="absolute right-0 top-1/2 transform -translate-y-1/2">
-        <button
-          className="btn-collection"
-          onClick={() => router.push("/collection", { scroll: false })}
-        >
-          View Collection
-        </button>
+          <div className="prompt">
+            <InputField
+              textArea
+          wrapText
+              className="prompt-input"
+              placeholder="Any ideas in mind?"
+              iconLeft={<IconSearch />}
+              value={prompt}
+              onChange={(e) => setPrompt(e.target.value)}
+            />
+            <Button
+              tint="aquamarine"
+              icon={<IconSparkles />}
+              label="Generate"
+              loading={generating}
+              onClick={getResponse}
+              xPad="0.7rem"
+              yPad="0.35rem"
+              disabled={!prompt}
+            />
+          </div>
+        </div>
       </div>
     </>
   );

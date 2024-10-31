@@ -1,0 +1,34 @@
+svg.stitch-wrapper {
+  --stitch-width: 0.14rem;
+  --stitch-length: 3;
+  --stitch-spacing: 3;
+  --stitch-dashes: var(--stitch-length) var(--stitch-spacing);
+  --overlay-pad: calc(var(--stitch-width) / 2);
+
+  @apply w-full;
+  @apply fill-none;
+  @apply px-[--overlay-pad] pt-[--overlay-pad];
+  @apply overflow-visible;
+  @apply pointer-events-none;
+}
+svg.stitch-wrapper:has(rect.stitches) {
+  @apply h-full;
+  @apply absolute box-border;
+}
+svg.stitch-wrapper:has(line.stitches) {
+  @apply h-[--stitch-width];
+}
+
+.stitches {
+  @apply stroke-primary-darker;
+  @apply [stroke-width:--stitch-width];
+  @apply [stroke-linecap:round];
+  @apply [stroke-dasharray:--stitch-dashes];
+  @apply pointer-events-none;
+}
+line.stitches {
+  @apply h-[--stitch-width];
+}
+line.stitches.centered {
+  @apply [stroke-dashoffset:-50%];
+}

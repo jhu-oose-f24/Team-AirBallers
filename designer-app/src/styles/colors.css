@@ -1,28 +1,30 @@
 :root {
-  --background: #faf9f6;
-  --foreground: #634133;
-  --accent: #800020;
-  --secondary: #9c9c9c;
+  --background-main: 32deg 100% 97%;
+  --background-alt: 26deg 53% 94%;
+  --foreground: 9deg 100% 7%;
+  --primary: 14deg 100% 25%;
+  --secondary: 9deg 10% 61%;
+  --accent: 31deg 54% 85%;
 
   /* TODO: dynamically generate in components */
-  --disabled-color-darkest: hsl(40, 10%, 50%);
-  --disabled-color-darker: hsl(40, 10%, 55%);
-  --disabled-color-dark: hsl(40, 10%, 60%);
-  --disabled-color-light: hsl(40, 20%, 75%);
-  --disabled-color-lighter: hsl(40, 30%, 85%);
-  --disabled-color-lightest: hsl(40, 100%, 95%);
+  --disabled-primary-darkest: 25deg 10% 50%;
+  --disabled-primary-darker: 25deg 10% 55%;
+  --disabled-primary-dark: 25deg 10% 60%;
+  --disabled-primary-light: 25deg 20% 75%;
+  --disabled-primary-lighter: 25deg 30% 85%;
+  --disabled-primary-lightest: 25deg 100% 95%;
 
-  --color-darkest: hsl(14, 100%, 15%);
-  --color-darker: hsl(14, 100%, 25%);
-  --color-dark: hsl(14, 60%, 50%);
-  --color-light: hsl(14, 100%, 75%);
-  --color-lighter: hsl(14, 100%, 80%);
-  --color-lightest: hsl(14, 100%, 95%);
+  --primary-darkest: 14deg 100% 15%;
+  --primary-darker: 14deg 100% 25%;
+  --primary-dark: 14deg 60% 50%;
+  --primary-light: 14deg 100% 75%;
+  --primary-lighter: 14deg 100% 80%;
+  --primary-lightest: 14deg 100% 95%;
 
-  --color-active-fill: hsl(14, 100%, 90%);
+  --primary-active-fill: 14deg 100% 90%;
 
-  --color-input-text: hsl(14, 100%, 10%);
-  --color-input-placeholder: hsl(14, 55%, 45%);
+  --primary-input-text: 14deg 100% 10%;
+  --primary-input-placeholder: 14deg 55% 45%;
 }
 
 @media (prefers-color-scheme: dark) {

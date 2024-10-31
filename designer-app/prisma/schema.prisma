@@ -91,3 +91,11 @@ model AbstractGarmentImage {
 
   AbstractGarment AbstractGarment[]
 }
+
+model Description {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  description String
+  edits       Json
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

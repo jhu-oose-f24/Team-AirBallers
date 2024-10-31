@@ -1,16 +1,143 @@
 body {
+  --fabric-tile: url("../assets/fabric-bg.svg");
   @apply text-foreground;
-  @apply bg-background;
+  @apply bg-repeat bg-[image:--fabric-tile] bg-[size:64px];
+  @apply h-screen overflow-hidden;
 }
 
 body #__next {
   @apply opacity-0;
   @apply flex flex-col items-center justify-items-center;
   @apply text-lg font-[family-name:--font-rubik];
-  @apply min-h-screen;
-  @apply pt-20 pb-4 px-4;
+  @apply pt-[5rem] pb-[1rem] px-[1rem];
+  @apply overflow-hidden;
+  @apply h-full;
 }
 body[id] #__next {
   @apply transition-opacity duration-100 delay-100;
   @apply opacity-100;
+}
+
+/* ========================== Home Page ========================== */
+
+body#home #__next {
+}
+
+.garment-img {
+  @apply flex flex-1 items-center justify-center;
+  @apply text-slate-400 font-medium w-auto;
+  @apply max-w-fit max-h-[60vh];
+  @apply rounded-2xl m-6 mt-[-2rem];
+  @apply bg-accent;
+}
+
+.garment-img.empty {
+  @apply px-6 py-4 min-w-[60%];
+  @apply text-primary;
+}
+
+.prompt {
+  @apply flex items-end justify-between gap-2 w-[80%] mx-auto mt-6 mb-[1.5rem];
+}
+
+.prompt-input,
+.edit-input {
+  @apply flex-grow;
+}
+
+.btn-collection {
+  @apply px-4 py-2;
+  @apply text-foreground font-medium bg-background-main;
+  @apply border-2 border-foreground rounded-md mr-6;
+  transition: all 0.3s ease;
+}
+.btn-collection:hover {
+  @apply bg-primary text-foreground;
+  @apply border-primary transform translate-y-[-3px];
+}
+
+.btn-prompt-generate {
+  @apply px-4 py-2;
+  @apply font-medium bg-green-300 text-green-900;
+  @apply rounded-md whitespace-nowrap;
+}
+
+.page-wrapper {
+  @apply w-full h-full flex flex-1;
+  @apply w-full transition-transform duration-300 ease-in-out;
+}
+
+.page-wrapper.shifted {
+  @apply translate-x-[300px];
+}
+
+.page-content {
+  @apply w-full h-full flex flex-col flex-1;
+  @apply justify-end  items-center;
+}
+
+/* ========================== Side Menu ========================== */
+
+.side-menu {
+  @apply flex flex-col justify-between;
+  @apply bg-background-main;
+  @apply w-[18rem] h-full;
+  @apply transition-all duration-300 ease-in-out;
+  @apply p-5;
+  @apply overflow-y-auto;
+}
+
+.side-menu.open {
+  @apply ml-0;
+}
+
+.side-menu.closed {
+  @apply -ml-[18rem];
+}
+
+.garment-list {
+  @apply flex flex-col gap-4; /* Space between images */
+  overflow-y: auto; /* Allows scroll if items overflow */
+  max-height: 80%;
+  max-width: 90%;
+  scrollbar-gutter: stable;
+  padding-right: 4px;
+}
+
+/* ========================== Log In Page ========================== */
+
+.login-wrapper {
+  @apply flex items-center justify-center h-screen bg-transparent;
+}
+
+.login-container {
+  @apply bg-white p-6 rounded-xl shadow-lg;
+  @apply w-[22rem] flex flex-col items-center gap-4;
+}
+
+button[type="submit"] {
+  @apply px-2 py-1 font-medium text-gray-800 bg-white;
+  @apply border-2 border-gray-300 rounded-md;
+  @apply transition-all cursor-pointer;
+}
+
+button[type="submit"]:hover {
+  @apply bg-blue-100 text-gray-800 border-blue-300 transform translate-y-[-2px];
+}
+
+/* ========================== Sign Up Page ========================== */
+
+.sign-up-prompt {
+  @apply flex items-center gap-2 mt-4;
+}
+
+.btn-signup {
+  @apply px-2 py-1 font-medium text-white bg-blue-500;
+  @apply border-2 border-blue-500 rounded-md;
+  @apply transition-all cursor-pointer;
+}
+
+.btn-signup:hover {
+  @apply bg-blue-600 border-blue-600 shadow-lg shadow-blue-300;
+  transform: translateY(-2px);
 }

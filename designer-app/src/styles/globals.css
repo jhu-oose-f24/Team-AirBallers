@@ -2,89 +2,144 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+@layer base {
+  svg * {
+    @apply pointer-events-none;
   }
 }
 
-body#home #__next {
-  @apply justify-end;
+/* ====================== Overlay Scrollbar ====================== */
+
+.os-scrollbar {
+  --scrollbar-end-padding: 0.5rem;
+  --scrollbar-track-padding: 0.3rem;
+  --scrollbar-width: 0.9rem;
+
+  @apply !transition-all !duration-100 !ease-in-out;
+  @apply !cursor-default;
+}
+.os-scrollbar.os-scrollbar-vertical {
+  @apply px-[--scrollbar-track-padding] py-[--scrollbar-end-padding];
+  @apply w-[--scrollbar-width];
+}
+.os-scrollbar.os-scrollbar-horizontal {
+  @apply px-[--scrollbar-end-padding] py-[--scrollbar-track-padding];
+  @apply h-[--scrollbar-width];
+  @apply mb-[0.1rem];
 }
 
-.garment-img {
-  @apply flex flex-1 items-center justify-center;
-  @apply text-slate-400 font-medium w-auto;
-  @apply max-w-fit max-h-[60vh];
-  @apply bg-[--secondary];
-  @apply rounded-2xl m-6 mt-[-2rem];
-}
-
-.garment-img.empty {
-  @apply px-6 py-4 min-w-[60%] bg-[--accent];
-  @apply text-background;
-  @apply bg-foreground;
-}
-
-.prompt {
-  @apply flex items-center gap-2 w-auto mt-6 mb-[1.5rem];
-}
-
-.prompt-input,
-.edit-input {
-  @apply w-auto px-3 py-2;
-  @apply bg-background text-foreground placeholder-[--secondary];
-  @apply rounded-md border-2 border-foreground;
-}
-
-.prompt-input:focus,
-.edit-input:focus {
-  @apply border-[--accent] shadow-lg;
+.os-scrollbar:has(:hover) {
+  --scrollbar-track-padding: 0.25rem;
+  --scrollbar-width: 1rem;
 }
 
 .btn-collection {
+  @apply flex flex-col;
   @apply px-4 py-2;
-  @apply text-foreground font-medium bg-background;
+  @apply text-foreground font-medium bg-background-main;
   @apply border-2 border-foreground rounded-md mr-6;
   transition: all 0.3s ease;
 }
-.btn-collection:hover {
-  @apply bg-[var(--accent)] text-foreground;
-  @apply border-[var(--accent)] transform translate-y-[-3px];
+
+.os-scrollbar-handle {
+  @apply !bg-primary-darker/50;
+  @apply [transition:inherit];
+}
+.os-scrollbar:has(:hover) .os-scrollbar-handle {
+  @apply !bg-primary-darker/65;
+}
+.os-scrollbar:has(:active) .os-scrollbar-handle {
+  @apply !bg-primary-darker;
 }
 
-.btn-prompt-generate {
-  @apply px-4 py-2;
-  @apply font-medium bg-green-300 text-green-900;
-  @apply rounded-md whitespace-nowrap;
+/* =========================== Tooltip =========================== */
+
+.tooltip {
+  --arrow-half-width: 0.5rem;
+  --arrow-height: 0.5rem;
+  --arrow-padding: 0.4rem;
+
+  --arrow-wrapper-width: calc(
+    2 * var(--arrow-half-width) + 2 * var(--arrow-padding)
+  );
+
+  @apply !bg-primary-darkest !text-primary-lightest;
+  @apply !rounded-[0.6rem];
+  @apply !outline !outline-primary-dark;
+  @apply ![outline-width:0.25rem] !-outline-offset-[0.25rem];
 }
+
+.tooltip .tippy-content {
+  @apply px-[0.8rem] py-[0.4rem];
+  @apply font-[450] text-[1rem];
+}
+
+.tooltip[data-placement^="top"] .tippy-arrow,
+.tooltip[data-placement^="bottom"] .tippy-arrow {
+  @apply !px-[--arrow-padding];
+  @apply w-[--arrow-wrapper-width];
+}
+.tooltip[data-placement^="left"] .tippy-arrow,
+.tooltip[data-placement^="right"] .tippy-arrow {
+  @apply !py-[--arrow-padding];
+  @apply h-[--arrow-wrapper-width];
+}
+
+.tooltip .tippy-arrow:before {
+  @apply !border-transparent;
+}
+.tooltip[data-placement^="top"] .tippy-arrow:before,
+.tooltip[data-placement^="bottom"] .tippy-arrow:before {
+  @apply ![border-left-width:--arrow-half-width];
+  @apply ![border-right-width:--arrow-half-width];
+  @apply !left-1/2 !-translate-x-1/2;
+}
+.tooltip[data-placement^="left"] .tippy-arrow:before,
+.tooltip[data-placement^="right"] .tippy-arrow:before {
+  @apply ![border-top-width:--arrow-half-width];
+  @apply ![border-bottom-width:--arrow-half-width];
+  @apply !top-1/2 !-translate-y-1/2;
+}
+.tooltip[data-placement^="top"] .tippy-arrow:before {
+  @apply ![border-top-width:--arrow-height];
+  @apply ![border-bottom-width:0px];
+  @apply !border-t-primary-dark;
+}
+.tooltip[data-placement^="bottom"] .tippy-arrow:before {
+  @apply ![border-top-width:0px];
+  @apply ![border-bottom-width:--arrow-height];
+  @apply !border-b-primary-dark;
+}
+.tooltip[data-placement^="left"] .tippy-arrow:before {
+  @apply ![border-left-width:--arrow-height];
+  @apply ![border-right-width:0px];
+  @apply !border-l-primary-dark;
+}
+.tooltip[data-placement^="right"] .tippy-arrow:before {
+  @apply ![border-left-width:0px];
+  @apply ![border-right-width:--arrow-height];
+  @apply !border-r-primary-dark;
+}
+
+/* HEADER */
 
 .header {
-  @apply flex justify-between items-center w-full p-4;
-  @apply bg-background;
-  @apply border-b-2 border-foreground;
-  @apply fixed top-0 left-0 z-50;
+  @apply w-full;
+  @apply p-4;
+  @apply bg-background-main;
+  @apply flex justify-between items-center;
+  @apply outline outline-[0.4rem] outline-background-alt;
+  @apply border-b-[0.15rem] border-secondary;
+  @apply fixed top-0 left-0 z-10;
 }
 
-.title {
+.header .title {
   @apply text-2xl font-bold text-foreground;
-  @apply pl-4;
+  @apply justify-center;
 }
 
 .auth-buttons {
   @apply flex gap-4;
-}
-
-.btn-login {
-  @apply px-4 py-2;
-  @apply font-medium text-foreground bg-background;
-  @apply border-2 border-foreground rounded-md;
-  transition: all 0.3s ease;
-}
-
-.btn-login:hover {
-  @apply bg-[--accent] text-foreground;
-  @apply border-[--accent] transform translate-y-[-3px];
 }
 
 body#collection-page .collection-grid {
