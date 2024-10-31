@@ -69,18 +69,21 @@
   @apply max-h-[12rem];
   @apply gap-[0.3rem] mx-[0.2rem];
   @apply bg-transparent;
+  @apply min-h-[--input-line-height];
 }
 
 .scroller {
   @apply mr-[-0.5rem] pr-[0.5rem];
+  @apply min-h-[--input-line-height];
+}
+.scroller:has(input.field) {
+  @apply max-h-[--input-line-height];
 }
 
-.scroller [data-overlayscrollbars-contents]:has(input.field) {
-  @apply !mb-[-4px];
-}
 .scroller [data-overlayscrollbars-contents]:has(textarea.field) {
   @apply !mb-[-8px];
 }
+
 .scroller [class*="os-scrollbar-vertical"] {
   --scrollbar-end-padding: 0.1rem;
 }

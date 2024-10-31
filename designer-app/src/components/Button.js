@@ -4,7 +4,6 @@ import Stitches from "@/components/Stitches";
 import { pause } from "@/util/misc";
 import { paletteFrom } from "@/util/tint";
 import clsx from "clsx";
-import { useEffect, useState } from "react";
 import css from "../styles/Button.module.css";
 
 /** @param {ButtonProps} props */
@@ -60,24 +59,16 @@ const Button = (props) => {
     },
   };
 
-  /** @type {UseState<CustomCSSProperties>} */
-  const [tintPalette, setTintPalette] = useState({});
-  /** @type {UseState<CustomCSSProperties>} */
-  const [moddedStyle, setModdedStyle] = useState({});
+  /** @type {CustomCSSProperties} */
+  const tintPalette = paletteFrom(tint);
 
-  const customSize = [height, width, xPad, yPad];
-  useEffect(() => {
-    setModdedStyle({
-      "--btn-x-padding": xPad || (width && "0.4rem"),
-      "--btn-y-padding": yPad || ((stretch || height) && "0px"),
-      "--btn-font-size": fontSize,
-      ...(SIZE_PRESETS[size] || {}),
-    });
-  }, [fontSize, stretch, size, ...customSize]);
-
-  useEffect(() => {
-    setTintPalette(paletteFrom(tint));
-  }, [tint]);
+  /** @type {CustomCSSProperties} */
+  const moddedStyle = {
+    "--btn-x-padding": xPad || (width && "0.4rem"),
+    "--btn-y-padding": yPad || ((stretch || height) && "0px"),
+    "--btn-font-size": fontSize,
+    ...(SIZE_PRESETS[size] || {}),
+  };
 
   /** @param {React.KeyboardEvent} event */
   async function enterClick(event) {
