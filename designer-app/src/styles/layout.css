@@ -6,7 +6,7 @@ body {
 }
 
 body #__next {
-  @apply opacity-0;
+  @apply opacity-100;
   @apply flex flex-col items-center justify-items-center;
   @apply text-lg font-[family-name:--font-rubik];
   @apply pt-[6rem];
