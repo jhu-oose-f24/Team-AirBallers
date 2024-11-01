@@ -2,7 +2,6 @@
 
 import Stitches from "@/components/Stitches";
 import Tooltip from "@/components/Tooltip";
-import { useOnResize } from "@/util/hooks";
 import { paletteFrom } from "@/util/tint";
 import {
   IconAlertCircleFilled,
@@ -45,8 +44,6 @@ const InputField = (props) => {
     style,
   } = props;
 
-  /** @type {UseState<CustomCSSProperties>} */
-  const [tintPalette, setTintPalette] = useState({});
   const [pwVisible, setPwVisible] = useState(false);
 
   /** @type {UseState<Element>} */
@@ -55,14 +52,12 @@ const InputField = (props) => {
   const [rootRef, setRootRef] = useState(null);
   /** @type {UseState<Element>} */
   const [iconsRightRef, setIconsRightRef] = useState(null);
+  const [scrollerInit, setScrollerInit] = useState(false);
+
+  /** @type {CustomCSSProperties} */
+  const tintPalette = paletteFrom(error && "crimson");
 
   const pwType = pwVisible ? "text" : "password";
-
-  useOnResize(() => textAreaResize(fieldRef), [fieldRef]);
-
-  useEffect(() => {
-    setTintPalette(paletteFrom(error && "crimson"));
-  }, [error]);
 
   const icons = [iconLeft, iconRight];
   const inputState = [disabled, password, pwVisible, error];
@@ -104,6 +99,14 @@ const InputField = (props) => {
     return [0, 15 + iconsY - fieldY];
   }
 
+  /** @param {import("overlayscrollbars").OverlayScrollbars} ref */
+  function initializeScroller(ref) {
+    const root = ref?.elements?.()?.host;
+    if (!root) return;
+
+    setScrollerInit(true);
+  }
+
   /** @ts-ignore @type {GeneralInput} */
   const InputElement = textArea ? "textarea" : "input";
 
@@ -137,6 +140,15 @@ const InputField = (props) => {
                 scrollbars: {
                   autoHide: "scroll",
                 },
+                paddingAbsolute: true,
+              }}
+              events={{
+                initialized: initializeScroller,
+                updated: () => textAreaResize(fieldRef),
+              }}
+              style={{
+                marginBottom: !scrollerInit && textArea && "-8px",
+                opacity: +scrollerInit,
               }}
               defer
             >

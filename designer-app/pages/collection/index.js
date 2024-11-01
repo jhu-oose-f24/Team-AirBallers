@@ -1,33 +1,20 @@
 "use client";
 
 import Header from "@/components/Header";
+import { useBodyID } from "@/util/hooks";
 import axios from "axios";
+import { OverlayScrollbarsComponent } from "overlayscrollbars-react";
 import { useEffect, useState } from "react";
 
-/**
- * @typedef {Awaited<
- *   ReturnType<import("@/util/db.js")["default"]["prompt"]["findMany"]>
- * >} GarmentList
- */
 export default function Home() {
-  const [mounted, setMounted] = useState(false);
-
-  /**
-   * @type {[
-   *   GarmentList,
-   *   React.Dispatch<React.SetStateAction<GarmentList>>,
-   * ]}
-   */
   const [garments, setGarments] = useState([]);
 
-  if (mounted) document.body.id = "collection-page";
+  useBodyID("collection-page");
 
   useEffect(() => {
-    setMounted(true);
-
     axios
       .get("/api/collection")
-      .then(({ data }) => setGarments(data.reverse())) // Reverse the order of garments here
+      .then(({ data }) => setGarments(data.reverse()))
       .catch((err) => console.log(err));
   }, []);
 
@@ -35,11 +22,11 @@ export default function Home() {
     <>
       <Header title="< Garment Collection" />
 
-      <div className="collection-grid">
+      <OverlayScrollbarsComponent className="collection-grid" defer>
         {garments.map((garment, idx) => (
           <img key={idx} src={garment.imageURL} />
         ))}
-      </div>
+      </OverlayScrollbarsComponent>
     </>
   );
 }
