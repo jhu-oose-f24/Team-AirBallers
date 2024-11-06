@@ -1,10 +1,6 @@
 "use client";
 
 import Header from "@/components/Header";
-<<<<<<< HEAD
-import { useState } from "react";
-=======
->>>>>>> origin/dev
 import { useBodyID } from "@/util/hooks";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
