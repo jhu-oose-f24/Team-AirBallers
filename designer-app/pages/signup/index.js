@@ -1,9 +1,13 @@
 "use client";
 
 import Header from "@/components/Header";
+<<<<<<< HEAD
 import { useState } from "react";
+=======
+>>>>>>> origin/dev
 import { useBodyID } from "@/util/hooks";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function Signup() {
   const router = useRouter();
@@ -20,7 +24,7 @@ export default function Signup() {
   const handleSignup = (event) => {
     event.preventDefault(); // EVENTUALLY WANT TO CHECK THAT EMAIL IS UNIQUE
 
-    if ((!firstName) || (!lastName) || (!email) || (!password) || (!confirmpassword)) {
+    if (!firstName || !lastName || !email || !password || !confirmpassword) {
       setGeneralError("Please fill in all fields.");
       setPasswordErrors([]);
       return;
@@ -112,11 +116,13 @@ export default function Signup() {
               </ul>
             </div>
           )}
-          <button 
+          <button
             type="button"
             onClick={() => router.push("/login")}
             className="mt-4 text-blue-500 hover:underline"
-          >Back to Login</button>
+          >
+            Back to Login
+          </button>
         </form>
       </div>
     </div>

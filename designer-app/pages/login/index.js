@@ -6,6 +6,8 @@ import { useBodyID } from "@/util/hooks";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+import { GoogleAuth, OAuth2Client } from 'google-auth-library';
+
 export default function Login() {
   const router = useRouter();
   const [username, setUsername] = useState("");
@@ -14,6 +16,16 @@ export default function Login() {
   const [error, setError] = useState(null);
 
   useBodyID("login");
+
+  const jwt = new JWT();
+  const auth = new GoogleAuth();
+  async function getToken() {
+    const token = await jwt.getToken('token');
+    const projectId = await auth.getProjectId();
+    const creds = await auth.getApplicationDefault();
+    return token;
+  }
+  getToken();
 
   const handleLogin = (event) => {
     event.preventDefault();
@@ -71,6 +83,13 @@ export default function Login() {
           tint="#3498db"
         />
       </div>
+
+      <Button
+        label="Log In with Google"
+        onClick={handleGoogleLogin}
+        size="xs"
+        tint="#db4437"
+      />
     </div>
   );
 }
