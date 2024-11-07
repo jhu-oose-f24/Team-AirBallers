@@ -1,28 +1,43 @@
 "use client";
 
+import randomExamplePrompt from "@/assets/examplePrompts";
 import Button from "@/components/Button";
-import Header from "@/components/Header";
 import InputField from "@/components/InputField";
-import SideMenu from "@/components/SideMenu";
+import { RootContext } from "@/components/RootLayout";
+import EnumSpec from "@/types/EnumSpec";
+import GarmentSpec from "@/types/GarmentSpec";
+import MeasurementSpec from "@/types/MeasurementSpec";
 import { useBodyID } from "@/util/hooks";
 import { IconSearch, IconSparkles } from "@tabler/icons-react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 export default function Home() {
   const router = useRouter();
+  const { setHeaderState } = useContext(RootContext);
 
+  const [examplePrompt, setExamplePrompt] = useState("");
   const [prompt, setPrompt] = useState("");
   const [imgSrc, setImgSrc] = useState("");
   const [garmentId, setGarmentId] = useState(null);
   const [generating, setGenerating] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useBodyID("home");
 
-  function toggleMenu() {
-    setIsMenuOpen(!isMenuOpen);
+  useEffect(() => {
+    setHeaderState({ title: "Designer-App" });
+    setExamplePrompt(randomExamplePrompt());
+  }, []);
+
+  /** @returns {GarmentSpec} */
+  function schemaToSpec(schema = {}) {
+    switch (schema?.class) {
+      case MeasurementSpec.name:
+        return MeasurementSpec.from(schema);
+      case EnumSpec.name:
+        return EnumSpec.from(schema);
+    }
   }
 
   function getResponse() {
@@ -48,61 +63,55 @@ export default function Home() {
 
   return (
     <>
-      <Header title="Designer-App" onMenuClick={toggleMenu} />
-      <div className="page-wrapper">
-        <SideMenu isOpen={isMenuOpen} toggleMenu={toggleMenu} />
-        <div className="page-content">
-          {imgSrc ? (
-            <img className="garment-img" src={imgSrc} alt="Generated garment" />
-          ) : (
-            <div className="garment-img empty">No Image Yet...</div>
-          )}
+      {imgSrc ? (
+        <img className="garment-img" src={imgSrc} alt="Generated garment" />
+      ) : (
+        <div className="garment-img empty">No Image Yet...</div>
+      )}
 
-          <div
-            className="absolute flex flex-col left-[1rem] top-1/2 transform -translate-y-1/2"
-            style={{ display: !garmentId && "none" }}
-          >
-            <b>Edit (Coming Soon)</b>
-            <label htmlFor="sleeve-edit">Sleeve Length</label>
-            <input
-              id="sleeve-edit"
-              className="edit-input sleeve max-w-[11rem]"
-              placeholder="Length in cm."
-              // onChange={(e) => setPrompt(e.target.value)}
-              disabled
-            />
-            <label htmlFor="color-edit">Color</label>
-            <input
-              id="color-edit"
-              className="edit-input color max-w-[11rem]"
-              placeholder="e.g. #12AB34"
-              // onChange={(e) => setPrompt(e.target.value)}
-              disabled
-            />
-          </div>
+      <div
+        className="absolute flex flex-col left-[1rem] top-1/2 transform -translate-y-1/2"
+        style={{ display: !garmentId && "none" }}
+      >
+        <b>Edit (Coming Soon)</b>
+        <label htmlFor="sleeve-edit">Sleeve Length</label>
+        <input
+          id="sleeve-edit"
+          className="edit-input sleeve max-w-[11rem]"
+          placeholder="Length in cm."
+          // onChange={(e) => setPrompt(e.target.value)}
+          disabled
+        />
+        <label htmlFor="color-edit">Color</label>
+        <input
+          id="color-edit"
+          className="edit-input color max-w-[11rem]"
+          placeholder="e.g. #12AB34"
+          // onChange={(e) => setPrompt(e.target.value)}
+          disabled
+        />
+      </div>
 
-          <div className="prompt">
-            <InputField
-              textArea
-              wrapText
-              className="prompt-input"
-              placeholder="Any ideas in mind?"
-              iconLeft={<IconSearch />}
-              value={prompt}
-              onChange={(e) => setPrompt(e.target.value)}
-            />
-            <Button
-              tint="aquamarine"
-              icon={<IconSparkles />}
-              label="Generate"
-              loading={generating}
-              onClick={getResponse}
-              xPad="0.7rem"
-              yPad="0.35rem"
-              disabled={!prompt}
-            />
-          </div>
-        </div>
+      <div className="prompt">
+        <InputField
+          textArea
+          wrapText
+          className="prompt-input"
+          placeholder={examplePrompt}
+          iconLeft={<IconSearch />}
+          value={prompt}
+          onChange={(e) => setPrompt(e.target.value)}
+        />
+        <Button
+          tint="aquamarine"
+          icon={<IconSparkles />}
+          label="Generate"
+          loading={generating}
+          onClick={getResponse}
+          xPad="0.7rem"
+          yPad="0.35rem"
+          disabled={!prompt?.trim()}
+        />
       </div>
     </>
   );

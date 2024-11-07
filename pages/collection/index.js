@@ -1,17 +1,24 @@
 "use client";
 
-import Header from "@/components/Header";
+import { RootContext } from "@/components/RootLayout";
+import ScrollContainer from "@/components/ScrollContainer";
 import { useBodyID } from "@/util/hooks";
 import axios from "axios";
-import { OverlayScrollbarsComponent } from "overlayscrollbars-react";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 export default function Home() {
+  const { setHeaderState } = useContext(RootContext);
+
   const [garments, setGarments] = useState([]);
 
   useBodyID("collection-page");
 
   useEffect(() => {
+    setHeaderState({
+      title: "Garment Collection",
+      back: "/",
+    });
+
     axios
       .get("/api/collection")
       .then(({ data }) => setGarments(data.reverse()))
@@ -20,13 +27,11 @@ export default function Home() {
 
   return (
     <>
-      <Header title="< Garment Collection" />
-
-      <OverlayScrollbarsComponent className="collection-grid" defer>
+      <ScrollContainer className="collection-grid">
         {garments.map((garment, idx) => (
           <img key={idx} src={garment.imageURL} />
         ))}
-      </OverlayScrollbarsComponent>
+      </ScrollContainer>
     </>
   );
 }

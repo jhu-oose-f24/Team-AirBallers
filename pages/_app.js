@@ -1,3 +1,4 @@
+import RootLayout from "@/components/RootLayout";
 import "@/styles/colors.css";
 import "@/styles/globals.css";
 import "@/styles/layout.css";
@@ -12,5 +13,9 @@ export const rubik = Rubik({
 });
 
 export default function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />;
+  return (
+    <RootLayout>
+      <Component {...pageProps} />
+    </RootLayout>
+  );
 }
