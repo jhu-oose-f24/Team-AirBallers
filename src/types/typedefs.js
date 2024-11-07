@@ -1,6 +1,6 @@
 /**
  * @template T
- * @typedef {[T, React.Dispatch<T>]} UseState
+ * @typedef {[T, React.Dispatch<React.SetStateAction<T>>]} UseState
  */
 
 /**
@@ -17,6 +17,12 @@
 /**
  * @template {React.ElementType<?>} C
  * @typedef {React.ComponentRef<C>} RefType
+ */
+
+/**
+ * @typedef {React.HTMLAttributes<HTMLElement>["className"]} ClassName
+ *
+ * @typedef {import("csstype").Property.Color} CSSColor
  */
 
 /**
@@ -37,4 +43,9 @@
  *   reference: import("@popperjs/core").Rect;
  * }} props
  * @returns {[number, number]}
+ */
+
+/**
+ * @typedef {import("@prisma/client").Prisma} Prisma
+ * @typedef {import("@prisma/client").Prisma.PromptGetPayload<{}>} Thing
  */

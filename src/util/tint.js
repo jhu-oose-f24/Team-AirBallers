@@ -9,7 +9,7 @@ function HSL(h, s, l) {
   return `${H}deg ${Math.round(S * 100)}% ${Math.round(L * 100)}%`;
 }
 
-/** @param {React.CSSProperties["color"]} tint */
+/** @param {CSSColor} tint */
 export function paletteFrom(tint) {
   if (!chroma.valid(tint)) {
     return {};
@@ -18,6 +18,7 @@ export function paletteFrom(tint) {
 
   return {
     "--hue": tint,
+    "--primary": HSL(hue, 1.0, 0.25),
 
     "--primary-darkest": HSL(hue, 1.0, 0.15),
     "--primary-darker": HSL(hue, 1.0, 0.25),

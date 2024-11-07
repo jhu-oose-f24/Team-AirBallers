@@ -10,6 +10,9 @@ import css from "../styles/Button.module.css";
 const Button = (props) => {
   const {
     className,
+    variant = "primary",
+    borderRadius,
+    bgColor = "var(--background-main)",
 
     onClick,
     loading,
@@ -27,6 +30,8 @@ const Button = (props) => {
     fontSize,
     xPad,
     yPad,
+
+    style,
   } = props;
 
   /**
@@ -60,14 +65,31 @@ const Button = (props) => {
   };
 
   /** @type {CustomCSSProperties} */
-  const tintPalette = paletteFrom(tint);
+  const tintPalette = {
+    ...paletteFrom(tint),
+    ...(variant === "secondary" && {
+      "--primary-darker": "var(--disabled-primary-darkest)",
+      "--primary-light": "var(--disabled-primary-lighter)",
+      "--primary-lighter": bgColor,
+      "--primary-active-fill": bgColor,
+    }),
+    ...(variant === "hint" && {
+      "--primary-light": "var(--background-alt)",
+      "--primary-lighter": "transparent",
+    }),
+  };
 
   /** @type {CustomCSSProperties} */
   const moddedStyle = {
     "--btn-x-padding": xPad || (width && "0.4rem"),
     "--btn-y-padding": yPad || ((stretch || height) && "0px"),
     "--btn-font-size": fontSize,
+    "--btn-content-radius": borderRadius,
     ...(SIZE_PRESETS[size] || {}),
+    ...(variant !== "primary" && {
+      "--btn-border-pad": "0px",
+      "--btn-content-radius": borderRadius ?? "0.5rem",
+    }),
   };
 
   /** @param {React.KeyboardEvent} event */
@@ -83,11 +105,16 @@ const Button = (props) => {
   return (
     <div
       className={clsx(css["btn-wrapper"], className)}
-      style={{ height, width, alignSelf: stretch && "stretch" }}
+      style={{ height, width, alignSelf: stretch && "stretch", ...style }}
       onKeyDown={enterClick}
     >
       <button
-        className={clsx(css.btn, css.patch, loading && css.loading)}
+        className={clsx(
+          css.btn,
+          css.patch,
+          css[variant],
+          loading && css.loading,
+        )}
         style={{ ...(disabled ? {} : tintPalette), ...moddedStyle }}
         onClick={loading || disabled ? null : onClick}
         disabled={disabled}
@@ -98,14 +125,16 @@ const Button = (props) => {
             {image && <img src={image} alt="" className={css.image} />}
             {label && <span className={css.label}>{label}</span>}
           </div>
-          <Stitches
-            type="border"
-            svgClass={css["stitch-wrapper"]}
-            pathClass={css.stitches}
-            stitchLength={SIZE_PRESETS[size]?.stitchLength}
-            stitchSpacing={SIZE_PRESETS[size]?.stitchSpacing}
-            stitchWidth={SIZE_PRESETS[size]?.stitchWidth}
-          />
+          {variant === "primary" && (
+            <Stitches
+              type="border"
+              svgClass={css["stitch-wrapper"]}
+              pathClass={css.stitches}
+              stitchLength={SIZE_PRESETS[size]?.stitchLength}
+              stitchSpacing={SIZE_PRESETS[size]?.stitchSpacing}
+              stitchWidth={SIZE_PRESETS[size]?.stitchWidth}
+            />
+          )}
         </div>
       </button>
     </div>
