@@ -4,9 +4,6 @@ import randomExamplePrompt from "@/assets/examplePrompts";
 import Button from "@/components/Button";
 import InputField from "@/components/InputField";
 import { RootContext } from "@/components/RootLayout";
-import EnumSpec from "@/types/EnumSpec";
-import GarmentSpec from "@/types/GarmentSpec";
-import MeasurementSpec from "@/types/MeasurementSpec";
 import { useBodyID } from "@/util/hooks";
 import { IconSearch, IconSparkles } from "@tabler/icons-react";
 import axios from "axios";
@@ -29,16 +26,6 @@ export default function Home() {
     setHeaderState({ title: "Designer-App" });
     setExamplePrompt(randomExamplePrompt());
   }, []);
-
-  /** @returns {GarmentSpec} */
-  function schemaToSpec(schema = {}) {
-    switch (schema?.class) {
-      case MeasurementSpec.name:
-        return MeasurementSpec.from(schema);
-      case EnumSpec.name:
-        return EnumSpec.from(schema);
-    }
-  }
 
   function getResponse() {
     if (generating) return;
