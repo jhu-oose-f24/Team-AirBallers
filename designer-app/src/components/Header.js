@@ -1,41 +1,60 @@
 "use client";
 
-import { IconLogin, IconMenu2 } from "@tabler/icons-react";
-import Link from "next/link";
+import { RootContext } from "@/components/RootLayout";
+import { IconChevronLeft, IconLayoutGrid } from "@tabler/icons-react";
+import clsx from "clsx";
 import { useRouter } from "next/navigation";
+import { useContext } from "react";
 import Button from "./Button";
 
-/**
- * @param {{
- *   title: string;
- *   onMenuClick?: () => void;
- * }} props
- */
-export default function Header(props) {
-  const { title = "TITLE", onMenuClick } = props;
+const Header = () => {
   const router = useRouter();
+  const { sideBarOpen, setSideBarOpen, headerState } = useContext(RootContext);
 
-  const handleLoginClick = () => {
-    router.push("/login");
-  };
+  const { title, back } = headerState;
+
+  function goBack() {
+    router.push(back);
+  }
+
+  function toggleSideBar() {
+    setSideBarOpen(!sideBarOpen);
+  }
 
   return (
-    <header className="header">
-      <button onClick={onMenuClick} className="menu-button">
-        <IconMenu2 />
-      </button>
+    <header className="app-header">
+      <Button
+        variant="hint"
+        className={clsx("action-button", back && "back")}
+        icon={back ? <IconChevronLeft stroke={2.8} /> : <IconLayoutGrid />}
+        label={back && title}
+        onClick={back ? goBack : toggleSideBar}
+        fontSize="1.8rem"
+        xPad="0.3rem"
+        yPad="0.3rem"
+        stretch
+      />
 
-      <Link href="/" scroll={false}>
-        <h1 className="title">{title}</h1>
-      </Link>
+      {!back && (
+        <Button
+          variant="hint"
+          className="title-link"
+          label={title}
+          onClick={goBack}
+          fontSize="1.8rem"
+          stretch
+        />
+      )}
 
       <Button
-        tint="aquamarine"
-        icon={<IconLogin />}
+        variant="secondary"
         label="Login"
-        onClick={handleLoginClick}
-        size="sm"
+        onClick={() => router.push("/login")}
+        xPad="0.6rem"
+        stretch
       />
     </header>
   );
-}
+};
+
+export default Header;

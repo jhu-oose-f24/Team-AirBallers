@@ -1,18 +1,22 @@
 "use client";
 
-import Button from "@/components/Button";
+import CollectionPreview from "@/components/CollectionPreview";
+import { RootContext } from "@/components/RootLayout";
+import ScrollContainer from "@/components/ScrollContainer";
+import Stitches from "@/components/Stitches";
 import axios from "axios";
+import clsx from "clsx";
 import { useRouter } from "next/navigation";
-import { OverlayScrollbarsComponent } from "overlayscrollbars-react";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 /**
  * @typedef {Awaited<
  *   ReturnType<import("@/util/db.js")["default"]["prompt"]["findMany"]>
  * >} GarmentList
  */
-export default function SideMenu({ isOpen, toggleMenu }) {
+const SideBar = () => {
   const router = useRouter();
+  const { sideBarOpen } = useContext(RootContext);
 
   /** @type {UseState<GarmentList>} */
   const [garments, setGarments] = useState([]);
@@ -25,29 +29,24 @@ export default function SideMenu({ isOpen, toggleMenu }) {
   }, []);
 
   return (
-    <div className={`side-menu ${isOpen ? "open" : "closed"}`}>
-      <OverlayScrollbarsComponent className="garment-list" defer>
-        {garments.length > 0 ? (
-          garments.map((garment, idx) => (
-            <Button
-              key={idx}
-              image={garment.imageURL}
-              // TODO: move to collection page
-              // onClick={() => router.push(`/garment/${garment.id}`)}
-            />
-          ))
-        ) : (
-          <p>No garments available</p>
-        )}
-      </OverlayScrollbarsComponent>
+    <div className={clsx("sidebar", sideBarOpen ? "open" : "closed")}>
+      <span className="header">
+        Collections
+        <Stitches type="line" stitchWidth="0.17rem" />
+      </span>
 
-      <Button
-        tint="aquamarine"
-        label="View Full Collection"
-        onClick={() => router.push("/collection", { scroll: false })}
-        xPad="0.7rem"
-        yPad="0.35rem"
-      />
+      <ScrollContainer className="collection-list">
+        {/* TODO: create actual cards from collections */}
+        <CollectionPreview garments={garments?.slice(0, 5)} />
+        <CollectionPreview garments={garments?.slice(5, 7)} />
+        <CollectionPreview garments={garments?.slice(7, 15)} />
+        <CollectionPreview garments={garments?.slice(15, 40)} />
+        <CollectionPreview garments={garments?.slice(40, 43)} />
+        <CollectionPreview garments={garments?.slice(43, 48)} />
+        <CollectionPreview garments={garments?.slice(48)} />
+      </ScrollContainer>
     </div>
   );
-}
+};
+
+export default SideBar;

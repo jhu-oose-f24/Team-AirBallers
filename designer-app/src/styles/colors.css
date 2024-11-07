@@ -1,10 +1,10 @@
 :root {
   --background-main: 32deg 100% 97%;
   --background-alt: 26deg 53% 94%;
-  --foreground: 9deg 100% 7%;
+  --foreground: 9deg 100% 10%;
   --primary: 14deg 100% 25%;
-  --secondary: 9deg 10% 61%;
-  --accent: 31deg 54% 85%;
+  --secondary: 9deg 10% 60%;
+  --accent: 30deg 55% 85%;
 
   /* TODO: dynamically generate in components */
   --disabled-primary-darkest: 25deg 10% 50%;

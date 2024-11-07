@@ -1,0 +1,46 @@
+.preview-card {
+  @apply flex flex-col;
+  @apply gap-[0.1rem];
+}
+
+.card-header {
+  @apply flex justify-between items-center;
+  @apply overflow-hidden;
+  @apply p-[0.2rem];
+}
+
+.card-header .collection-name {
+  @apply text-[1.1rem] font-[450] text-primary-darkest;
+  @apply text-ellipsis whitespace-nowrap;
+  @apply overflow-hidden;
+}
+
+.card-header .ctx-menu-icon {
+  @apply min-h-[1rem] min-w-[1rem] shrink-0;
+}
+.garment-grid {
+  --gap: 0.35rem;
+  @apply grid grid-rows-2 grid-cols-2;
+  @apply gap-[--gap] rounded-[1.7rem];
+  @apply border-primary-dark [border-width:--gap];
+  @apply bg-primary-dark;
+  @apply overflow-hidden;
+  @apply cursor-pointer;
+}
+
+.garment-grid * {
+  @apply pointer-events-none;
+}
+
+.garment-grid .preview {
+  @apply relative aspect-square;
+  @apply bg-cover bg-center bg-primary-light;
+  @apply flex justify-center items-center;
+  @apply rounded-[0.3rem];
+}
+
+.garment-grid .preview span {
+  @apply text-[2rem] text-primary-darker font-semibold;
+  @apply -ml-[0.2rem];
+  @apply z-10;
+}
