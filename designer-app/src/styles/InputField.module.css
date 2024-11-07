@@ -76,11 +76,12 @@
   @apply mr-[-0.5rem] pr-[0.5rem];
   @apply min-h-[--input-line-height];
 }
-.scroller:has(input.field) {
+.scroller:has(input.field),
+.scroller:has(textarea.field:empty) {
   @apply max-h-[--input-line-height];
 }
 
-.scroller [data-overlayscrollbars-contents]:has(textarea.field) {
+.scroller > [data-overlayscrollbars-contents]:has(textarea.field) {
   @apply !mb-[-8px];
 }
 

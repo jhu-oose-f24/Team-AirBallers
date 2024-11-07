@@ -1,9 +1,8 @@
 "use client";
 
 import ClothButton from "@/components/ClothButton";
+import ScrollContainer from "@/components/ScrollContainer";
 import Stitches from "@/components/Stitches";
-import { ClickScrollPlugin, OverlayScrollbars } from "overlayscrollbars";
-import { OverlayScrollbarsComponent } from "overlayscrollbars-react";
 import ReactModal from "react-modal";
 import css from "../styles/Modal.module.css";
 
@@ -12,8 +11,6 @@ const Modal = (props) => {
   const { openState, onAfterOpen, onAfterClose, children } = props;
 
   const [isOpen, setIsOpen] = openState;
-
-  OverlayScrollbars.plugin(ClickScrollPlugin);
 
   /** @type {typeof onAfterOpen} */
   function handleAfterOpen(options) {
@@ -52,13 +49,9 @@ const Modal = (props) => {
             stitchSpacing="short"
             centered
           />
-          <OverlayScrollbarsComponent
-            className={css["modal-inner-container"]}
-            options={{ scrollbars: { clickScroll: true } }}
-            defer
-          >
+          <ScrollContainer className={css["modal-inner-container"]}>
             {children}
-          </OverlayScrollbarsComponent>
+          </ScrollContainer>
         </div>
         <Stitches
           type="border"

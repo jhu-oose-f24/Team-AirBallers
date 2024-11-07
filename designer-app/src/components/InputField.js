@@ -1,5 +1,6 @@
 "use client";
 
+import ScrollContainer from "@/components/ScrollContainer";
 import Stitches from "@/components/Stitches";
 import Tooltip from "@/components/Tooltip";
 import { paletteFrom } from "@/util/tint";
@@ -10,7 +11,6 @@ import {
   IconLock,
 } from "@tabler/icons-react";
 import clsx from "clsx";
-import { OverlayScrollbarsComponent } from "overlayscrollbars-react";
 import { useEffect, useState } from "react";
 import css from "../styles/InputField.module.css";
 
@@ -52,7 +52,6 @@ const InputField = (props) => {
   const [rootRef, setRootRef] = useState(null);
   /** @type {UseState<Element>} */
   const [iconsRightRef, setIconsRightRef] = useState(null);
-  const [scrollerInit, setScrollerInit] = useState(false);
 
   /** @type {CustomCSSProperties} */
   const tintPalette = paletteFrom(error && "crimson");
@@ -99,14 +98,6 @@ const InputField = (props) => {
     return [0, 15 + iconsY - fieldY];
   }
 
-  /** @param {import("overlayscrollbars").OverlayScrollbars} ref */
-  function initializeScroller(ref) {
-    const root = ref?.elements?.()?.host;
-    if (!root) return;
-
-    setScrollerInit(true);
-  }
-
   /** @ts-ignore @type {GeneralInput} */
   const InputElement = textArea ? "textarea" : "input";
 
@@ -130,27 +121,15 @@ const InputField = (props) => {
           <span className={css["icon-group"]}>{iconLeft}</span>
 
           <div className={css["field-wrapper"]}>
-            <OverlayScrollbarsComponent
+            <ScrollContainer
               className={css.scroller}
               options={{
                 overflow: {
                   x: "hidden",
                   y: textArea ? "scroll" : "hidden",
                 },
-                scrollbars: {
-                  autoHide: "scroll",
-                },
-                paddingAbsolute: true,
               }}
-              events={{
-                initialized: initializeScroller,
-                updated: () => textAreaResize(fieldRef),
-              }}
-              style={{
-                marginBottom: !scrollerInit && textArea && "-8px",
-                opacity: +scrollerInit,
-              }}
-              defer
+              events={{ updated: () => textAreaResize(fieldRef) }}
             >
               <InputElement
                 id={id}
@@ -167,7 +146,7 @@ const InputField = (props) => {
                 readOnly={readOnly}
                 ref={setFieldRef}
               />
-            </OverlayScrollbarsComponent>
+            </ScrollContainer>
             <Stitches type="line" stitchWidth="0.16rem" />
           </div>
 

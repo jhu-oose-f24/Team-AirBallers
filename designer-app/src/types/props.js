@@ -5,8 +5,8 @@
  *
  * @typedef {{
  *   type: "border" | "line";
- *   svgClass?: string;
- *   pathClass?: string;
+ *   svgClass?: ClassName;
+ *   pathClass?: ClassName;
  *   stitchWidth?: string;
  *   stitchLength?: StitchDash;
  *   stitchSpacing?: StitchDash;
@@ -16,14 +16,17 @@
 
 /**
  * @typedef {{
- *   className?: string;
+ *   className?: ClassName;
+ *   variant?: "primary" | "secondary" | "hint";
+ *   borderRadius?: React.CSSProperties["borderRadius"];
+ *   bgColor?: CSSColor;
  *   onClick?: React.MouseEventHandler;
  *   loading?: boolean;
  *   disabled?: boolean;
  *   label?: string;
  *   icon?: JSX.Element;
  *   image?: string;
- *   tint?: React.CSSProperties["color"];
+ *   tint?: CSSColor;
  *   height?: React.CSSProperties["height"];
  *   width?: React.CSSProperties["width"];
  *   stretch?: boolean;
@@ -40,7 +43,7 @@
  *   height?: React.CSSProperties["height"];
  *   type: "round" | "cross";
  *   borderWidth?: React.CSSProperties["outlineWidth"];
- *   tint?: React.CSSProperties["color"];
+ *   tint?: CSSColor;
  *   icon?: any;
  * }} ClothButtonProps
  */
@@ -55,7 +58,7 @@
 /**
  * @typedef {{
  *   id?: string;
- *   className?: string;
+ *   className?: ClassName;
  *   placeholder?: string;
  *   value?: string;
  *   defaultValue?: string;
