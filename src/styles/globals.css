@@ -33,14 +33,6 @@
   --scrollbar-width: 1rem;
 }
 
-.btn-collection {
-  @apply flex flex-col;
-  @apply px-4 py-2;
-  @apply text-foreground font-medium bg-background-main;
-  @apply border-2 border-foreground rounded-md mr-6;
-  transition: all 0.3s ease;
-}
-
 .os-scrollbar-handle {
   @apply !bg-primary-darker/50;
   @apply [transition:inherit];
@@ -50,6 +42,15 @@
 }
 .os-scrollbar:has(:active) .os-scrollbar-handle {
   @apply !bg-primary-darker;
+}
+
+.os-scrollbar:not(:has(.os-scrollbar-handle:hover))
+  .os-scrollbar-track:hover:not(:active) {
+  @apply !bg-primary-dark/35;
+  @apply delay-200;
+}
+.os-scrollbar:not(:has(.os-scrollbar-handle:hover)) .os-scrollbar-track:active {
+  @apply !bg-primary-dark/50;
 }
 
 /* =========================== Tooltip =========================== */
@@ -119,25 +120,4 @@
   @apply ![border-left-width:0px];
   @apply ![border-right-width:--arrow-height];
   @apply !border-r-primary-dark;
-}
-
-/* HEADER (TODO: move style to component) */
-
-.header {
-  @apply w-full;
-  @apply p-4;
-  @apply bg-background-main;
-  @apply flex justify-between items-center;
-  @apply outline outline-[0.4rem] outline-background-alt;
-  @apply border-b-[0.15rem] border-secondary;
-  @apply fixed top-0 left-0 z-10;
-}
-
-.header .title {
-  @apply text-2xl font-bold text-foreground;
-  @apply justify-center;
-}
-
-.auth-buttons {
-  @apply flex gap-4;
 }
