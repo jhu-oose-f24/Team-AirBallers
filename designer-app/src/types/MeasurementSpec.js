@@ -1,20 +1,22 @@
+import GarmentSpecType from "@/types/GarmentSpecType";
+
 const UNIT = Object.freeze({
   MM: "mm",
   CM: "cm",
   INCH: "in",
-  // TODO: define more if needed
+  // define more if needed
 });
 
 /**
+ * @extends {GarmentSpecType<VType>}
+ * @typedef {number} VType
+ *
  * @typedef {UNIT[keyof UNIT]} Unit
  *
  * @typedef {[number, number]} Range
  */
-export default class MeasurementSpec {
+export default class MeasurementSpec extends GarmentSpecType {
   static UNIT = UNIT;
-
-  /** @type {number} */
-  value = 0;
 
   /** @type {Range} */
   range = [null, null];
@@ -25,29 +27,47 @@ export default class MeasurementSpec {
   /**
    * @param {Unit} unit
    * @param {[number, number]} range
-   * @param {number} value
+   * @param {VType} value
+   * @override
    */
-  constructor(unit, range, value = undefined) {
+  constructor(unit, range, value = 0) {
     const [min, max] = range;
     const clampedValue = Math.min(Math.max(value, min), max);
 
+    super(typeof clampedValue, 0, clampedValue);
     this.unit = unit;
     this.range = range;
-    this.value = clampedValue;
+  }
+
+  /**
+   * @param {VType} value
+   * @override
+   */
+  validate(value) {
+    const [min, max] = this.range;
+    const clampedValue = Math.min(Math.max(value, min), max);
+
+    return clampedValue;
+  }
+
+  /** @override */
+  readable() {
+    return `${this.value}${this.unit}`;
   }
 
   /**
    * @param {Unit} unit
    * @param {[number, number]} range
+   * @override
    */
   static defineSchema(unit, range) {
     return new this(unit, range).getSchema();
   }
 
+  /** @override */
   getSchema() {
     return {
-      class: MeasurementSpec.name,
-      value: "number",
+      ...super.getSchema(),
       range: [...this.range],
       unit: this.unit,
     };
