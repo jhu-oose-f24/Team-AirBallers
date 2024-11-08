@@ -1,6 +1,9 @@
 import Button from "@/components/Button";
+import { RootContext } from "@/components/RootLayout";
+import Tooltip from "@/components/Tooltip";
 import { IconDotsVertical } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
+import { useContext, useState } from "react";
 import css from "../styles/CollectionPreview.module.css";
 
 /**
@@ -9,9 +12,14 @@ import css from "../styles/CollectionPreview.module.css";
  * }} props
  */
 const CollectionPreview = (props) => {
-  const router = useRouter();
-
   const { garments } = props;
+
+  const { sideBarRef } = useContext(RootContext);
+  const router = useRouter();
+  const [nameRef, setNameRef] = useState(null);
+
+  const collectionName = "Collection Name"; // TODO: from props
+  const overflownName = nameRef?.clientWidth < nameRef?.scrollWidth;
 
   function generatePreviews() {
     const previews = [];
@@ -47,15 +55,38 @@ const CollectionPreview = (props) => {
     return previews;
   }
 
+  /** @type {TooltipOffset} */
+  function getTooltipOffset() {
+    /** @type {HTMLElement} */
+    const name = nameRef;
+
+    const nameRect = name?.getBoundingClientRect();
+    const headerRect = name?.parentElement.getBoundingClientRect();
+
+    return [0, 15 + headerRect.width - nameRect.width];
+  }
+
   return (
     <div className={css["preview-card"]}>
       <div className={css["card-header"]}>
-        <span className={css["collection-name"]}>Collection Name</span>
+        <Tooltip
+          disabled={!overflownName}
+          content={collectionName}
+          placement="right"
+          appendTo={sideBarRef || "parent"}
+          maxWidth="12rem"
+          delay={[500, 0]}
+          offset={getTooltipOffset}
+        >
+          <span className={css["collection-name"]} ref={setNameRef}>
+            {collectionName}
+          </span>
+        </Tooltip>
 
         <Button
           variant="hint"
           icon={<IconDotsVertical />}
-          // TODO: onClick
+          // TODO: onClick: collection context menu
           borderRadius="100vmax"
           fontSize="1.1rem"
           xPad="0.2rem"
@@ -66,7 +97,7 @@ const CollectionPreview = (props) => {
       <div
         className={css["garment-grid"]}
         // TODO: go to specific collection
-        onClick={() => router.push("/collection")} 
+        onClick={() => router.push("/collection")}
       >
         {generatePreviews()}
       </div>
