@@ -67,11 +67,11 @@ body[id] #__next {
 /* Side Bar */
 
 .sidebar {
-  --width: 14rem;
+  --width: 15rem;
 
   @apply flex flex-col;
   @apply w-[--width] h-full;
-  @apply p-[1.2rem] gap-[0.8rem];
+  @apply p-[1rem] gap-[0.8rem];
   @apply transition-all duration-300 ease-in-out;
   @apply border-r-[0.3rem] border-r-background-alt;
   @apply bg-background-main;
@@ -82,19 +82,16 @@ body[id] #__next {
   @apply flex flex-col content-center;
   @apply text-[1.5rem] text-foreground font-semibold;
   @apply text-center;
+  @apply z-10;
 }
 
 .sidebar .collection-list {
-  @apply !-mx-[1.1rem];
+  @apply !-mx-[0.7rem] !-mt-[0.9rem] !mb-[1rem];
 }
 
 .sidebar .collection-list > [data-overlayscrollbars-contents] {
   @apply flex flex-col gap-[0.9rem];
-  @apply !px-[1.1rem];
-}
-
-.sidebar .collection-list .os-scrollbar-vertical {
-  --scrollbar-end-padding: 0px;
+  @apply !px-[1rem] !pt-[0.7rem];
 }
 
 .sidebar.open {
@@ -129,18 +126,14 @@ body[id] #__next {
 }
 
 .prompt {
-  @apply flex items-end justify-between gap-2 w-[80%] mx-auto mt-6 mb-[1.5rem];
+  @apply flex items-end justify-between;
+  @apply mx-auto mt-6 mb-[1.5rem] gap-2;
+  @apply w-[80%];
 }
 
 .prompt-input,
 .edit-input {
   @apply flex-grow;
-}
-
-.btn-prompt-generate {
-  @apply px-4 py-2;
-  @apply font-medium bg-green-300 text-green-900;
-  @apply rounded-md whitespace-nowrap;
 }
 
 /* ======================== Collection Page ======================== */

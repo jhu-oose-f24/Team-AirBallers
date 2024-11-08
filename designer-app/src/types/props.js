@@ -30,6 +30,7 @@
  *   height?: React.CSSProperties["height"];
  *   width?: React.CSSProperties["width"];
  *   stretch?: boolean;
+ *   align?: React.CSSProperties["justifyContent"];
  *   size?: "xs" | "sm" | "lg";
  *   fontSize?: React.CSSProperties["fontSize"];
  *   xPad?: React.CSSProperties["paddingInline"];
