@@ -1,9 +1,11 @@
 "use client";
 
+import Button from "@/components/Button";
 import CollectionPreview from "@/components/CollectionPreview";
 import { RootContext } from "@/components/RootLayout";
 import ScrollContainer from "@/components/ScrollContainer";
 import Stitches from "@/components/Stitches";
+import { IconHanger, IconPlus } from "@tabler/icons-react";
 import axios from "axios";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
@@ -15,9 +17,9 @@ import { useContext, useEffect, useState } from "react";
  * >} GarmentList
  */
 const SideBar = () => {
-  const router = useRouter();
-  const { sideBarOpen } = useContext(RootContext);
+  const { sideBarOpen, setSideBarRef } = useContext(RootContext);
 
+  const router = useRouter();
   /** @type {UseState<GarmentList>} */
   const [garments, setGarments] = useState([]);
 
@@ -29,7 +31,10 @@ const SideBar = () => {
   }, []);
 
   return (
-    <div className={clsx("sidebar", sideBarOpen ? "open" : "closed")}>
+    <div
+      className={clsx("sidebar", sideBarOpen ? "open" : "closed")}
+      ref={setSideBarRef}
+    >
       <span className="header">
         Collections
         <Stitches type="line" stitchWidth="0.17rem" />
@@ -45,6 +50,24 @@ const SideBar = () => {
         <CollectionPreview garments={garments?.slice(43, 48)} />
         <CollectionPreview garments={garments?.slice(48)} />
       </ScrollContainer>
+
+      <Button
+        variant="secondary"
+        icon={<IconHanger />}
+        label="New Garment"
+        align="left"
+        xPad="1.1rem"
+        width="100%"
+        size="sm"
+        // TODO: onClick: redirect to create new garment
+      />
+      <Button
+        icon={<IconPlus />}
+        label="New Collection"
+        width="100%"
+        size="sm"
+        // TODO: onClick: modal to create collection
+      />
     </div>
   );
 };

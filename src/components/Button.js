@@ -25,6 +25,7 @@ const Button = (props) => {
     height,
     width,
     stretch,
+    align = "center",
 
     size, // shorthand sets props below (and more)
     fontSize,
@@ -36,31 +37,41 @@ const Button = (props) => {
 
   /**
    * @typedef {Partial<StitchProps & CustomCSSProperties>} SizePreset
-   * @type {{ [x in ButtonProps["size"]]: SizePreset }}
+   * @type {{
+   *   [x in ButtonProps["size"]]: {
+   *     css: CustomCSSProperties;
+   *     stitch: Partial<StitchProps>;
+   *   };
+   * }}
    */
   const SIZE_PRESETS = {
     xs: {
-      "--btn-x-padding": "0.5rem",
-      "--btn-y-padding": "0.3rem",
-      "--btn-font-size": "0.9rem",
-      "--btn-border-pad": "0.35rem",
-      stitchLength: "short",
-      stitchSpacing: "short",
-      fontWeight: 600,
+      css: {
+        "--btn-x-padding": "0.5rem",
+        "--btn-y-padding": "0.3rem",
+        "--btn-font-size": "0.9rem",
+        "--btn-border-pad": "0.35rem",
+        fontWeight: 600,
+      },
+      stitch: { stitchLength: "short", stitchSpacing: "short" },
     },
     sm: {
-      "--btn-x-padding": "0.7rem",
-      "--btn-y-padding": "0.45rem",
-      "--btn-font-size": "1.1rem",
-      "--btn-border-pad": "0.4rem",
-      stitchLength: "short",
+      css: {
+        "--btn-x-padding": "0.7rem",
+        "--btn-y-padding": "0.45rem",
+        "--btn-font-size": "1.1rem",
+        "--btn-border-pad": "0.4rem",
+      },
+      stitch: { stitchLength: "short" },
     },
     lg: {
-      "--btn-x-padding": "1.1rem",
-      "--btn-y-padding": "0.7rem",
-      "--btn-font-size": "1.5rem",
-      "--btn-border-pad": "0.55rem",
-      stitchWidth: "0.18rem",
+      css: {
+        "--btn-x-padding": "1.1rem",
+        "--btn-y-padding": "0.7rem",
+        "--btn-font-size": "1.5rem",
+        "--btn-border-pad": "0.55rem",
+      },
+      stitch: { stitchWidth: "0.18rem" },
     },
   };
 
@@ -81,15 +92,18 @@ const Button = (props) => {
 
   /** @type {CustomCSSProperties} */
   const moddedStyle = {
-    "--btn-x-padding": xPad || (width && "0.4rem"),
-    "--btn-y-padding": yPad || ((stretch || height) && "0px"),
-    "--btn-font-size": fontSize,
-    "--btn-content-radius": borderRadius,
-    ...(SIZE_PRESETS[size] || {}),
+    ...(width && { "--btn-x-padding": "0.4rem" }),
+    ...((stretch || height) && { "--btn-y-padding": "0px" }),
+    ...(SIZE_PRESETS[size]?.css || {}),
     ...(variant !== "primary" && {
       "--btn-border-pad": "0px",
-      "--btn-content-radius": borderRadius ?? "0.5rem",
+      "--btn-content-radius": "0.5rem",
     }),
+    ...(xPad && { "--btn-x-padding": xPad }),
+    ...(yPad && { "--btn-y-padding": yPad }),
+
+    ...(fontSize && { "--btn-font-size": fontSize }),
+    ...(borderRadius && { "--btn-content-radius": borderRadius }),
   };
 
   /** @param {React.KeyboardEvent} event */
@@ -120,7 +134,12 @@ const Button = (props) => {
         disabled={disabled}
       >
         <div className={css.border}>
-          <div className={css.content}>
+          <div
+            className={css.content}
+            style={{
+              justifyContent: align,
+            }}
+          >
             {icon && <span className={css.icon}>{icon}</span>}
             {image && <img src={image} alt="" className={css.image} />}
             {label && <span className={css.label}>{label}</span>}
@@ -130,9 +149,9 @@ const Button = (props) => {
               type="border"
               svgClass={css["stitch-wrapper"]}
               pathClass={css.stitches}
-              stitchLength={SIZE_PRESETS[size]?.stitchLength}
-              stitchSpacing={SIZE_PRESETS[size]?.stitchSpacing}
-              stitchWidth={SIZE_PRESETS[size]?.stitchWidth}
+              stitchLength={SIZE_PRESETS[size]?.stitch?.stitchLength}
+              stitchSpacing={SIZE_PRESETS[size]?.stitch?.stitchSpacing}
+              stitchWidth={SIZE_PRESETS[size]?.stitch?.stitchWidth}
             />
           )}
         </div>
