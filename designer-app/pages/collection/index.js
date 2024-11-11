@@ -1,7 +1,6 @@
 "use client";
 
 import { RootContext } from "@/components/RootLayout";
-import ScrollContainer from "@/components/ScrollContainer";
 import { useBodyID } from "@/util/hooks";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
@@ -26,12 +25,10 @@ export default function Home() {
   }, []);
 
   return (
-    <>
-      <ScrollContainer className="collection-grid">
-        {garments.map((garment, idx) => (
-          <img key={idx} src={garment.imageURL} />
-        ))}
-      </ScrollContainer>
-    </>
+    <div className="collection-grid">
+      {garments.map((garment, idx) => (
+        <img key={idx} src={garment.imageURL} />
+      ))}
+    </div>
   );
 }
