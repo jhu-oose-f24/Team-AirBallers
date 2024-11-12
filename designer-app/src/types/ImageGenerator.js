@@ -8,7 +8,7 @@ export default class ImageGenerator {
    * @param {string} model
    * @throws {Error}
    */
-  static async createFrom(description, model = "fal-ai/flux-pro/v1.1") {
+  static async createFrom(description, model = "fal-ai/flux/schnell") {
     if (
       !description ||
       typeof description !== "string" ||
