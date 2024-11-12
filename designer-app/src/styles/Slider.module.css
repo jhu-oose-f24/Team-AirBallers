@@ -1,0 +1,41 @@
+.slider {
+  --slider-border-width: 0.25rem;
+  --slider-track-radius: 0.35rem;
+  --slider-border-radius: calc(
+    var(--slider-border-width) + var(--slider-track-radius)
+  );
+
+  @apply w-[40%] h-fit;
+  @apply min-w-[15rem];
+  @apply p-[--slider-border-width];
+  @apply bg-primary-darkest;
+  @apply rounded-[--slider-border-radius];
+}
+
+.track {
+  @apply flex justify-between items-center;
+  @apply w-full h-[1.5rem];
+  @apply bg-primary-dark;
+  @apply rounded-[--slider-track-radius];
+  @apply px-[0.6rem];
+}
+
+.tick-mark {
+  @apply w-[0.35rem];
+  @apply bg-primary-darkest;
+}
+.tick-mark.major {
+  @apply relative;
+  @apply h-full;
+}
+.tick-mark.minor {
+  @apply h-[60%];
+  @apply rounded-full;
+}
+
+.tick-mark.major::after {
+  @apply content-[attr(content)];
+  @apply absolute left-1/2 top-full;
+  @apply -translate-x-1/2 translate-y-[--slider-border-width];
+  @apply text-[1.1rem] font-medium;
+}
