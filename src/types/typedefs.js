@@ -46,6 +46,6 @@
  */
 
 /**
- * @typedef {import("@prisma/client").Prisma} Prisma
- * @typedef {import("@prisma/client").Prisma.PromptGetPayload<{}>} Thing
+ * @typedef {{name: string, spec: object}} NamedSpec
+ * @typedef {NamedSpec[]} SpecSchema
  */
