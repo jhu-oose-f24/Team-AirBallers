@@ -35,11 +35,9 @@ const SideBar = () => {
       className={clsx("sidebar", sideBarOpen ? "open" : "closed")}
       ref={setSideBarRef}
     >
-      <span className="header">
-        Collections
-        <Stitches type="line" stitchWidth="0.17rem" />
-      </span>
+      <span className="header">Collections</span>
 
+      <Stitches type="line" stitchWidth="0.17rem" svgClass="stitch-open" />
       <ScrollContainer className="collection-list">
         {/* TODO: create actual cards from collections */}
         <CollectionPreview garments={garments?.slice(0, 5)} />
@@ -50,6 +48,7 @@ const SideBar = () => {
         <CollectionPreview garments={garments?.slice(43, 48)} />
         <CollectionPreview garments={garments?.slice(48)} />
       </ScrollContainer>
+      <Stitches type="line" stitchWidth="0.17rem" svgClass="stitch-close" />
 
       <Button
         variant="secondary"
