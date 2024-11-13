@@ -1,6 +1,7 @@
 import AbstractGarment from "@/types/AbstractGarment";
 import EnumSpec from "@/types/EnumSpec";
 import StringSpec from "@/types/StringSpec";
+import { GarmentType } from "@prisma/client";
 
 export default class Pants extends AbstractGarment {
   static SCHEMA = [
@@ -55,6 +56,6 @@ export default class Pants extends AbstractGarment {
   ];
 
   constructor() {
-    super("Pants", "Untitled Pants", Pants.SCHEMA);
+    super(GarmentType.Pants, "Untitled Pants", Pants.SCHEMA);
   }
 }

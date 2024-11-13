@@ -1,6 +1,7 @@
 import AbstractSpecType from "@/types/AbstractSpecType";
 import EnumSpec from "@/types/EnumSpec";
 import MeasurementSpec from "@/types/MeasurementSpec";
+import { GarmentType } from "@prisma/client";
 
 /** @abstract */
 export default class AbstractGarment {
@@ -13,27 +14,25 @@ export default class AbstractGarment {
     // add more here
   };
 
-  /** @type {string} */
   name;
-
-  // TODO: use from prisma schema
-  /** @typedef {"Shirt" | "Pants"} GarmentType */
-
-  /** @type {GarmentType} */
   type;
-
-  /** @type {DefinedSpecSchema} */
   specs;
+  prompts;
+  images;
 
   /**
    * @param {GarmentType} type
    * @param {string} name
    * @param {SpecSchema} schema
+   * @param {import("@prisma/client").Garment["prompts"]} prompts
+   * @param {import("@prisma/client").Garment["images"]} images
    */
-  constructor(type, name, schema = AbstractGarment.SCHEMA) {
+  constructor(type, name, schema, prompts = [], images = []) {
     this.type = type;
     this.name = name;
     this.specs = AbstractGarment.parseSpecs(schema);
+    this.prompts = prompts;
+    this.images = images;
   }
 
   /** @param {NamedSpec["spec"]} spec */
@@ -43,7 +42,10 @@ export default class AbstractGarment {
     return SpecType?.from(spec);
   }
 
-  /** @param {SpecSchema} schema */
+  /**
+   * @param {SpecSchema} schema
+   * @returns {DefinedSpecSchema}
+   */
   static parseSpecs(schema) {
     return schema.map(({ name, spec }) => ({
       name,
@@ -51,11 +53,13 @@ export default class AbstractGarment {
     }));
   }
 
-  static from({ type, name, specs = "" }) {
+  static from(obj) {
+    const { type, name, specs, prompts, images } = obj;
+
     /** @type {SpecSchema} */
     const schema = JSON.parse(specs);
 
-    return new this(type, name, schema);
+    return new this(type, name, schema, prompts, images);
   }
 
   /** @param {SpecSchema} schema */
@@ -63,13 +67,22 @@ export default class AbstractGarment {
     this.specs = AbstractGarment.parseSpecs(schema);
   }
 
+  addPrompt(text = "") {
+    this.prompts.push({ text, createdAt: new Date() });
+  }
+
+  addImage(url = "") {
+    this.images.push({ url, createdAt: new Date() });
+  }
+
   /** @param {string} name */
   rename(name) {
     this.name = name;
   }
 
+  /** @returns {Partial<import("@prisma/client").Garment>} */
   serialize() {
-    const { type, name, specs } = this;
+    const { type, name, specs, prompts, images } = this;
 
     const serializedSpecs = specs.map(({ name, spec }) => ({
       name,
@@ -77,9 +90,11 @@ export default class AbstractGarment {
     }));
 
     return {
-      type,
       name,
+      type,
       specs: JSON.stringify(serializedSpecs),
+      prompts,
+      images,
     };
   }
 
