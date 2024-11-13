@@ -1,5 +1,7 @@
 import EditableDescriptionGenerator from "@/types/EditableDescriptionGenerator";
+import Shirt from "@/types/garments/Shirt";
 import ImageGenerator from "@/types/ImageGenerator";
+import SpecificationGenerator from "@/types/SpecificationGenerator";
 import ApiHandler from "@/util/ApiHandler";
 import prisma from "@/util/db";
 
@@ -12,6 +14,9 @@ export default ApiHandler()
     try {
       const description = await editor.generateInitialDescription(userPrompt);
       const { images } = await ImageGenerator.createFrom(description);
+
+      const specs = SpecificationGenerator.createFrom(userPrompt, Shirt.SCHEMA);
+      console.log(specs);
 
       /** @type {string} */
       const url = images?.[0]?.url;
