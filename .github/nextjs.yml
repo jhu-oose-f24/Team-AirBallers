@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main
+      - rkim-59-deploy-application
 
 jobs:
   deploy:
