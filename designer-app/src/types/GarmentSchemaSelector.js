@@ -1,5 +1,5 @@
-import ShirtSchema from "@/types/classification_schemas/shirtSpecSchema";
-import PantsSchema from "@/types/classification_schemas/pantsSpecSchema";
+import ShirtSchema from "@/types/classification_schemas/ShirtSchema";
+import PantsSchema from "@/types/classification_schemas/PantsSchema";
 import GarmentClassificationGenerator from "@/types/GarmentClassifierGenerator";
 
 export default class GarmentSchemaSelector {
