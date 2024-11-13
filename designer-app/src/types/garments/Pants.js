@@ -2,27 +2,30 @@ import AbstractGarment from "@/types/AbstractGarment";
 import EnumSpec from "@/types/EnumSpec";
 import StringSpec from "@/types/StringSpec";
 
-export default class Shirt extends AbstractGarment {
+export default class Pants extends AbstractGarment {
   static SCHEMA = [
     {
-      name: "Sleeve Length",
+      name: "Style",
       spec: EnumSpec.defineSchema([
-        "short-sleeve",
-        "long-sleeve",
-        "sleeveless",
+        "jeans",
+        "chinos",
+        "cargo",
+        "sweatpants",
+        "trousers",
+        "shorts",
       ]),
     },
     {
-      name: "Fit",
-      spec: EnumSpec.defineSchema(["regular", "slim", "relaxed"]),
+      name: "Rise",
+      spec: EnumSpec.defineSchema(["low-rise", "mid-rise", "high-rise"]),
     },
     {
-      name: "Neck Style",
+      name: "Closure Type",
       spec: EnumSpec.defineSchema([
-        "round-neck",
-        "v-neck",
-        "polo",
-        "crew-neck",
+        "zipper",
+        "button",
+        "drawstring",
+        "elastic",
       ]),
     },
     { name: "Color", spec: StringSpec.defineSchema() },
@@ -30,11 +33,11 @@ export default class Shirt extends AbstractGarment {
       name: "Fabric",
       spec: EnumSpec.defineSchema([
         "cotton",
+        "denim",
         "polyester",
-        "blend",
         "wool",
         "linen",
-        "silk",
+        "nylon",
       ]),
     },
     {
@@ -43,7 +46,7 @@ export default class Shirt extends AbstractGarment {
         "solid",
         "striped",
         "checkered",
-        "graphic",
+        "camo",
         "printed",
         "plain",
       ]),
@@ -52,6 +55,6 @@ export default class Shirt extends AbstractGarment {
   ];
 
   constructor() {
-    super("Shirt", "Untitled Shirt", Shirt.SCHEMA);
+    super("Pants", "Untitled Pants", Pants.SCHEMA);
   }
 }
