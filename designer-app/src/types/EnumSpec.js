@@ -19,6 +19,7 @@ export default class EnumSpec extends AbstractSpecType {
     super("string", possibleValues[0], initial || possibleValues[0]);
     this.possibleValues = possibleValues;
   }
+
   /** @returns {typeof this.prototype} */
   static from(obj) {
     return super.from(obj);
