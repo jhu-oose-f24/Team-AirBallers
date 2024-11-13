@@ -1,7 +1,7 @@
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import { getServerSession } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
-import { db } from '../prisma/db';
+import prisma from '../src/util/db';
  
 // Configuration options for authentication
 export const authOptions = {
@@ -16,7 +16,7 @@ export const authOptions = {
     }),
   },
   // Prisma adapter to connect NextAuth.js with the database
-  adapter: PrismaAdapter(db),
+  adapter: PrismaAdapter(prisma),
   // Authentication providers
   providers: [
     GoogleProvider({
@@ -25,6 +25,7 @@ export const authOptions = {
       allowDangerousEmailAccountLinking: true,
     }),
   ],
+  debug: true,
 };
  
 // Utility function to retrieve the server session with authentication options
