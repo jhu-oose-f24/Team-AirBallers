@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 
 const prismaClientSingleton = () => new PrismaClient();
 
-/** @type {ReturnType<prismaClientSingleton>} */
+/** @type {ReturnType<typeof prismaClientSingleton>} */
 const prisma = globalThis.prismaGlobal ?? prismaClientSingleton();
 
 if (process.env.NODE_ENV !== "production") {
