@@ -46,6 +46,13 @@
  */
 
 /**
+ * @typedef {{
+ *   minLength?: number;
+ *   maxLength?: number;
+ * }} StringSpecOptions
+ */
+
+/**
  * @typedef {(typeof import("@/types/AbstractSpecType"))["default"]} AbstractSpecType
  *
  *
