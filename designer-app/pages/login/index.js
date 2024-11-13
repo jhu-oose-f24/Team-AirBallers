@@ -17,16 +17,6 @@ export default function Login() {
 
   useBodyID("login");
 
-  const jwt = new JWT();
-  const auth = new GoogleAuth();
-  async function getToken() {
-    const token = await jwt.getToken('token');
-    const projectId = await auth.getProjectId();
-    const creds = await auth.getApplicationDefault();
-    return token;
-  }
-  getToken();
-
   const handleLogin = (event) => {
     event.preventDefault();
     if (username && password) {
@@ -84,12 +74,12 @@ export default function Login() {
         />
       </div>
 
-      <Button
+      {/*<Button
         label="Log In with Google"
         onClick={handleGoogleLogin}
         size="xs"
         tint="#db4437"
-      />
+      />*/}
     </div>
   );
 }
