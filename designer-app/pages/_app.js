@@ -5,6 +5,7 @@ import "@/styles/layout.css";
 import { Rubik } from "next/font/google";
 import "overlayscrollbars/overlayscrollbars.css";
 import "tippy.js/dist/tippy.css";
+import { SessionProvider } from 'next-auth/react';
 
 export const rubik = Rubik({
   subsets: ["latin-ext"],
@@ -12,10 +13,12 @@ export const rubik = Rubik({
   weight: "variable",
 });
 
-export default function MyApp({ Component, pageProps }) {
+export default function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   return (
-    <RootLayout>
-      <Component {...pageProps} />
-    </RootLayout>
+    <SessionProvider session={session}>
+      <RootLayout>
+        <Component {...pageProps} />
+      </RootLayout>
+    </SessionProvider>
   );
 }

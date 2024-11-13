@@ -6,8 +6,6 @@ import { useBodyID } from "@/util/hooks";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-import { GoogleAuth, OAuth2Client } from 'google-auth-library';
-
 export default function Login() {
   const router = useRouter();
   const [username, setUsername] = useState("");
@@ -37,7 +35,7 @@ export default function Login() {
 
   return (
     <div className="login-container">
-      <Header title="Log In" />
+      <Header/>
       <h1 className="text-center text-2xl font-bold">Login</h1>
       <form onSubmit={handleLogin} className="flex flex-col gap-4">
         <input

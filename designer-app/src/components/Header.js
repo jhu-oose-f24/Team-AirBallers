@@ -6,12 +6,15 @@ import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
 import Button from "./Button";
+import { signIn, signOut, useSession } from 'next-auth/react';
 
 const Header = () => {
   const router = useRouter();
   const { sideBarOpen, setSideBarOpen, headerState } = useContext(RootContext);
 
   const { title, back } = headerState;
+
+  const { data: session } = useSession();
 
   function goBack() {
     router.push(back);
@@ -45,13 +48,11 @@ const Header = () => {
         stretch
       />
 
-      <Button
-        variant="secondary"
-        label="Login"
-        onClick={() => router.push("/login")}
-        xPad="0.6rem"
-        stretch
-      />
+      {session ? (
+        <Button label="Logout" onClick={() => signOut()} />
+      ) : (
+        <Button label="Log In" onClick={() => signIn()} />
+      )}
     </header>
   );
 };

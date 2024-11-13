@@ -1,4 +1,4 @@
-import { getServerAuthSession } from '@/auth'; // Adjust path as necessary
+import { getServerAuthSession } from '../src/auth'; // Adjust path as necessary
 import { redirect } from 'next/navigation';
 import Header from '@/components/Header';
 
