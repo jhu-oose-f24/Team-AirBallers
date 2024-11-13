@@ -46,7 +46,7 @@
  */
 
 /**
- * @typedef {(typeof import("@/types/GarmentSpecType"))["default"]} AbstractSpecType
+ * @typedef {(typeof import("@/types/AbstractSpecType"))["default"]} AbstractSpecType
  *
  *
  * @typedef {ReturnType<AbstractSpecType["defineSchema"]>} BlankAbstractSpec

@@ -1,4 +1,4 @@
-import AbstractSpecType from "@/types/GarmentSpecType";
+import AbstractSpecType from "@/types/AbstractSpecType";
 
 /**
  * @extends {AbstractSpecType<VType>}
