@@ -33,9 +33,10 @@ export default function Home() {
     let apiUrl = "/api/prompt";
     let body = { prompt };
 
-    if (garmentId) {
-      apiUrl = "api/prompt/edit";
-    }
+    // TODO: not ready for edit
+    // if (garmentId) {
+    //   apiUrl = "api/prompt/edit";
+    // }
 
     setGenerating(true);
     axios
@@ -49,35 +50,12 @@ export default function Home() {
   }
 
   return (
-    <>
+    <div className="create-layout">
       {imgSrc ? (
         <img className="garment-img" src={imgSrc} alt="Generated garment" />
       ) : (
         <div className="garment-img empty">No Image Yet...</div>
       )}
-
-      <div
-        className="absolute flex flex-col left-[1rem] top-1/2 transform -translate-y-1/2"
-        style={{ display: !garmentId && "none" }}
-      >
-        <b>Edit (Coming Soon)</b>
-        <label htmlFor="sleeve-edit">Sleeve Length</label>
-        <input
-          id="sleeve-edit"
-          className="edit-input sleeve max-w-[11rem]"
-          placeholder="Length in cm."
-          // onChange={(e) => setPrompt(e.target.value)}
-          disabled
-        />
-        <label htmlFor="color-edit">Color</label>
-        <input
-          id="color-edit"
-          className="edit-input color max-w-[11rem]"
-          placeholder="e.g. #12AB34"
-          // onChange={(e) => setPrompt(e.target.value)}
-          disabled
-        />
-      </div>
 
       <div className="prompt">
         <InputField
@@ -100,6 +78,6 @@ export default function Home() {
           disabled={!prompt?.trim()}
         />
       </div>
-    </>
+    </div>
   );
 }
