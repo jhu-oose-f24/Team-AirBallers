@@ -46,6 +46,31 @@
  */
 
 /**
- * @typedef {{name: string, spec: object}} NamedSpec
+ * @typedef {(typeof import("@/types/GarmentSpecType"))["default"]} AbstractSpecType
+ *
+ *
+ * @typedef {ReturnType<AbstractSpecType["defineSchema"]>} BlankAbstractSpec
+ *
+ * @typedef {{
+ *   name: string;
+ *   spec: InstanceType<AbstractSpecType> | BlankAbstractSpec | string;
+ * }} NamedSpec
+ *
+ *
+ * @typedef {{
+ *   name: string;
+ *   spec: BlankAbstractSpec;
+ * }} BlankNamedSpec
+ *
+ * @typedef {{
+ *   name: string;
+ *   spec: InstanceType<AbstractSpecType>;
+ * }} DefinedNamedSpec
+ *
+ *
  * @typedef {NamedSpec[]} SpecSchema
+ *
+ * @typedef {DefinedNamedSpec[]} DefinedSpecSchema
+ *
+ * @typedef {BlankNamedSpec[]} BlankSpecSchema
  */

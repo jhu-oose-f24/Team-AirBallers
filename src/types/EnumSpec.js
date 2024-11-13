@@ -1,10 +1,10 @@
-import GarmentSpecType from "@/types/GarmentSpecType";
+import AbstractSpecType from "@/types/GarmentSpecType";
 
 /**
- * @extends {GarmentSpecType<VType>}
+ * @extends {AbstractSpecType<VType>}
  * @typedef {string} VType
  */
-export default class EnumSpec extends GarmentSpecType {
+export default class EnumSpec extends AbstractSpecType {
   /** @type {VType[]} */
   possibleValues = [];
 
@@ -19,13 +19,9 @@ export default class EnumSpec extends GarmentSpecType {
     super("string", possibleValues[0], initial || possibleValues[0]);
     this.possibleValues = possibleValues;
   }
-
-  /**
-   * @param {VType} value
-   * @override
-   */
-  validate(value) {
-    return this.possibleValues.includes(value) ? value : this.default;
+  /** @returns {typeof this.prototype} */
+  static from(obj) {
+    return super.from(obj);
   }
 
   /**
@@ -34,6 +30,14 @@ export default class EnumSpec extends GarmentSpecType {
    */
   static defineSchema(possibleValues) {
     return new this(possibleValues).getSchema();
+  }
+
+  /**
+   * @param {VType} value
+   * @override
+   */
+  validate(value) {
+    return this.possibleValues.includes(value) ? value : this.default;
   }
 
   /** @override */
