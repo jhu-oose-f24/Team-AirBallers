@@ -13,9 +13,9 @@ export default class GarmentSchemaSelector {
       const normalizedClassification = classification.toLowerCase().trim();
       
       switch (normalizedClassification) {
-        case "Shirt":
+        case "shirt":
           return ShirtSchema;
-        case "Pants":
+        case "pants":
           return PantsSchema;
         default:
           throw new Error(`Invalid garment classification: ${classification}. Expected "Shirt" or "Pants".`);
