@@ -1,4 +1,4 @@
-import GarmentSpecType from "@/types/GarmentSpecType";
+import AbstractSpecType from "@/types/GarmentSpecType";
 
 const UNIT = Object.freeze({
   MM: "mm",
@@ -8,14 +8,14 @@ const UNIT = Object.freeze({
 });
 
 /**
- * @extends {GarmentSpecType<VType>}
+ * @extends {AbstractSpecType<VType>}
  * @typedef {number} VType
  *
  * @typedef {UNIT[keyof UNIT]} Unit
  *
  * @typedef {[number, number]} Range
  */
-export default class MeasurementSpec extends GarmentSpecType {
+export default class MeasurementSpec extends AbstractSpecType {
   static UNIT = UNIT;
 
   /** @type {Range} */
@@ -39,6 +39,20 @@ export default class MeasurementSpec extends GarmentSpecType {
     this.range = range;
   }
 
+  /** @returns {typeof this.prototype} */
+  static from(obj) {
+    return super.from(obj);
+  }
+
+  /**
+   * @param {Unit} unit
+   * @param {[number, number]} range
+   * @override
+   */
+  static defineSchema(unit, range) {
+    return new this(unit, range).getSchema();
+  }
+
   /**
    * @param {VType} value
    * @override
@@ -53,15 +67,6 @@ export default class MeasurementSpec extends GarmentSpecType {
   /** @override */
   readable() {
     return `${this.value}${this.unit}`;
-  }
-
-  /**
-   * @param {Unit} unit
-   * @param {[number, number]} range
-   * @override
-   */
-  static defineSchema(unit, range) {
-    return new this(unit, range).getSchema();
   }
 
   /** @override */
