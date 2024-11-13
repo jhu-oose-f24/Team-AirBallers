@@ -1,20 +1,19 @@
 import PromptGenerator from "@/types/PromptGenerator";
-import ShirtSchema from "@/types/classification_schemas/ShirtSchema";
-import { format } from "prettier";
+import { format as pretty } from "prettier";
 
-async function formatSchema(schema = {}) {
-  return await format(JSON.stringify(schema), { parser: "json" });
+function formatSchema(schema = {}) {
+  return pretty(JSON.stringify(schema), { parser: "json" });
 }
 
 /** @hideconstructor */
 export default class SpecificationGenerator {
   /**
    * @param {string} description // TODO: use class
-   * @returns {Promise<string>} // TODO: use class
+   * @param {BlankSpecSchema} schema
    */
-  static async createFrom(description) {
+  static async createFrom(description, schema) {
     try {
-      const schemaStr = await formatSchema(ShirtSchema); // TODO: accept other schemas
+      const schemaStr = await formatSchema(schema);
 
       return await PromptGenerator.generateFrom(
         PromptGenerator.ASSETS.SPEC(schemaStr),

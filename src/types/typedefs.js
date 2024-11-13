@@ -46,6 +46,38 @@
  */
 
 /**
- * @typedef {import("@prisma/client").Prisma} Prisma
- * @typedef {import("@prisma/client").Prisma.PromptGetPayload<{}>} Thing
+ * @typedef {{
+ *   minLength?: number;
+ *   maxLength?: number;
+ * }} StringSpecOptions
+ */
+
+/**
+ * @typedef {(typeof import("@/types/AbstractSpecType"))["default"]} AbstractSpecType
+ *
+ *
+ * @typedef {ReturnType<AbstractSpecType["defineSchema"]>} BlankAbstractSpec
+ *
+ * @typedef {{
+ *   name: string;
+ *   spec: InstanceType<AbstractSpecType> | BlankAbstractSpec | string;
+ * }} NamedSpec
+ *
+ *
+ * @typedef {{
+ *   name: string;
+ *   spec: BlankAbstractSpec;
+ * }} BlankNamedSpec
+ *
+ * @typedef {{
+ *   name: string;
+ *   spec: InstanceType<AbstractSpecType>;
+ * }} DefinedNamedSpec
+ *
+ *
+ * @typedef {NamedSpec[]} SpecSchema
+ *
+ * @typedef {DefinedNamedSpec[]} DefinedSpecSchema
+ *
+ * @typedef {BlankNamedSpec[]} BlankSpecSchema
  */

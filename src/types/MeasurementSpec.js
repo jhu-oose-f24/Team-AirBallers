@@ -1,20 +1,22 @@
+import AbstractSpecType from "@/types/AbstractSpecType";
+
 const UNIT = Object.freeze({
   MM: "mm",
   CM: "cm",
   INCH: "in",
-  // TODO: define more if needed
+  // define more if needed
 });
 
 /**
+ * @extends {AbstractSpecType<VType>}
+ * @typedef {number} VType
+ *
  * @typedef {UNIT[keyof UNIT]} Unit
  *
  * @typedef {[number, number]} Range
  */
-export default class MeasurementSpec {
+export default class MeasurementSpec extends AbstractSpecType {
   static UNIT = UNIT;
-
-  /** @type {number} */
-  value = 0;
 
   /** @type {Range} */
   range = [null, null];
@@ -25,29 +27,54 @@ export default class MeasurementSpec {
   /**
    * @param {Unit} unit
    * @param {[number, number]} range
-   * @param {number} value
+   * @param {VType} value
+   * @override
    */
-  constructor(unit, range, value = undefined) {
-    const [min, max] = range;
-    const clampedValue = Math.min(Math.max(value, min), max);
+  constructor(unit, range, value = 0) {
+    super("number", 0);
 
     this.unit = unit;
     this.range = range;
-    this.value = clampedValue;
+    this.setValue(value);
+  }
+
+  /**
+   * @returns {typeof this.prototype}
+   * @override
+   */
+  static from(obj) {
+    return super.from(obj);
   }
 
   /**
    * @param {Unit} unit
    * @param {[number, number]} range
+   * @override
    */
   static defineSchema(unit, range) {
     return new this(unit, range).getSchema();
   }
 
+  /**
+   * @param {VType} value
+   * @override
+   */
+  validate(value = this.default) {
+    const [min, max] = this.range;
+    const clampedValue = Math.min(Math.max(value, min), max);
+
+    return clampedValue;
+  }
+
+  /** @override */
+  readable() {
+    return `${this.value}${this.unit}`;
+  }
+
+  /** @override */
   getSchema() {
     return {
-      class: MeasurementSpec.name,
-      value: "number",
+      ...super.getSchema(),
       range: [...this.range],
       unit: this.unit,
     };

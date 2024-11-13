@@ -1,31 +1,54 @@
-export default class EnumSpec {
-  /** @type {string} */
-  value = null;
+import AbstractSpecType from "@/types/AbstractSpecType";
 
-  /** @type {string[]} */
-  enumValues = [];
+/**
+ * @extends {AbstractSpecType<VType>}
+ * @typedef {string} VType
+ */
+export default class EnumSpec extends AbstractSpecType {
+  /** @type {VType[]} */
+  possibleValues = [];
 
   /**
-   * @param {string} value
-   * @param {string[]} enumValues
+   * @param {string[]} possibleValues
+   * @param {VType} value
+   * @override
    */
-  constructor(enumValues, value = undefined) {
-    this.enumValues = enumValues;
-    if (enumValues.includes(value)) {
-      this.value = value;
-    }
+  constructor(possibleValues, value = undefined) {
+    super("string", possibleValues[0]);
+    this.possibleValues = possibleValues;
+
+    this.setValue(value);
   }
 
-  /** @param {string[]} enumValues */
-  static defineSchema(enumValues) {
-    return new this(enumValues).getSchema();
+  /**
+   * @returns {typeof this.prototype}
+   * @override
+   */
+  static from(obj) {
+    return super.from(obj);
   }
 
+  /**
+   * @param {VType[]} possibleValues
+   * @override
+   */
+  static defineSchema(possibleValues) {
+    return new this(possibleValues).getSchema();
+  }
+
+  /**
+   * @param {VType} value
+   * @override
+   */
+  validate(value = this.default) {
+    return this.possibleValues.includes(value) ? value : this.default;
+  }
+
+  /** @override */
   getSchema() {
     return {
-      class: EnumSpec.name,
-      value: "string",
-      enumValues: [...this.enumValues],
+      ...super.getSchema(),
+      possibleValues: [...this.possibleValues],
     };
   }
 }
