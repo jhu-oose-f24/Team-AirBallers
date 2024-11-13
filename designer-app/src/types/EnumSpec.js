@@ -14,13 +14,16 @@ export default class EnumSpec extends AbstractSpecType {
    * @override
    */
   constructor(possibleValues, value = undefined) {
-    const initial = possibleValues.includes(value) && value;
-
-    super("string", possibleValues[0], initial || possibleValues[0]);
+    super("string", possibleValues[0]);
     this.possibleValues = possibleValues;
+
+    this.setValue(value);
   }
 
-  /** @returns {typeof this.prototype} */
+  /**
+   * @returns {typeof this.prototype}
+   * @override
+   */
   static from(obj) {
     return super.from(obj);
   }
@@ -37,7 +40,7 @@ export default class EnumSpec extends AbstractSpecType {
    * @param {VType} value
    * @override
    */
-  validate(value) {
+  validate(value = this.default) {
     return this.possibleValues.includes(value) ? value : this.default;
   }
 
