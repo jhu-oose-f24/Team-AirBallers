@@ -5,6 +5,10 @@
   @apply flex flex-col;
   @apply -mt-[--btn-margin-top];
 }
+.btn-wrapper:has(.btn.patch.hint) {
+  --btn-depth: 0px;
+  --btn-margin-top: 0px;
+}
 
 .btn.patch {
   --btn-cur-depth: var(--btn-depth);
@@ -31,11 +35,17 @@
   @apply font-medium;
   @apply h-full;
 }
-.btn.patch:hover:not(.active):not(:active):not(:disabled) {
+.btn.patch.hint {
+  --btn-cur-margin-top: 0px;
+  --btn-border-width: 0px;
+
+  @apply bg-transparent;
+}
+.btn.patch:not(.hint):hover:not(.active):not(:active):not(:disabled) {
   --btn-cur-depth: 0.4rem;
 }
-.btn.patch.active:not(:disabled),
-.btn.patch:active:not(:disabled) {
+.btn.patch:not(.hint).active:not(:disabled),
+.btn.patch:not(.hint):active:not(:disabled) {
   --btn-cur-depth: 0.2rem;
 }
 .btn.patch:not(:disabled) {
@@ -52,6 +62,9 @@
 .btn.patch:focus-visible {
   @apply outline outline-[0.2rem] outline-primary-darker;
   @apply outline-offset-[0.15rem];
+}
+.btn.patch.hint:focus-visible {
+  @apply outline-primary-darkest/35 outline-offset-0;
 }
 
 .btn.patch,
@@ -74,7 +87,7 @@
   @apply overflow-hidden;
   @apply relative;
 }
-.btn.patch:hover:not(:disabled) .border {
+.btn.patch:not(.hint):hover:not(:disabled) .border {
   @apply bg-primary-light;
 }
 
@@ -93,9 +106,16 @@
   @apply bg-primary-lighter;
   @apply overflow-hidden;
 }
-.btn.patch.active:not(:disabled) .content,
-.btn.patch:active:not(:disabled) .content {
+.btn.patch.hint:hover:not(.active):not(:active):not(:disabled) .content {
+  @apply bg-primary-light;
+}
+.btn.patch:not(.hint).active:not(:disabled) .content,
+.btn.patch:not(.hint):active:not(:disabled) .content {
   @apply bg-primary-active-fill;
+}
+.btn.patch.hint.active:not(:disabled) .content,
+.btn.patch.hint:active:not(:disabled) .content {
+  @apply bg-primary/10;
 }
 .btn.patch.loading .content > * {
   @apply opacity-0;
@@ -106,7 +126,7 @@
   @apply text-primary-darkest;
 }
 .btn.patch span.icon svg {
-  @apply max-w-[--btn-line-height] max-h-[--btn-line-height];
+  @apply w-[--btn-line-height] h-[--btn-line-height];
   @apply stroke-[2.7];
 }
 

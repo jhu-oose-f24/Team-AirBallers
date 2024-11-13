@@ -1,7 +1,7 @@
 .modal-overlay {
   @apply fixed inset-0 z-50;
   @apply bg-background-alt/70;
-  @apply font-[family-name:--font-rubik];
+  @apply font-[family-name:inherit];
 }
 
 .modal-patch {
