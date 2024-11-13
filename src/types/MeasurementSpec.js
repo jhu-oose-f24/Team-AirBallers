@@ -31,15 +31,17 @@ export default class MeasurementSpec extends AbstractSpecType {
    * @override
    */
   constructor(unit, range, value = 0) {
-    const [min, max] = range;
-    const clampedValue = Math.min(Math.max(value, min), max);
+    super("number", 0);
 
-    super(typeof clampedValue, 0, clampedValue);
     this.unit = unit;
     this.range = range;
+    this.setValue(value);
   }
 
-  /** @returns {typeof this.prototype} */
+  /**
+   * @returns {typeof this.prototype}
+   * @override
+   */
   static from(obj) {
     return super.from(obj);
   }
@@ -57,7 +59,7 @@ export default class MeasurementSpec extends AbstractSpecType {
    * @param {VType} value
    * @override
    */
-  validate(value) {
+  validate(value = this.default) {
     const [min, max] = this.range;
     const clampedValue = Math.min(Math.max(value, min), max);
 

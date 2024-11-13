@@ -10,11 +10,10 @@ export default class AbstractSpecType {
   /**
    * @param {string} valueType
    * @param {V} defaultValue
-   * @param {V} value
+   * @param {any[]} otherParams
    */
-  constructor(valueType, defaultValue, value = undefined) {
-    this.value = value;
-    this.valueType = valueType || typeof value;
+  constructor(valueType, defaultValue, ...otherParams) {
+    this.valueType = valueType;
     this.default = defaultValue;
   }
 
