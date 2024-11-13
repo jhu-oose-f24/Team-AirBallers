@@ -80,7 +80,6 @@ export default class AbstractGarment {
     this.name = name;
   }
 
-  /** @returns {Partial<import("@prisma/client").Garment>} */
   serialize() {
     const { type, name, specs, prompts, images } = this;
 
