@@ -1,5 +1,5 @@
-import EnumSpec from "@/types/EnumSpec";
 import AbstractGarment from "@/types/AbstractGarment";
+import EnumSpec from "@/types/EnumSpec";
 import MeasurementSpec from "@/types/MeasurementSpec";
 
 export default class Shirt extends AbstractGarment {

@@ -1,5 +1,5 @@
-import EnumSpec from "@/types/EnumSpec";
 import AbstractSpecType from "@/types/AbstractSpecType";
+import EnumSpec from "@/types/EnumSpec";
 import MeasurementSpec from "@/types/MeasurementSpec";
 
 /** @abstract */
