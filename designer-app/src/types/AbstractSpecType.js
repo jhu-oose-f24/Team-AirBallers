@@ -21,7 +21,7 @@ export default class AbstractSpecType {
   static from(spec) {
     if (spec instanceof this) return spec;
 
-    let parsed;
+    let parsed = spec;
     if (typeof spec === "string") {
       parsed = JSON.parse(spec);
     }
