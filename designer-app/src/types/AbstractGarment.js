@@ -1,6 +1,7 @@
 import AbstractSpecType from "@/types/AbstractSpecType";
 import EnumSpec from "@/types/EnumSpec";
 import MeasurementSpec from "@/types/MeasurementSpec";
+import StringSpec from "@/types/StringSpec";
 import { GarmentType } from "@prisma/client";
 
 /** @abstract */
@@ -11,6 +12,7 @@ export default class AbstractGarment {
   static SPEC_TYPES = {
     MeasurementSpec,
     EnumSpec,
+    StringSpec,
     // add more here
   };
 
