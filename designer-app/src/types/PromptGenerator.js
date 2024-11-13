@@ -27,6 +27,7 @@ export default class PromptGenerator {
     SPEC: (schemaStr = "") => {
       return resolveAsset("specPrompt").replace("JSON_SCHEMA", schemaStr);
     },
+    CLASSIFIER: () => resolveAsset("garmentClassifierPrompt"),
   };
 
   /**
