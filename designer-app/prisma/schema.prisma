@@ -83,17 +83,8 @@ enum GarmentType {
 }
 
 model Session {
-  id             String   @id @default(auto()) @map("_id") @db.ObjectId
-  sessionToken String   @unique
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
   userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
- 
-model VerificationToken {
-  identifier String   @id @default(auto()) @map("_id") @db.ObjectId
-  token      String   @unique
-  expires    DateTime
- 
-  @@unique([identifier, token])
 }
