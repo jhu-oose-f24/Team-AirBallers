@@ -3,10 +3,10 @@
 import { RootContext } from "@/components/RootLayout";
 import { IconChevronLeft, IconLayoutGrid } from "@tabler/icons-react";
 import clsx from "clsx";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
 import Button from "./Button";
-import { signIn, signOut, useSession } from 'next-auth/react';
 
 const Header = () => {
   const router = useRouter();
@@ -48,11 +48,13 @@ const Header = () => {
         stretch
       />
 
-      {session ? (
-        <Button label="Logout" onClick={() => signOut()} />
-      ) : (
-        <Button label="Log In" onClick={() => signIn()} />
-      )}
+      <Button
+        variant="secondary"
+        label={session ? "Sign out" : "Sign in"}
+        onClick={() => (session ? signOut() : signIn("google"))}
+        xPad="0.6rem"
+        stretch
+      />
     </header>
   );
 };
