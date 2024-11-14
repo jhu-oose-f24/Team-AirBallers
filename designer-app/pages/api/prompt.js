@@ -15,8 +15,10 @@ export default ApiHandler()
       const description = await editor.generateInitialDescription(userPrompt);
       const { images } = await ImageGenerator.createFrom(description);
 
-      const specs = SpecificationGenerator.createFrom(userPrompt, Shirt.SCHEMA);
-      console.log(specs);
+      const specs = await SpecificationGenerator.createFrom(
+        userPrompt,
+        Shirt.SCHEMA,
+      );
 
       /** @type {string} */
       const url = images?.[0]?.url;
@@ -24,21 +26,8 @@ export default ApiHandler()
       // TODO: different users
       let [user] = await prisma.user.findMany();
 
-      if (!user) {
-        user = await prisma.user.create({
-          data: {
-            name: "Fabio Fernandez",
-            email: "fabiofartist@gmail.com",
-            emailVerified: new Date(),
-            image: "http://some.url.com/pfp",
-            collections: {
-              create: [{ name: "Drafts", editable: false }],
-            },
-          },
-        });
-      }
-
-      const [collection] = await prisma.collection.findMany({
+      // TODO: different collections
+      let [collection] = await prisma.collection.findMany({
         where: { userId: user.id },
       });
 
@@ -47,13 +36,13 @@ export default ApiHandler()
           collectionId: collection.id,
           name: "Custom Red Shirt",
           type: "Shirt",
-          specs: JSON.stringify({ sleeveLength: "Hehe" }),
+          specs,
           prompts: [{ text: userPrompt }],
           images: [{ url }],
         },
       });
 
-      res.status(200).json({ url, id: garment.id });
+      res.status(200).json({ garment });
     } catch (err) {
       res.status(500).json(err);
       console.error("Error creating prompt:", err);

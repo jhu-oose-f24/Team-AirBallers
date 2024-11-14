@@ -42,7 +42,10 @@ export default function Home() {
     axios
       .post(apiUrl, { prompt })
       .then(({ data }) => {
-        setImgSrc(data.url);
+        /** @type {import("@prisma/client").Garment} */
+        const garment = data.garment;
+
+        setImgSrc(garment.images[0].url);
       })
       .catch((err) => console.log(err))
       .finally(() => setGenerating(false));
