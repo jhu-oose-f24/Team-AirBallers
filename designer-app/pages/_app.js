@@ -2,10 +2,10 @@ import RootLayout from "@/components/RootLayout";
 import "@/styles/colors.css";
 import "@/styles/globals.css";
 import "@/styles/layout.css";
+import { SessionProvider } from "next-auth/react";
 import { Rubik } from "next/font/google";
 import "overlayscrollbars/overlayscrollbars.css";
 import "tippy.js/dist/tippy.css";
-import { SessionProvider } from 'next-auth/react';
 
 export const rubik = Rubik({
   subsets: ["latin-ext"],
@@ -13,9 +13,12 @@ export const rubik = Rubik({
   weight: "variable",
 });
 
-export default function MyApp({ Component, pageProps }) {
+export default function MyApp({
+  Component,
+  pageProps: { session, ...pageProps },
+}) {
   return (
-    <SessionProvider session={pageProps.session}>
+    <SessionProvider session={session}>
       <RootLayout>
         <Component {...pageProps} />
       </RootLayout>
