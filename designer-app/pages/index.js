@@ -42,7 +42,6 @@ export default function Home() {
     axios
       .post(apiUrl, { prompt })
       .then(({ data }) => {
-        setGarmentId(data.id);
         setImgSrc(data.url);
       })
       .catch((err) => console.log(err))

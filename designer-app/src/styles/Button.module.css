@@ -121,6 +121,50 @@
   @apply opacity-0;
 }
 
+@keyframes loader-flash {
+  0% {
+    transform: translateY(20%);
+    @apply bg-transparent;
+  }
+
+  60% {
+    @apply bg-primary-darkest;
+  }
+
+  100% {
+    transform: translateY(-25%);
+    @apply bg-primary-darkest;
+  }
+}
+
+.btn.patch .loader {
+  --dot-size: calc(var(--btn-line-height) / 2);
+  --dot-gap: calc(var(--btn-line-height) / 3);
+
+  @apply absolute top-1/2 left-1/2;
+  @apply -translate-x-1/2 -translate-y-1/2;
+  @apply flex gap-[--dot-gap];
+  @apply opacity-0;
+}
+.btn.patch.loading .loader {
+  @apply opacity-100;
+}
+
+.btn.patch .loader span {
+  @apply h-[--dot-size] w-[--dot-size];
+  @apply bg-primary-darkest;
+  @apply rounded-full;
+  @apply transition-all duration-150 ease-in-out;
+  @apply animate-[loader-flash_300ms_infinite_alternate_ease];
+  @apply [animation-delay:150ms];
+}
+.btn.patch .loader span:nth-child(1) {
+  @apply [animation-delay:0ms];
+}
+.btn.patch .loader span:nth-child(3) {
+  @apply [animation-delay:300ms];
+}
+
 .btn.patch span.icon {
   @apply max-w-[--btn-line-height] max-h-[--btn-line-height];
   @apply text-primary-darkest;
