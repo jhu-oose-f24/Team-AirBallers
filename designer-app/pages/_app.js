@@ -13,9 +13,9 @@ export const rubik = Rubik({
   weight: "variable",
 });
 
-export default function MyApp({ Component, pageProps: { session, ...pageProps } }) {
+export default function MyApp({ Component, pageProps }) {
   return (
-    <SessionProvider session={session}>
+    <SessionProvider session={pageProps.session}>
       <RootLayout>
         <Component {...pageProps} />
       </RootLayout>
