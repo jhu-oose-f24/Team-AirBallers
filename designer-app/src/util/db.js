@@ -1,13 +1,16 @@
 import { PrismaClient } from "@prisma/client";
 
-const prismaClientSingleton = () => new PrismaClient();
-
-/** @type {ReturnType<typeof prismaClientSingleton>} */
-const prisma =
-  globalThis.prisma ||
-  new PrismaClient({
-    log: process.env.NODE_ENV === "development" ? ["query", "error", "warn"] : ["error"],
+const PrismaClientSingleton = () => {
+  return new PrismaClient({
+    log:
+      process.env.NODE_ENV === "development"
+        ? ["query", "warn", "error"]
+        : ["error"],
   });
+};
+
+/** @type {ReturnType<typeof PrismaClientSingleton>} */
+const prisma = globalThis.prismaGlobal ?? PrismaClientSingleton();
 
 if (process.env.NODE_ENV !== "production") {
   globalThis.prismaGlobal = prisma;
