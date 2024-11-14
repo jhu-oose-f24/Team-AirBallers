@@ -8,19 +8,20 @@ datasource db {
 }
 
 model User {
-  // Provided by google-auth-library
+  // Provided by next-auth
   id            String       @id @default(auto()) @map("_id") @db.ObjectId
   name          String?
   email         String?      @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
+  sessions      Session[]
   // Added for designer-app
   collections   Collection[]
 }
 
 model Account {
-  // Provided by google-auth-library
+  // Provided by next-auth
   id                String   @id @default(auto()) @map("_id") @db.ObjectId
   userId            String   @db.ObjectId
   type              String
@@ -79,4 +80,11 @@ type GarmentImage {
 enum GarmentType {
   Shirt
   Pants
+}
+
+model Session {
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId  String   @db.ObjectId
+  expires DateTime
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

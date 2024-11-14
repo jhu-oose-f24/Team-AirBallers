@@ -3,6 +3,7 @@
 import { RootContext } from "@/components/RootLayout";
 import { IconChevronLeft, IconLayoutGrid } from "@tabler/icons-react";
 import clsx from "clsx";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
 import Button from "./Button";
@@ -12,6 +13,8 @@ const Header = () => {
   const { sideBarOpen, setSideBarOpen, headerState } = useContext(RootContext);
 
   const { title, back } = headerState;
+
+  const { data: session } = useSession();
 
   function goBack() {
     router.push(back);
@@ -47,8 +50,8 @@ const Header = () => {
 
       <Button
         variant="secondary"
-        label="Login"
-        onClick={() => router.push("/login")}
+        label={session ? "Sign out" : "Sign in"}
+        onClick={() => (session ? signOut() : signIn("google"))}
         xPad="0.6rem"
         stretch
       />
