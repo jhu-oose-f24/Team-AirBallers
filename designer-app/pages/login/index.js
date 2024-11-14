@@ -63,7 +63,7 @@ export default function Login() {
       </form>
 
       <div className="sign-up-prompt">
-        <span>Don't have an account?</span>
+        <span>Don`&apos;`t have an account?</span>
         <Button
           label="Sign Up"
           onClick={() => router.push("/signup")}
