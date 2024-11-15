@@ -1,0 +1,6 @@
+## Iteration 4 - Retrospective
+For iterarion 4, the major goal was to improve the overall functionality of the project. We aimed to fix a lot of the bugs that were happening during the usage of the application. Furthermore, we refactored a lot of the backend in order to run more smoothly and to be more aligned with our goals of the project. We honned down the production pipeline on the backend. Futhermore, we got the json schema down and working with the database. We also implemented a login feature using Next Auth to finally allow users to create accounts. 
+
+One challenged we experienced last iteration was refactoring. We had to talk a lot about how we wanted the refactoring to go and wha the production pipeline should look like. After talking through it for a little while, we agreed upon a design and layout of the codebase. After the plan was made it was fairly straighforward to refactor and get the ideas coded.
+
+For iteration 5, we aim to refactor the prompting, json schema generation and some additionally refactoring of the backend. We also aim to improve the sign-in and sign-out as well. We will also make it so signed-out users will only be able to generate a couple images, while signed in users have all the features. 
