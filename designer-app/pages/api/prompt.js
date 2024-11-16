@@ -1,4 +1,3 @@
-import EditableDescriptionGenerator from "@/types/EditableDescriptionGenerator";
 import Shirt from "@/types/garments/Shirt";
 import ImageGenerator from "@/types/ImageGenerator";
 import SpecificationGenerator from "@/types/SpecificationGenerator";
@@ -9,19 +8,24 @@ export default ApiHandler()
   .POST(async (req, res) => {
     /** @type {string} */ // TODO: use class
     const userPrompt = req.body?.prompt;
-    const editor = new EditableDescriptionGenerator(); // TODO: refactor
 
     try {
-      const description = await editor.generateInitialDescription(userPrompt);
-      const { images } = await ImageGenerator.createFrom(description);
-
-      const specs = await SpecificationGenerator.createFrom(
+      const specValues = await SpecificationGenerator.createFrom(
         userPrompt,
         Shirt.SCHEMA,
       );
 
+      const generatedGarment = new Shirt();
+      generatedGarment.parseValues(JSON.parse(specValues));
+      generatedGarment.addPrompt(userPrompt);
+
+      const imagePrompt = generatedGarment.getReadableSpecs();
+      console.log(imagePrompt);
+      const { images } = await ImageGenerator.createFrom(imagePrompt);
+
       /** @type {string} */
       const url = images?.[0]?.url;
+      generatedGarment.addImage(url);
 
       // TODO: different users
       let [user] = await prisma.user.findMany();
@@ -34,11 +38,7 @@ export default ApiHandler()
       const garment = await prisma.garment.create({
         data: {
           collectionId: collection.id,
-          name: "Custom Red Shirt",
-          type: "Shirt",
-          specs,
-          prompts: [{ text: userPrompt }],
-          images: [{ url }],
+          ...generatedGarment.serialize(),
         },
       });
 

@@ -57,7 +57,6 @@ export default class AbstractSpecType {
       class: this.constructor.name,
       valueType: this.valueType,
       default: this.default,
-      value: undefined,
     };
   }
 

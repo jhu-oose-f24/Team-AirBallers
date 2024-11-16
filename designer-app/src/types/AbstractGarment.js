@@ -6,9 +6,6 @@ import { GarmentType } from "@prisma/client";
 
 /** @abstract */
 export default class AbstractGarment {
-  /** @type {BlankSpecSchema} */
-  static SCHEMA = [];
-
   static SPEC_TYPES = {
     MeasurementSpec,
     EnumSpec,
@@ -26,8 +23,8 @@ export default class AbstractGarment {
    * @param {GarmentType} type
    * @param {string} name
    * @param {SpecSchema} schema
-   * @param {import("@prisma/client").Garment["prompts"]} prompts
-   * @param {import("@prisma/client").Garment["images"]} images
+   * @param {GarmentPrompt[]} prompts
+   * @param {GarmentImage[]} images
    */
   constructor(type, name, schema, prompts = [], images = []) {
     this.type = type;
@@ -55,18 +52,19 @@ export default class AbstractGarment {
     }));
   }
 
+  /** @param {Garment} obj */
   static from(obj) {
     const { type, name, specs, prompts, images } = obj;
 
-    /** @type {SpecSchema} */
-    const schema = JSON.parse(specs);
-
-    return new this(type, name, schema, prompts, images);
+    return new this(type, name, JSON.parse(specs), prompts, images);
   }
 
-  /** @param {SpecSchema} schema */
-  setSpecs(schema) {
-    this.specs = AbstractGarment.parseSpecs(schema);
+  /** @param {object} specValues */
+  parseValues(specValues) {
+    this.specs = this.specs.map(({ name, spec }) => {
+      spec.setValue(specValues[name]);
+      return { name, spec };
+    });
   }
 
   addPrompt(text = "") {
@@ -100,10 +98,10 @@ export default class AbstractGarment {
   }
 
   getReadableSpecs() {
-    const readable = this.specs.map(({ name, spec }) => {
-      return `${name}: ${spec.readable()}`;
+    const specs = this.specs.map(({ name, spec }) => {
+      return ` - ${name}: ${spec.readable()}`;
     });
 
-    return readable.join("\n");
+    return [`${this.type} specifications:`, ...specs].join("\n");
   }
 }

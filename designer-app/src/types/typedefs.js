@@ -81,3 +81,12 @@
  *
  * @typedef {BlankNamedSpec[]} BlankSpecSchema
  */
+
+/**
+ * @typedef {import("@prisma/client").User} User
+ * @typedef {import("@prisma/client").Collection} Collection
+ * @typedef {import("@prisma/client").Garment} Garment
+ * @typedef {import("@prisma/client").GarmentImage} GarmentImage
+ * @typedef {import("@prisma/client").GarmentPrompt} GarmentPrompt
+ * @typedef {import("@prisma/client").GarmentType} GarmentType
+ */

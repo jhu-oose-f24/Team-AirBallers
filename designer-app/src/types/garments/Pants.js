@@ -4,6 +4,7 @@ import StringSpec from "@/types/StringSpec";
 import { GarmentType } from "@prisma/client";
 
 export default class Pants extends AbstractGarment {
+  /** @type {BlankSpecSchema} */
   static SCHEMA = [
     {
       name: "Style",
