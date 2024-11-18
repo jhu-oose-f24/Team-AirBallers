@@ -3,6 +3,7 @@
 import { RootContext } from "@/components/RootLayout";
 import { IconChevronLeft, IconLayoutGrid } from "@tabler/icons-react";
 import clsx from "clsx";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
 import Button from "./Button";
@@ -12,6 +13,8 @@ const Header = () => {
   const { sideBarOpen, setSideBarOpen, headerState } = useContext(RootContext);
 
   const { title, back } = headerState;
+
+  const { data: session } = useSession();
 
   function goBack() {
     router.push(back);
@@ -25,31 +28,30 @@ const Header = () => {
     <header className="app-header">
       <Button
         variant="hint"
-        className={clsx("action-button", back && "back")}
-        icon={back ? <IconChevronLeft stroke={2.8} /> : <IconLayoutGrid />}
-        label={back && title}
-        onClick={back ? goBack : toggleSideBar}
+        className="action-button"
+        icon={<IconLayoutGrid />}
+        onClick={toggleSideBar}
         fontSize="1.8rem"
         xPad="0.3rem"
         yPad="0.3rem"
         stretch
       />
 
-      {!back && (
-        <Button
-          variant="hint"
-          className="title-link"
-          label={title}
-          onClick={goBack}
-          fontSize="1.8rem"
-          stretch
-        />
-      )}
+      <Button
+        variant="hint"
+        className={clsx("title-link", back && "back")}
+        icon={back && <IconChevronLeft stroke={2.8} />}
+        label={title}
+        onClick={() => back && router.push(back)}
+        fontSize="1.8rem"
+        xPad={back && "0.3rem"}
+        stretch
+      />
 
       <Button
         variant="secondary"
-        label="Login"
-        onClick={() => router.push("/login")}
+        label={session ? "Sign out" : "Sign in"}
+        onClick={() => (session ? signOut() : signIn("google"))}
         xPad="0.6rem"
         stretch
       />

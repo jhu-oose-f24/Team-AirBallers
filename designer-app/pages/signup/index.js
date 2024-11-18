@@ -64,7 +64,7 @@ export default function Signup() {
   return (
     <div className="login-wrapper">
       <div className="login-container">
-        <Header title="Sign Up" />
+        <Header/>
         <h1 className="text-center text-2xl font-bold">Sign Up</h1>
         <form onSubmit={handleSignup} className="flex flex-col gap-4">
           <input

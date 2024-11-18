@@ -35,7 +35,7 @@ export default function Login() {
 
   return (
     <div className="login-container">
-      <Header title="Log In" />
+      <Header/>
       <h1 className="text-center text-2xl font-bold">Login</h1>
       <form onSubmit={handleLogin} className="flex flex-col gap-4">
         <input
@@ -63,7 +63,7 @@ export default function Login() {
       </form>
 
       <div className="sign-up-prompt">
-        <span>Don't have an account?</span>
+        <span>Don`&apos;`t have an account?</span>
         <Button
           label="Sign Up"
           onClick={() => router.push("/signup")}
@@ -71,6 +71,13 @@ export default function Login() {
           tint="#3498db"
         />
       </div>
+
+      {/*<Button
+        label="Log In with Google"
+        onClick={handleGoogleLogin}
+        size="xs"
+        tint="#db4437"
+      />*/}
     </div>
   );
 }

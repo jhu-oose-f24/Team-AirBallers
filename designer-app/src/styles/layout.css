@@ -33,12 +33,26 @@ body[id] #__next {
   @apply flex justify-between items-center;
   @apply outline outline-[0.4rem] outline-background-alt;
   @apply border-b-[0.15rem] border-secondary;
+  @apply p-[0.7rem] gap-[0.5rem];
   @apply relative z-20;
-  @apply p-[0.7rem];
 }
 
 .app-header .title-link {
   @apply min-w-0;
+}
+.app-header .title-link.back {
+  @apply mr-auto;
+}
+
+.app-header .title-link span:not(:has(svg)) {
+  @apply font-bold !text-foreground;
+}
+.app-header .title-link.back span:not(:has(svg)) {
+  @apply !pl-0 !pr-[0.6rem];
+}
+
+.app-header .title-link.back svg {
+  @apply !stroke-[2.8];
 }
 
 .app-header .action-button {
@@ -48,16 +62,10 @@ body[id] #__next {
 .app-header .action-button svg {
   @apply !stroke-[1.9];
 }
-.app-header .action-button.back svg {
-  @apply !stroke-[2.8];
-}
-
-.app-header .title-link span,
-.app-header .action-button span {
-  @apply font-bold !text-foreground;
-}
 
 .root-container {
+  --sidebar-width: 15rem;
+
   @apply w-full h-auto flex flex-1;
   @apply transition-transform duration-300 ease-in-out;
   @apply overflow-hidden;
@@ -67,10 +75,8 @@ body[id] #__next {
 /* Side Bar */
 
 .sidebar {
-  --width: 15rem;
-
-  @apply flex flex-col;
-  @apply w-[--width] h-full;
+  @apply flex flex-col shrink-0;
+  @apply w-[--sidebar-width] h-full;
   @apply p-[1rem] gap-[0.8rem];
   @apply transition-all duration-300 ease-in-out;
   @apply border-r-[0.3rem] border-r-background-alt;
@@ -82,16 +88,25 @@ body[id] #__next {
   @apply flex flex-col content-center;
   @apply text-[1.5rem] text-foreground font-semibold;
   @apply text-center;
-  @apply z-10;
 }
 
 .sidebar .collection-list {
-  @apply !-mx-[0.7rem] !-mt-[0.9rem] !mb-[1rem];
+  @apply !-mx-[0.7rem];
 }
 
 .sidebar .collection-list > [data-overlayscrollbars-contents] {
   @apply flex flex-col gap-[0.9rem];
-  @apply !px-[1rem] !pt-[0.7rem];
+  @apply !px-[1rem] !py-[0.7rem];
+}
+
+.sidebar .stitch-open {
+  @apply !-mt-[0.2rem] !-mb-[0.9rem];
+  @apply z-10;
+}
+
+.sidebar .stitch-close {
+  @apply !-mt-[0.9rem] !mb-[0.5rem];
+  @apply z-10;
 }
 
 .sidebar.open {
@@ -99,18 +114,35 @@ body[id] #__next {
 }
 
 .sidebar.closed {
-  @apply -ml-[--width];
+  @apply -ml-[--sidebar-width];
   @apply invisible;
+}
+
+/* Page Content */
+
+.page-content,
+.page-content > [data-overlayscrollbars-contents] > * {
+  @apply flex;
+  @apply w-full h-full;
+  @apply relative;
 }
 
 .page-content,
 .page-content > [data-overlayscrollbars-contents] {
-  @apply w-full h-full flex flex-col flex-1;
-  @apply justify-end  items-center;
-  @apply relative;
+  @apply max-w-full max-h-full;
+}
+
+.page-content > [data-overlayscrollbars-contents] > * {
+  @apply min-h-max;
+  @apply p-[1rem];
 }
 
 /* ========================== Home Page ========================== */
+
+body#home .create-layout {
+  @apply flex-col justify-end items-center;
+  @apply min-w-max;
+}
 
 .garment-img {
   @apply flex flex-1 items-center justify-center;
@@ -121,14 +153,18 @@ body[id] #__next {
 }
 
 .garment-img.empty {
-  @apply px-6 py-4 min-w-[60%];
+  @apply px-[1.5rem] py-[1rem] min-w-[60%];
   @apply text-primary;
 }
 
 .prompt {
   @apply flex items-end justify-between;
-  @apply mx-auto mt-6 mb-[1.5rem] gap-2;
-  @apply w-[80%];
+  @apply p-[1.5rem] gap-[0.5rem];
+  @apply w-[90%] min-w-fit;
+}
+
+.prompt-input {
+  @apply min-w-[20rem];
 }
 
 .prompt-input,
@@ -139,14 +175,16 @@ body[id] #__next {
 /* ======================== Collection Page ======================== */
 
 body#collection-page .collection-grid {
-  @apply w-full h-full p-[1rem];
+  --grid-side-pad: calc(1rem + var(--sidebar-width) / 2);
+  @apply flex-wrap;
+  @apply px-[--grid-side-pad] gap-[1rem];
+  @apply transition-all duration-300 ease-in-out;
+}
+body#collection-page:has(.sidebar.open) .collection-grid {
+  --grid-side-pad: 1rem;
 }
 
-body#collection-page .collection-grid > [data-overlayscrollbars-contents] {
-  @apply flex flex-wrap gap-[1rem] overflow-y-auto;
-}
-
-body#collection-page .collection-grid > [data-overlayscrollbars-contents] > * {
+body#collection-page .collection-grid > * {
   @apply max-w-[calc(25%-1rem*(3/4))];
 }
 

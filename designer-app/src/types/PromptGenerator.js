@@ -27,6 +27,8 @@ export default class PromptGenerator {
     SPEC: (schemaStr = "") => {
       return resolveAsset("specPrompt").replace("JSON_SCHEMA", schemaStr);
     },
+    // TODO: insert synamic list of garment types to pick from
+    CLASSIFIER: () => resolveAsset("garmentClassifierPrompt"),
   };
 
   /**

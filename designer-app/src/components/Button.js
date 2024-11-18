@@ -134,6 +134,12 @@ const Button = (props) => {
         disabled={disabled}
       >
         <div className={css.border}>
+          <div className={css.loader}>
+            <span />
+            <span />
+            <span />
+          </div>
+
           <div
             className={css.content}
             style={{
