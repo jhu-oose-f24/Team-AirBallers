@@ -1,0 +1,75 @@
+[class*="tooltip"].context-menu {
+  --tooltip-bg: hsl(var(--background-alt)) !important;
+  --tooltip-text: hsl(var(--primary-darkest)) !important;
+  --tooltip-border: hsl(var(--secondary)) !important;
+
+  --tooltip-x-pad: 0px;
+  --tooltip-y-pad: 0.25rem;
+  --tooltip-radius: 0.9rem;
+
+  --header-radius: calc(var(--tooltip-radius) - 0.25rem);
+
+  @apply relative;
+  @apply shadow-foreground/15 shadow-[0_0.6rem_1rem_0];
+  @apply transition-all duration-150 ease-in-out;
+}
+
+.context-menu::before {
+  @apply content-[""];
+  @apply absolute top-0 left-[--tooltip-radius] -translate-x-full;
+  @apply border-l-transparent border-b-transparent;
+  @apply border-t-[--tooltip-border] border-r-[--tooltip-border];
+  @apply border-x-[0.8rem] border-y-[1.2rem];
+  @apply z-[-1];
+}
+
+.context-menu [class*="tippy-content"] > div {
+  @apply flex flex-col;
+}
+
+.context-menu [class*="tippy-content"] > div > * {
+  @apply mx-[0.25rem];
+}
+
+.context-menu div.option,
+.context-menu span.header {
+  @apply transition-[inherit];
+  @apply py-[0.6rem];
+}
+
+.context-menu span.header {
+  @apply text-[1.2rem] font-semibold;
+  @apply px-[1rem] pt-[0.6rem];
+  @apply rounded-t-[--header-radius];
+  @apply bg-background-main;
+}
+
+.context-menu span.separator {
+  @apply w-auto h-[0.4rem];
+  @apply border-t-[0.2rem] border-t-[--tooltip-border];
+  @apply bg-background-alt;
+}
+
+.context-menu div.option {
+  @apply flex items-center;
+  @apply px-[0.8rem] gap-[0.5rem];
+  @apply cursor-pointer;
+}
+.context-menu div.option:hover {
+  @apply bg-background-main;
+}
+.context-menu div.option:not(:last-child) {
+  @apply -mb-[0.2rem];
+}
+.context-menu div.option:last-child {
+  @apply pb-[0.6rem];
+  @apply rounded-b-[--header-radius];
+}
+
+.context-menu div.option span {
+  @apply px-[0.2rem];
+}
+
+.context-menu div.option * {
+  @apply pointer-events-none;
+}

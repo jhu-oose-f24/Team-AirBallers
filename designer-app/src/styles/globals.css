@@ -56,6 +56,13 @@
 /* =========================== Tooltip =========================== */
 
 .tooltip {
+  --tooltip-bg: hsl(var(--primary-darkest));
+  --tooltip-text: hsl(var(--primary-lightest));
+  --tooltip-border: hsl(var(--primary-dark));
+  --tooltip-x-pad: 0.8rem;
+  --tooltip-y-pad: 0.4rem;
+  --tooltip-radius: 0.6rem;
+
   --arrow-half-width: 0.5rem;
   --arrow-height: 0.5rem;
   --arrow-padding: 0.4rem;
@@ -64,14 +71,14 @@
     2 * var(--arrow-half-width) + 2 * var(--arrow-padding)
   );
 
-  @apply !bg-primary-darkest !text-primary-lightest;
-  @apply !rounded-[0.6rem];
-  @apply !outline !outline-primary-dark;
+  @apply !bg-[--tooltip-bg] !text-[--tooltip-text];
+  @apply !rounded-[--tooltip-radius];
+  @apply !outline !outline-[--tooltip-border];
   @apply ![outline-width:0.25rem] !-outline-offset-[0.25rem];
 }
 
 .tooltip .tippy-content {
-  @apply px-[0.8rem] py-[0.4rem];
+  @apply px-[--tooltip-x-pad] py-[--tooltip-y-pad];
   @apply font-[450] text-[1rem];
 }
 
@@ -104,20 +111,20 @@
 .tooltip[data-placement^="top"] .tippy-arrow:before {
   @apply ![border-top-width:--arrow-height];
   @apply ![border-bottom-width:0px];
-  @apply !border-t-primary-dark;
+  @apply !border-t-[--tooltip-border];
 }
 .tooltip[data-placement^="bottom"] .tippy-arrow:before {
   @apply ![border-top-width:0px];
   @apply ![border-bottom-width:--arrow-height];
-  @apply !border-b-primary-dark;
+  @apply !border-b-[--tooltip-border];
 }
 .tooltip[data-placement^="left"] .tippy-arrow:before {
   @apply ![border-left-width:--arrow-height];
   @apply ![border-right-width:0px];
-  @apply !border-l-primary-dark;
+  @apply !border-l-[--tooltip-border];
 }
 .tooltip[data-placement^="right"] .tippy-arrow:before {
   @apply ![border-left-width:0px];
   @apply ![border-right-width:--arrow-height];
-  @apply !border-r-primary-dark;
+  @apply !border-r-[--tooltip-border];
 }

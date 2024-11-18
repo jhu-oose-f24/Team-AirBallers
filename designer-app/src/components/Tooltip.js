@@ -2,9 +2,10 @@
 
 import Tippy from "@tippyjs/react";
 import clsx from "clsx";
+import { forwardRef } from "react";
 
-/** @param {import("@tippyjs/react").TippyProps} props */
-const Tooltip = (props) => {
+/** @type {ForwardRef<TooltipProps, Element>} */
+const Tooltip = forwardRef((props, ref) => {
   const { className, children, ...otherProps } = props;
 
   /** @ts-ignore @type {Tippy} */
@@ -17,10 +18,11 @@ const Tooltip = (props) => {
       duration={150}
       appendTo="parent"
       {...otherProps}
+      ref={ref}
     >
       {children}
     </TippyComponent>
   );
-};
+});
 
 export default Tooltip;
