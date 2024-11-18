@@ -1,6 +1,6 @@
 "use client";
 
-import { RootContext } from "@/components/RootLayout";
+import { RootContext } from "@/context/RootContext";
 import { IconChevronLeft, IconLayoutGrid } from "@tabler/icons-react";
 import clsx from "clsx";
 import { signIn, signOut, useSession } from "next-auth/react";

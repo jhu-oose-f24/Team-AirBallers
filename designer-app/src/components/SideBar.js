@@ -2,25 +2,25 @@
 
 import Button from "@/components/Button";
 import CollectionPreview from "@/components/CollectionPreview";
-import { RootContext } from "@/components/RootLayout";
 import ScrollContainer from "@/components/ScrollContainer";
 import Stitches from "@/components/Stitches";
+import { RootContext } from "@/context/RootContext";
+import { SideBarContext } from "@/context/SideBarContext";
+import DeleteCollectionModal from "@/features/DeleteCollectionModal";
+import { pause } from "@/util/misc";
 import { IconHanger, IconPlus } from "@tabler/icons-react";
 import axios from "axios";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 
-/**
- * @typedef {Awaited<
- *   ReturnType<import("@/util/db.js")["default"]["prompt"]["findMany"]>
- * >} GarmentList
- */
 const SideBar = () => {
   const { sideBarOpen, setSideBarRef } = useContext(RootContext);
+  const { openMenuRef, collectionToDelete, setCollectionToDelete } =
+    useContext(SideBarContext);
 
   const router = useRouter();
-  /** @type {UseState<GarmentList>} */
+  /** @type {UseState<GarmentList[]>} */
   const [garments, setGarments] = useState([]);
 
   useEffect(() => {
@@ -30,6 +30,12 @@ const SideBar = () => {
       .catch((err) => console.log(err));
   }, []);
 
+  async function hideOpenMenu() {
+    const lastOpen = openMenuRef.current;
+    await pause(100);
+    lastOpen?.state.isShown && lastOpen?.hide();
+  }
+
   return (
     <div
       className={clsx("sidebar", sideBarOpen ? "open" : "closed")}
@@ -38,7 +44,7 @@ const SideBar = () => {
       <span className="header">Collections</span>
 
       <Stitches type="line" stitchWidth="0.17rem" svgClass="stitch-open" />
-      <ScrollContainer className="collection-list">
+      <ScrollContainer className="collection-list" onScroll={hideOpenMenu}>
         {/* TODO: create actual cards from collections */}
         <CollectionPreview garments={garments?.slice(0, 5)} />
         <CollectionPreview garments={garments?.slice(5, 7)} />
@@ -67,6 +73,7 @@ const SideBar = () => {
         size="sm"
         // TODO: onClick: modal to create collection
       />
+      <DeleteCollectionModal />
     </div>
   );
 };

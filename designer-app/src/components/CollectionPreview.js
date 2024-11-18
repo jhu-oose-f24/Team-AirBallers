@@ -1,22 +1,25 @@
 import Button from "@/components/Button";
-import { RootContext } from "@/components/RootLayout";
+import ContextMenu from "@/components/ContextMenu";
 import Tooltip from "@/components/Tooltip";
-import { IconDotsVertical } from "@tabler/icons-react";
+import { RootContext } from "@/context/RootContext";
+import { SideBarContext } from "@/context/SideBarContext";
+import { pause } from "@/util/misc";
+import { IconDotsVertical, IconEdit, IconTrash } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 import { useContext, useState } from "react";
 import css from "../styles/CollectionPreview.module.css";
 
-/**
- * @param {{
- *   garments: import("@/components/SideBar").GarmentList;
- * }} props
- */
+/** @param {CollectionPreviewProps} props */
 const CollectionPreview = (props) => {
   const { garments } = props;
 
   const { sideBarRef } = useContext(RootContext);
+  const { openMenuRef, setCollectionToDelete } = useContext(SideBarContext);
   const router = useRouter();
+
   const [nameRef, setNameRef] = useState(null);
+  /** @type {UseState<import("tippy.js").Instance>} */
+  const [contextMenu, setContextMenu] = useState(null);
 
   const collectionName = "Collection Name"; // TODO: from props
   const overflownName = nameRef?.clientWidth < nameRef?.scrollWidth;
@@ -66,6 +69,22 @@ const CollectionPreview = (props) => {
     return [0, 15 + headerRect.width - nameRect.width];
   }
 
+  async function onMenuClick() {
+    contextMenu?.hide();
+    await pause(200);
+  }
+
+  async function onRenameClick() {
+    await onMenuClick();
+    // TODO
+  }
+
+  async function onDeleteClick() {
+    await onMenuClick();
+    // TODO: set collection id
+    setCollectionToDelete("collectionId");
+  }
+
   return (
     <div className={css["preview-card"]}>
       <div className={css["card-header"]}>
@@ -83,15 +102,25 @@ const CollectionPreview = (props) => {
           </span>
         </Tooltip>
 
-        <Button
-          variant="hint"
-          icon={<IconDotsVertical />}
-          // TODO: onClick: collection context menu
-          borderRadius="100vmax"
-          fontSize="1.1rem"
-          xPad="0.2rem"
-          yPad="0.2rem"
-        />
+        <ContextMenu
+          onCreate={(inst) => setContextMenu(inst)}
+          onShown={() => (openMenuRef.current = contextMenu)}
+          onHide={() => (openMenuRef.current = null)}
+          options={[
+            { label: "Rename", icon: <IconEdit />, action: onRenameClick },
+            { label: "Delete", icon: <IconTrash />, action: onDeleteClick },
+          ]}
+          appendTo={sideBarRef || "parent"}
+        >
+          <Button
+            variant="hint"
+            icon={<IconDotsVertical />}
+            borderRadius="100vmax"
+            fontSize="1.1rem"
+            xPad="0.2rem"
+            yPad="0.2rem"
+          />
+        </ContextMenu>
       </div>
 
       <div

@@ -3,7 +3,7 @@
 import randomExamplePrompt from "@/assets/examplePrompts";
 import Button from "@/components/Button";
 import InputField from "@/components/InputField";
-import { RootContext } from "@/components/RootLayout";
+import { RootContext } from "@/context/RootContext";
 import { useBodyID } from "@/util/hooks";
 import { IconSearch, IconSparkles } from "@tabler/icons-react";
 import axios from "axios";

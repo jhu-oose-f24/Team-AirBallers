@@ -45,6 +45,11 @@ export default {
         "in-modal": "cubic-bezier(0.1, 1.3, 0.5, 1)",
         "out-modal": "cubic-bezier(0.2, 0, 0, 1.3)",
       },
+      screens: {
+        "max-sm": {
+          max: "640px"
+        }
+      }
     },
   },
   plugins: [

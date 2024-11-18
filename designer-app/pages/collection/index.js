@@ -1,6 +1,6 @@
 "use client";
 
-import { RootContext } from "@/components/RootLayout";
+import { RootContext } from "@/context/RootContext";
 import { useBodyID } from "@/util/hooks";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
