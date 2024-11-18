@@ -82,9 +82,42 @@
 
 /**
  * @typedef {{
+ *   title: string;
  *   openState: UseState<boolean>;
  *   children?: React.ReactNode;
  *   onAfterOpen?: ReactModal.OnAfterOpenCallback;
  *   onAfterClose?: () => void;
  * }} ModalProps
+ */
+
+/** @typedef {import("@tippyjs/react").TippyProps} TooltipProps */
+
+/** @typedef {{ garments: Garment[] }} CollectionPreviewProps */
+
+/**
+ * @typedef {{
+ *   label: string;
+ *   icon?: React.JSX.Element;
+ *   action: React.MouseEventHandler;
+ * }} ContextMenuOption
+ *
+ *
+ * @typedef {TooltipProps & {
+ *   options: ContextMenuOption[];
+ * }} ContextMenuProps
+ */
+
+/**
+ * @typedef {import("overlayscrollbars").EventListeners} ScrollContainerEventListeners
+ *
+ *
+ * @typedef {Omit<
+ *   import("overlayscrollbars-react").OverlayScrollbarsComponentProps,
+ *   "events" | "onScroll"
+ * > & {
+ *   onScroll?: ScrollContainerEventListeners["scroll"];
+ *   onDestroyed?: ScrollContainerEventListeners["destroyed"];
+ *   onInitialized?: ScrollContainerEventListeners["initialized"];
+ *   onUpdated?: ScrollContainerEventListeners["updated"];
+ * }} ScrollContainerProps
  */

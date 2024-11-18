@@ -1,5 +1,6 @@
 body {
   @apply h-screen overflow-hidden contain-paint;
+  @apply text-[1rem] font-[family-name:--font-rubik];
   @apply text-foreground;
 }
 
@@ -14,7 +15,6 @@ body::before {
 body #__next {
   @apply opacity-0;
   @apply flex flex-col items-center justify-center;
-  @apply text-[1rem] font-[family-name:--font-rubik];
   @apply overflow-hidden;
   @apply h-full;
 }
@@ -38,10 +38,28 @@ body[id] #__next {
 }
 
 .app-header .title-link {
-  @apply min-w-0;
+  @apply min-w-0 mx-auto;
 }
 .app-header .title-link.back {
-  @apply mr-auto;
+  @apply ml-0;
+}
+
+@screen sm {
+  .app-header .title-link:not(.back) {
+    @apply absolute top-1/2 left-1/2;
+    @apply -translate-x-1/2 -translate-y-1/2;
+    @apply h-[3rem];
+  }
+}
+
+@screen max-sm {
+  .app-header .action-button {
+    @apply -ml-[3rem] -mr-[0.5rem];
+  }
+
+  .app-header .title-link {
+    @apply ml-0;
+  }
 }
 
 .app-header .title-link span:not(:has(svg)) {
@@ -57,6 +75,7 @@ body[id] #__next {
 
 .app-header .action-button {
   @apply w-auto h-full aspect-square;
+  @apply transition-all duration-150 ease-in-out;
 }
 
 .app-header .action-button svg {

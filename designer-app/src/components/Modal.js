@@ -8,7 +8,13 @@ import css from "../styles/Modal.module.css";
 
 /** @param {ModalProps} props */
 const Modal = (props) => {
-  const { openState, onAfterOpen, onAfterClose, children } = props;
+  const {
+    title = "Modal Title",
+    openState,
+    onAfterOpen,
+    onAfterClose,
+    children,
+  } = props;
 
   const [isOpen, setIsOpen] = openState;
 
@@ -38,7 +44,7 @@ const Modal = (props) => {
       <div className={css["modal-border"]}>
         <div className={css["modal-content"]}>
           <div className={css["modal-header"]}>
-            <span className={css["title"]}>Modal Title</span>
+            <span className={css["title"]}>{title}</span>
             <ClothButton type="cross" onClick={() => setIsOpen(false)} />
           </div>
           <Stitches

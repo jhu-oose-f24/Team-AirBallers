@@ -7,10 +7,8 @@
  * =============== Forward Ref Shorthand ===============
  *
  * @template P, R
- * @typedef {React.FC<
- *   P & {
- *     ref: React.ForwardedRef<R>;
- *   }
+ * @typedef {React.ForwardRefExoticComponent<
+ *   React.PropsWithoutRef<P> & React.RefAttributes<R>
  * >} ForwardRef
  */
 
@@ -34,6 +32,8 @@
 /** @typedef {ForwardRef<React.InputHTMLAttributes, HTMLInputElement>} HTMLInputFC */
 /** @typedef {ForwardRef<React.TextareaHTMLAttributes, HTMLTextAreaElement>} HTMLTextAreaFC */
 /** @typedef {HTMLInputFC | HTMLTextAreaFC} GeneralInput */
+
+/** @typedef {import("overlayscrollbars-react").OverlayScrollbarsComponentRef} ScrollContainerRef */
 
 /**
  * @callback TooltipOffset
@@ -80,4 +80,18 @@
  * @typedef {DefinedNamedSpec[]} DefinedSpecSchema
  *
  * @typedef {BlankNamedSpec[]} BlankSpecSchema
+ */
+
+/**
+ * @typedef {import("@prisma/client").User} User
+ *
+ * @typedef {import("@prisma/client").Collection} Collection
+ *
+ * @typedef {import("@prisma/client").Garment} Garment
+ *
+ * @typedef {import("@prisma/client").GarmentImage} GarmentImage
+ *
+ * @typedef {import("@prisma/client").GarmentPrompt} GarmentPrompt
+ *
+ * @typedef {import("@prisma/client").GarmentType} GarmentType
  */

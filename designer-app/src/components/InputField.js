@@ -129,7 +129,7 @@ const InputField = (props) => {
                   y: textArea ? "scroll" : "hidden",
                 },
               }}
-              events={{ updated: () => textAreaResize(fieldRef) }}
+              onUpdated={() => textAreaResize(fieldRef)}
             >
               <InputElement
                 id={id}

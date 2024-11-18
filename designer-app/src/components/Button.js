@@ -4,10 +4,11 @@ import Stitches from "@/components/Stitches";
 import { pause } from "@/util/misc";
 import { paletteFrom } from "@/util/tint";
 import clsx from "clsx";
+import { forwardRef } from "react";
 import css from "../styles/Button.module.css";
 
-/** @param {ButtonProps} props */
-const Button = (props) => {
+/** @type {ForwardRef<ButtonProps, HTMLButtonElement>} */
+const Button = forwardRef((props, ref) => {
   const {
     className,
     variant = "primary",
@@ -132,6 +133,7 @@ const Button = (props) => {
         style={{ ...(disabled ? {} : tintPalette), ...moddedStyle }}
         onClick={loading || disabled ? null : onClick}
         disabled={disabled}
+        ref={ref}
       >
         <div className={css.border}>
           <div className={css.loader}>
@@ -164,6 +166,6 @@ const Button = (props) => {
       </button>
     </div>
   );
-};
+});
 
 export default Button;
