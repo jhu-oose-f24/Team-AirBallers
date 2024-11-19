@@ -3,13 +3,15 @@
 import ClothButton from "@/components/ClothButton";
 import ScrollContainer from "@/components/ScrollContainer";
 import Stitches from "@/components/Stitches";
+import css from "@/styles/Modal.module.css";
+import clsx from "clsx";
 import ReactModal from "react-modal";
-import css from "../styles/Modal.module.css";
 
 /** @param {ModalProps} props */
 const Modal = (props) => {
   const {
     title = "Modal Title",
+    className,
     openState,
     onAfterOpen,
     onAfterClose,
@@ -32,7 +34,7 @@ const Modal = (props) => {
         afterOpen: css["after-open"],
         beforeClose: css["before-close"],
       }}
-      className={css["modal-patch"]}
+      className={clsx(css["modal-patch"], className)}
       isOpen={isOpen}
       onAfterOpen={handleAfterOpen}
       onRequestClose={() => setIsOpen(false)}

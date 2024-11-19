@@ -3,6 +3,8 @@
 import ScrollContainer from "@/components/ScrollContainer";
 import Stitches from "@/components/Stitches";
 import Tooltip from "@/components/Tooltip";
+import css from "@/styles/InputField.module.css";
+import { useBodyRef } from "@/util/hooks";
 import { paletteFrom } from "@/util/tint";
 import {
   IconAlertCircleFilled,
@@ -12,7 +14,6 @@ import {
 } from "@tabler/icons-react";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
-import css from "../styles/InputField.module.css";
 
 /** @param {InputFieldProps} props */
 const InputField = (props) => {
@@ -44,9 +45,12 @@ const InputField = (props) => {
     style,
   } = props;
 
+  const documentBody = useBodyRef();
+
   const [pwVisible, setPwVisible] = useState(false);
 
   /** @type {UseState<Element>} */
+  const [labelRef, setLabelRef] = useState(null);
   const [fieldRef, setFieldRef] = useState(null);
   /** @type {UseState<Element>} */
   const [rootRef, setRootRef] = useState(null);
@@ -54,7 +58,7 @@ const InputField = (props) => {
   const [iconsRightRef, setIconsRightRef] = useState(null);
 
   /** @type {CustomCSSProperties} */
-  const tintPalette = paletteFrom(error && "crimson");
+  const tintPalette = paletteFrom(error && "red");
 
   const pwType = pwVisible ? "text" : "password";
 
@@ -94,8 +98,9 @@ const InputField = (props) => {
   function getTooltipOffset() {
     const { y: iconsY } = iconsRightRef?.getBoundingClientRect();
     const { y: fieldY } = rootRef?.getBoundingClientRect();
+    const labelHeight = labelRef?.clientHeight || 0;
 
-    return [0, 15 + iconsY - fieldY];
+    return [0, 15 + iconsY - fieldY - labelHeight];
   }
 
   /** @ts-ignore @type {GeneralInput} */
@@ -109,11 +114,13 @@ const InputField = (props) => {
     >
       {label &&
         (id ? (
-          <label className={css["input-label"]} htmlFor={id}>
+          <label className={css["input-label"]} htmlFor={id} ref={setLabelRef}>
             {label}
           </label>
         ) : (
-          <span className={css["input-label"]}>{label}</span>
+          <span className={css["input-label"]} ref={setLabelRef}>
+            {label}
+          </span>
         ))}
 
       <div className={css["input-border"]}>
@@ -163,10 +170,18 @@ const InputField = (props) => {
               <Tooltip
                 disabled={!rootRef}
                 content={error}
-                appendTo={rootRef}
+                appendTo={documentBody}
                 placement="top-end"
                 trigger="mouseenter click"
                 offset={getTooltipOffset}
+                onCreate={(inst) => {
+                  if (!inst?.popper) return;
+
+                  const palette = paletteFrom("red");
+                  for (let colorVar in palette) {
+                    inst.popper.style.setProperty(colorVar, palette[colorVar]);
+                  }
+                }}
               >
                 <IconAlertCircleFilled
                   className="cursor-pointer"

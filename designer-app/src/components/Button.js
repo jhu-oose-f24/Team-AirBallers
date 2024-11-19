@@ -1,11 +1,51 @@
 "use client";
 
 import Stitches from "@/components/Stitches";
+import css from "@/styles/Button.module.css";
 import { pause } from "@/util/misc";
 import { paletteFrom } from "@/util/tint";
 import clsx from "clsx";
 import { forwardRef } from "react";
-import css from "../styles/Button.module.css";
+
+/**
+ * @typedef {Partial<StitchProps & CustomCSSProperties>} SizePreset
+ * @type {{
+ *   [x in ButtonProps["size"]]: {
+ *     css: CustomCSSProperties;
+ *     stitch: Partial<StitchProps>;
+ *   };
+ * }}
+ */
+const SIZE_PRESETS = {
+  xs: {
+    css: {
+      "--btn-x-padding": "0.5rem",
+      "--btn-y-padding": "0.3rem",
+      "--btn-font-size": "0.9rem",
+      "--btn-border-pad": "0.35rem",
+      fontWeight: 600,
+    },
+    stitch: { stitchLength: "short", stitchSpacing: "short" },
+  },
+  sm: {
+    css: {
+      "--btn-x-padding": "0.7rem",
+      "--btn-y-padding": "0.45rem",
+      "--btn-font-size": "1.1rem",
+      "--btn-border-pad": "0.4rem",
+    },
+    stitch: { stitchLength: "short" },
+  },
+  lg: {
+    css: {
+      "--btn-x-padding": "1.1rem",
+      "--btn-y-padding": "0.7rem",
+      "--btn-font-size": "1.5rem",
+      "--btn-border-pad": "0.55rem",
+    },
+    stitch: { stitchWidth: "0.18rem" },
+  },
+};
 
 /** @type {ForwardRef<ButtonProps, HTMLButtonElement>} */
 const Button = forwardRef((props, ref) => {
@@ -36,77 +76,6 @@ const Button = forwardRef((props, ref) => {
     style,
   } = props;
 
-  /**
-   * @typedef {Partial<StitchProps & CustomCSSProperties>} SizePreset
-   * @type {{
-   *   [x in ButtonProps["size"]]: {
-   *     css: CustomCSSProperties;
-   *     stitch: Partial<StitchProps>;
-   *   };
-   * }}
-   */
-  const SIZE_PRESETS = {
-    xs: {
-      css: {
-        "--btn-x-padding": "0.5rem",
-        "--btn-y-padding": "0.3rem",
-        "--btn-font-size": "0.9rem",
-        "--btn-border-pad": "0.35rem",
-        fontWeight: 600,
-      },
-      stitch: { stitchLength: "short", stitchSpacing: "short" },
-    },
-    sm: {
-      css: {
-        "--btn-x-padding": "0.7rem",
-        "--btn-y-padding": "0.45rem",
-        "--btn-font-size": "1.1rem",
-        "--btn-border-pad": "0.4rem",
-      },
-      stitch: { stitchLength: "short" },
-    },
-    lg: {
-      css: {
-        "--btn-x-padding": "1.1rem",
-        "--btn-y-padding": "0.7rem",
-        "--btn-font-size": "1.5rem",
-        "--btn-border-pad": "0.55rem",
-      },
-      stitch: { stitchWidth: "0.18rem" },
-    },
-  };
-
-  /** @type {CustomCSSProperties} */
-  const tintPalette = {
-    ...paletteFrom(tint),
-    ...(variant === "secondary" && {
-      "--primary-darker": "var(--disabled-primary-darkest)",
-      "--primary-light": "var(--disabled-primary-lighter)",
-      "--primary-lighter": bgColor,
-      "--primary-active-fill": bgColor,
-    }),
-    ...(variant === "hint" && {
-      "--primary-light": "var(--background-alt)",
-      "--primary-lighter": "transparent",
-    }),
-  };
-
-  /** @type {CustomCSSProperties} */
-  const moddedStyle = {
-    ...(width && { "--btn-x-padding": "0.4rem" }),
-    ...((stretch || height) && { "--btn-y-padding": "0px" }),
-    ...(SIZE_PRESETS[size]?.css || {}),
-    ...(variant !== "primary" && {
-      "--btn-border-pad": "0px",
-      "--btn-content-radius": "0.5rem",
-    }),
-    ...(xPad && { "--btn-x-padding": xPad }),
-    ...(yPad && { "--btn-y-padding": yPad }),
-
-    ...(fontSize && { "--btn-font-size": fontSize }),
-    ...(borderRadius && { "--btn-content-radius": borderRadius }),
-  };
-
   /** @param {React.KeyboardEvent} event */
   async function enterClick(event) {
     const btn = event.currentTarget?.querySelector("button");
@@ -130,7 +99,31 @@ const Button = forwardRef((props, ref) => {
           css[variant],
           loading && css.loading,
         )}
-        style={{ ...(disabled ? {} : tintPalette), ...moddedStyle }}
+        style={{
+          ...(!disabled && paletteFrom(tint)),
+          ...(variant === "secondary" && {
+            "--primary-darker": "var(--disabled-primary-darkest)",
+            "--primary-light": "var(--disabled-primary-lighter)",
+            "--primary-lighter": bgColor,
+            "--primary-active-fill": bgColor,
+          }),
+          ...(variant === "hint" && {
+            "--primary-light": "var(--background-alt)",
+            "--primary-lighter": "transparent",
+          }),
+
+          ...(width && { "--btn-x-padding": "0.4rem" }),
+          ...((stretch || height) && { "--btn-y-padding": "0px" }),
+          ...(SIZE_PRESETS[size]?.css || {}),
+          ...(variant !== "primary" && {
+            "--btn-border-pad": "0px",
+            "--btn-content-radius": "0.5rem",
+          }),
+          ...(xPad && { "--btn-x-padding": xPad }),
+          ...(yPad && { "--btn-y-padding": yPad }),
+          ...(fontSize && { "--btn-font-size": fontSize }),
+          ...(borderRadius && { "--btn-content-radius": borderRadius }),
+        }}
         onClick={loading || disabled ? null : onClick}
         disabled={disabled}
         ref={ref}
