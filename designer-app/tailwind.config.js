@@ -1,5 +1,7 @@
 import plugin from "tailwindcss/plugin";
 
+import defaultTheme from "tailwindcss/defaultTheme";
+
 /** @type {import("tailwindcss").Config} */
 export default {
   content: [
@@ -47,13 +49,14 @@ export default {
       },
       screens: {
         "max-sm": {
-          max: "640px"
-        }
-      }
+          max: defaultTheme.screens.sm,
+        },
+      },
     },
   },
+
   plugins: [
-    plugin(({ matchUtilities, theme }) => {
+    plugin(({ matchUtilities }) => {
       matchUtilities({
         "bg-gradient": (angle) => ({
           backgroundImage: `linear-gradient(${angle}, var(--tw-gradient-stops));`,
