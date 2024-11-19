@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 /**
  * @param {React.EffectCallback} effect
@@ -11,6 +11,15 @@ export const useOnResize = (effect, deps) => {
     window.addEventListener("resize", effect);
     return () => window.removeEventListener("resize", effect);
   }, deps);
+};
+
+export const useBodyRef = () => {
+  /** @type {UseState<HTMLElement>} */
+  const [body, setBody] = useState(null);
+
+  useEffect(() => setBody(document.body), []);
+
+  return body;
 };
 
 export const useBodyID = (id = "") => {
