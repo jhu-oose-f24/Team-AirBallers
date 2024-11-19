@@ -1,20 +1,22 @@
 "use client";
 
+import Button from "@/components/Button";
 import { RootContext } from "@/context/RootContext";
 import { IconChevronLeft, IconLayoutGrid } from "@tabler/icons-react";
 import clsx from "clsx";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { SessionContext, signIn, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
-import Button from "./Button";
 
 const Header = () => {
   const router = useRouter();
+
+  const session = useContext(SessionContext);
   const { sideBarOpen, setSideBarOpen, headerState } = useContext(RootContext);
 
   const { title, back } = headerState;
 
-  const { data: session } = useSession();
+  const signedIn = !!session?.data?.user;
 
   function goBack() {
     router.push(back);
@@ -50,8 +52,8 @@ const Header = () => {
 
       <Button
         variant="secondary"
-        label={session ? "Sign out" : "Sign in"}
-        onClick={() => (session ? signOut() : signIn("google"))}
+        label={signedIn ? "Sign out" : "Sign in"}
+        onClick={() => (signedIn ? signOut() : signIn("google"))}
         xPad="0.6rem"
         stretch
       />

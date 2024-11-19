@@ -4,7 +4,7 @@ import Header from "@/components/Header";
 import ScrollContainer from "@/components/ScrollContainer";
 import SideBar from "@/components/SideBar";
 import RootContextProvider from "@/context/RootContext";
-import SideBarProvider from "@/context/SideBarContext";
+import SideBarContextProvider from "@/context/SideBarContext";
 
 const RootLayout = ({ children }) => {
   return (
@@ -12,10 +12,12 @@ const RootLayout = ({ children }) => {
       <Header />
 
       <div className="root-container">
-        <SideBarProvider>
+        <SideBarContextProvider>
           <SideBar />
-        </SideBarProvider>
-        <ScrollContainer className="page-content">{children}</ScrollContainer>
+        </SideBarContextProvider>
+        <ScrollContainer className="page-content" manageMenuSingleton>
+          {children}
+        </ScrollContainer>
       </div>
     </RootContextProvider>
   );

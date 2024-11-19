@@ -7,6 +7,7 @@ import Stitches from "@/components/Stitches";
 import { RootContext } from "@/context/RootContext";
 import { SideBarContext } from "@/context/SideBarContext";
 import DeleteCollectionModal from "@/features/DeleteCollectionModal";
+import RenameCollectionModal from "@/features/RenameCollectionModal";
 import { pause } from "@/util/misc";
 import { IconHanger, IconPlus } from "@tabler/icons-react";
 import axios from "axios";
@@ -16,11 +17,12 @@ import { useContext, useEffect, useState } from "react";
 
 const SideBar = () => {
   const { sideBarOpen, setSideBarRef } = useContext(RootContext);
-  const { openMenuRef, collectionToDelete, setCollectionToDelete } =
-    useContext(SideBarContext);
+  const { openMenuRef } = useContext(SideBarContext);
 
   const router = useRouter();
-  /** @type {UseState<GarmentList[]>} */
+
+  // TODO: refactor with collections
+  /** @type {UseState<Garment[]>} */
   const [garments, setGarments] = useState([]);
 
   useEffect(() => {
@@ -73,6 +75,7 @@ const SideBar = () => {
         size="sm"
         // TODO: onClick: modal to create collection
       />
+      <RenameCollectionModal />
       <DeleteCollectionModal />
     </div>
   );

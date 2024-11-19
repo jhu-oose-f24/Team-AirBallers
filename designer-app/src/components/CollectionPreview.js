@@ -1,28 +1,21 @@
-import Button from "@/components/Button";
-import ContextMenu from "@/components/ContextMenu";
-import Tooltip from "@/components/Tooltip";
+import GridItemInfo from "@/components/GridItemInfo";
 import { RootContext } from "@/context/RootContext";
 import { SideBarContext } from "@/context/SideBarContext";
-import { pause } from "@/util/misc";
-import { IconDotsVertical, IconEdit, IconTrash } from "@tabler/icons-react";
+import css from "@/styles/CollectionPreview.module.css";
+import { IconEdit, IconTrash } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
-import { useContext, useState } from "react";
-import css from "../styles/CollectionPreview.module.css";
+import { useContext } from "react";
 
 /** @param {CollectionPreviewProps} props */
 const CollectionPreview = (props) => {
   const { garments } = props;
 
   const { sideBarRef } = useContext(RootContext);
-  const { openMenuRef, setCollectionToDelete } = useContext(SideBarContext);
+  const { openMenuRef, setActiveTask } = useContext(SideBarContext);
+
   const router = useRouter();
 
-  const [nameRef, setNameRef] = useState(null);
-  /** @type {UseState<import("tippy.js").Instance>} */
-  const [contextMenu, setContextMenu] = useState(null);
-
   const collectionName = "Collection Name"; // TODO: from props
-  const overflownName = nameRef?.clientWidth < nameRef?.scrollWidth;
 
   function generatePreviews() {
     const previews = [];
@@ -45,7 +38,8 @@ const CollectionPreview = (props) => {
           key={previews.length}
           className={css.preview}
           style={{
-            backgroundImage: `url(${garment.imageURL})`,
+            // TODO: set url() from garment
+            backgroundImage: null,
           }}
         />,
       );
@@ -58,70 +52,33 @@ const CollectionPreview = (props) => {
     return previews;
   }
 
-  /** @type {TooltipOffset} */
-  function getTooltipOffset() {
-    /** @type {HTMLElement} */
-    const name = nameRef;
-
-    const nameRect = name?.getBoundingClientRect();
-    const headerRect = name?.parentElement.getBoundingClientRect();
-
-    return [0, 15 + headerRect.width - nameRect.width];
+  function onRenameClick() {
+    // @ts-ignore TODO: set collection
+    setActiveTask({ collection: {}, action: "rename" });
   }
 
-  async function onMenuClick() {
-    contextMenu?.hide();
-    await pause(200);
-  }
-
-  async function onRenameClick() {
-    await onMenuClick();
-    // TODO
-  }
-
-  async function onDeleteClick() {
-    await onMenuClick();
-    // TODO: set collection id
-    setCollectionToDelete("collectionId");
+  function onDeleteClick() {
+    // @ts-ignore TODO: set collection
+    setActiveTask({ collection: {}, action: "delete" });
   }
 
   return (
     <div className={css["preview-card"]}>
-      <div className={css["card-header"]}>
-        <Tooltip
-          disabled={!overflownName}
-          content={collectionName}
-          placement="right"
-          appendTo={sideBarRef || "parent"}
-          maxWidth="12rem"
-          delay={[500, 0]}
-          offset={getTooltipOffset}
-        >
-          <span className={css["collection-name"]} ref={setNameRef}>
-            {collectionName}
-          </span>
-        </Tooltip>
-
-        <ContextMenu
-          onCreate={(inst) => setContextMenu(inst)}
-          onShown={() => (openMenuRef.current = contextMenu)}
-          onHide={() => (openMenuRef.current = null)}
-          options={[
-            { label: "Rename", icon: <IconEdit />, action: onRenameClick },
-            { label: "Delete", icon: <IconTrash />, action: onDeleteClick },
-          ]}
-          appendTo={sideBarRef || "parent"}
-        >
-          <Button
-            variant="hint"
-            icon={<IconDotsVertical />}
-            borderRadius="100vmax"
-            fontSize="1.1rem"
-            xPad="0.2rem"
-            yPad="0.2rem"
-          />
-        </ContextMenu>
-      </div>
+      <GridItemInfo
+        itemName={collectionName}
+        contextTitle="Collection Options"
+        contextOptions={[
+          { label: "Rename", icon: <IconEdit />, action: onRenameClick },
+          {
+            label: "Delete",
+            icon: <IconTrash />,
+            action: onDeleteClick,
+            destructive: true,
+          },
+        ]}
+        openMenuRef={openMenuRef}
+        appendTo={sideBarRef}
+      />
 
       <div
         className={css["garment-grid"]}

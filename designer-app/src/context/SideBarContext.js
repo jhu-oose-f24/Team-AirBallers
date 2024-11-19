@@ -4,26 +4,25 @@ import { createContext, useRef, useState } from "react";
 
 /**
  * @type {React.Context<{
- *   openMenuRef?: React.MutableRefObject<import("tippy.js").Instance>;
- *   collectionToDelete?: UseState<string>[0];
- *   setCollectionToDelete?: UseState<string>[1];
+ *   openMenuRef?: ContextMenuRef;
+ *   activeTask?: UseState<ActiveCollectionTask>[0];
+ *   setActiveTask?: UseState<ActiveCollectionTask>[1];
  * }>}
  */
 export const SideBarContext = createContext({});
 
-const SideBarProvider = (props) => {
-  const { children } = props;
-
-  const [collectionToDelete, setCollectionToDelete] = useState("");
-  /** @type {React.MutableRefObject<import("tippy.js").Instance>} */
+const SideBarContextProvider = ({ children }) => {
+  /** @type {ContextMenuRef} */
   const openMenuRef = useRef(null);
+  /** @type {UseState<ActiveCollectionTask>} */
+  const [activeTask, setActiveTask] = useState({});
 
   return (
     <SideBarContext.Provider
       value={{
         openMenuRef,
-        collectionToDelete,
-        setCollectionToDelete,
+        activeTask,
+        setActiveTask,
       }}
     >
       {children}
@@ -31,4 +30,4 @@ const SideBarProvider = (props) => {
   );
 };
 
-export default SideBarProvider;
+export default SideBarContextProvider;
