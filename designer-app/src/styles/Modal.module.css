@@ -73,6 +73,13 @@
   @apply opacity-0;
 }
 
+.modal-overlay * {
+  @apply invisible;
+}
+.modal-overlay.after-open * {
+  @apply visible;
+}
+
 .modal-patch {
   @apply transition-all duration-500 ease-in-modal;
   @apply top-full left-1/2 -translate-x-1/2 -translate-y-1/2;
@@ -83,6 +90,9 @@
 .modal-overlay.before-close .modal-patch {
   @apply ease-out-modal;
   @apply top-full;
+}
+.modal-overlay:not(.before-close) {
+  @apply delay-[50ms];
 }
 
 /* 
