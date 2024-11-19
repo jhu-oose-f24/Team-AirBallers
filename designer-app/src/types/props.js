@@ -83,6 +83,7 @@
 /**
  * @typedef {{
  *   title: string;
+ *   className?: ClassName;
  *   openState: UseState<boolean>;
  *   children?: React.ReactNode;
  *   onAfterOpen?: ReactModal.OnAfterOpenCallback;
@@ -92,20 +93,36 @@
 
 /** @typedef {import("@tippyjs/react").TippyProps} TooltipProps */
 
-/** @typedef {{ garments: Garment[] }} CollectionPreviewProps */
-
 /**
  * @typedef {{
  *   label: string;
  *   icon?: React.JSX.Element;
  *   action: React.MouseEventHandler;
+ *   destructive?: boolean;
  * }} ContextMenuOption
  *
  *
  * @typedef {TooltipProps & {
+ *   title: string;
  *   options: ContextMenuOption[];
  * }} ContextMenuProps
  */
+
+/**
+ * @typedef {{
+ *   itemName: string;
+ *   contextTitle: string;
+ *   contextOptions: ContextMenuOption[];
+ *   openMenuRef: React.MutableRefObject;
+ *   appendTo: HTMLElement;
+ *   menuPlacement?: TooltipProps["placement"];
+ *   nameoverflowPlacement?: TooltipProps["placement"];
+ * }} GridItemInfoProps
+ */
+
+/** @typedef {{ garments: Garment[] }} CollectionPreviewProps */
+
+/** @typedef {{ garment: Garment }} GarmentCardProps */
 
 /**
  * @typedef {import("overlayscrollbars").EventListeners} ScrollContainerEventListeners
@@ -119,5 +136,6 @@
  *   onDestroyed?: ScrollContainerEventListeners["destroyed"];
  *   onInitialized?: ScrollContainerEventListeners["initialized"];
  *   onUpdated?: ScrollContainerEventListeners["updated"];
+ *   manageMenuSingleton?: boolean;
  * }} ScrollContainerProps
  */

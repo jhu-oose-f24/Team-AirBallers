@@ -11,16 +11,29 @@
 
   @apply relative;
   @apply shadow-foreground/15 shadow-[0_0.6rem_1rem_0];
-  @apply transition-all duration-150 ease-in-out;
+  @apply transition-all duration-100 ease-in-out;
 }
 
 .context-menu::before {
   @apply content-[""];
-  @apply absolute top-0 left-[--tooltip-radius] -translate-x-full;
+  @apply absolute;
   @apply border-l-transparent border-b-transparent;
   @apply border-t-[--tooltip-border] border-r-[--tooltip-border];
   @apply border-x-[0.8rem] border-y-[1.2rem];
-  @apply z-[-1];
+}
+.context-menu[data-placement*="start"]::before {
+  @apply top-0;
+}
+.context-menu[data-placement*="end"]::before {
+  @apply bottom-0;
+  @apply -scale-y-100;
+}
+.context-menu[data-placement*="left"]::before {
+  @apply right-[--tooltip-radius] translate-x-full;
+  @apply -scale-x-100;
+}
+.context-menu[data-placement*="right"]::before {
+  @apply left-[--tooltip-radius] -translate-x-full;
 }
 
 .context-menu [class*="tippy-content"] > div {
@@ -54,6 +67,11 @@
   @apply flex items-center;
   @apply px-[0.8rem] gap-[0.5rem];
   @apply cursor-pointer;
+  @apply bg-background-alt;
+  @apply z-10;
+}
+.context-menu div.option:not(:hover) {
+  @apply z-0;
 }
 .context-menu div.option:hover {
   @apply bg-background-main;
@@ -64,6 +82,11 @@
 .context-menu div.option:last-child {
   @apply pb-[0.6rem];
   @apply rounded-b-[--header-radius];
+}
+
+.context-menu div.option.destructive:hover {
+  @apply bg-primary-lightest;
+  @apply text-primary-dark;
 }
 
 .context-menu div.option span {
