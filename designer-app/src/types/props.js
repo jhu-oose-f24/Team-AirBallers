@@ -145,8 +145,8 @@
 /**
  * @typedef {{
  *   title: string;
- *   activeTask: UseState<ActiveGarmentTask | ActiveCollectionTask>[0];
- *   setActiveTask: UseState<ActiveGarmentTask | ActiveCollectionTask>[1];
+ *   activeTask: ActiveTask;
+ *   setActiveTask: SetState<ActiveTask>;
  *   children?: React.ReactNode;
  * }} ItemActionModalProps
  */

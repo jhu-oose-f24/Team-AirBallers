@@ -5,8 +5,8 @@ import { createContext, useRef, useState } from "react";
 /**
  * @type {React.Context<{
  *   openMenuRef?: ContextMenuRef;
- *   activeTask?: UseState<ActiveCollectionTask>[0];
- *   setActiveTask?: UseState<ActiveCollectionTask>[1];
+ *   activeTask?: ActiveCollectionTask;
+ *   setActiveTask?: SetState<ActiveCollectionTask>;
  * }>}
  */
 export const SideBarContext = createContext({});

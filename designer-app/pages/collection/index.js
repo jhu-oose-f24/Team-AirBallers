@@ -2,8 +2,8 @@
 
 import GarmentCard from "@/components/GarmentCard";
 import { RootContext } from "@/context/RootContext";
-import DeleteItemModal from "@/features/DeleteCollectionModal";
-import RenameItemModal from "@/features/RenameCollectionModal";
+import DeleteItemModal from "@/features/DeleteItemModal";
+import RenameItemModal from "@/features/RenameItemModal";
 import { useBodyID, useOnResize } from "@/util/hooks";
 import { pause } from "@/util/misc";
 import axios from "axios";

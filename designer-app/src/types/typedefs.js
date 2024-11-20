@@ -1,6 +1,11 @@
 /**
  * @template T
- * @typedef {[T, React.Dispatch<React.SetStateAction<T>>]} UseState
+ * @typedef {React.Dispatch<React.SetStateAction<T>>} SetState
+ */
+
+/**
+ * @template T
+ * @typedef {[T, SetState<T>]} UseState
  */
 
 /**
@@ -99,15 +104,9 @@
 /** @typedef {React.MutableRefObject<import("tippy.js").Instance>} ContextMenuRef */
 
 /**
- * @typedef {{
- *   garment?: Garment;
- *   action?: "move" | "rename" | "delete";
- * }} ActiveGarmentTask
- */
-
-/**
- * @typedef {{
- *   collection?: Collection;
- *   action?: "rename" | "delete";
- * }} ActiveCollectionTask
+ * @typedef {{ action?: "move" | "rename" | "delete" }} ActiveTask
+ *
+ * @typedef {ActiveTask & { garment?: Garment }} ActiveGarmentTask
+ *
+ * @typedef {ActiveTask & { collection?: Collection }} ActiveCollectionTask
  */

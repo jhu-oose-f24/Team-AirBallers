@@ -10,13 +10,13 @@ import { createContext, useRef, useState } from "react";
  *   sideBarRef?: HTMLElement;
  *   sideBarOpen?: boolean;
  *   headerState?: HeaderState;
- *   setHeaderRef?: UseState<HTMLElement>[1];
- *   setSideBarRef?: UseState<HTMLElement>[1];
- *   setSideBarOpen?: UseState<boolean>[1];
- *   setHeaderState?: UseState<HeaderState>[1];
+ *   setHeaderRef?: SetState<HTMLElement>;
+ *   setSideBarRef?: SetState<HTMLElement>;
+ *   setSideBarOpen?: SetState<boolean>;
+ *   setHeaderState?: SetState<HeaderState>;
  *   openMenuRef?: ContextMenuRef;
- *   activeTask?: UseState<ActiveGarmentTask>[0];
- *   setActiveTask?: UseState<ActiveGarmentTask>[1];
+ *   activeTask?: ActiveGarmentTask;
+ *   setActiveTask?: SetState<ActiveGarmentTask>;
  * }>}
  */
 export const RootContext = createContext({});
