@@ -4,8 +4,15 @@ import ClothButton from "@/components/ClothButton";
 import ScrollContainer from "@/components/ScrollContainer";
 import Stitches from "@/components/Stitches";
 import css from "@/styles/Modal.module.css";
+import { pause } from "@/util/misc";
 import clsx from "clsx";
 import ReactModal from "react-modal";
+
+const focusableElts = [
+  "input:not(:disabled):not([tabindex='-1'])",
+  "textarea:not(:disabled):not([tabindex='-1'])",
+  "button:not(:disabled):not([tabindex='-1'])",
+].join(",");
 
 /** @param {ModalProps} props */
 const Modal = (props) => {
@@ -20,11 +27,16 @@ const Modal = (props) => {
 
   const [isOpen, setIsOpen] = openState;
 
-  /** @type {typeof onAfterOpen} */
-  function handleAfterOpen(options) {
-    const modal = options.contentEl;
-    modal?.querySelector("input")?.focus();
-    onAfterOpen?.(options);
+  /** @param {import("overlayscrollbars").OverlayScrollbars} inst */
+  async function focusWithin(inst) {
+    const content = inst?.elements().content;
+
+    const elt = content?.querySelector?.(focusableElts);
+
+    if (elt instanceof HTMLElement) {
+      await pause(200);
+      elt.focus();
+    }
   }
 
   return (
@@ -36,7 +48,7 @@ const Modal = (props) => {
       }}
       className={clsx(css["modal-patch"], className)}
       isOpen={isOpen}
-      onAfterOpen={handleAfterOpen}
+      onAfterOpen={onAfterOpen}
       onRequestClose={() => setIsOpen(false)}
       onAfterClose={onAfterClose}
       closeTimeoutMS={200}
@@ -57,7 +69,10 @@ const Modal = (props) => {
             stitchSpacing="short"
             centered
           />
-          <ScrollContainer className={css["modal-inner-container"]}>
+          <ScrollContainer
+            className={css["modal-inner-container"]}
+            onInitialized={focusWithin}
+          >
             {children}
           </ScrollContainer>
         </div>

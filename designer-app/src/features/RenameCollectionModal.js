@@ -3,15 +3,20 @@
 import Button from "@/components/Button";
 import InputField from "@/components/InputField";
 import Modal from "@/components/Modal";
-import { SideBarContext } from "@/context/SideBarContext";
-import { useContext, useState } from "react";
+import { useState } from "react";
 
-const RenameCollectionModal = () => {
-  const { activeTask, setActiveTask } = useContext(SideBarContext);
+/** @param {ItemActionModalProps & ItemRenameModalProps} props */
+const RenameItemModal = (props) => {
+  const {
+    title,
+    originalName,
+    inputLabel,
+    activeTask,
+    setActiveTask,
+    onSaveClick,
+  } = props;
 
-  const [collectionName, setCollectionName] = useState("(Collection Name)");
-
-  const isOpen = activeTask?.collection && activeTask.action === "rename";
+  const [itemName, setItemName] = useState(originalName || "Untitled");
 
   function cancel() {
     setActiveTask(null);
@@ -19,15 +24,15 @@ const RenameCollectionModal = () => {
 
   return (
     <Modal
-      title="Rename Collection"
-      className="rename-collection"
-      openState={[isOpen, cancel]}
+      title={title}
+      className="rename-item"
+      openState={[activeTask?.action === "rename", cancel]}
     >
       <InputField
-        label="Collection Name"
-        placeholder={activeTask?.collection?.name || "(Collection Name)"}
-        value={collectionName}
-        onChange={(e) => setCollectionName(e.target.value)}
+        label={inputLabel}
+        placeholder={originalName}
+        value={itemName}
+        onChange={(e) => setItemName(e.target.value)}
         style={{ margin: "0.7rem" }}
       />
 
@@ -41,15 +46,10 @@ const RenameCollectionModal = () => {
           yPad="0.3rem"
           onClick={cancel}
         />
-        <Button
-          label="Save"
-          yPad="0.3rem"
-          width="100%"
-          // TODO: onClick
-        />
+        <Button label="Save" yPad="0.3rem" width="100%" onClick={onSaveClick} />
       </span>
     </Modal>
   );
 };
 
-export default RenameCollectionModal;
+export default RenameItemModal;

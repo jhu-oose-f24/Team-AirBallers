@@ -2,13 +2,16 @@
 
 import GarmentCard from "@/components/GarmentCard";
 import { RootContext } from "@/context/RootContext";
+import DeleteItemModal from "@/features/DeleteCollectionModal";
+import RenameItemModal from "@/features/RenameCollectionModal";
 import { useBodyID, useOnResize } from "@/util/hooks";
 import { pause } from "@/util/misc";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 
 export default function Home() {
-  const { sideBarOpen, setHeaderState } = useContext(RootContext);
+  const { sideBarOpen, setHeaderState, activeTask, setActiveTask } =
+    useContext(RootContext);
 
   const [garments, setGarments] = useState([]);
   /** @type {UseState<HTMLElement>} */
@@ -62,12 +65,12 @@ export default function Home() {
   return (
     <div
       className="collection-grid"
-      ref={setGridRef}
       style={{
         opacity: +(numCols >= 0),
         // @ts-ignore
         "--num-cols": Math.max(1, numCols),
       }}
+      ref={setGridRef}
     >
       {Array(20)
         .fill({})
@@ -79,6 +82,29 @@ export default function Home() {
             garment={garment}
           />
         ))}
+
+      <RenameItemModal
+        title="Rename Garment"
+        inputLabel="Garment Name"
+        originalName="(Unknown)"
+        activeTask={activeTask}
+        setActiveTask={setActiveTask}
+        // TODO: save garment name
+        onSaveClick={null}
+      />
+
+      <DeleteItemModal
+        title="Delete Garment"
+        activeTask={activeTask}
+        setActiveTask={setActiveTask}
+      >
+        {/* TODO: get garment name */}
+        <p>
+          The garment named <b>(Garment Name)</b> will be permanently deleted.
+          Are you sure?
+        </p>
+        <br />
+      </DeleteItemModal>
     </div>
   );
 }

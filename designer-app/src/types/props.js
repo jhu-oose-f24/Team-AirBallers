@@ -114,6 +114,8 @@
  *   contextTitle: string;
  *   contextOptions: ContextMenuOption[];
  *   openMenuRef: React.MutableRefObject;
+ *   onMenuOpen?: TooltipProps["onShow"];
+ *   onMenuClose?: TooltipProps["onHidden"];
  *   appendTo: HTMLElement;
  *   menuPlacement?: TooltipProps["placement"];
  *   nameoverflowPlacement?: TooltipProps["placement"];
@@ -138,4 +140,21 @@
  *   onUpdated?: ScrollContainerEventListeners["updated"];
  *   manageMenuSingleton?: boolean;
  * }} ScrollContainerProps
+ */
+
+/**
+ * @typedef {{
+ *   title: string;
+ *   activeTask: UseState<ActiveGarmentTask | ActiveCollectionTask>[0];
+ *   setActiveTask: UseState<ActiveGarmentTask | ActiveCollectionTask>[1];
+ *   children?: React.ReactNode;
+ * }} ItemActionModalProps
+ */
+
+/**
+ * @typedef {{
+ *   inputLabel: string;
+ *   originalName: string;
+ *   onSaveClick: React.MouseEventHandler;
+ * }} ItemRenameModalProps
  */

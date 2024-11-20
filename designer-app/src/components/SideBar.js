@@ -6,8 +6,8 @@ import ScrollContainer from "@/components/ScrollContainer";
 import Stitches from "@/components/Stitches";
 import { RootContext } from "@/context/RootContext";
 import { SideBarContext } from "@/context/SideBarContext";
-import DeleteCollectionModal from "@/features/DeleteCollectionModal";
-import RenameCollectionModal from "@/features/RenameCollectionModal";
+import DeleteItemModal from "@/features/DeleteCollectionModal";
+import RenameItemModal from "@/features/RenameCollectionModal";
 import { pause } from "@/util/misc";
 import { IconHanger, IconPlus } from "@tabler/icons-react";
 import axios from "axios";
@@ -17,8 +17,7 @@ import { useContext, useEffect, useState } from "react";
 
 const SideBar = () => {
   const { sideBarOpen, setSideBarRef } = useContext(RootContext);
-  const { openMenuRef } = useContext(SideBarContext);
-
+  const { openMenuRef, activeTask, setActiveTask } = useContext(SideBarContext);
   const router = useRouter();
 
   // TODO: refactor with collections
@@ -75,8 +74,34 @@ const SideBar = () => {
         size="sm"
         // TODO: onClick: modal to create collection
       />
-      <RenameCollectionModal />
-      <DeleteCollectionModal />
+
+      <RenameItemModal
+        title="Rename Collection"
+        inputLabel="Collection Name"
+        originalName="(Unknown)"
+        activeTask={activeTask}
+        setActiveTask={setActiveTask}
+        // TODO: save collection name
+        onSaveClick={null}
+      />
+
+      <DeleteItemModal
+        title="Delete Collection"
+        activeTask={activeTask}
+        setActiveTask={setActiveTask}
+      >
+        {/* TODO: get collection name and # garments */}
+        <p>
+          The <b>(Collection Name)</b> collection will be permanently deleted
+          along with the following contents:
+        </p>
+        <ul>
+          <li>
+            <b>(Number)</b> Garments
+          </li>
+        </ul>
+        <br />
+      </DeleteItemModal>
     </div>
   );
 };

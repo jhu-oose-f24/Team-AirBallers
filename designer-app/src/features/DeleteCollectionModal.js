@@ -2,15 +2,12 @@
 
 import Button from "@/components/Button";
 import Modal from "@/components/Modal";
-import { SideBarContext } from "@/context/SideBarContext";
 import { paletteFrom } from "@/util/tint";
 import { IconAlertCircle } from "@tabler/icons-react";
-import { useContext } from "react";
 
-const DeleteCollectionModal = () => {
-  const { activeTask, setActiveTask } = useContext(SideBarContext);
-
-  const isOpen = activeTask?.collection && activeTask.action === "delete";
+/** @param {ItemActionModalProps} props */
+const DeleteItemModal = (props) => {
+  const { children, title, activeTask, setActiveTask } = props;
 
   function cancel() {
     setActiveTask(null);
@@ -18,27 +15,17 @@ const DeleteCollectionModal = () => {
 
   return (
     <Modal
-      title="Delete Collection"
-      className="delete-collection"
-      openState={[isOpen, cancel]}
+      title={title}
+      className="delete-item"
+      openState={[activeTask?.action === "delete", cancel]}
     >
       <span className="confirm-delete-msg" style={{ ...paletteFrom("red") }}>
         <IconAlertCircle height="1.6rem" stroke={2.7} />
         This action cannot be undone!
       </span>
 
-      {/* TODO: get collection name and # garments */}
-      <span>
-        The <b>(Collection Name)</b> collection will be permanently deleted
-        along with the following contents:
-      </span>
-      <ul>
-        <li>
-          <b>(Number)</b> Garments
-        </li>
-      </ul>
+      {children}
 
-      <br />
       <span className="flex gap-[0.5rem]">
         <Button
           variant="secondary"
@@ -62,4 +49,4 @@ const DeleteCollectionModal = () => {
   );
 };
 
-export default DeleteCollectionModal;
+export default DeleteItemModal;
