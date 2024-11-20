@@ -13,6 +13,8 @@ const ContextMenu = (props) => {
   const [menuOptions, setMenuOptions] = useState(null);
   /** @type {React.MutableRefObject<NodeListOf<HTMLElement>>} */
   const optionEltsRef = useRef(null);
+  /** @type {React.MutableRefObject<HTMLElement>} */
+  const headerRef = useRef(null);
   /** @type {ContextMenuRef} */
   const menuRef = useRef(null);
 
@@ -22,6 +24,15 @@ const ContextMenu = (props) => {
         key={idx}
         className={clsx(css.option, option.destructive && css.destructive)}
         onClick={(e) => menuClick(e, option.action)}
+        onMouseMove={(e) => {
+          e.currentTarget.classList.add(css["opt-hover"]);
+          e.currentTarget.focus();
+        }}
+        onMouseOver={(e) => e.currentTarget.focus()}
+        onMouseOut={(e) => {
+          e.currentTarget.classList.remove(css["opt-hover"]);
+          headerRef.current?.focus();
+        }}
         onKeyDown={optionKeyDown}
         style={{ ...paletteFrom(option.destructive && "red") }}
         tabIndex={0}
@@ -45,13 +56,17 @@ const ContextMenu = (props) => {
   }
 
   /** @type {TooltipProps["onMount"]} */
-  async function focusFirstOption(inst) {
+  async function focusMenu(inst) {
     if (!inst) return;
+
+    /** @type {HTMLElement} */
+    const header = inst.popper?.querySelector(`.${css.header}`);
+    headerRef.current = header;
+    header?.focus();
 
     /** @type {typeof optionEltsRef.current} */
     const options = inst.popper?.querySelectorAll(`.${css.option}`);
     optionEltsRef.current = options;
-    options[0]?.focus();
   }
 
   /** @type {React.KeyboardEventHandler<HTMLElement>} */
@@ -72,13 +87,14 @@ const ContextMenu = (props) => {
         const nextOption = event.currentTarget.nextElementSibling;
         const optionElts = optionEltsRef.current;
 
-        if (event.shiftKey && !prevOption.classList.contains(css.option)) {
+        if (event.shiftKey && !prevOption?.classList.contains(css.option)) {
           event.preventDefault();
           optionElts?.item(optionElts.length - 1)?.focus();
         } else if (!event.shiftKey && !nextOption) {
           event.preventDefault();
           optionElts?.[0]?.focus();
         }
+        event.currentTarget?.classList.remove(css["opt-hover"]);
         return;
     }
   }
@@ -93,10 +109,12 @@ const ContextMenu = (props) => {
       className={css["context-menu"]}
       interactive
       onCreate={(inst) => (menuRef.current = inst)}
-      onMount={focusFirstOption}
+      onMount={focusMenu}
       content={
         <>
-          <span className={css.header}>{title}</span>
+          <span className={css.header} onKeyDown={optionKeyDown} tabIndex={0}>
+            {title}
+          </span>
           <span className={css.separator} />
           {menuOptions}
         </>

@@ -43,7 +43,7 @@
 
 .context-menu div.option,
 .context-menu span.header {
-  @apply transition-colors duration-100 ease-in-out;
+  @apply transition duration-100 ease-in-out;
   @apply py-[0.6rem];
 }
 
@@ -66,15 +66,18 @@
   @apply cursor-pointer;
   @apply z-10;
 }
-.context-menu div.option:not(:hover) {
+.context-menu div.option:not(.opt-hover) {
   @apply z-0;
 }
-.context-menu div.option:hover,
+.context-menu div.option.opt-hover,
 .context-menu div.option:focus-visible {
   @apply bg-background-main;
 }
-.context-menu div.option:focus-visible {
+.context-menu div.option:not(.opt-hover):focus-visible {
   @apply font-semibold;
+}
+.context-menu div.option:focus-visible,
+.context-menu span.header:focus-visible {
   @apply !outline-none;
 }
 .context-menu div.option:not(:last-child) {
@@ -85,7 +88,7 @@
   @apply rounded-b-[--header-radius];
 }
 
-.context-menu div.option.destructive:hover,
+.context-menu div.option.destructive.opt-hover,
 .context-menu div.option.destructive:focus-visible {
   @apply bg-primary-lightest;
   @apply text-primary-dark;
