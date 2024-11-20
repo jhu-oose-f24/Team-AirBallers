@@ -11,6 +11,9 @@ const ContextMenu = (props) => {
   const { children, title, options, ...otherProps } = props;
 
   const [menuOptions, setMenuOptions] = useState(null);
+  /** @type {React.MutableRefObject<NodeListOf<HTMLElement>>} */
+  const optionEltsRef = useRef(null);
+  /** @type {ContextMenuRef} */
   const menuRef = useRef(null);
 
   useEffect(() => {
@@ -19,7 +22,9 @@ const ContextMenu = (props) => {
         key={idx}
         className={clsx(css.option, option.destructive && css.destructive)}
         onClick={(e) => menuClick(e, option.action)}
+        onKeyDown={optionKeyDown}
         style={{ ...paletteFrom(option.destructive && "red") }}
+        tabIndex={0}
       >
         {option.icon || <IconQuestionMark opacity={0} />}
         <span>{option.label}</span>
@@ -39,6 +44,45 @@ const ContextMenu = (props) => {
     action?.(event);
   }
 
+  /** @type {TooltipProps["onMount"]} */
+  async function focusFirstOption(inst) {
+    if (!inst) return;
+
+    /** @type {typeof optionEltsRef.current} */
+    const options = inst.popper?.querySelectorAll(`.${css.option}`);
+    optionEltsRef.current = options;
+    options[0]?.focus();
+  }
+
+  /** @type {React.KeyboardEventHandler<HTMLElement>} */
+  function optionKeyDown(event) {
+    switch (event.key) {
+      case "Enter":
+        event.currentTarget.click();
+        return;
+
+      case "Escape":
+        menuRef.current?.hide();
+        // @ts-ignore
+        menuRef.current?.reference?.focus?.();
+        return;
+
+      case "Tab":
+        const prevOption = event.currentTarget.previousElementSibling;
+        const nextOption = event.currentTarget.nextElementSibling;
+        const optionElts = optionEltsRef.current;
+
+        if (event.shiftKey && !prevOption.classList.contains(css.option)) {
+          event.preventDefault();
+          optionElts?.item(optionElts.length - 1)?.focus();
+        } else if (!event.shiftKey && !nextOption) {
+          event.preventDefault();
+          optionElts?.[0]?.focus();
+        }
+        return;
+    }
+  }
+
   /** @type {TooltipOffset} */
   function getTooltipOffset({ placement }) {
     return [placement.includes("start") ? 15 : -15, 20];
@@ -49,6 +93,7 @@ const ContextMenu = (props) => {
       className={css["context-menu"]}
       interactive
       onCreate={(inst) => (menuRef.current = inst)}
+      onMount={focusFirstOption}
       content={
         <>
           <span className={css.header}>{title}</span>

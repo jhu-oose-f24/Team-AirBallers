@@ -3,13 +3,16 @@ import { RootContext } from "@/context/RootContext";
 import css from "@/styles/GarmentCard.module.css";
 import { useBodyRef } from "@/util/hooks";
 import { IconPencil, IconReplace, IconTrash } from "@tabler/icons-react";
-import { useContext } from "react";
+import clsx from "clsx";
+import { useContext, useState } from "react";
 
 /** @param {GarmentCardProps} props */
 const GarmentCard = (props) => {
   const { garment } = props;
 
   const { openMenuRef, setActiveTask } = useContext(RootContext);
+
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const documentBody = useBodyRef();
 
@@ -30,7 +33,7 @@ const GarmentCard = (props) => {
 
   return (
     <div className={css["garment-card"]}>
-      <div className={css.frame}>
+      <div className={clsx(css.frame, menuOpen && css["menu-open"])}>
         <div
           className={css.thumb}
           style={{
@@ -57,6 +60,8 @@ const GarmentCard = (props) => {
           },
         ]}
         openMenuRef={openMenuRef}
+        onMenuOpen={() => setMenuOpen(true)}
+        onMenuClose={() => setMenuOpen(false)}
         appendTo={documentBody}
         menuPlacement="right-end"
         nameoverflowPlacement="bottom-start"

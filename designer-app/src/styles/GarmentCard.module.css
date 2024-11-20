@@ -14,7 +14,10 @@
   @apply cursor-pointer;
 }
 .garment-card .frame:hover {
-  @apply border-primary-dark;
+  @apply !border-primary-dark;
+}
+.garment-card .frame.menu-open {
+  @apply border-primary-dark/70;
 }
 
 .garment-card .frame * {

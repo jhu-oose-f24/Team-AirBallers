@@ -7,15 +7,16 @@ import { useState } from "react";
 
 /** @param {GridItemInfoProps} props */
 const GridItemInfo = (props) => {
-  // prettier-ignore
   const {
     itemName,
     contextTitle,
     contextOptions,
     openMenuRef,
     appendTo,
+    onMenuOpen,
+    onMenuClose,
     menuPlacement = "right-start",
-    nameoverflowPlacement = "right"
+    nameoverflowPlacement = "right",
   } = props;
 
   const [nameRef, setNameRef] = useState(null);
@@ -52,11 +53,13 @@ const GridItemInfo = (props) => {
       </Tooltip>
 
       <ContextMenu
+        onShow={onMenuOpen}
         onShown={(inst) => {
           openMenuRef.current?.hide();
           openMenuRef.current = inst;
         }}
         onHide={() => (openMenuRef.current = null)}
+        onHidden={onMenuClose}
         title={contextTitle}
         options={contextOptions}
         appendTo={appendTo || "parent"}

@@ -134,7 +134,6 @@ body[id] #__next {
 
 .sidebar.closed {
   @apply -ml-[--sidebar-width];
-  @apply invisible;
 }
 
 /* Page Content */
@@ -198,7 +197,8 @@ body#collection-page .collection-grid {
   --grid-cols: repeat(var(--num-cols), 10rem);
   --grid-side-pad: calc(1rem + var(--sidebar-width) / 2);
 
-  @apply grid grid-cols-[--grid-cols] justify-center;
+  @apply grid justify-center h-auto;
+  @apply grid-cols-[--grid-cols] grid-rows-[min-content];
   @apply px-[--grid-side-pad] gap-[1.4rem] gap-y-[1.1rem];
   @apply transition-all duration-300 ease-in-out;
 }

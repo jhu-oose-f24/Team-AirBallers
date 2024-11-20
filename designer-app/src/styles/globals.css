@@ -10,6 +10,10 @@
   ul {
     @apply list-disc list-outside p-[inherit];
   }
+
+  * {
+    @apply select-none;
+  }
 }
 
 /* ====================== Overlay Scrollbar ====================== */
@@ -135,13 +139,13 @@
 
 /* ======================= Modal Instances ======================= */
 
-.delete-collection [data-overlayscrollbars-viewport],
-.rename-collection [data-overlayscrollbars-viewport] {
+.delete-item [data-overlayscrollbars-viewport],
+.rename-item [data-overlayscrollbars-viewport] {
   @apply text-[1.1rem] font-[450];
   @apply !w-[30rem];
 }
 
-.rename-collection [data-overlayscrollbars-viewport] {
+.rename-item [data-overlayscrollbars-viewport] {
   @apply flex flex-col gap-[0.5rem];
 }
 

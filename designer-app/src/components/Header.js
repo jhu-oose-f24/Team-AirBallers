@@ -2,6 +2,7 @@
 
 import Button from "@/components/Button";
 import { RootContext } from "@/context/RootContext";
+import { pause } from "@/util/misc";
 import { IconChevronLeft, IconLayoutGrid } from "@tabler/icons-react";
 import clsx from "clsx";
 import { SessionContext, signIn, signOut } from "next-auth/react";
@@ -12,9 +13,12 @@ const Header = () => {
   const router = useRouter();
 
   const session = useContext(SessionContext);
-  const { sideBarOpen, setSideBarOpen, headerState } = useContext(RootContext);
-
-  const { title, back } = headerState;
+  const {
+    sideBarRef,
+    sideBarOpen,
+    setSideBarOpen,
+    headerState: { title, back },
+  } = useContext(RootContext);
 
   const signedIn = !!session?.data?.user;
 
@@ -22,8 +26,21 @@ const Header = () => {
     router.push(back);
   }
 
-  function toggleSideBar() {
-    setSideBarOpen(!sideBarOpen);
+  async function toggleSideBar() {
+    if (!sideBarRef) {
+      setSideBarOpen(!sideBarOpen);
+      return;
+    }
+
+    if (sideBarOpen) {
+      setSideBarOpen(false);
+      await pause(100);
+      sideBarRef.style.visibility = "hidden";
+    } else {
+      sideBarRef.style.visibility = "visible";
+      await pause(100);
+      setSideBarOpen(true);
+    }
   }
 
   return (

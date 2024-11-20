@@ -4,7 +4,7 @@ import { useOnResize } from "@/util/hooks";
 import { createContext, useRef, useState } from "react";
 
 /**
- * @typedef {{ title: string; back?: string }} HeaderState
+ * @typedef {{ title?: string; back?: string }} HeaderState
  * @type {React.Context<{
  *   headerRef?: HTMLElement;
  *   sideBarRef?: HTMLElement;
@@ -25,7 +25,7 @@ const RootContextProvider = ({ children }) => {
   const [headerRef, setHeaderRef] = useState(null);
   const [sideBarRef, setSideBarRef] = useState(null);
   const [sideBarOpen, setSideBarOpen] = useState(false);
-  const [headerState, setHeaderState] = useState({ title: "Designer-App" });
+  const [headerState, setHeaderState] = useState({});
   const [activeTask, setActiveTask] = useState({});
   /** @type {ContextMenuRef} */
   const openMenuRef = useRef(null);
