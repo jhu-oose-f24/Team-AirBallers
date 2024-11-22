@@ -21,6 +21,7 @@ export default {
           darkest: "hsl(var(--primary-darkest))",
           darker: "hsl(var(--primary-darker))",
           dark: "hsl(var(--primary-dark))",
+          medium: "hsl(var(--primary-medium))",
           light: "hsl(var(--primary-light))",
           lighter: "hsl(var(--primary-lighter))",
           lightest: "hsl(var(--primary-lightest))",

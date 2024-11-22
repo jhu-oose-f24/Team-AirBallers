@@ -65,19 +65,38 @@
  *   defaultValue?: string;
  *   label?: string;
  *   iconLeft?: any;
- *   iconRight?: any;
  *   width?: string;
- *   autoComplete?: React.InputHTMLAttributes["autoComplete"];
  *   onChange?: React.InputHTMLAttributes["onChange"];
+ *   disabled?: boolean;
+ *   error?: string;
+ *   style?: React.CSSProperties;
+ * }} GeneralInputProps
+ */
+
+/**
+ * @typedef {GeneralInputProps & {
+ *   iconRight?: any;
+ *   autoComplete?: React.InputHTMLAttributes["autoComplete"];
  *   hideValue?: boolean;
  *   password?: boolean;
- *   disabled?: boolean;
  *   readOnly?: boolean;
  *   textArea?: boolean;
  *   wrapText?: boolean;
- *   error?: string;
- *   style?: React.CSSProperties;
  * }} InputFieldProps
+ */
+
+/**
+ * @typedef {GeneralInputProps & {
+ *   options: SelectOption[];
+ * }} SelectFieldProps
+ *
+ *
+ * @typedef {{
+ *   id: string;
+ *   label: string;
+ *   selected?: boolean;
+ *   render?: React.JSX.Element;
+ * }} SelectOption
  */
 
 /**
@@ -144,15 +163,25 @@
 
 /**
  * @typedef {{
- *   title: string;
  *   activeTask: ActiveTask;
  *   setActiveTask: SetState<ActiveTask>;
- *   children?: React.ReactNode;
  * }} ItemActionModalProps
  */
 
 /**
- * @typedef {{
+ * @typedef {ItemActionModalProps & {
+ *   title: string;
+ * }} DynamicItemActionModalProps
+ */
+
+/**
+ * @typedef {DynamicItemActionModalProps & {
+ *   children?: React.ReactNode;
+ * }} ItemDeleteModalProps
+ */
+
+/**
+ * @typedef {DynamicItemActionModalProps & {
  *   inputLabel: string;
  *   originalName: string;
  *   onSaveClick: React.MouseEventHandler;

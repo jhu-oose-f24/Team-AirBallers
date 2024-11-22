@@ -27,6 +27,7 @@ export function paletteFrom(tint) {
     "--primary-darkest": HSL(hue, 1.0, 0.15),
     "--primary-darker": HSL(hue, 1.0, 0.25),
     "--primary-dark": HSL(hue, 0.6, 0.5),
+    "--primary-medium": HSL(hue, 0.75, 0.6),
     "--primary-light": HSL(hue, 1.0, 0.75),
     "--primary-lighter": HSL(hue, 1.0, 0.8),
     "--primary-lightest": HSL(hue, 1.0, 0.95),

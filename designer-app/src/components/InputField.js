@@ -13,10 +13,10 @@ import {
   IconLock,
 } from "@tabler/icons-react";
 import clsx from "clsx";
-import { useEffect, useState } from "react";
+import { forwardRef, useEffect, useImperativeHandle, useState } from "react";
 
-/** @param {InputFieldProps} props */
-const InputField = (props) => {
+/** @type {ForwardRef<InputFieldProps, HTMLElement>} */
+const InputField = forwardRef((props, ref) => {
   const {
     id,
     className,
@@ -49,21 +49,23 @@ const InputField = (props) => {
 
   const [pwVisible, setPwVisible] = useState(false);
 
-  /** @type {UseState<Element>} */
+  /** @type {UseState<HTMLElement>} */
   const [labelRef, setLabelRef] = useState(null);
+  /** @type {UseState<HTMLElement>} */
   const [fieldRef, setFieldRef] = useState(null);
-  /** @type {UseState<Element>} */
+  /** @type {UseState<HTMLElement>} */
   const [rootRef, setRootRef] = useState(null);
-  /** @type {UseState<Element>} */
+  /** @type {UseState<HTMLElement>} */
   const [iconsRightRef, setIconsRightRef] = useState(null);
-
-  /** @type {CustomCSSProperties} */
-  const tintPalette = paletteFrom(error && "red");
-
-  const pwType = pwVisible ? "text" : "password";
 
   const icons = [iconLeft, iconRight];
   const inputState = [disabled, password, pwVisible, error];
+  const pwType = pwVisible ? "text" : "password";
+
+  useImperativeHandle(ref, () => {
+    return fieldRef;
+  }, [fieldRef]);
+
   useEffect(() => {
     textAreaResize(fieldRef);
   }, [fieldRef, width, ...icons, ...inputState]);
@@ -109,7 +111,7 @@ const InputField = (props) => {
   return (
     <div
       className={clsx(css["input-wrapper"], className)}
-      style={{ width, ...style, ...tintPalette }}
+      style={{ width, ...style, ...paletteFrom(error && "red") }}
       ref={setRootRef}
     >
       {label &&
@@ -134,6 +136,9 @@ const InputField = (props) => {
                 overflow: {
                   x: "hidden",
                   y: textArea ? "scroll" : "hidden",
+                },
+                scrollbars: {
+                  visibility: value ? "auto" : "hidden",
                 },
               }}
               onUpdated={() => textAreaResize(fieldRef)}
@@ -196,6 +201,6 @@ const InputField = (props) => {
       </div>
     </div>
   );
-};
+});
 
 export default InputField;

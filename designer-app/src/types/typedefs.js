@@ -101,7 +101,7 @@
  * @typedef {import("@prisma/client").GarmentType} GarmentType
  */
 
-/** @typedef {React.MutableRefObject<import("tippy.js").Instance>} ContextMenuRef */
+/** @typedef {React.MutableRefObject<import("tippy.js").Instance>} TooltipRef */
 
 /**
  * @typedef {{ action?: "move" | "rename" | "delete" }} ActiveTask
