@@ -7,12 +7,12 @@
   --accent: 30deg 55% 85%;
 
   /* TODO: dynamically generate in components */
-  --disabled-primary-darkest: 25deg 10% 50%;
-  --disabled-primary-darker: 25deg 10% 55%;
-  --disabled-primary-dark: 25deg 10% 60%;
-  --disabled-primary-light: 25deg 20% 75%;
-  --disabled-primary-lighter: 25deg 30% 85%;
-  --disabled-primary-lightest: 25deg 100% 95%;
+  --disabled-darkest: 25deg 10% 50%;
+  --disabled-darker: 25deg 10% 55%;
+  --disabled-dark: 25deg 10% 60%;
+  --disabled-light: 25deg 20% 75%;
+  --disabled-lighter: 25deg 30% 85%;
+  --disabled-lightest: 25deg 100% 95%;
 
   --primary-darkest: 14deg 100% 15%;
   --primary-darker: 14deg 100% 25%;

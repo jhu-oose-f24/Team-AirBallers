@@ -102,8 +102,8 @@ const Button = forwardRef((props, ref) => {
         style={{
           ...(!disabled && paletteFrom(tint)),
           ...(variant === "secondary" && {
-            "--primary-darker": "var(--disabled-primary-darkest)",
-            "--primary-light": "var(--disabled-primary-lighter)",
+            "--primary-darker": "var(--disabled-darkest)",
+            "--primary-light": "var(--disabled-lighter)",
             "--primary-lighter": bgColor,
             "--primary-active-fill": bgColor,
           }),

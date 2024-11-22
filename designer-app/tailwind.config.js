@@ -35,12 +35,12 @@ export default {
         accent: "hsl(var(--accent))",
 
         disabled: {
-          "color-darkest": "hsl(var(--disabled-primary-darkest))",
-          "color-darker": "hsl(var(--disabled-primary-darker))",
-          "color-dark": "hsl(var(--disabled-primary-dark))",
-          "color-light": "hsl(var(--disabled-primary-light))",
-          "color-lighter": "hsl(var(--disabled-primary-lighter))",
-          "color-lightest": "hsl(var(--disabled-primary-lightest))",
+          darkest: "hsl(var(--disabled-darkest))",
+          darker: "hsl(var(--disabled-darker))",
+          dark: "hsl(var(--disabled-dark))",
+          light: "hsl(var(--disabled-light))",
+          lighter: "hsl(var(--disabled-lighter))",
+          lightest: "hsl(var(--disabled-lightest))",
         },
       },
       transitionTimingFunction: {

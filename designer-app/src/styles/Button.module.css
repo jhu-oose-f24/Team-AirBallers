@@ -52,12 +52,12 @@
   @apply cursor-pointer;
 }
 .btn.patch:disabled {
-  @apply [--primary-darkest:--disabled-primary-darkest];
-  @apply [--primary-darker:--disabled-primary-darker];
-  @apply [--primary-dark:--disabled-primary-dark];
-  @apply [--primary-light:--disabled-primary-light];
-  @apply [--primary-lighter:--disabled-primary-lighter];
-  @apply [--primary-lightest:--disabled-primary-lightest];
+  @apply [--primary-darkest:--disabled-darkest];
+  @apply [--primary-darker:--disabled-darker];
+  @apply [--primary-dark:--disabled-dark];
+  @apply [--primary-light:--disabled-light];
+  @apply [--primary-lighter:--disabled-lighter];
+  @apply [--primary-lightest:--disabled-lightest];
 }
 .btn.patch:focus-visible {
   @apply outline outline-[0.2rem] outline-primary-darker;
