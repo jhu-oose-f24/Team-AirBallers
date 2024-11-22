@@ -5,7 +5,7 @@ import Modal from "@/components/Modal";
 import { paletteFrom } from "@/util/tint";
 import { IconAlertCircle } from "@tabler/icons-react";
 
-/** @param {ItemActionModalProps} props */
+/** @param {ItemDeleteModalProps} props */
 const DeleteItemModal = (props) => {
   const { children, title, activeTask, setActiveTask } = props;
 

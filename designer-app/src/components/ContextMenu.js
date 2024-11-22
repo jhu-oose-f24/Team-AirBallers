@@ -15,7 +15,7 @@ const ContextMenu = (props) => {
   const optionEltsRef = useRef(null);
   /** @type {React.MutableRefObject<HTMLElement>} */
   const headerRef = useRef(null);
-  /** @type {ContextMenuRef} */
+  /** @type {TooltipRef} */
   const menuRef = useRef(null);
 
   useEffect(() => {
@@ -74,28 +74,48 @@ const ContextMenu = (props) => {
     switch (event.key) {
       case "Enter":
         event.currentTarget.click();
-        return;
+        break;
+
+      case "ArrowUp":
+        // @ts-ignore
+        event.currentTarget?.previousSibling?.focus();
+        event.currentTarget?.classList.remove(css["opt-hover"]);
+        break;
+
+      case "ArrowDown":
+        // @ts-ignore
+        event.currentTarget?.nextSibling?.focus();
+        event.currentTarget?.classList.remove(css["opt-hover"]);
+        break;
+
+      case "Tab":
+        event.preventDefault();
+        break;
 
       case "Escape":
         menuRef.current?.hide();
         // @ts-ignore
         menuRef.current?.reference?.focus?.();
-        return;
+        break;
+    }
+  }
+
+  /** @type {React.KeyboardEventHandler<HTMLElement>} */
+  function headerKeyDown(event) {
+    switch (event.key) {
+      case "ArrowDown":
+        optionEltsRef.current?.[0]?.focus();
+        break;
 
       case "Tab":
-        const prevOption = event.currentTarget.previousElementSibling;
-        const nextOption = event.currentTarget.nextElementSibling;
-        const optionElts = optionEltsRef.current;
+        event.preventDefault();
+        break;
 
-        if (event.shiftKey && !prevOption?.classList.contains(css.option)) {
-          event.preventDefault();
-          optionElts?.item(optionElts.length - 1)?.focus();
-        } else if (!event.shiftKey && !nextOption) {
-          event.preventDefault();
-          optionElts?.[0]?.focus();
-        }
-        event.currentTarget?.classList.remove(css["opt-hover"]);
-        return;
+      case "Escape":
+        menuRef.current?.hide();
+        // @ts-ignore
+        menuRef.current?.reference?.focus?.();
+        break;
     }
   }
 
@@ -112,7 +132,7 @@ const ContextMenu = (props) => {
       onMount={focusMenu}
       content={
         <>
-          <span className={css.header} onKeyDown={optionKeyDown} tabIndex={0}>
+          <span className={css.header} onKeyDown={headerKeyDown} tabIndex={0}>
             {title}
           </span>
           <span className={css.separator} />

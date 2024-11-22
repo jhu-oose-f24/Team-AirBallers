@@ -56,16 +56,18 @@ const Header = () => {
         stretch
       />
 
-      <Button
-        variant="hint"
-        className={clsx("title-link", back && "back")}
-        icon={back && <IconChevronLeft stroke={2.8} />}
-        label={title}
-        onClick={() => back && router.push(back)}
-        fontSize="1.8rem"
-        xPad={back && "0.3rem"}
-        stretch
-      />
+      {title && (
+        <Button
+          variant="hint"
+          className={clsx("title-link", back && "back")}
+          icon={back && <IconChevronLeft stroke={2.8} />}
+          label={title}
+          onClick={() => back && router.push(back)}
+          fontSize="1.8rem"
+          xPad={back && "0.3rem"}
+          stretch
+        />
+      )}
 
       <Button
         variant="secondary"

@@ -5,7 +5,7 @@ import InputField from "@/components/InputField";
 import Modal from "@/components/Modal";
 import { useState } from "react";
 
-/** @param {ItemActionModalProps & ItemRenameModalProps} props */
+/** @param {ItemRenameModalProps} props */
 const RenameItemModal = (props) => {
   const {
     title,

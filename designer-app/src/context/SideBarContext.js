@@ -4,7 +4,7 @@ import { createContext, useRef, useState } from "react";
 
 /**
  * @type {React.Context<{
- *   openMenuRef?: ContextMenuRef;
+ *   openMenuRef?: TooltipRef;
  *   activeTask?: ActiveCollectionTask;
  *   setActiveTask?: SetState<ActiveCollectionTask>;
  * }>}
@@ -12,7 +12,7 @@ import { createContext, useRef, useState } from "react";
 export const SideBarContext = createContext({});
 
 const SideBarContextProvider = ({ children }) => {
-  /** @type {ContextMenuRef} */
+  /** @type {TooltipRef} */
   const openMenuRef = useRef(null);
   /** @type {UseState<ActiveCollectionTask>} */
   const [activeTask, setActiveTask] = useState({});

@@ -70,6 +70,7 @@
   --tooltip-x-pad: 0.8rem;
   --tooltip-y-pad: 0.4rem;
   --tooltip-radius: 0.6rem;
+  --tooltip-border-width: 0.25rem;
 
   --arrow-half-width: 0.5rem;
   --arrow-height: 0.5rem;
@@ -82,7 +83,8 @@
   @apply !bg-[--tooltip-bg] !text-[--tooltip-text];
   @apply !rounded-[--tooltip-radius];
   @apply !outline !outline-[--tooltip-border];
-  @apply ![outline-width:0.25rem] !-outline-offset-[0.25rem];
+  @apply ![outline-width:--tooltip-border-width];
+  @apply !-outline-offset-[--tooltip-border-width];
 }
 
 .tooltip .tippy-content {
@@ -139,12 +141,14 @@
 
 /* ======================= Modal Instances ======================= */
 
-.delete-item [data-overlayscrollbars-viewport],
-.rename-item [data-overlayscrollbars-viewport] {
+.move-garment [data-overlayscrollbars-viewport],
+.rename-item [data-overlayscrollbars-viewport],
+.delete-item [data-overlayscrollbars-viewport] {
   @apply text-[1.1rem] font-[450];
   @apply !w-[30rem];
 }
 
+.move-garment [data-overlayscrollbars-viewport],
 .rename-item [data-overlayscrollbars-viewport] {
   @apply flex flex-col gap-[0.5rem];
 }
@@ -155,4 +159,17 @@
   @apply py-[0.2rem] mb-[0.6rem] gap-[0.5rem];
   @apply rounded-[0.6rem];
   @apply bg-primary-light;
+}
+
+[class*="option"] > .num-items {
+  @apply flex gap-[0.1rem];
+  @apply text-primary-dark;
+}
+[class*="option"][class*="selected"] > .num-items {
+  @apply !text-primary-lightest;
+}
+
+[class*="option"]:active > .num-items,
+[class*="option"][class*="clicked"] > .num-items {
+  @apply text-primary-darker/70;
 }

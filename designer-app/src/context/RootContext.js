@@ -14,7 +14,7 @@ import { createContext, useRef, useState } from "react";
  *   setSideBarRef?: SetState<HTMLElement>;
  *   setSideBarOpen?: SetState<boolean>;
  *   setHeaderState?: SetState<HeaderState>;
- *   openMenuRef?: ContextMenuRef;
+ *   openMenuRef?: TooltipRef;
  *   activeTask?: ActiveGarmentTask;
  *   setActiveTask?: SetState<ActiveGarmentTask>;
  * }>}
@@ -27,7 +27,7 @@ const RootContextProvider = ({ children }) => {
   const [sideBarOpen, setSideBarOpen] = useState(false);
   const [headerState, setHeaderState] = useState({});
   const [activeTask, setActiveTask] = useState({});
-  /** @type {ContextMenuRef} */
+  /** @type {TooltipRef} */
   const openMenuRef = useRef(null);
 
   useOnResize(() => {

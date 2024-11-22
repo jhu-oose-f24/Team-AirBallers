@@ -3,6 +3,7 @@
 import GarmentCard from "@/components/GarmentCard";
 import { RootContext } from "@/context/RootContext";
 import DeleteItemModal from "@/features/DeleteItemModal";
+import MoveGarmentModal from "@/features/MoveGarmentModal";
 import RenameItemModal from "@/features/RenameItemModal";
 import { useBodyID, useOnResize } from "@/util/hooks";
 import { pause } from "@/util/misc";
@@ -82,6 +83,8 @@ export default function Home() {
             garment={garment}
           />
         ))}
+
+      <MoveGarmentModal activeTask={activeTask} setActiveTask={setActiveTask} />
 
       <RenameItemModal
         title="Rename Garment"
