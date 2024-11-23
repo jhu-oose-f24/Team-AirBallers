@@ -29,14 +29,14 @@ const RenameItemModal = (props) => {
       openState={[activeTask?.action === "rename", cancel]}
     >
       <InputField
+        className="item-rename-field"
         label={inputLabel}
         placeholder={originalName}
         value={itemName}
         onChange={(e) => setItemName(e.target.value)}
-        style={{ margin: "0.7rem" }}
       />
 
-      <span className="flex gap-[0.5rem]">
+      <span className="flex gap-[0.5rem] mt-[0.5rem]">
         <Button
           variant="secondary"
           bgColor="var(--primary-lightest)"
@@ -46,7 +46,13 @@ const RenameItemModal = (props) => {
           yPad="0.3rem"
           onClick={cancel}
         />
-        <Button label="Save" yPad="0.3rem" width="100%" onClick={onSaveClick} />
+        <Button
+          label="Save"
+          yPad="0.3rem"
+          width="100%"
+          onClick={onSaveClick}
+          disabled={originalName === itemName}
+        />
       </span>
     </Modal>
   );

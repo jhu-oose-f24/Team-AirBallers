@@ -23,6 +23,11 @@
  */
 
 /**
+ * @template T
+ * @typedef {T[keyof T]} ValueOf
+ */
+
+/**
  * @typedef {React.HTMLAttributes<HTMLElement>["className"]} ClassName
  *
  * @typedef {import("csstype").Property.Color} CSSColor

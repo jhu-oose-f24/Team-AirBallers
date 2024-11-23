@@ -85,6 +85,10 @@
   @apply z-40;
 }
 
+.dropdown .option * {
+  @apply pointer-events-none;
+}
+
 .select-field .select-arrow {
   @apply !stroke-[2.4];
 }

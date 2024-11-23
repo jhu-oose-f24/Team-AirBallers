@@ -6,16 +6,22 @@ import { useBodyRef } from "@/util/hooks";
 import { pause } from "@/util/misc";
 import { IconChevronDown } from "@tabler/icons-react";
 import clsx from "clsx";
-import { forwardRef, useImperativeHandle, useRef, useState } from "react";
+import {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
 
 /** @type {ForwardRef<SelectFieldProps, HTMLElement>} */
 const SelectField = forwardRef((props, ref) => {
-  const { options = [], ...otherProps } = props;
+  const { options = [], value, onChange, ...otherProps } = props;
 
   const bodyRef = useBodyRef();
 
-  /** @type {UseState<SelectOption>} */
-  const [selectedOption, setSelectedOption] = useState(null);
+  /** @type {UseState<SelectOptionMap>} */
+  const [parsedOptions, setParsedOptions] = useState({});
   const [optionsOpen, setOptionsOpen] = useState(false);
   /** @type {React.MutableRefObject<HTMLDivElement>} */
   const fieldWrapperRef = useRef(null);
@@ -30,10 +36,19 @@ const SelectField = forwardRef((props, ref) => {
     return fieldRef.current;
   }, []);
 
-  /** @param {SelectOption} option */
-  async function optionClick(option) {
+  useEffect(() => {
+    setParsedOptions(
+      options.reduce((map, { value, ...option }) => {
+        map[value] = option;
+        return map;
+      }, {}),
+    );
+  }, [options]);
+
+  /** @param {React.MouseEvent} event */
+  async function optionClick(event) {
     await pause(150);
-    setSelectedOption(option);
+    onChange?.(event);
     dropdownRef.current?.hide();
     await pause(150);
     fieldRef.current?.focus();
@@ -105,14 +120,19 @@ const SelectField = forwardRef((props, ref) => {
 
   /** @param {HTMLElement} list */
   function focusFirstOption(list) {
-    if (selectedOption?.id) return;
+    if (value) return;
     // @ts-ignore
     pause(50).then(() => list?.firstChild?.focus());
   }
 
-  /** @param {HTMLElement} option */
+  /** @param {HTMLElement & { value: string }} option */
   function focusOnOpen(option) {
-    if (option?.id !== selectedOption?.id) return;
+    const thisValue = option?.value;
+    if (!value && parsedOptions[thisValue]?.selected) {
+      option.click();
+    }
+    if (thisValue !== value) return;
+
     pause(50).then(() => option?.focus());
   }
 
@@ -123,25 +143,18 @@ const SelectField = forwardRef((props, ref) => {
 
   /** @param {SelectOption} option */
   const OptionItem = (option) => {
-    if (!selectedOption && option.selected) {
-      setSelectedOption(option);
-    }
-
     return (
-      <span
-        id={option.id}
-        className={clsx(
-          css.option,
-          selectedOption?.id === option.id && css.selected,
-        )}
-        onClick={() => optionClick(option)}
+      <button
+        className={clsx(css.option, value === option.value && css.selected)}
+        onClick={optionClick}
+        value={option.value}
         onKeyDown={optionKeyDown}
         onMouseMove={optionHover}
         tabIndex={-1}
         ref={focusOnOpen}
       >
         {option.render || option.label}
-      </span>
+      </button>
     );
   };
 
@@ -149,8 +162,8 @@ const SelectField = forwardRef((props, ref) => {
     <ScrollContainer className={css["options-wrapper"]}>
       <div className={css["rounded-mask"]} />
       <div className={css["options-list"]} ref={focusFirstOption}>
-        {options.map((props, idx) => (
-          <OptionItem key={idx} {...props} />
+        {Object.entries(parsedOptions).map(([value, attrs], idx) => (
+          <OptionItem key={idx} value={value} {...attrs} />
         ))}
       </div>
     </ScrollContainer>
@@ -180,7 +193,7 @@ const SelectField = forwardRef((props, ref) => {
       >
         <InputField
           iconRight={<IconChevronDown className={css["select-arrow"]} />}
-          value={selectedOption?.label || ""}
+          value={parsedOptions[value]?.label || ""}
           readOnly
           {...otherProps}
           ref={fieldRef}

@@ -161,8 +161,23 @@
   @apply bg-primary-light;
 }
 
+.item-rename-field,
+.collection-select-field {
+  @apply mx-[0.7rem];
+}
+
+.new-collection .name,
+.prev-collection .name {
+  @apply flex grow justify-between;
+  @apply gap-[0.2rem] ml-[0.5rem];
+  @apply text-primary-darker font-semibold;
+}
+
+.name .num-items {
+  @apply flex gap-[0.2rem];
+}
 [class*="option"] > .num-items {
-  @apply flex gap-[0.1rem];
+  @apply flex gap-[0.2rem];
   @apply text-primary-dark;
 }
 [class*="option"][class*="selected"] > .num-items {

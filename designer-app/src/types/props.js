@@ -92,11 +92,20 @@
  *
  *
  * @typedef {{
- *   id: string;
+ *   value: string;
  *   label: string;
  *   selected?: boolean;
  *   render?: React.JSX.Element;
  * }} SelectOption
+ *
+ *
+ * @typedef {{
+ *   [K: SelectOption["value"]]: {
+ *     label: string;
+ *     selected?: boolean;
+ *     render?: React.JSX.Element;
+ *   };
+ * }} SelectOptionMap
  */
 
 /**
