@@ -30,7 +30,8 @@ const SelectField = forwardRef((props, ref) => {
   /** @type {TooltipRef} */
   const dropdownRef = useRef(null);
 
-  const dropdownWidth = fieldWrapperRef.current?.firstElementChild?.clientWidth;
+  const fieldRoot = fieldWrapperRef.current?.firstElementChild;
+  const dropdownWidth = fieldRoot?.clientWidth;
 
   useImperativeHandle(ref, () => {
     return fieldRef.current;
@@ -98,19 +99,17 @@ const SelectField = forwardRef((props, ref) => {
 
   /** @param {React.KeyboardEvent<HTMLElement>} event */
   function fieldKeyDown(event) {
-    const navKeys = ["Enter", "Escape"];
-    if (!navKeys.includes(event.key)) return;
-
-    event.preventDefault();
-    event.stopPropagation();
-
     switch (event.key) {
       case "Enter":
+        event.preventDefault();
+        event.stopPropagation();
         fieldRef.current?.click();
         break;
 
       case "Escape":
         if (optionsOpen) {
+          event.preventDefault();
+          event.stopPropagation();
           dropdownRef.current?.hide();
           fieldRef.current?.focus();
           break;
@@ -183,7 +182,7 @@ const SelectField = forwardRef((props, ref) => {
       delay={0}
       duration={[100, 0]}
       trigger="click"
-      reference={fieldWrapperRef.current?.firstElementChild}
+      reference={fieldRoot}
       appendTo={bodyRef}
     >
       <div
