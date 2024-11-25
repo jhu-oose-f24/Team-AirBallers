@@ -2,17 +2,22 @@
 
 import Button from "@/components/Button";
 import { RootContext } from "@/context/RootContext";
+import ProfileModal from "@/features/ProfileModal";
 import { pause } from "@/util/misc";
-import { IconChevronLeft, IconLayoutGrid } from "@tabler/icons-react";
+import {
+  IconChevronLeft,
+  IconLayoutGrid,
+  IconUserCircle,
+} from "@tabler/icons-react";
 import clsx from "clsx";
-import { SessionContext, signIn, signOut } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
 const Header = () => {
   const router = useRouter();
 
-  const session = useContext(SessionContext);
+  const session = useSession();
   const {
     sideBarRef,
     sideBarOpen,
@@ -20,7 +25,11 @@ const Header = () => {
     headerState: { title, back },
   } = useContext(RootContext);
 
-  const signedIn = !!session?.data?.user;
+  const [profileOpen, setProfileOpen] = useState(false);
+
+  const { user } = session.data || {};
+  const signedIn = session.status === "authenticated" && user?.email;
+  const signedOut = session.status !== "loading" && !user?.email;
 
   function goBack() {
     router.push(back);
@@ -69,13 +78,39 @@ const Header = () => {
         />
       )}
 
-      <Button
-        variant="secondary"
-        label={signedIn ? "Sign out" : "Sign in"}
-        onClick={() => (signedIn ? signOut() : signIn("google"))}
-        xPad="0.6rem"
-        stretch
-      />
+      {signedIn && (
+        <Button
+          className="user-pfp"
+          variant="hint"
+          icon={
+            user?.image ? (
+              <div className="pfp-image">
+                <img src={user.image} />
+              </div>
+            ) : (
+              <IconUserCircle className="pfp-image !stroke-[2]" />
+            )
+          }
+          onClick={() => setProfileOpen(!profileOpen)}
+          fontSize={user?.image ? "2rem" : "2.4rem"}
+          xPad={user?.image ? "0.2rem" : "0px"}
+          yPad={user?.image ? "0.2rem" : "0px"}
+          borderRadius="100vmax"
+        />
+      )}
+      {signedOut && (
+        <Button
+          className="sign-in"
+          variant="secondary"
+          label="Sign in"
+          loading={session.status === "loading"}
+          onClick={() => signIn("google")}
+          xPad="0.6rem"
+          stretch
+        />
+      )}
+
+      <ProfileModal openState={[profileOpen, setProfileOpen]} />
     </header>
   );
 };

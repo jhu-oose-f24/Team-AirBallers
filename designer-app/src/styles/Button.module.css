@@ -166,6 +166,7 @@
 }
 
 .btn.patch span.icon {
+  @apply w-[--btn-line-height] h-[--btn-line-height];
   @apply max-w-[--btn-line-height] max-h-[--btn-line-height];
   @apply text-primary-darkest;
 }

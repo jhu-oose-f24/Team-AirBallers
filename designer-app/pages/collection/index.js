@@ -14,10 +14,11 @@ export default function Home() {
   const { sideBarOpen, setHeaderState, activeTask, setActiveTask } =
     useContext(RootContext);
 
-  const [garments, setGarments] = useState([]);
   /** @type {UseState<HTMLElement>} */
   const [gridRef, setGridRef] = useState(null);
   const [numCols, setNumCols] = useState(-1);
+
+  const [garments, setGarments] = useState([]);
 
   useBodyID("collection-page");
 
@@ -27,8 +28,8 @@ export default function Home() {
     if (!gridRef) return;
 
     if (numCols < 0) {
-      const delay = parseFloat(getComputedStyle(gridRef).transitionDuration);
-      pause(delay * 1000).then(calcGridColumns);
+      const delaySeconds = getComputedStyle(gridRef).transitionDuration;
+      pause(parseFloat(delaySeconds) * 1000).then(calcGridColumns);
     } else {
       calcGridColumns();
     }

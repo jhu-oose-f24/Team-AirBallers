@@ -16,13 +16,19 @@ import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 
 const SideBar = () => {
-  const { sideBarOpen, setSideBarRef } = useContext(RootContext);
+  const { sideBarOpen, sideBarRef, setSideBarRef } = useContext(RootContext);
   const { openMenuRef, activeTask, setActiveTask } = useContext(SideBarContext);
   const router = useRouter();
 
   // TODO: refactor with collections
   /** @type {UseState<Garment[]>} */
   const [garments, setGarments] = useState([]);
+
+  useEffect(() => {
+    if (sideBarRef?.classList.contains("closed")) {
+      sideBarRef.style.visibility = "hidden";
+    }
+  }, [sideBarRef]);
 
   useEffect(() => {
     axios
@@ -57,23 +63,25 @@ const SideBar = () => {
       </ScrollContainer>
       <Stitches type="line" stitchWidth="0.17rem" svgClass="stitch-close" />
 
-      <Button
-        variant="secondary"
-        icon={<IconHanger />}
-        label="New Garment"
-        align="left"
-        xPad="1.1rem"
-        width="100%"
-        size="sm"
-        // TODO: onClick: redirect to create new garment
-      />
-      <Button
-        icon={<IconPlus />}
-        label="New Collection"
-        width="100%"
-        size="sm"
-        // TODO: onClick: modal to create collection
-      />
+      <div className="flex flex-col gap-[0.6rem]">
+        <Button
+          variant="secondary"
+          icon={<IconHanger />}
+          label="New Garment"
+          align="left"
+          xPad="1.1rem"
+          width="100%"
+          size="sm"
+          // TODO: onClick: redirect to create new garment
+        />
+        <Button
+          icon={<IconPlus />}
+          label="New Collection"
+          width="100%"
+          size="sm"
+          // TODO: onClick: modal to create collection
+        />
+      </div>
 
       <RenameItemModal
         title="Rename Collection"

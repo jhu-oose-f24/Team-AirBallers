@@ -1,6 +1,6 @@
 import Button from "@/components/Button";
 import ContextMenu from "@/components/ContextMenu";
-import Tooltip from "@/components/Tooltip";
+import OverflowableText from "@/components/OverflowableText";
 import css from "@/styles/GridItemInfo.module.css";
 import { IconDotsVertical } from "@tabler/icons-react";
 import { useState } from "react";
@@ -21,8 +21,6 @@ const GridItemInfo = (props) => {
 
   const [nameRef, setNameRef] = useState(null);
 
-  const overflownName = nameRef?.clientWidth < nameRef?.scrollWidth;
-
   /** @type {TooltipOffset} */
   function getTooltipOffset({ placement }) {
     if (!placement.includes("right")) return [0, 10];
@@ -33,24 +31,19 @@ const GridItemInfo = (props) => {
     const nameRect = name?.getBoundingClientRect();
     const headerRect = name?.parentElement.getBoundingClientRect();
 
-    return [0, 15 + headerRect.width - nameRect.width];
+    return [0, 15 + headerRect?.width - nameRect?.width];
   }
 
   return (
     <div className={css["grid-item-info"]}>
-      <Tooltip
-        disabled={!overflownName}
-        content={itemName}
+      <OverflowableText
+        className={css["item-name"]}
+        text={itemName}
         placement={nameoverflowPlacement}
-        appendTo={appendTo || "parent"}
-        maxWidth="12rem"
-        delay={[500, 0]}
+        appendTo={appendTo}
         offset={getTooltipOffset}
-      >
-        <span className={css["item-name"]} ref={setNameRef}>
-          {itemName}
-        </span>
-      </Tooltip>
+        ref={setNameRef}
+      />
 
       <ContextMenu
         onShow={onMenuOpen}
