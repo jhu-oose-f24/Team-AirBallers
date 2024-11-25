@@ -28,6 +28,12 @@
  */
 
 /**
+ * @typedef {import("@tabler/icons-react").TablerIcon} TablerIcon
+ *
+ * @typedef {import("next-auth/providers/index").BuiltInProviderType} OAuthProvider
+ */
+
+/**
  * @typedef {React.HTMLAttributes<HTMLElement>["className"]} ClassName
  *
  * @typedef {import("csstype").Property.Color} CSSColor
