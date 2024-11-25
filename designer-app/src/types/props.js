@@ -109,17 +109,42 @@
  */
 
 /**
+ * @typedef {"top-left"
+ *   | "top-right"
+ *   | "bottom-left"
+ *   | "bottom-right"
+ *   | "center"} ModalPlacement
+ *
+ *
  * @typedef {{
  *   title: string;
  *   className?: ClassName;
+ *   overlayClassName?: ClassName;
  *   openState: UseState<boolean>;
  *   children?: React.ReactNode;
  *   onAfterOpen?: ReactModal.OnAfterOpenCallback;
  *   onAfterClose?: () => void;
+ *   placement?: ModalPlacement;
+ *   offset?: React.CSSProperties["paddingTop"];
+ *   passive?: boolean;
  * }} ModalProps
  */
 
-/** @typedef {import("@tippyjs/react").TippyProps} TooltipProps */
+/**
+ * @typedef {import("@tippyjs/react").TippyProps & {
+ *   hideAfterMS?: number;
+ * }} TooltipProps
+ */
+
+/**
+ * @typedef {Omit<
+ *   TooltipProps,
+ *   "content" | "maxWidth" | "disabled" | "delay"
+ * > & {
+ *   text?: string;
+ *   as?: keyof React.JSX.IntrinsicElements;
+ * }} OverflowableTextProps
+ */
 
 /**
  * @typedef {{
@@ -168,6 +193,12 @@
  *   onUpdated?: ScrollContainerEventListeners["updated"];
  *   manageMenuSingleton?: boolean;
  * }} ScrollContainerProps
+ */
+
+/**
+ * @typedef {{
+ *   openState: UseState<boolean>;
+ * }} ProfileModalProps
  */
 
 /**

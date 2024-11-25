@@ -19,13 +19,22 @@ const Modal = (props) => {
   const {
     title = "Modal Title",
     className,
+    overlayClassName,
     openState,
     onAfterOpen,
     onAfterClose,
+    placement = "center",
+    offset,
+    passive,
     children,
   } = props;
 
   const [isOpen, setIsOpen] = openState;
+
+  const placeTop = placement?.includes("top");
+  const placeBottom = placement?.includes("bottom");
+  const placeLeft = placement?.includes("left");
+  const placeRight = placement?.includes("right");
 
   /** @param {import("overlayscrollbars").OverlayScrollbars} inst */
   async function focusWithin(inst) {
@@ -42,11 +51,22 @@ const Modal = (props) => {
   return (
     <ReactModal
       overlayClassName={{
-        base: css["modal-overlay"],
+        base: clsx(
+          css["modal-overlay"],
+          passive && css.passive,
+          overlayClassName,
+        ),
         afterOpen: css["after-open"],
         beforeClose: css["before-close"],
       }}
-      className={clsx(css["modal-patch"], className)}
+      className={clsx(
+        css["modal-patch"],
+        placeTop && css.top,
+        placeBottom && css.bottom,
+        placeLeft && css.left,
+        placeRight && css.right,
+        className,
+      )}
       isOpen={isOpen}
       onAfterOpen={onAfterOpen}
       onRequestClose={() => setIsOpen(false)}
@@ -54,6 +74,10 @@ const Modal = (props) => {
       closeTimeoutMS={200}
       shouldCloseOnOverlayClick
       ariaHideApp={false}
+      style={{
+        // @ts-ignore
+        content: { "--offset": offset },
+      }}
     >
       <div className={css["modal-border"]}>
         <div className={css["modal-content"]}>
