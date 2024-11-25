@@ -31,7 +31,6 @@ const DeleteItemModal = (props) => {
           variant="secondary"
           bgColor="var(--primary-lightest)"
           label="Cancel"
-          borderRadius="0.65rem"
           xPad="1.6rem"
           yPad="0.3rem"
           width="60%"

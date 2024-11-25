@@ -8,7 +8,6 @@ import clsx from "clsx";
 import { forwardRef } from "react";
 
 /**
- * @typedef {Partial<StitchProps & CustomCSSProperties>} SizePreset
  * @type {{
  *   [x in ButtonProps["size"]]: {
  *     css: CustomCSSProperties;
@@ -117,7 +116,7 @@ const Button = forwardRef((props, ref) => {
           ...(SIZE_PRESETS[size]?.css || {}),
           ...(variant !== "primary" && {
             "--btn-border-pad": "0px",
-            "--btn-content-radius": "0.5rem",
+            "--btn-content-radius": "0.65rem",
           }),
           ...(xPad && { "--btn-x-padding": xPad }),
           ...(yPad && { "--btn-y-padding": yPad }),
