@@ -22,6 +22,10 @@ body[id] #__next {
   @apply transition-opacity duration-100 delay-100;
   @apply opacity-100;
 }
+body.will-unload #__next {
+  @apply duration-[50ms];
+  @apply !opacity-0;
+}
 
 /* ========================= Root Layout ========================= */
 

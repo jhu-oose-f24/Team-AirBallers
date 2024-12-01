@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 /**
  * @param {React.EffectCallback} effect
@@ -9,23 +9,20 @@ import { useEffect, useState } from "react";
 export const useOnResize = (effect, deps) => {
   useEffect(() => {
     window.addEventListener("resize", effect);
+
     return () => window.removeEventListener("resize", effect);
   }, deps);
 };
 
-export const useBodyRef = () => {
-  /** @type {UseState<HTMLElement>} */
-  const [body, setBody] = useState(null);
-
-  useEffect(() => setBody(document.body), []);
-
-  return body;
-};
-
 export const useBodyID = (id = "") => {
+  function fadeOut() {
+    document.body.classList.add("will-unload");
+  }
+
   useEffect(() => {
     document.body.id = id;
+    window.addEventListener("beforeunload", fadeOut);
 
-    return () => document.body.removeAttribute("id");
+    return () => window.removeEventListener("beforeunload", fadeOut);
   }, []);
 };

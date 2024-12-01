@@ -3,6 +3,7 @@
 import ScrollContainer from "@/components/ScrollContainer";
 import Stitches from "@/components/Stitches";
 import Tooltip from "@/components/Tooltip";
+import { RootContext } from "@/context/RootContext";
 import css from "@/styles/InputField.module.css";
 import { useBodyRef } from "@/util/hooks";
 import { paletteFrom } from "@/util/tint";
@@ -13,7 +14,13 @@ import {
   IconLock,
 } from "@tabler/icons-react";
 import clsx from "clsx";
-import { forwardRef, useEffect, useImperativeHandle, useState } from "react";
+import {
+  forwardRef,
+  useContext,
+  useEffect,
+  useImperativeHandle,
+  useState,
+} from "react";
 
 /** @type {ForwardRef<InputFieldProps, HTMLElement>} */
 const InputField = forwardRef((props, ref) => {
@@ -45,10 +52,9 @@ const InputField = forwardRef((props, ref) => {
     style,
   } = props;
 
-  const documentBody = useBodyRef();
+  const { bodyRef } = useContext(RootContext);
 
   const [pwVisible, setPwVisible] = useState(false);
-
   /** @type {UseState<HTMLElement>} */
   const [labelRef, setLabelRef] = useState(null);
   /** @type {UseState<HTMLElement>} */
@@ -175,7 +181,7 @@ const InputField = forwardRef((props, ref) => {
               <Tooltip
                 disabled={!rootRef}
                 content={error}
-                appendTo={documentBody}
+                appendTo={bodyRef}
                 placement="top-end"
                 trigger="mouseenter click"
                 offset={getTooltipOffset}
