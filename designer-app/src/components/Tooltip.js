@@ -39,6 +39,7 @@ const Tooltip = (props) => {
       appendTo="parent"
       onShow={showTooltip}
       onHide={hideTooltip}
+      trigger="mouseenter click"
       {...otherProps}
     >
       {children}

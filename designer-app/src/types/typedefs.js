@@ -115,9 +115,14 @@
 /** @typedef {React.MutableRefObject<import("tippy.js").Instance>} TooltipRef */
 
 /**
- * @typedef {{ action?: "move" | "rename" | "delete" }} ActiveTask
+ * @typedef {{
+ *   action?: "move" | "edit" | "rename" | "delete";
+ *   garment?: Garment;
+ * }} ActiveGarmentTask
  *
- * @typedef {ActiveTask & { garment?: Garment }} ActiveGarmentTask
  *
- * @typedef {ActiveTask & { collection?: Collection }} ActiveCollectionTask
+ * @typedef {{
+ *   action?: "rename" | "delete";
+ *   collection?: Collection;
+ * }} ActiveCollectionTask
  */

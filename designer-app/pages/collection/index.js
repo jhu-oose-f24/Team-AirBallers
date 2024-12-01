@@ -10,7 +10,7 @@ import { pause } from "@/util/misc";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 
-export default function Home() {
+export default function CollectionView() {
   const { sideBarOpen, setHeaderState, activeTask, setActiveTask } =
     useContext(RootContext);
 

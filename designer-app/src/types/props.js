@@ -203,8 +203,8 @@
 
 /**
  * @typedef {{
- *   activeTask: ActiveTask;
- *   setActiveTask: SetState<ActiveTask>;
+ *   activeTask: ActiveGarmentTask | ActiveCollectionTask;
+ *   setActiveTask: SetState<ActiveGarmentTask | ActiveCollectionTask>;
  * }} ItemActionModalProps
  */
 

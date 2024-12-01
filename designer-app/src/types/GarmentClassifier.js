@@ -15,11 +15,17 @@ export default class GarmentClassifier {
         userPrompt,
       );
 
+      assert(garmentType, "No applicable garment type");
+
       const garmentClass = GarmentTypes[garmentType];
-      assert(garmentClass !== undefined);
+      assert(
+        garmentClass !== undefined,
+        `${garmentType} not a valid garment type`,
+      );
+
       return garmentClass;
     } catch (error) {
-      console.error("Error generating garmentClassifierPrompt:", error);
+      console.error("Error classifying garment:", error);
       throw error;
     }
   }

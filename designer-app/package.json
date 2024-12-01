@@ -26,6 +26,7 @@
     "@types/react": "^18.3.9",
     "@types/react-modal": "^3.16.3",
     "axios": "^1.7.7",
+    "base64url": "^3.0.1",
     "chroma-js": "^3.1.2",
     "clsx": "^2.1.1",
     "google-auth-library": "^9.14.2",
