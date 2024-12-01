@@ -28,7 +28,6 @@ export default class PromptGenerator {
     SPEC: (schemaStr = "") => {
       return resolveAsset("specPrompt").replace("JSON_SCHEMA", schemaStr);
     },
-    // TODO: insert dynamic list of garment types to pick from
     CLASSIFY: () => {
       return resolveAsset("classifyPrompt").replace(
         "GARMENT_TYPES",
