@@ -1,17 +1,23 @@
+import { GarmentTypes } from "@/types/GarmentParser";
 import PromptGenerator from "@/types/PromptGenerator";
+import { assert } from "console";
 
 /** @hideconstructor */
-export default class GarmentClassificationGenerator {
+export default class GarmentClassifier {
   /**
-   * @param {string} userPrompt // TODO: use class
-   * @returns {Promise<string>} // TODO: use class
+   * @param {string} userPrompt
+   * @returns {Promise<ValueOf<GarmentTypes>>}
    */
-  static async createFrom(userPrompt) {
+  static async classify(userPrompt) {
     try {
-      return await PromptGenerator.generateFrom(
-        PromptGenerator.ASSETS.CLASSIFIER(),
+      const garmentType = await PromptGenerator.generateFrom(
+        PromptGenerator.ASSETS.CLASSIFY(),
         userPrompt,
       );
+
+      const garmentClass = GarmentTypes[garmentType];
+      assert(garmentClass !== undefined);
+      return garmentClass;
     } catch (error) {
       console.error("Error generating garmentClassifierPrompt:", error);
       throw error;
