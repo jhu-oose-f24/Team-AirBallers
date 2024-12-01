@@ -2,7 +2,7 @@
 
 import Button from "@/components/Button";
 import Modal from "@/components/Modal";
-import { paletteFrom } from "@/util/tint";
+import { dangerColor, dangerPalette } from "@/util/tint";
 import { IconAlertCircle } from "@tabler/icons-react";
 
 /** @param {ItemDeleteModalProps} props */
@@ -19,7 +19,7 @@ const DeleteItemModal = (props) => {
       className="delete-item"
       openState={[activeTask?.action === "delete", cancel]}
     >
-      <span className="confirm-delete-msg" style={{ ...paletteFrom("red") }}>
+      <span className="confirm-delete-msg" style={dangerPalette}>
         <IconAlertCircle height="1.6rem" stroke={2.7} />
         This action cannot be undone!
       </span>
@@ -37,7 +37,7 @@ const DeleteItemModal = (props) => {
           onClick={cancel}
         />
         <Button
-          tint="red"
+          tint={dangerColor}
           label="Delete"
           yPad="0.3rem"
           width="40%"
