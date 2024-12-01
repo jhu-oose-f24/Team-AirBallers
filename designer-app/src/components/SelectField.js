@@ -1,13 +1,14 @@
 import InputField from "@/components/InputField";
 import ScrollContainer from "@/components/ScrollContainer";
 import Tooltip from "@/components/Tooltip";
+import { RootContext } from "@/context/RootContext";
 import css from "@/styles/SelectField.module.css";
-import { useBodyRef } from "@/util/hooks";
 import { pause } from "@/util/misc";
 import { IconChevronDown } from "@tabler/icons-react";
 import clsx from "clsx";
 import {
   forwardRef,
+  useContext,
   useEffect,
   useImperativeHandle,
   useRef,
@@ -18,7 +19,7 @@ import {
 const SelectField = forwardRef((props, ref) => {
   const { options = [], value, onChange, ...otherProps } = props;
 
-  const bodyRef = useBodyRef();
+  const { bodyRef } = useContext(RootContext);
 
   /** @type {UseState<SelectOptionMap>} */
   const [parsedOptions, setParsedOptions] = useState({});

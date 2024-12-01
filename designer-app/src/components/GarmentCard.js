@@ -1,7 +1,6 @@
 import GridItemInfo from "@/components/GridItemInfo";
 import { RootContext } from "@/context/RootContext";
 import css from "@/styles/GarmentCard.module.css";
-import { useBodyRef } from "@/util/hooks";
 import { IconPencil, IconReplace, IconTrash } from "@tabler/icons-react";
 import clsx from "clsx";
 import { useContext, useState } from "react";
@@ -10,11 +9,9 @@ import { useContext, useState } from "react";
 const GarmentCard = (props) => {
   const { garment } = props;
 
-  const { openMenuRef, setActiveTask } = useContext(RootContext);
+  const { bodyRef, openMenuRef, setActiveTask } = useContext(RootContext);
 
   const [menuOpen, setMenuOpen] = useState(false);
-
-  const documentBody = useBodyRef();
 
   function onMoveClick() {
     // @ts-ignore TODO: set collection
@@ -62,7 +59,7 @@ const GarmentCard = (props) => {
         openMenuRef={openMenuRef}
         onMenuOpen={() => setMenuOpen(true)}
         onMenuClose={() => setMenuOpen(false)}
-        appendTo={documentBody}
+        appendTo={bodyRef}
         menuPlacement="right-end"
         nameoverflowPlacement="bottom-start"
       />

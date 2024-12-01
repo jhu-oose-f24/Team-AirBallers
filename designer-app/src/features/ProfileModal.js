@@ -4,10 +4,10 @@ import Button from "@/components/Button";
 import Modal from "@/components/Modal";
 import OverflowableText from "@/components/OverflowableText";
 import Tooltip from "@/components/Tooltip";
-import { useBodyRef } from "@/util/hooks";
+import { RootContext } from "@/context/RootContext";
 import { IconBrandGoogleFilled, IconUserCircle } from "@tabler/icons-react";
 import { getProviders, signOut, useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 /** @type {{ [k in OAuthProvider]?: TablerIcon }} */
 const providerIcons = {
@@ -18,13 +18,14 @@ const providerIcons = {
 const ProfileModal = (props) => {
   const { openState } = props;
 
+  const { bodyRef } = useContext(RootContext);
+
   const session = useSession();
   const { user, provider } = session.data || {};
   const ProviderIcon = providerIcons[provider];
 
   const [profileOpen, setProfileOpen] = openState;
   const [providerName, setProviderName] = useState("");
-  const bodyRef = useBodyRef();
 
   useEffect(() => {
     if (!provider) return;
