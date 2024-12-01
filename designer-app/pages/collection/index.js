@@ -38,7 +38,7 @@ export default function CollectionView() {
   useEffect(() => {
     setHeaderState({
       title: "Garment Collection",
-      back: "/",
+      back: "/create",
     });
 
     axios

@@ -86,7 +86,7 @@ const ProfileModal = (props) => {
           label="Sign out"
           yPad="0.4rem"
           width="100%"
-          onClick={() => signOut({ callbackUrl: "/" })}
+          onClick={() => signOut({ callbackUrl: "/create" })}
         />
       </div>
     </Modal>

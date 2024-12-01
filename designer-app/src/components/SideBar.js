@@ -72,7 +72,7 @@ const SideBar = () => {
           xPad="1.1rem"
           width="100%"
           size="sm"
-          onClick={() => router.replace("/")}
+          onClick={() => router.replace("/create")}
           // TODO: onClick: redirect to create new garment
         />
         <Button
