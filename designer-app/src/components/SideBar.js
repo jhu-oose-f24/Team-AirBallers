@@ -66,12 +66,13 @@ const SideBar = () => {
       <div className="flex flex-col gap-[0.6rem]">
         <Button
           variant="secondary"
-          icon={<IconHanger />}
+          icon={<IconHanger className="-scale-x-[1]" />}
           label="New Garment"
           align="left"
           xPad="1.1rem"
           width="100%"
           size="sm"
+          onClick={() => router.replace("/")}
           // TODO: onClick: redirect to create new garment
         />
         <Button

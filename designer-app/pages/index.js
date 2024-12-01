@@ -4,20 +4,27 @@ import randomExamplePrompt from "@/assets/examplePrompts";
 import Button from "@/components/Button";
 import InputField from "@/components/InputField";
 import { RootContext } from "@/context/RootContext";
+import GarmentEncoder from "@/types/GarmentEncoder";
+import Shirt from "@/types/garments/Shirt";
 import { useBodyID } from "@/util/hooks";
-import { IconSearch, IconSparkles } from "@tabler/icons-react";
-import axios from "axios";
+import { pause } from "@/util/misc";
+import {
+  IconClothesRack,
+  IconHanger2,
+  IconSearch,
+  IconShirtFilled,
+  IconSparkles,
+} from "@tabler/icons-react";
+// import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 
 export default function Home() {
   const router = useRouter();
-  const { setHeaderState } = useContext(RootContext);
+  const { setHeaderState, setActiveTask } = useContext(RootContext);
 
   const [examplePrompt, setExamplePrompt] = useState("");
   const [prompt, setPrompt] = useState("");
-  const [imgSrc, setImgSrc] = useState("");
-  const [garmentId, setGarmentId] = useState(null);
   const [generating, setGenerating] = useState(false);
 
   useBodyID("home");
@@ -25,27 +32,31 @@ export default function Home() {
   useEffect(() => {
     setHeaderState({ title: "Designer-App" });
     setExamplePrompt(randomExamplePrompt());
+
+    setActiveTask(null);
   }, []);
 
-  function getResponse() {
+  function createGarment() {
     if (generating) return;
 
-    let apiUrl = "/api/prompt";
-    let body = { prompt };
+    // Testing flow from home to edit page
 
-    // TODO: not ready for edit
-    // if (garmentId) {
-    //   apiUrl = "api/prompt/edit";
-    // }
+    /** @ts-ignore @type {Garment} */
+    const garment = new Shirt().serialize();
+    garment.id = "674b7e80e94e6a3a2e256970"; // example MongoDB id
 
     setGenerating(true);
-    axios
-      .post(apiUrl, { prompt })
-      .then(({ data }) => {
-        /** @type {import("@prisma/client").Garment} */
-        const garment = data.garment;
+    pause(1000)
+      .then(() => {
+        // axios
+        // .post("/api/prompt", { prompt })
+        // .then(({ data }) => {
+        // /** @type {Garment} */
+        // const garment = data.garment;
+        setActiveTask({ action: "edit", garment });
 
-        setImgSrc(garment.images[0].url);
+        const garmentURL = GarmentEncoder.encode(garment);
+        router.replace(`garment/${garmentURL}/edit`);
       })
       .catch((err) => console.log(err))
       .finally(() => setGenerating(false));
@@ -53,11 +64,13 @@ export default function Home() {
 
   return (
     <div className="create-layout">
-      {imgSrc ? (
-        <img className="garment-img" src={imgSrc} alt="Generated garment" />
-      ) : (
-        <div className="garment-img empty">No Image Yet...</div>
-      )}
+      <div className="garment-img">
+        <div className="garment-placeholder">
+          <IconHanger2 className="garment-icon hanger" />
+          <IconShirtFilled className="garment-icon shirt" />
+          <IconClothesRack className="garment-icon rack" />
+        </div>
+      </div>
 
       <div className="prompt">
         <InputField
@@ -75,7 +88,7 @@ export default function Home() {
           icon={<IconSparkles />}
           label="Generate"
           loading={generating}
-          onClick={getResponse}
+          onClick={createGarment}
           xPad="0.7rem"
           yPad="0.35rem"
           disabled={!prompt?.trim()}

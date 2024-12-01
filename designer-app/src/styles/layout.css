@@ -108,6 +108,12 @@ body.will-unload #__next {
   @apply bg-background-main;
   @apply overflow-hidden;
 }
+.sidebar.open {
+  @apply ml-0;
+}
+.sidebar.closed {
+  @apply -ml-[--sidebar-width];
+}
 
 .sidebar span.header {
   @apply flex flex-col content-center;
@@ -134,14 +140,6 @@ body.will-unload #__next {
   @apply z-10;
 }
 
-.sidebar.open {
-  @apply ml-0;
-}
-
-.sidebar.closed {
-  @apply -ml-[--sidebar-width];
-}
-
 /* Page Content */
 
 .page-content,
@@ -158,7 +156,7 @@ body.will-unload #__next {
 
 .page-content > [data-overlayscrollbars-contents] > * {
   @apply min-h-max;
-  @apply p-[1rem];
+  @apply p-[1.5rem];
 }
 
 /* Breakpoints */
@@ -186,35 +184,69 @@ body.will-unload #__next {
 
 body#home .create-layout {
   @apply flex-col justify-end items-center;
-  @apply min-w-max gap-[0.5rem];
+  @apply py-[2.5rem] gap-[2.5rem];
+  @apply min-w-max;
 }
 
-.garment-img {
+body#home .garment-img {
   @apply flex flex-1 items-center justify-center;
-  @apply text-slate-400 font-medium w-auto;
-  @apply max-w-fit max-h-[60vh];
-  @apply rounded-2xl m-6 mt-[-2rem];
-  @apply bg-accent;
+  @apply h-full w-auto aspect-square min-h-[15rem] max-h-[30rem];
+  @apply text-primary font-medium;
+  @apply p-[1.5rem] rounded-[1rem] my-auto;
+  @apply overflow-hidden;
+  @apply bg-background-main;
+  @apply border-[0.25rem] border-background-alt;
 }
 
-.garment-img.empty {
-  @apply px-[1.5rem] py-[1rem] min-w-[60%];
-  @apply text-primary;
+body#home .garment-placeholder {
+  @apply grid grid-cols-2;
+  @apply h-full w-full;
+  @apply -translate-x-[3%];
 }
 
-.prompt {
+body#home .garment-icon {
+  @apply h-full w-auto aspect-square;
+  @apply stroke-[0.6rem];
+}
+body#home .garment-icon.shirt {
+  @apply -translate-x-[60%] translate-y-[25%] scale-[1.2];
+  @apply text-accent;
+}
+body#home .garment-icon.hanger {
+  @apply translate-x-[85%] translate-y-[55%];
+  @apply -scale-x-[1.2] scale-y-[1.2];
+  @apply text-primary-light;
+  @apply z-10;
+}
+body#home .garment-icon.rack {
+  @apply translate-x-[15%] -translate-y-[35%] scale-[1.3];
+  @apply text-primary-dark;
+}
+
+body#home .garment-icon path {
+  @apply [vector-effect:non-scaling-stroke];
+}
+
+body#home .prompt {
   @apply flex items-end justify-between;
   @apply w-full min-w-fit max-w-[85vw];
-  @apply px-[0.5rem] py-[1rem] gap-[0.5rem];
+  @apply px-[0.5rem] gap-[0.5rem];
 }
 
-.prompt-input {
+body#home .prompt-input {
   @apply min-w-[20rem];
 }
-
-.prompt-input,
-.edit-input {
+body#home .prompt-input,
+body#home .edit-input {
   @apply flex-grow;
+}
+
+/* Breakpoints */
+
+@media screen(max-sm) {
+  body#home .garment-icon {
+    @apply stroke-[0.4rem];
+  }
 }
 
 /* ======================== Collection Page ======================== */
@@ -222,7 +254,7 @@ body#home .create-layout {
 body#collection-page .collection-grid {
   --num-cols: 1;
   --grid-cols: repeat(var(--num-cols), 10rem);
-  --grid-side-pad: calc(1rem + var(--sidebar-width) / 2);
+  --grid-side-pad: calc(1.5rem + var(--sidebar-width) / 2);
 
   @apply grid justify-center h-auto;
   @apply grid-cols-[--grid-cols] grid-rows-[min-content];
@@ -230,7 +262,7 @@ body#collection-page .collection-grid {
   @apply transition-all duration-300 ease-in-out;
 }
 body#collection-page:has(.sidebar.open) .collection-grid {
-  --grid-side-pad: 1rem;
+  --grid-side-pad: 1.5rem;
 }
 
 /* ======================= Modal Instances ======================= */
