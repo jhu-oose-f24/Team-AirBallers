@@ -23,7 +23,7 @@
  */
 
 /**
- * @template T
+ * @template {object} T
  * @typedef {T[keyof T]} ValueOf
  */
 
@@ -72,6 +72,12 @@
  * @typedef {(typeof import("@/types/AbstractSpecType"))["default"]} AbstractSpecType
  *
  *
+ * @typedef {(typeof import("@/types/AbstractGarment"))["default"]} AbstractGarment
+ * 
+ * @typedef {(typeof import("@/types/GarmentParser")["GarmentTypes"])} GarmentTypes
+ */
+
+/**
  * @typedef {ReturnType<AbstractSpecType["defineSchema"]>} BlankAbstractSpec
  *
  * @typedef {{
@@ -96,6 +102,13 @@
  * @typedef {DefinedNamedSpec[]} DefinedSpecSchema
  *
  * @typedef {BlankNamedSpec[]} BlankSpecSchema
+ */
+
+/**
+ * @template {ValueOf<GarmentTypes>} G
+ * @typedef {{
+ *   [S in G["SPEC_NAMES"][number]]: InstanceType<AbstractSpecType>;
+ * }} SpecMap
  */
 
 /**

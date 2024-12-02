@@ -97,6 +97,13 @@ export default class AbstractGarment {
     };
   }
 
+  specMap() {
+    return this.specs.reduce((prev, spec) => {
+      prev[spec.name] = spec.spec;
+      return prev;
+    }, {});
+  }
+
   getReadableSpecs() {
     const specs = this.specs.map(({ name, spec }) => {
       return ` - ${name}: ${spec.readable()}`;
