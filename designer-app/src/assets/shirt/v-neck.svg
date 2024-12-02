@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="b" viewBox="0 0 250 250">
+    <defs>
+        <style>
+            .d{fill:#b3b3b3;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:10px}
+        </style>
+    </defs>
+    <g id="c">
+        <path d="M55.02 70.97h139.96v20.2H55.02z" class="d"/>
+        <path d="M125 193.69c-15.23-12.46-82.12-69.54-89.48-116.33 2.41-.98 6.01-2.46 11.5-4.74 2.64-1.09 5.46-1.65 8.31-1.66h0c4.87 42.36 63.96 89.38 66.57 91.43l3.09 2.44 3.09-2.44c2.61-2.06 61.69-49.07 66.57-91.43h.02c2.85 0 5.68.56 8.31 1.66l11.48 4.75c-7.36 46.77-74.24 103.85-89.48 116.32Z" class="d"/>
+        <path d="M0 0h250v250H0z" style="fill:none"/>
+    </g>
+</svg>
