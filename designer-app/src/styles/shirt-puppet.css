@@ -1,0 +1,63 @@
+.shirt-puppet {
+  --x-pad: calc(var(--root-unit) * 285);
+
+  @apply flex relative;
+  @apply h-fit w-max;
+  @apply mx-[--x-pad] my-auto;
+  @apply transition-[inherit];
+}
+
+.shirt-puppet .shirt {
+  --width: calc(var(--root-unit) * 380);
+
+  @apply w-[--width] h-fit;
+  @apply z-10;
+}
+
+.shirt-puppet .sleeve {
+  --width: calc(var(--root-unit) * 120);
+  --x-offset: calc(var(--root-unit) * 20);
+  --y-offset: calc(var(--root-unit) * 58);
+
+  @apply origin-top;
+  @apply absolute top-[--y-offset];
+  @apply w-[--width];
+}
+.shirt-puppet .sleeve.left {
+  @apply -left-[--x-offset];
+  @apply rotate-[30deg];
+}
+.shirt-puppet .sleeve.right {
+  @apply -right-[--x-offset];
+  @apply -rotate-[30deg];
+  @apply -scale-x-100;
+}
+.shirt-puppet .sleeve.SvgSleeveless {
+  --width: calc(var(--root-unit) * 52);
+  --x-offset: 0px;
+  --y-offset: calc(var(--root-unit) * 50);
+
+  @apply !rotate-0;
+  @apply z-20;
+}
+
+.shirt-puppet .neck {
+  --width: calc(var(--root-unit) * 250);
+  --y-offset: calc(var(--root-unit) * 68);
+
+  @apply absolute left-1/2 -top-[--y-offset];
+  @apply -translate-x-1/2;
+  @apply w-[--width];
+  @apply z-20;
+}
+
+.shirt-puppet > svg path:not([style*="fill: none"]),
+.shirt-puppet > svg line:not([style*="fill: none"]),
+.shirt-puppet > svg rect:not([style*="fill: none"]),
+.shirt-puppet > svg circle:not([style*="fill: none"]),
+.shirt-puppet > svg ellipse:not([style*="fill: none"]),
+.shirt-puppet > svg polygon:not([style*="fill: none"]),
+.shirt-puppet > svg polyline:not([style*="fill: none"]) {
+  /* @apply !fill-[--fill]; */
+  /* @apply !stroke-[--stroke]; */
+}
