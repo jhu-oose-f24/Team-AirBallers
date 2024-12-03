@@ -1,4 +1,7 @@
-import { invalidInputError, promptGenerationError } from "@/responses/responses";
+import {
+  invalidInputError,
+  promptGenerationError,
+} from "@/responses/responses";
 import PromptGenerator from "@/types/PromptGenerator";
 
 /** @hideconstructor */
@@ -9,8 +12,12 @@ export default class DescriptionGenerator {
    * @throws {ApiErrorResponse}
    */
   static async createFrom(userPrompt) {
-    if (!userPrompt || typeof userPrompt !== 'string' || userPrompt.trim() === '') {
-      throw invalidInputError('User prompt must be a non-empty string');
+    if (
+      !userPrompt ||
+      typeof userPrompt !== "string" ||
+      userPrompt.trim() === ""
+    ) {
+      throw invalidInputError("User prompt must be a non-empty string");
     }
 
     try {

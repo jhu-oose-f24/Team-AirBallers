@@ -1,10 +1,10 @@
+import {
+  apiError,
+  imageGenerationError,
+  invalidInputError,
+} from "@/responses/responses";
 import PromptGenerator from "@/types/PromptGenerator";
 import * as fal from "@fal-ai/serverless-client";
-import { 
-  imageGenerationError, 
-  invalidInputError,
-  apiError 
-} from "@/responses/responses";
 
 /** @hideconstructor */
 export default class ImageGenerator {
@@ -14,7 +14,11 @@ export default class ImageGenerator {
    * @throws {ApiErrorResponse}
    */
   static async createFrom(description, model = "fal-ai/flux/schnell") {
-    if (!description || typeof description !== "string" || description.trim() === "") {
+    if (
+      !description ||
+      typeof description !== "string" ||
+      description.trim() === ""
+    ) {
       throw invalidInputError("Description must be a non-empty string");
     }
 
