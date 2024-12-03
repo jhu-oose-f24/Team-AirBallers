@@ -48,8 +48,8 @@ export default class StringSpec extends AbstractSpecType {
   validate(value = this.default) {
     const overMinLength = value?.length >= this.minLength;
     const underMaxLength = value?.length <= this.maxLength;
-  
-    return (overMinLength && underMaxLength) ? `${value}` : this.default;
+
+    return overMinLength && underMaxLength ? `${value}` : this.default;
   }
 
   /** @override */

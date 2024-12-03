@@ -1,5 +1,8 @@
+import {
+  invalidInputError,
+  promptGenerationError,
+} from "@/responses/responses";
 import PromptGenerator from "@/types/PromptGenerator";
-import { promptGenerationError, invalidInputError } from "@/responses/responses";
 
 /** @hideconstructor */
 export default class GarmentClassificationGenerator {
@@ -9,8 +12,12 @@ export default class GarmentClassificationGenerator {
    * @throws {ApiErrorResponse}
    */
   static async createFrom(userPrompt) {
-    if (!userPrompt || typeof userPrompt !== 'string' || userPrompt.trim() === '') {
-      throw invalidInputError('User prompt must be a non-empty string');
+    if (
+      !userPrompt ||
+      typeof userPrompt !== "string" ||
+      userPrompt.trim() === ""
+    ) {
+      throw invalidInputError("User prompt must be a non-empty string");
     }
 
     try {
@@ -24,4 +31,3 @@ export default class GarmentClassificationGenerator {
     }
   }
 }
-
