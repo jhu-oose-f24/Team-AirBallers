@@ -3,6 +3,8 @@
 import ScrollContainer from "@/components/ScrollContainer";
 import Stitches from "@/components/Stitches";
 import Tooltip from "@/components/Tooltip";
+import css from "@/styles/InputField.module.css";
+import { useBodyRef } from "@/util/hooks";
 import { paletteFrom } from "@/util/tint";
 import {
   IconAlertCircleFilled,
@@ -11,11 +13,10 @@ import {
   IconLock,
 } from "@tabler/icons-react";
 import clsx from "clsx";
-import { useEffect, useState } from "react";
-import css from "../styles/InputField.module.css";
+import { forwardRef, useEffect, useImperativeHandle, useState } from "react";
 
-/** @param {InputFieldProps} props */
-const InputField = (props) => {
+/** @type {ForwardRef<InputFieldProps, HTMLElement>} */
+const InputField = forwardRef((props, ref) => {
   const {
     id,
     className,
@@ -44,22 +45,27 @@ const InputField = (props) => {
     style,
   } = props;
 
+  const documentBody = useBodyRef();
+
   const [pwVisible, setPwVisible] = useState(false);
 
-  /** @type {UseState<Element>} */
+  /** @type {UseState<HTMLElement>} */
+  const [labelRef, setLabelRef] = useState(null);
+  /** @type {UseState<HTMLElement>} */
   const [fieldRef, setFieldRef] = useState(null);
-  /** @type {UseState<Element>} */
+  /** @type {UseState<HTMLElement>} */
   const [rootRef, setRootRef] = useState(null);
-  /** @type {UseState<Element>} */
+  /** @type {UseState<HTMLElement>} */
   const [iconsRightRef, setIconsRightRef] = useState(null);
-
-  /** @type {CustomCSSProperties} */
-  const tintPalette = paletteFrom(error && "crimson");
-
-  const pwType = pwVisible ? "text" : "password";
 
   const icons = [iconLeft, iconRight];
   const inputState = [disabled, password, pwVisible, error];
+  const pwType = pwVisible ? "text" : "password";
+
+  useImperativeHandle(ref, () => {
+    return fieldRef;
+  }, [fieldRef]);
+
   useEffect(() => {
     textAreaResize(fieldRef);
   }, [fieldRef, width, ...icons, ...inputState]);
@@ -94,8 +100,9 @@ const InputField = (props) => {
   function getTooltipOffset() {
     const { y: iconsY } = iconsRightRef?.getBoundingClientRect();
     const { y: fieldY } = rootRef?.getBoundingClientRect();
+    const labelHeight = labelRef?.clientHeight || 0;
 
-    return [0, 15 + iconsY - fieldY];
+    return [0, 15 + iconsY - fieldY - labelHeight];
   }
 
   /** @ts-ignore @type {GeneralInput} */
@@ -104,16 +111,18 @@ const InputField = (props) => {
   return (
     <div
       className={clsx(css["input-wrapper"], className)}
-      style={{ width, ...style, ...tintPalette }}
+      style={{ width, ...style, ...paletteFrom(error && "red") }}
       ref={setRootRef}
     >
       {label &&
         (id ? (
-          <label className={css["input-label"]} htmlFor={id}>
+          <label className={css["input-label"]} htmlFor={id} ref={setLabelRef}>
             {label}
           </label>
         ) : (
-          <span className={css["input-label"]}>{label}</span>
+          <span className={css["input-label"]} ref={setLabelRef}>
+            {label}
+          </span>
         ))}
 
       <div className={css["input-border"]}>
@@ -127,6 +136,9 @@ const InputField = (props) => {
                 overflow: {
                   x: "hidden",
                   y: textArea ? "scroll" : "hidden",
+                },
+                scrollbars: {
+                  visibility: value ? "auto" : "hidden",
                 },
               }}
               onUpdated={() => textAreaResize(fieldRef)}
@@ -163,10 +175,18 @@ const InputField = (props) => {
               <Tooltip
                 disabled={!rootRef}
                 content={error}
-                appendTo={rootRef}
+                appendTo={documentBody}
                 placement="top-end"
                 trigger="mouseenter click"
                 offset={getTooltipOffset}
+                onCreate={(inst) => {
+                  if (!inst?.popper) return;
+
+                  const palette = paletteFrom("red");
+                  for (let colorVar in palette) {
+                    inst.popper.style.setProperty(colorVar, palette[colorVar]);
+                  }
+                }}
               >
                 <IconAlertCircleFilled
                   className="cursor-pointer"
@@ -181,6 +201,6 @@ const InputField = (props) => {
       </div>
     </div>
   );
-};
+});
 
 export default InputField;

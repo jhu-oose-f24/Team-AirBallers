@@ -1,6 +1,11 @@
 /**
  * @template T
- * @typedef {[T, React.Dispatch<React.SetStateAction<T>>]} UseState
+ * @typedef {React.Dispatch<React.SetStateAction<T>>} SetState
+ */
+
+/**
+ * @template T
+ * @typedef {[T, SetState<T>]} UseState
  */
 
 /**
@@ -15,6 +20,17 @@
 /**
  * @template {React.ElementType<?>} C
  * @typedef {React.ComponentRef<C>} RefType
+ */
+
+/**
+ * @template T
+ * @typedef {T[keyof T]} ValueOf
+ */
+
+/**
+ * @typedef {import("@tabler/icons-react").TablerIcon} TablerIcon
+ *
+ * @typedef {import("next-auth/providers/index").BuiltInProviderType} OAuthProvider
  */
 
 /**
@@ -94,4 +110,14 @@
  * @typedef {import("@prisma/client").GarmentPrompt} GarmentPrompt
  *
  * @typedef {import("@prisma/client").GarmentType} GarmentType
+ */
+
+/** @typedef {React.MutableRefObject<import("tippy.js").Instance>} TooltipRef */
+
+/**
+ * @typedef {{ action?: "move" | "rename" | "delete" }} ActiveTask
+ *
+ * @typedef {ActiveTask & { garment?: Garment }} ActiveGarmentTask
+ *
+ * @typedef {ActiveTask & { collection?: Collection }} ActiveCollectionTask
  */

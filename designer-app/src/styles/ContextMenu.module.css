@@ -1,39 +1,49 @@
-[class*="tooltip"].context-menu {
-  --tooltip-bg: hsl(var(--background-alt)) !important;
+.context-menu {
   --tooltip-text: hsl(var(--primary-darkest)) !important;
   --tooltip-border: hsl(var(--secondary)) !important;
 
-  --tooltip-x-pad: 0px;
-  --tooltip-y-pad: 0.25rem;
-  --tooltip-radius: 0.9rem;
+  --tooltip-x-pad: 0px !important;
+  --tooltip-y-pad: 0.25rem !important;
+  --tooltip-radius: 0.9rem !important;
 
   --header-radius: calc(var(--tooltip-radius) - 0.25rem);
 
   @apply relative;
   @apply shadow-foreground/15 shadow-[0_0.6rem_1rem_0];
-  @apply transition-all duration-150 ease-in-out;
 }
 
 .context-menu::before {
   @apply content-[""];
-  @apply absolute top-0 left-[--tooltip-radius] -translate-x-full;
+  @apply absolute;
   @apply border-l-transparent border-b-transparent;
   @apply border-t-[--tooltip-border] border-r-[--tooltip-border];
   @apply border-x-[0.8rem] border-y-[1.2rem];
-  @apply z-[-1];
+}
+.context-menu[data-placement*="start"]::before {
+  @apply top-0;
+}
+.context-menu[data-placement*="end"]::before {
+  @apply bottom-0;
+  @apply -scale-y-100;
+}
+.context-menu[data-placement*="left"]::before {
+  @apply right-[--tooltip-radius] translate-x-full;
+  @apply -scale-x-100;
+}
+.context-menu[data-placement*="right"]::before {
+  @apply left-[--tooltip-radius] -translate-x-full;
 }
 
 .context-menu [class*="tippy-content"] > div {
   @apply flex flex-col;
-}
-
-.context-menu [class*="tippy-content"] > div > * {
+  @apply bg-background-alt;
+  @apply rounded-[--header-radius];
   @apply mx-[0.25rem];
 }
 
 .context-menu div.option,
 .context-menu span.header {
-  @apply transition-[inherit];
+  @apply transition duration-100 ease-in-out;
   @apply py-[0.6rem];
 }
 
@@ -54,9 +64,21 @@
   @apply flex items-center;
   @apply px-[0.8rem] gap-[0.5rem];
   @apply cursor-pointer;
+  @apply z-10;
 }
-.context-menu div.option:hover {
+.context-menu div.option:not(.opt-hover) {
+  @apply z-0;
+}
+.context-menu div.option.opt-hover,
+.context-menu div.option:focus-visible {
   @apply bg-background-main;
+}
+.context-menu div.option:not(.opt-hover):focus-visible {
+  @apply font-semibold;
+}
+.context-menu div.option:focus-visible,
+.context-menu span.header:focus-visible {
+  @apply !outline-none;
 }
 .context-menu div.option:not(:last-child) {
   @apply -mb-[0.2rem];
@@ -64,6 +86,12 @@
 .context-menu div.option:last-child {
   @apply pb-[0.6rem];
   @apply rounded-b-[--header-radius];
+}
+
+.context-menu div.option.destructive.opt-hover,
+.context-menu div.option.destructive:focus-visible {
+  @apply bg-primary-lightest;
+  @apply text-primary-dark;
 }
 
 .context-menu div.option span {

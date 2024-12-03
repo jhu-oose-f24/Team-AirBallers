@@ -1,0 +1,15 @@
+.grid-item-info {
+  @apply flex justify-between items-center;
+  @apply overflow-hidden;
+  @apply p-[0.2rem];
+}
+
+.grid-item-info .item-name {
+  @apply text-[1.1rem] font-[475] text-primary-darkest;
+  @apply text-ellipsis whitespace-nowrap;
+  @apply overflow-hidden;
+}
+
+.grid-item-info .ctx-menu-icon {
+  @apply min-h-[1rem] min-w-[1rem] shrink-0;
+}

@@ -6,6 +6,14 @@
   svg * {
     @apply pointer-events-none;
   }
+
+  ul {
+    @apply list-disc list-outside p-[inherit];
+  }
+
+  * {
+    @apply select-none;
+  }
 }
 
 /* ====================== Overlay Scrollbar ====================== */
@@ -62,6 +70,7 @@
   --tooltip-x-pad: 0.8rem;
   --tooltip-y-pad: 0.4rem;
   --tooltip-radius: 0.6rem;
+  --tooltip-border-width: 0.25rem;
 
   --arrow-half-width: 0.5rem;
   --arrow-height: 0.5rem;
@@ -74,7 +83,8 @@
   @apply !bg-[--tooltip-bg] !text-[--tooltip-text];
   @apply !rounded-[--tooltip-radius];
   @apply !outline !outline-[--tooltip-border];
-  @apply ![outline-width:0.25rem] !-outline-offset-[0.25rem];
+  @apply ![outline-width:--tooltip-border-width];
+  @apply !-outline-offset-[--tooltip-border-width];
 }
 
 .tooltip .tippy-content {

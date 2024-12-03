@@ -1,0 +1,105 @@
+.select-field * {
+  @apply cursor-pointer;
+}
+
+.dropdown {
+  --tooltip-text: hsl(var(--primary-darkest)) !important;
+  --tooltip-border: hsl(var(--primary-darker)) !important;
+
+  --tooltip-border-width: 0.2rem;
+  --tooltip-x-pad: var(--tooltip-border-width) !important;
+  --tooltip-y-pad: var(--tooltip-border-width) !important;
+  --tooltip-radius: calc(
+    var(--list-radius) + var(--tooltip-border-width)
+  ) !important;
+
+  --list-radius: 0.7rem;
+
+  @apply relative !w-screen;
+  @apply shadow-foreground/20 shadow-[0_0.6rem_1rem_0];
+}
+
+.dropdown .options-wrapper {
+  --size: calc(100% + 2px);
+
+  @apply transition-all duration-100 ease-in-out;
+  /* @apply pr-[1rem]; */
+}
+
+.dropdown .options-wrapper [data-overlayscrollbars-viewport] {
+  @apply flex;
+  @apply rounded-[--list-radius];
+  @apply max-h-[11.5rem];
+}
+
+.dropdown .options-list {
+  @apply sticky -inset-x-[2px] inset-y-0;
+  @apply flex flex-col;
+  @apply w-[--size] h-max;
+  @apply bg-primary-lightest;
+}
+
+.dropdown .rounded-mask {
+  @apply sticky -inset-x-[2px] -inset-y-[1px];
+  @apply shrink-0 w-[--size] h-[--size];
+  @apply outline outline-[1rem] outline-primary-light;
+  @apply rounded-[--list-radius] -m-[100%];
+  @apply pointer-events-none;
+  @apply z-50;
+}
+
+.dropdown .option {
+  @apply flex justify-between items-center;
+  @apply text-[1.1rem] font-medium;
+  @apply px-[0.8rem] py-[0.4rem] -my-[0.1rem];
+  @apply border-y-primary-light border-y-[0.2rem];
+  @apply bg-primary-lighter/80;
+  @apply cursor-pointer;
+  @apply !outline-none;
+  @apply z-10;
+}
+.dropdown .option:first-child {
+  @apply border-t-0;
+  @apply pt-[0.5rem] mt-0;
+}
+.dropdown .option:last-child {
+  @apply border-b-0;
+  @apply pb-[0.5rem] mb-0;
+}
+.dropdown .option:focus,
+.dropdown .option:focus-visible {
+  @apply bg-primary-light;
+  @apply z-20;
+}
+.dropdown .option:active,
+.dropdown .option.clicked {
+  @apply bg-primary-medium;
+  @apply border-y-primary-medium;
+  @apply text-foreground;
+  @apply z-30;
+}
+.dropdown .option.selected {
+  @apply bg-primary-darker;
+  @apply border-y-primary-darker;
+  @apply text-background-main;
+  @apply z-40;
+}
+
+.dropdown .option * {
+  @apply pointer-events-none;
+}
+
+.select-field .select-arrow {
+  @apply !stroke-[2.4];
+}
+.select-field.open .select-arrow {
+  @apply rotate-180;
+}
+
+.select-field .select-arrow path {
+  @apply translate-y-[0.05rem];
+}
+
+.select-field input::selection {
+  @apply !bg-transparent !text-primary-darkest;
+}

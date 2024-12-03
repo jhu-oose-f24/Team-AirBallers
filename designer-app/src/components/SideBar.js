@@ -6,7 +6,8 @@ import ScrollContainer from "@/components/ScrollContainer";
 import Stitches from "@/components/Stitches";
 import { RootContext } from "@/context/RootContext";
 import { SideBarContext } from "@/context/SideBarContext";
-import DeleteCollectionModal from "@/features/DeleteCollectionModal";
+import DeleteItemModal from "@/features/DeleteItemModal";
+import RenameItemModal from "@/features/RenameItemModal";
 import { pause } from "@/util/misc";
 import { IconHanger, IconPlus } from "@tabler/icons-react";
 import axios from "axios";
@@ -15,13 +16,19 @@ import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 
 const SideBar = () => {
-  const { sideBarOpen, setSideBarRef } = useContext(RootContext);
-  const { openMenuRef, collectionToDelete, setCollectionToDelete } =
-    useContext(SideBarContext);
-
+  const { sideBarOpen, sideBarRef, setSideBarRef } = useContext(RootContext);
+  const { openMenuRef, activeTask, setActiveTask } = useContext(SideBarContext);
   const router = useRouter();
-  /** @type {UseState<GarmentList[]>} */
+
+  // TODO: refactor with collections
+  /** @type {UseState<Garment[]>} */
   const [garments, setGarments] = useState([]);
+
+  useEffect(() => {
+    if (sideBarRef?.classList.contains("closed")) {
+      sideBarRef.style.visibility = "hidden";
+    }
+  }, [sideBarRef]);
 
   useEffect(() => {
     axios
@@ -56,24 +63,53 @@ const SideBar = () => {
       </ScrollContainer>
       <Stitches type="line" stitchWidth="0.17rem" svgClass="stitch-close" />
 
-      <Button
-        variant="secondary"
-        icon={<IconHanger />}
-        label="New Garment"
-        align="left"
-        xPad="1.1rem"
-        width="100%"
-        size="sm"
-        // TODO: onClick: redirect to create new garment
+      <div className="flex flex-col gap-[0.6rem]">
+        <Button
+          variant="secondary"
+          icon={<IconHanger />}
+          label="New Garment"
+          align="left"
+          xPad="1.1rem"
+          width="100%"
+          size="sm"
+          // TODO: onClick: redirect to create new garment
+        />
+        <Button
+          icon={<IconPlus />}
+          label="New Collection"
+          width="100%"
+          size="sm"
+          // TODO: onClick: modal to create collection
+        />
+      </div>
+
+      <RenameItemModal
+        title="Rename Collection"
+        inputLabel="Collection Name"
+        originalName="(Unknown)"
+        activeTask={activeTask}
+        setActiveTask={setActiveTask}
+        // TODO: save collection name
+        onSaveClick={null}
       />
-      <Button
-        icon={<IconPlus />}
-        label="New Collection"
-        width="100%"
-        size="sm"
-        // TODO: onClick: modal to create collection
-      />
-      <DeleteCollectionModal />
+
+      <DeleteItemModal
+        title="Delete Collection"
+        activeTask={activeTask}
+        setActiveTask={setActiveTask}
+      >
+        {/* TODO: get collection name and # garments */}
+        <p>
+          The <b>(Collection Name)</b> collection will be permanently deleted
+          along with the following contents:
+        </p>
+        <ul>
+          <li>
+            <b>(Number)</b> Garments
+          </li>
+        </ul>
+        <br />
+      </DeleteItemModal>
     </div>
   );
 };

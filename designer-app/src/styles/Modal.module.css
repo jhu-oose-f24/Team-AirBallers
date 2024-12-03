@@ -2,6 +2,10 @@
   @apply fixed inset-0 z-50;
   @apply bg-background-alt/70;
 }
+.modal-overlay.passive {
+  @apply pointer-events-none;
+  @apply bg-transparent;
+}
 
 .modal-patch {
   --m-depth: 0.3rem;
@@ -17,6 +21,9 @@
   @apply rounded-[--m-patch-radius];
   @apply p-[--m-border-width] pb-[--m-root-depth];
   @apply bg-primary-darkest;
+}
+.modal-overlay.passive .modal-patch {
+  @apply pointer-events-auto;
 }
 
 .modal-border {
@@ -73,6 +80,13 @@
   @apply opacity-0;
 }
 
+.modal-overlay * {
+  @apply invisible;
+}
+.modal-overlay.after-open * {
+  @apply visible;
+}
+
 .modal-patch {
   @apply transition-all duration-500 ease-in-modal;
   @apply top-full left-1/2 -translate-x-1/2 -translate-y-1/2;
@@ -84,21 +98,55 @@
   @apply ease-out-modal;
   @apply top-full;
 }
+.modal-overlay:not(.before-close) {
+  @apply delay-[50ms];
+}
 
-/* 
+/* Could be used for modal anchored to top left */
 
-Could be used for modal anchored to top left
+@media screen(max-sm) {
+  .modal-patch {
+    @apply max-w-[95%];
+  }
+}
 
 @media screen(md) {
   .modal-patch {
-    @apply !top-[1rem] -left-[1rem] -translate-x-full translate-y-0;
+    --offset: 0px;
+    --max-height: calc(90% - var(--offset));
   }
-  .modal-overlay.after-open .modal-patch {
+
+  .modal-patch.top {
+    @apply !top-[1rem];
+    @apply max-h-[--max-height];
+    @apply translate-y-[--offset];
+  }
+
+  .modal-patch.bottom {
+    @apply !bottom-[1rem];
+    @apply max-h-[--max-height];
+    @apply -translate-y-[--offset];
+  }
+
+  .modal-patch.left {
+    @apply -left-[1rem];
+    @apply -translate-x-full;
+  }
+  .modal-overlay.after-open .modal-patch.left {
     @apply left-[1rem] translate-x-0;
   }
-  .modal-overlay.before-close .modal-patch {
+  .modal-overlay.before-close .modal-patch.left {
     @apply -left-[1rem] -translate-x-full;
   }
-} 
-  
-*/
+
+  .modal-patch.right {
+    @apply left-[unset] -right-[1rem];
+    @apply translate-x-full;
+  }
+  .modal-overlay.after-open .modal-patch.right {
+    @apply right-[1rem] translate-x-0;
+  }
+  .modal-overlay.before-close .modal-patch.right {
+    @apply -right-[1rem] translate-x-full;
+  }
+}

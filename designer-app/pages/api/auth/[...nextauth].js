@@ -18,11 +18,12 @@ export default NextAuth.default({
   secret: process.env.NEXTAUTH_SECRET,
 
   callbacks: {
-    async jwt({ token, user, account }) {
+    async jwt({ token, user, account, profile, isNewUser }) {
       // Initial sign in
       if (account && user) {
         token.id = user.id;
         token.accessToken = account.access_token;
+        token.provider = account.provider;
       }
 
       // Return previous token if no updates
@@ -32,6 +33,8 @@ export default NextAuth.default({
     async session({ session, token }) {
       session.user.id = token.id;
       session.user.accessToken = token.accessToken;
+      session.provider = token.provider;
+
       return session;
     },
   },

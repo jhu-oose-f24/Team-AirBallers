@@ -1,27 +1,55 @@
 "use client";
 
+import Button from "@/components/Button";
 import { RootContext } from "@/context/RootContext";
-import { IconChevronLeft, IconLayoutGrid } from "@tabler/icons-react";
+import ProfileModal from "@/features/ProfileModal";
+import { pause } from "@/util/misc";
+import {
+  IconChevronLeft,
+  IconLayoutGrid,
+  IconUserCircle,
+} from "@tabler/icons-react";
 import clsx from "clsx";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useContext } from "react";
-import Button from "./Button";
+import { useContext, useState } from "react";
 
 const Header = () => {
   const router = useRouter();
-  const { sideBarOpen, setSideBarOpen, headerState } = useContext(RootContext);
 
-  const { title, back } = headerState;
+  const session = useSession();
+  const {
+    sideBarRef,
+    sideBarOpen,
+    setSideBarOpen,
+    headerState: { title, back },
+  } = useContext(RootContext);
 
-  const { data: session } = useSession();
+  const [profileOpen, setProfileOpen] = useState(false);
+
+  const { user } = session.data || {};
+  const signedIn = session.status === "authenticated" && user?.email;
+  const signedOut = session.status !== "loading" && !user?.email;
 
   function goBack() {
     router.push(back);
   }
 
-  function toggleSideBar() {
-    setSideBarOpen(!sideBarOpen);
+  async function toggleSideBar() {
+    if (!sideBarRef) {
+      setSideBarOpen(!sideBarOpen);
+      return;
+    }
+
+    if (sideBarOpen) {
+      setSideBarOpen(false);
+      await pause(100);
+      sideBarRef.style.visibility = "hidden";
+    } else {
+      sideBarRef.style.visibility = "visible";
+      await pause(100);
+      setSideBarOpen(true);
+    }
   }
 
   return (
@@ -37,24 +65,52 @@ const Header = () => {
         stretch
       />
 
-      <Button
-        variant="hint"
-        className={clsx("title-link", back && "back")}
-        icon={back && <IconChevronLeft stroke={2.8} />}
-        label={title}
-        onClick={() => back && router.push(back)}
-        fontSize="1.8rem"
-        xPad={back && "0.3rem"}
-        stretch
-      />
+      {title && (
+        <Button
+          variant="hint"
+          className={clsx("title-link", back && "back")}
+          icon={back && <IconChevronLeft stroke={2.8} />}
+          label={title}
+          onClick={() => back && router.push(back)}
+          fontSize="1.8rem"
+          xPad={back && "0.3rem"}
+          stretch
+        />
+      )}
 
-      <Button
-        variant="secondary"
-        label={session ? "Sign out" : "Sign in"}
-        onClick={() => (session ? signOut() : signIn("google"))}
-        xPad="0.6rem"
-        stretch
-      />
+      {signedIn && (
+        <Button
+          className="user-pfp"
+          variant="hint"
+          icon={
+            user?.image ? (
+              <div className="pfp-image">
+                <img src={user.image} />
+              </div>
+            ) : (
+              <IconUserCircle className="pfp-image !stroke-[2]" />
+            )
+          }
+          onClick={() => setProfileOpen(!profileOpen)}
+          fontSize={user?.image ? "2rem" : "2.4rem"}
+          xPad={user?.image ? "0.2rem" : "0px"}
+          yPad={user?.image ? "0.2rem" : "0px"}
+          borderRadius="100vmax"
+        />
+      )}
+      {signedOut && (
+        <Button
+          className="sign-in"
+          variant="secondary"
+          label="Sign in"
+          loading={session.status === "loading"}
+          onClick={() => signIn("google")}
+          xPad="0.6rem"
+          stretch
+        />
+      )}
+
+      <ProfileModal openState={[profileOpen, setProfileOpen]} />
     </header>
   );
 };

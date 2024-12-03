@@ -64,7 +64,7 @@
 /* TODO: autofill color styling */
 
 .field-wrapper {
-  @apply w-full;
+  @apply w-full min-w-0;
   @apply flex flex-col;
   @apply max-h-[12rem];
   @apply gap-[0.3rem] mx-[0.2rem];
@@ -107,6 +107,7 @@ textarea.field {
 input.field::placeholder,
 textarea.field::placeholder {
   @apply text-primary-input-placeholder;
+  @apply select-none;
 }
 input.field.hide-value,
 textarea.field.hide-value {

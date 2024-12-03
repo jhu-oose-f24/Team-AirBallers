@@ -44,24 +44,6 @@ body[id] #__next {
   @apply ml-0;
 }
 
-@screen sm {
-  .app-header .title-link:not(.back) {
-    @apply absolute top-1/2 left-1/2;
-    @apply -translate-x-1/2 -translate-y-1/2;
-    @apply h-[3rem];
-  }
-}
-
-@screen max-sm {
-  .app-header .action-button {
-    @apply -ml-[3rem] -mr-[0.5rem];
-  }
-
-  .app-header .title-link {
-    @apply ml-0;
-  }
-}
-
 .app-header .title-link span:not(:has(svg)) {
   @apply font-bold !text-foreground;
 }
@@ -80,6 +62,26 @@ body[id] #__next {
 
 .app-header .action-button svg {
   @apply !stroke-[1.9];
+}
+
+@keyframes fade-in {
+  0% {
+    @apply opacity-0;
+  }
+  100% {
+    @apply opacity-100;
+  }
+}
+
+.app-header .user-pfp,
+.app-header .sign-in {
+  @apply animate-[fade-in_200ms_ease];
+}
+
+.pfp-image {
+  @apply shrink-0;
+  @apply aspect-square rounded-full;
+  @apply overflow-hidden;
 }
 
 .root-container {
@@ -134,7 +136,6 @@ body[id] #__next {
 
 .sidebar.closed {
   @apply -ml-[--sidebar-width];
-  @apply invisible;
 }
 
 /* Page Content */
@@ -156,11 +157,32 @@ body[id] #__next {
   @apply p-[1rem];
 }
 
+/* Breakpoints */
+
+@media screen(sm) {
+  .app-header .title-link:not(.back) {
+    @apply absolute top-1/2 left-1/2;
+    @apply -translate-x-1/2 -translate-y-1/2;
+    @apply h-[3rem];
+  }
+}
+
+@media screen(max-sm) {
+  .app-header .action-button {
+    @apply -ml-[3rem] -mr-[0.5rem];
+    @apply invisible;
+  }
+
+  .app-header .title-link {
+    @apply ml-0;
+  }
+}
+
 /* ========================== Home Page ========================== */
 
 body#home .create-layout {
   @apply flex-col justify-end items-center;
-  @apply min-w-max;
+  @apply min-w-max gap-[0.5rem];
 }
 
 .garment-img {
@@ -178,8 +200,8 @@ body#home .create-layout {
 
 .prompt {
   @apply flex items-end justify-between;
-  @apply p-[1.5rem] gap-[0.5rem];
-  @apply w-[90%] min-w-fit;
+  @apply w-full min-w-fit max-w-[85vw];
+  @apply px-[0.5rem] py-[1rem] gap-[0.5rem];
 }
 
 .prompt-input {
@@ -194,53 +216,107 @@ body#home .create-layout {
 /* ======================== Collection Page ======================== */
 
 body#collection-page .collection-grid {
+  --num-cols: 1;
+  --grid-cols: repeat(var(--num-cols), 10rem);
   --grid-side-pad: calc(1rem + var(--sidebar-width) / 2);
-  @apply flex-wrap;
-  @apply px-[--grid-side-pad] gap-[1rem];
+
+  @apply grid justify-center h-auto;
+  @apply grid-cols-[--grid-cols] grid-rows-[min-content];
+  @apply px-[--grid-side-pad] gap-[1.4rem] gap-y-[1.1rem];
   @apply transition-all duration-300 ease-in-out;
 }
 body#collection-page:has(.sidebar.open) .collection-grid {
   --grid-side-pad: 1rem;
 }
 
-body#collection-page .collection-grid > * {
-  @apply max-w-[calc(25%-1rem*(3/4))];
+/* ======================= Modal Instances ======================= */
+
+.move-garment [data-overlayscrollbars-viewport],
+.rename-item [data-overlayscrollbars-viewport],
+.delete-item [data-overlayscrollbars-viewport] {
+  @apply text-[1.1rem] font-[450];
+  @apply !w-[30rem];
 }
 
-/* ========================== Log In Page ========================== */
-
-.login-wrapper {
-  @apply flex items-center justify-center h-screen bg-transparent;
+.move-garment [data-overlayscrollbars-viewport],
+.rename-item [data-overlayscrollbars-viewport] {
+  @apply flex flex-col gap-[0.5rem];
 }
 
-.login-container {
-  @apply bg-white p-6 rounded-xl shadow-lg;
-  @apply w-[22rem] flex flex-col items-center gap-4;
+.profile-modal [data-overlayscrollbars-viewport] {
+  @apply flex flex-col gap-[1rem];
+  @apply text-[1.2rem] font-[450];
+  @apply !w-[24rem];
 }
 
-button[type="submit"] {
-  @apply px-2 py-1 font-medium text-gray-800 bg-white;
-  @apply border-2 border-gray-300 rounded-md;
-  @apply transition-all cursor-pointer;
+.confirm-delete-msg {
+  @apply flex justify-center items-center;
+  @apply text-[1.3rem] text-primary-darkest font-medium;
+  @apply py-[0.2rem] mb-[0.6rem] gap-[0.5rem];
+  @apply rounded-[0.6rem];
+  @apply bg-primary-light;
 }
 
-button[type="submit"]:hover {
-  @apply bg-blue-100 text-gray-800 border-blue-300 transform translate-y-[-2px];
+.item-rename-field,
+.collection-select-field {
+  @apply mx-[0.7rem];
 }
 
-/* ========================== Sign Up Page ========================== */
-
-.sign-up-prompt {
-  @apply flex items-center gap-2 mt-4;
+.new-collection .name,
+.prev-collection .name {
+  @apply flex grow justify-between;
+  @apply gap-[0.2rem] ml-[0.5rem];
+  @apply text-primary-darker font-semibold;
 }
 
-.btn-signup {
-  @apply px-2 py-1 font-medium text-white bg-blue-500;
-  @apply border-2 border-blue-500 rounded-md;
-  @apply transition-all cursor-pointer;
+.name .num-items {
+  @apply flex gap-[0.2rem];
+}
+[class*="option"] > .num-items {
+  @apply flex gap-[0.2rem];
+  @apply text-primary-dark;
+}
+[class*="option"][class*="selected"] > .num-items {
+  @apply !text-primary-lightest;
 }
 
-.btn-signup:hover {
-  @apply bg-blue-600 border-blue-600 shadow-lg shadow-blue-300;
-  transform: translateY(-2px);
+[class*="option"]:active > .num-items,
+[class*="option"][class*="clicked"] > .num-items {
+  @apply text-primary-darker/70;
+}
+
+.profile-modal .profile-summary {
+  @apply flex shrink-0 gap-[0.8rem];
+  @apply overflow-hidden;
+}
+
+.profile-modal .pfp-wrapper {
+  @apply relative;
+  @apply p-[0.2rem];
+}
+
+.profile-modal .pfp-image {
+  @apply min-w-[5rem] min-h-[5rem];
+}
+.profile-modal .pfp-image.blank {
+  @apply stroke-[1.2] scale-[1.2];
+}
+
+.profile-modal .auth-provider-icon {
+  @apply absolute bottom-0 right-0;
+  @apply p-[0.2rem] rounded-full;
+  @apply h-[1.8rem] w-auto aspect-square;
+  @apply bg-primary-lightest;
+  @apply text-primary;
+  @apply !outline-none;
+}
+
+.profile-modal .profile-info {
+  @apply flex flex-col;
+  @apply my-[0.3rem];
+  @apply overflow-hidden;
+}
+
+.profile-modal .profile-info * {
+  @apply overflow-hidden whitespace-nowrap text-ellipsis;
 }

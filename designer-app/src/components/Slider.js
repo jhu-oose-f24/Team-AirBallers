@@ -1,6 +1,6 @@
+import css from "@/styles/Slider.module.css";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
-import css from "../styles/Slider.module.css";
 
 /**
  * @param {{
@@ -62,7 +62,7 @@ const Slider = (props) => {
       setMinorTicks(Math.floor(unit / 2) - 1);
     } else if (unit <= 18) {
       setMajorTicks(-1);
-      console.log(Math.floor(unit / 4) - 1)
+      console.log(Math.floor(unit / 4) - 1);
       setMinorTicks(Math.floor(unit / 4) - 1);
     } else {
       setMajorTicks(0);

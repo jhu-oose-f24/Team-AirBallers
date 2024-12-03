@@ -1,0 +1,46 @@
+.garment-card {
+  @apply flex flex-col;
+  @apply gap-[0.1rem];
+  @apply transition-all duration-150 ease-in-out;
+}
+
+.garment-card .frame {
+  @apply relative;
+  @apply w-full h-auto aspect-square;
+  @apply border-[0.25rem] border-primary-dark/30;
+  @apply rounded-[1.2rem];
+  @apply bg-background-main;
+  @apply transition-[inherit];
+  @apply cursor-pointer;
+}
+.garment-card .frame:hover {
+  @apply !border-primary-dark;
+}
+.garment-card .frame.menu-open {
+  @apply border-primary-dark/70;
+}
+
+.garment-card .frame * {
+  @apply pointer-events-none;
+}
+
+.garment-card .frame .thumb {
+  /* TODO */
+}
+
+.garment-card .frame .edit-icon {
+  @apply absolute bottom-[0.4rem] right-[0.4rem];
+  @apply p-[0.35rem];
+  @apply bg-primary-light;
+  @apply border-[0.25rem] border-primary-dark;
+  @apply rounded-[0.7rem];
+  @apply transition-[inherit];
+  @apply opacity-0;
+}
+.garment-card .frame:hover .edit-icon {
+  @apply opacity-100;
+}
+
+.garment-card .frame .edit-icon svg {
+  @apply w-[1.7rem] h-auto aspect-square;
+}

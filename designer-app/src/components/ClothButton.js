@@ -1,5 +1,5 @@
+import css from "@/styles/ClothButton.module.css";
 import clsx from "clsx";
-import css from "../styles/ClothButton.module.css";
 
 /** @param {ClothButtonProps} props */
 const ClothButton = (props) => {

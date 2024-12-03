@@ -1,7 +1,7 @@
 import ClothButton from "@/components/ClothButton";
+import css from "@/styles/Toggle.module.css";
 import { IconLock } from "@tabler/icons-react";
 import clsx from "clsx";
-import css from "../styles/Toggle.module.css";
 
 /** @param {ToggleProps} props */
 const Toggle = (props) => {

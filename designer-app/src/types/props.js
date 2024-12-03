@@ -65,47 +65,119 @@
  *   defaultValue?: string;
  *   label?: string;
  *   iconLeft?: any;
- *   iconRight?: any;
  *   width?: string;
- *   autoComplete?: React.InputHTMLAttributes["autoComplete"];
  *   onChange?: React.InputHTMLAttributes["onChange"];
+ *   disabled?: boolean;
+ *   error?: string;
+ *   style?: React.CSSProperties;
+ * }} GeneralInputProps
+ */
+
+/**
+ * @typedef {GeneralInputProps & {
+ *   iconRight?: any;
+ *   autoComplete?: React.InputHTMLAttributes["autoComplete"];
  *   hideValue?: boolean;
  *   password?: boolean;
- *   disabled?: boolean;
  *   readOnly?: boolean;
  *   textArea?: boolean;
  *   wrapText?: boolean;
- *   error?: string;
- *   style?: React.CSSProperties;
  * }} InputFieldProps
  */
 
 /**
+ * @typedef {GeneralInputProps & {
+ *   options: SelectOption[];
+ * }} SelectFieldProps
+ *
+ *
+ * @typedef {{
+ *   value: string;
+ *   label: string;
+ *   selected?: boolean;
+ *   render?: React.JSX.Element;
+ * }} SelectOption
+ *
+ *
+ * @typedef {{
+ *   [K: SelectOption["value"]]: {
+ *     label: string;
+ *     selected?: boolean;
+ *     render?: React.JSX.Element;
+ *   };
+ * }} SelectOptionMap
+ */
+
+/**
+ * @typedef {"top-left"
+ *   | "top-right"
+ *   | "bottom-left"
+ *   | "bottom-right"
+ *   | "center"} ModalPlacement
+ *
+ *
  * @typedef {{
  *   title: string;
+ *   className?: ClassName;
+ *   overlayClassName?: ClassName;
  *   openState: UseState<boolean>;
  *   children?: React.ReactNode;
  *   onAfterOpen?: ReactModal.OnAfterOpenCallback;
  *   onAfterClose?: () => void;
+ *   placement?: ModalPlacement;
+ *   offset?: React.CSSProperties["paddingTop"];
+ *   passive?: boolean;
  * }} ModalProps
  */
 
-/** @typedef {import("@tippyjs/react").TippyProps} TooltipProps */
+/**
+ * @typedef {import("@tippyjs/react").TippyProps & {
+ *   hideAfterMS?: number;
+ * }} TooltipProps
+ */
 
-/** @typedef {{ garments: Garment[] }} CollectionPreviewProps */
+/**
+ * @typedef {Omit<
+ *   TooltipProps,
+ *   "content" | "maxWidth" | "disabled" | "delay"
+ * > & {
+ *   text?: string;
+ *   as?: keyof React.JSX.IntrinsicElements;
+ * }} OverflowableTextProps
+ */
 
 /**
  * @typedef {{
  *   label: string;
  *   icon?: React.JSX.Element;
  *   action: React.MouseEventHandler;
+ *   destructive?: boolean;
  * }} ContextMenuOption
  *
  *
  * @typedef {TooltipProps & {
+ *   title: string;
  *   options: ContextMenuOption[];
  * }} ContextMenuProps
  */
+
+/**
+ * @typedef {{
+ *   itemName: string;
+ *   contextTitle: string;
+ *   contextOptions: ContextMenuOption[];
+ *   openMenuRef: React.MutableRefObject;
+ *   onMenuOpen?: TooltipProps["onShow"];
+ *   onMenuClose?: TooltipProps["onHidden"];
+ *   appendTo: HTMLElement;
+ *   menuPlacement?: TooltipProps["placement"];
+ *   nameoverflowPlacement?: TooltipProps["placement"];
+ * }} GridItemInfoProps
+ */
+
+/** @typedef {{ garments: Garment[] }} CollectionPreviewProps */
+
+/** @typedef {{ garment: Garment }} GarmentCardProps */
 
 /**
  * @typedef {import("overlayscrollbars").EventListeners} ScrollContainerEventListeners
@@ -119,5 +191,39 @@
  *   onDestroyed?: ScrollContainerEventListeners["destroyed"];
  *   onInitialized?: ScrollContainerEventListeners["initialized"];
  *   onUpdated?: ScrollContainerEventListeners["updated"];
+ *   manageMenuSingleton?: boolean;
  * }} ScrollContainerProps
+ */
+
+/**
+ * @typedef {{
+ *   openState: UseState<boolean>;
+ * }} ProfileModalProps
+ */
+
+/**
+ * @typedef {{
+ *   activeTask: ActiveTask;
+ *   setActiveTask: SetState<ActiveTask>;
+ * }} ItemActionModalProps
+ */
+
+/**
+ * @typedef {ItemActionModalProps & {
+ *   title: string;
+ * }} DynamicItemActionModalProps
+ */
+
+/**
+ * @typedef {DynamicItemActionModalProps & {
+ *   children?: React.ReactNode;
+ * }} ItemDeleteModalProps
+ */
+
+/**
+ * @typedef {DynamicItemActionModalProps & {
+ *   inputLabel: string;
+ *   originalName: string;
+ *   onSaveClick: React.MouseEventHandler;
+ * }} ItemRenameModalProps
  */

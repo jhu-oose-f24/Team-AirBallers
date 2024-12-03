@@ -61,6 +61,7 @@ export default function Home() {
 
       <div className="prompt">
         <InputField
+          id="prompt-input"
           textArea
           wrapText
           className="prompt-input"

@@ -1,7 +1,7 @@
 "use client";
 
+import css from "@/styles/Stitches.module.css";
 import clsx from "clsx";
-import css from "../styles/Stitches.module.css";
 
 /** @param {StitchProps} props */
 const Stitches = (props) => {

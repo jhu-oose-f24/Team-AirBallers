@@ -1,10 +1,13 @@
 import plugin from "tailwindcss/plugin";
 
+import defaultTheme from "tailwindcss/defaultTheme";
+
 /** @type {import("tailwindcss").Config} */
 export default {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/styles/*.css",
   ],
   theme: {
     extend: {
@@ -19,6 +22,7 @@ export default {
           darkest: "hsl(var(--primary-darkest))",
           darker: "hsl(var(--primary-darker))",
           dark: "hsl(var(--primary-dark))",
+          medium: "hsl(var(--primary-medium))",
           light: "hsl(var(--primary-light))",
           lighter: "hsl(var(--primary-lighter))",
           lightest: "hsl(var(--primary-lightest))",
@@ -33,12 +37,12 @@ export default {
         accent: "hsl(var(--accent))",
 
         disabled: {
-          "color-darkest": "hsl(var(--disabled-primary-darkest))",
-          "color-darker": "hsl(var(--disabled-primary-darker))",
-          "color-dark": "hsl(var(--disabled-primary-dark))",
-          "color-light": "hsl(var(--disabled-primary-light))",
-          "color-lighter": "hsl(var(--disabled-primary-lighter))",
-          "color-lightest": "hsl(var(--disabled-primary-lightest))",
+          darkest: "hsl(var(--disabled-darkest))",
+          darker: "hsl(var(--disabled-darker))",
+          dark: "hsl(var(--disabled-dark))",
+          light: "hsl(var(--disabled-light))",
+          lighter: "hsl(var(--disabled-lighter))",
+          lightest: "hsl(var(--disabled-lightest))",
         },
       },
       transitionTimingFunction: {
@@ -47,13 +51,14 @@ export default {
       },
       screens: {
         "max-sm": {
-          max: "640px"
-        }
-      }
+          max: defaultTheme.screens.sm,
+        },
+      },
     },
   },
+
   plugins: [
-    plugin(({ matchUtilities, theme }) => {
+    plugin(({ matchUtilities }) => {
       matchUtilities({
         "bg-gradient": (angle) => ({
           backgroundImage: `linear-gradient(${angle}, var(--tw-gradient-stops));`,
