@@ -1,22 +1,21 @@
 import PromptGenerator from "@/types/PromptGenerator";
 import * as fal from "@fal-ai/serverless-client";
+import { 
+  imageGenerationError, 
+  invalidInputError,
+  apiError 
+} from "@/responses/responses";
 
 /** @hideconstructor */
 export default class ImageGenerator {
   /**
    * @param {string} description
    * @param {string} model
-   * @throws {Error}
+   * @throws {ApiErrorResponse}
    */
   static async createFrom(description, model = "fal-ai/flux/schnell") {
-    if (
-      !description ||
-      typeof description !== "string" ||
-      description.trim() === ""
-    ) {
-      throw new Error(
-        "Invalid description: Description must be a non-empty string",
-      );
+    if (!description || typeof description !== "string" || description.trim() === "") {
+      throw invalidInputError("Description must be a non-empty string");
     }
 
     const prePrompt = PromptGenerator.ASSETS.IMAGE();
@@ -48,11 +47,9 @@ export default class ImageGenerator {
     } catch (error) {
       console.error("Error generating GarmentImage:", error);
       if (error.message.includes("Invalid prompt")) {
-        throw new Error(
-          "Invalid prompt: The generated prompt was rejected by the API",
-        );
+        throw imageGenerationError(error);
       }
-      throw error;
+      throw apiError(error);
     }
   }
 }

@@ -1,8 +1,8 @@
-import { invalidInputError, promptGenerationError } from "@/responses/responses";
 import PromptGenerator from "@/types/PromptGenerator";
+import { promptGenerationError, invalidInputError } from "@/responses/responses";
 
 /** @hideconstructor */
-export default class DescriptionGenerator {
+export default class GarmentClassificationGenerator {
   /**
    * @param {string} userPrompt // TODO: use class
    * @returns {Promise<string>} // TODO: use class
@@ -15,12 +15,13 @@ export default class DescriptionGenerator {
 
     try {
       return await PromptGenerator.generateFrom(
-        PromptGenerator.ASSETS.CREATIVE(),
+        PromptGenerator.ASSETS.CLASSIFIER(),
         userPrompt,
       );
     } catch (error) {
-      console.error("Error generating CreativePrompt:", error);
+      console.error("Error generating garmentClassifierPrompt:", error);
       throw promptGenerationError(error);
     }
   }
 }
+
