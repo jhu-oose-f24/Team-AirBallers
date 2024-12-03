@@ -39,6 +39,7 @@ const InputField = forwardRef((props, ref) => {
 
     onChange,
     disabled,
+    tabIndex,
     readOnly,
     error,
 
@@ -161,6 +162,7 @@ const InputField = forwardRef((props, ref) => {
                 autoComplete={autoComplete}
                 disabled={disabled}
                 readOnly={readOnly}
+                tabIndex={tabIndex}
                 ref={setFieldRef}
               />
             </ScrollContainer>
@@ -182,7 +184,6 @@ const InputField = forwardRef((props, ref) => {
                 content={error}
                 appendTo={bodyRef}
                 placement="top-end"
-                trigger="mouseenter click"
                 offset={getTooltipOffset}
                 onCreate={(inst) => {
                   if (!inst?.popper) return;

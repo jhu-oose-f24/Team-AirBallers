@@ -120,6 +120,9 @@
 .btn.patch.loading .content > * {
   @apply opacity-0;
 }
+.btn.patch.reverse .content {
+  @apply flex-row-reverse;
+}
 
 @keyframes loader-flash {
   0% {
