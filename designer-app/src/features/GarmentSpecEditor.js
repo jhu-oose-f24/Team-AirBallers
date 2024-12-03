@@ -1,8 +1,9 @@
 import EnumSpecEditor from "@/components/editor/EnumSpec";
 import ScrollContainer from "@/components/ScrollContainer";
 import Stitches from "@/components/Stitches";
+import { RootContext } from "@/context/RootContext";
 import clsx from "clsx";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 /** @type {{ [K in keyof SpecTypes]: SpecEditor }} */
 const Editors = {
@@ -14,6 +15,8 @@ const Editors = {
 /** @param {{ specs: DefinedSpecSchema }} props */
 const GarmentSpecEditor = (props) => {
   const { specs } = props;
+
+  const { sideBarOpen } = useContext(RootContext);
 
   const [editorStack, setEditorStack] = useState([]);
 

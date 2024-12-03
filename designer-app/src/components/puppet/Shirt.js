@@ -1,5 +1,5 @@
 import ShirtSVG from "@/assets/shirt/shirt.svg";
-import css from "@/styles/Shirt.module.css";
+import css from "@/styles/puppet/Shirt.module.css";
 import Shirt from "@/types/garments/Shirt";
 import clsx from "clsx";
 import { useEffect, useState } from "react";

@@ -316,6 +316,15 @@ body#edit .spec-editor .scroll-list {
   @apply flex flex-col gap-[0.5rem];
   @apply px-[1rem] pb-[1.5rem];
 }
+body#edit .spec-editor[inert] header,
+body#edit .spec-editor[inert] .scroll-list {
+  @apply opacity-60;
+}
+
+body#edit .spec-editor header,
+body#edit .spec-editor .scroll-list {
+  @apply transition-all duration-150 ease-in-out;
+}
 
 body#edit .spec-editor .border-stitch {
   @apply -m-[0.5rem] p-[0.5rem];

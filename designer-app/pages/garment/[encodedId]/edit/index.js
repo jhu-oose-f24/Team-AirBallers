@@ -1,8 +1,8 @@
 "use client";
 
-import GarmentSpecEditor from "@/components/GarmentSpecEditor";
+import GarmentPuppet from "@/features/GarmentPuppet";
+import GarmentSpecEditor from "@/features/GarmentSpecEditor";
 import { RootContext } from "@/context/RootContext";
-import GarmentPuppet from "@/components/GarmentPuppet";
 import GarmentEncoder from "@/types/GarmentEncoder";
 import GarmentTypes from "@/types/GarmentTypes";
 import Shirt from "@/types/garments/Shirt";
@@ -22,25 +22,26 @@ export default function Editor() {
 
   useEffect(() => {
     setHeaderState({ title: "Designer-App" });
+
+    return () => setActiveTask(null);
   }, []);
 
   useEffect(() => {
     if (typeof encodedId !== "string") return;
 
+    let garment = activeTask?.garment;
     if (!activeTask?.garment) {
-      // TODO: re-fetch garment (from url) on refresh
-
       // testing with example garment
       /** @ts-ignore @type {Garment} */
       const garment = new Shirt().serialize();
       garment.id = GarmentEncoder.decode(encodedId);
+      // TODO: re-fetch garment (from url) on refresh
 
       setActiveTask({ action: "edit", garment });
-      setParsedGarment(GarmentTypes[garment?.type]?.from(garment));
     }
 
-    return () => setActiveTask(null);
-  }, [encodedId]);
+    setParsedGarment(GarmentTypes[garment?.type]?.from(garment));
+  }, [encodedId, activeTask]);
 
   return (
     <div className="edit-layout">
