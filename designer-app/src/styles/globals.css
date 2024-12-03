@@ -142,18 +142,3 @@
   @apply ![border-right-width:--arrow-height];
   @apply !border-r-[--tooltip-border];
 }
-
-.garment-puppet {
-  --scale: 0.9;
-  --root-unit: min(
-    calc(var(--scale) * 40vh / 500),
-    calc(var(--scale) * 1rem / 30)
-  );
-
-  @apply flex;
-  @apply h-fit w-fit aspect-square;
-  @apply border-[0.2rem] border-accent;
-  @apply my-auto rounded-[1rem];
-  @apply bg-background-main;
-  @apply transition-opacity duration-200 ease-in-out;
-}

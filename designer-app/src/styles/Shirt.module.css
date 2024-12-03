@@ -1,4 +1,9 @@
 .shirt-puppet {
+  --main-color: theme(colors.teal.200);
+  --main-outline: theme(colors.teal.500);
+  --neck-color: theme(colors.cyan.700);
+  --neck-outline: theme(colors.cyan.900);
+
   --x-pad: calc(var(--root-unit) * 285);
 
   @apply flex relative;
@@ -51,13 +56,12 @@
   @apply z-20;
 }
 
-.shirt-puppet > svg path:not([style*="fill: none"]),
-.shirt-puppet > svg line:not([style*="fill: none"]),
-.shirt-puppet > svg rect:not([style*="fill: none"]),
-.shirt-puppet > svg circle:not([style*="fill: none"]),
-.shirt-puppet > svg ellipse:not([style*="fill: none"]),
-.shirt-puppet > svg polygon:not([style*="fill: none"]),
-.shirt-puppet > svg polyline:not([style*="fill: none"]) {
-  /* @apply !fill-[--fill]; */
-  /* @apply !stroke-[--stroke]; */
+.shirt-puppet .shirt,
+.shirt-puppet .sleeve {
+  @apply fill-[--main-color];
+  @apply stroke-[--main-outline];
+}
+.shirt-puppet .neck {
+  @apply fill-[--neck-color];
+  @apply stroke-[--neck-outline];
 }

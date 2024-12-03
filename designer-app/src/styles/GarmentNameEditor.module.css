@@ -1,0 +1,56 @@
+.garment-name {
+  @apply flex relative;
+  @apply w-full h-full;
+}
+
+.garment-name.editing > * {
+  @apply transition-all duration-200 ease-in-out;
+  @apply delay-200;
+}
+
+.copy-name:not(.copied):not(:hover) > :not(:focus-visible) [class*="icon"] {
+  @apply !hidden;
+}
+.copy-name:hover [class*="content"],
+.copy-name > :focus-visible [class*="content"] {
+  @apply flex-row-reverse;
+}
+
+.garment-name > :first-child {
+  @apply absolute top-0 inset-x-0;
+  @apply z-10;
+}
+.garment-name.editing > :first-child {
+  @apply bottom-auto;
+  @apply !pointer-events-none;
+  @apply !opacity-0;
+}
+.garment-name:not(.editing) .name-input {
+  @apply !pointer-events-none;
+  @apply !opacity-0;
+}
+
+.garment-name:not(.editing) .name-input *:not(input) {
+  @apply !bg-transparent;
+  @apply !text-transparent;
+  @apply stroke-transparent;
+}
+.garment-name:not(.editing) .name-input input {
+  @apply !overflow-hidden;
+}
+
+@keyframes fade-in {
+  0% {
+    @apply opacity-0;
+  }
+  100% {
+    @apply opacity-100;
+  }
+}
+
+.copy-icon {
+  @apply scale-[1.2];
+  @apply !stroke-[2.4];
+  @apply [animation:fade-in_200ms_ease];
+  @apply transition-opacity duration-200 ease-in-out;
+}
