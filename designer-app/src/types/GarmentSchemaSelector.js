@@ -1,21 +1,31 @@
 import GarmentClassificationGenerator from "@/types/GarmentClassifierGenerator";
 import Pants from "@/types/garments/Pants";
 import Shirt from "@/types/garments/Shirt";
+import { 
+  classificationError, 
+  schemaError, 
+  invalidInputError 
+} from "@/responses/responses";
 
 export default class GarmentSchemaSelector {
   /**
    * Processes the user input and returns the appropriate schema
    *
    * @param {string} userInput - The user's garment description
+   * @throws {ApiErrorResponse}
    */
   static async selectSchema(userInput) {
+    if (!userInput || typeof userInput !== 'string' || userInput.trim() === '') {
+      throw invalidInputError('User input must be a non-empty string');
+    }
+
     try {
-      const classification =
+      const classification = 
         await GarmentClassificationGenerator.createFrom(userInput);
       return this.getSchemaForGarment(classification);
     } catch (error) {
       console.error("Error selecting garment schema:", error);
-      throw error;
+      throw classificationError(error);
     }
   }
 
@@ -24,9 +34,13 @@ export default class GarmentSchemaSelector {
    *
    * @param {string} type - The garment type
    * @returns {SpecSchema} - The corresponding schema
-   * @throws {Error} - If the classification is invalid
+   * @throws {ApiErrorResponse}
    */
   static getSchemaForGarment(type) {
+    if (!type || typeof type !== 'string') {
+      throw invalidInputError('Garment type must be a non-empty string');
+    }
+
     const normalizedClassification = type.toLowerCase().trim();
 
     // TODO: simplify with garment type map
@@ -36,9 +50,7 @@ export default class GarmentSchemaSelector {
       case "pants":
         return Pants.SCHEMA;
       default:
-        throw new Error(
-          `Invalid garment type: ${type}`,
-        );
+        throw schemaError(type);
     }
   }
 }
