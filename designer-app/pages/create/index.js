@@ -21,6 +21,7 @@ import { useContext, useEffect, useState } from "react";
 
 export default function Create() {
   const router = useRouter();
+  
   const { setHeaderState, setActiveTask } = useContext(RootContext);
 
   const [examplePrompt, setExamplePrompt] = useState("");
@@ -32,8 +33,6 @@ export default function Create() {
   useEffect(() => {
     setHeaderState({ title: "Designer-App" });
     setExamplePrompt(randomExamplePrompt());
-
-    setActiveTask(null);
   }, []);
 
   function createGarment() {
