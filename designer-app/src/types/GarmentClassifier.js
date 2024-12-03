@@ -1,4 +1,4 @@
-import { GarmentTypes } from "@/types/GarmentParser";
+import GarmentTypes from "@/types/GarmentTypes";
 import PromptGenerator from "@/types/PromptGenerator";
 import { assert } from "console";
 
