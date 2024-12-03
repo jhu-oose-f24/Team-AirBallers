@@ -1,6 +1,6 @@
 .context-menu {
-  --tooltip-text: hsl(var(--primary-darkest)) !important;
-  --tooltip-border: hsl(var(--secondary)) !important;
+  --tooltip-text: theme(colors.primary.darkest) !important;
+  --tooltip-border: theme(colors.secondary) !important;
 
   --tooltip-x-pad: 0px !important;
   --tooltip-y-pad: 0.25rem !important;

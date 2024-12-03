@@ -68,9 +68,9 @@
 /* =========================== Tooltip =========================== */
 
 .tooltip {
-  --tooltip-bg: hsl(var(--primary-darkest));
-  --tooltip-text: hsl(var(--primary-lightest));
-  --tooltip-border: hsl(var(--primary-dark));
+  --tooltip-bg: theme(colors.primary.darkest);
+  --tooltip-text: theme(colors.primary.lightest);
+  --tooltip-border: theme(colors.primary.dark);
   --tooltip-x-pad: 0.8rem;
   --tooltip-y-pad: 0.4rem;
   --tooltip-radius: 0.6rem;

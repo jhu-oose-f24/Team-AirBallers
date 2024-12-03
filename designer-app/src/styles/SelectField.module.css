@@ -3,8 +3,8 @@
 }
 
 .dropdown {
-  --tooltip-text: hsl(var(--primary-darkest)) !important;
-  --tooltip-border: hsl(var(--primary-darker)) !important;
+  --tooltip-text: theme(colors.primary.darkest) !important;
+  --tooltip-border: theme(colors.primary.darker) !important;
 
   --tooltip-border-width: 0.2rem;
   --tooltip-x-pad: var(--tooltip-border-width) !important;
