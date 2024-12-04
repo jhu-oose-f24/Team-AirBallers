@@ -1,5 +1,3 @@
-"use client";
-
 import Tippy from "@tippyjs/react";
 import clsx from "clsx";
 import { useRef } from "react";
@@ -17,7 +15,7 @@ const Tooltip = (props) => {
   /** @type {typeof onShow} */
   function showTooltip(inst) {
     onShow?.(inst);
-    if (hideAfterMS < 0) return;
+    if (hideAfterMS <= 0) return;
 
     hideTimeout.current = setTimeout(() => {
       if (!inst?.state.isDestroyed) inst.hide();

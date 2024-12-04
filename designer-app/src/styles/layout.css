@@ -180,7 +180,7 @@ body.will-unload #__next {
   }
 }
 
-/* ========================== Home Page ========================== */
+/* ========================== Create Page ========================== */
 
 body#create .create-layout {
   @apply flex-col justify-end items-center;
@@ -247,6 +247,93 @@ body#create .edit-input {
   body#create .garment-icon {
     @apply stroke-[0.4rem];
   }
+}
+
+/* ========================== Editor Page ========================== */
+
+body#edit .edit-layout {
+  @apply min-w-min gap-[1rem];
+}
+
+body#edit .garment-preview {
+  @apply flex flex-col justify-center;
+  @apply mx-auto gap-[0.5rem];
+  @apply min-h-fit max-w-min;
+}
+
+body#edit .puppet-box {
+  --scale: 0.9;
+  --root-unit: min(
+    calc(var(--scale) * 40vh / 500),
+    calc(var(--scale) * 1rem / 30)
+  );
+
+  --size: calc(var(--root-unit) * 950);
+
+  @apply flex box-content;
+  @apply h-[--size] w-[--size] aspect-square;
+  @apply border-[0.2rem] border-accent;
+  @apply rounded-[1rem];
+  @apply bg-background-main;
+  @apply transition-opacity duration-200 ease-in-out;
+}
+
+body#edit .puppet > svg path:not([style*="fill: none"]),
+body#edit .puppet > svg line:not([style*="fill: none"]),
+body#edit .puppet > svg rect:not([style*="fill: none"]),
+body#edit .puppet > svg circle:not([style*="fill: none"]),
+body#edit .puppet > svg ellipse:not([style*="fill: none"]),
+body#edit .puppet > svg polygon:not([style*="fill: none"]),
+body#edit .puppet > svg polyline:not([style*="fill: none"]) {
+  @apply !fill-[inherit];
+  @apply !stroke-[inherit];
+}
+
+body#edit .spec-editor {
+  @apply relative;
+  @apply flex flex-col;
+  @apply w-[min(50vw,25rem)] bg-primary-lightest;
+  @apply border-primary-light/50 border-[0.18rem];
+  @apply p-[0.5rem] rounded-[1rem];
+}
+
+body#edit .spec-editor header {
+  @apply flex justify-between items-center;
+  @apply text-[1.5rem] font-medium text-primary-darkest;
+  @apply px-[1rem] py-[0.5rem];
+}
+
+body#edit .spec-editor header .pin {
+  @apply w-auto h-[1.5rem] aspect-square;
+  @apply border-[0.25rem] border-primary-darkest;
+  @apply rounded-[1rem];
+  @apply bg-gradient-[160deg];
+  @apply from-primary-lighter from-50%;
+  @apply to-primary-dark to-50%;
+}
+
+body#edit .spec-editor .scroll-list {
+  @apply flex flex-col gap-[0.5rem];
+  @apply px-[1rem] pb-[1.5rem];
+}
+body#edit .spec-editor[inert] header,
+body#edit .spec-editor[inert] .scroll-list {
+  @apply opacity-60;
+}
+
+body#edit .spec-editor.shown header,
+body#edit .spec-editor.shown .scroll-list {
+  @apply transition-all duration-150 ease-in-out;
+}
+
+body#edit .spec-editor .border-stitch {
+  @apply -m-[0.5rem] p-[0.5rem];
+  @apply z-10;
+}
+
+body#edit .spec-editor .border-stitch-path {
+  @apply [rx:0.4rem];
+  @apply stroke-primary-dark/80;
 }
 
 /* ======================== Collection Page ======================== */

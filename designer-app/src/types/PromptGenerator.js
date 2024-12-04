@@ -1,4 +1,4 @@
-import { GarmentTypes } from "@/types/GarmentParser";
+import GarmentTypes from "@/types/GarmentTypes";
 import axios from "axios";
 import { readFileSync } from "fs";
 import path from "path";

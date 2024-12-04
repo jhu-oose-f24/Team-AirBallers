@@ -23,6 +23,7 @@
  *   onClick?: React.MouseEventHandler;
  *   loading?: boolean;
  *   disabled?: boolean;
+ *   tabIndex?: React.HTMLAttributes["tabIndex"];
  *   label?: string;
  *   icon?: JSX.Element;
  *   image?: string;
@@ -31,6 +32,7 @@
  *   width?: React.CSSProperties["width"];
  *   stretch?: boolean;
  *   align?: React.CSSProperties["justifyContent"];
+ *   reverse?: boolean;
  *   size?: "xs" | "sm" | "lg";
  *   fontSize?: React.CSSProperties["fontSize"];
  *   xPad?: React.CSSProperties["paddingInline"];
@@ -68,6 +70,7 @@
  *   width?: string;
  *   onChange?: React.InputHTMLAttributes["onChange"];
  *   disabled?: boolean;
+ *   tabIndex?: React.HTMLAttributes["tabIndex"];
  *   error?: string;
  *   style?: React.CSSProperties;
  * }} GeneralInputProps
@@ -226,4 +229,16 @@
  *   originalName: string;
  *   onSaveClick: React.MouseEventHandler;
  * }} ItemRenameModalProps
+ */
+
+/**
+ * @template {ValueOf<GarmentTypes>} T
+ * @typedef {{
+ *   specs: SpecMap<T>;
+ * }} PuppetProps
+ */
+
+/**
+ * @template {SpecType} T
+ * @typedef {DefinedNamedSpec<T>} SpecEditorProps
  */

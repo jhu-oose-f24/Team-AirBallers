@@ -1,5 +1,3 @@
-"use client";
-
 import Header from "@/components/Header";
 import ScrollContainer from "@/components/ScrollContainer";
 import SideBar from "@/components/SideBar";

@@ -1,5 +1,3 @@
-"use client";
-
 import Stitches from "@/components/Stitches";
 import css from "@/styles/Button.module.css";
 import { pause } from "@/util/misc";
@@ -57,6 +55,7 @@ const Button = forwardRef((props, ref) => {
     onClick,
     loading,
     disabled,
+    tabIndex,
 
     label,
     icon,
@@ -66,6 +65,7 @@ const Button = forwardRef((props, ref) => {
     width,
     stretch,
     align = "center",
+    reverse,
 
     size, // shorthand sets props below (and more)
     fontSize,
@@ -97,6 +97,7 @@ const Button = forwardRef((props, ref) => {
           css.patch,
           css[variant],
           loading && css.loading,
+          reverse && css.reverse,
         )}
         style={{
           ...(!disabled && paletteFrom(tint)),
@@ -125,6 +126,7 @@ const Button = forwardRef((props, ref) => {
         }}
         onClick={loading || disabled ? null : onClick}
         disabled={disabled}
+        tabIndex={tabIndex}
         ref={ref}
       >
         <div className={css.border}>

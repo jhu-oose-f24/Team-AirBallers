@@ -69,12 +69,22 @@
  */
 
 /**
- * @typedef {(typeof import("@/types/AbstractSpecType"))["default"]} AbstractSpecType
+ * @typedef {import("@/types/AbstractSpecType")["default"]} AbstractSpecType
  *
+ * @typedef {import("@/types/AbstractGarment")["default"]} AbstractGarment
  *
- * @typedef {(typeof import("@/types/AbstractGarment"))["default"]} AbstractGarment
- * 
- * @typedef {(typeof import("@/types/GarmentParser")["GarmentTypes"])} GarmentTypes
+ * @typedef {import("@/types/GarmentTypes")["default"]} GarmentTypes
+ *
+ * @typedef {import("@/types/SpecTypes")["default"]} SpecTypes
+ *
+ * @typedef {ValueOf<SpecTypes>} SpecType
+ *
+ * @typedef {InstanceType<AbstractGarment>} GarmentInstance
+ */
+
+/**
+ * @template {SpecType} T
+ * @typedef {InstanceType<T>} SpecInstance
  */
 
 /**
@@ -82,24 +92,32 @@
  *
  * @typedef {{
  *   name: string;
- *   spec: InstanceType<AbstractSpecType> | BlankAbstractSpec | string;
- * }} NamedSpec
- *
- *
- * @typedef {{
- *   name: string;
  *   spec: BlankAbstractSpec;
  * }} BlankNamedSpec
- *
+ */
+
+/**
+ * @template {SpecType} [T=SpecType] Default is `SpecType`
  * @typedef {{
  *   name: string;
- *   spec: InstanceType<AbstractSpecType>;
+ *   spec: SpecInstance<T> | BlankAbstractSpec | string;
+ * }} NamedSpec
+ */
+
+/**
+ * @template {SpecType} [T=SpecType] Default is `SpecType`
+ * @typedef {{
+ *   name: string;
+ *   spec: SpecInstance<T>;
  * }} DefinedNamedSpec
+ */
+
+/**
  *
  *
- * @typedef {NamedSpec[]} SpecSchema
+ * @typedef {NamedSpec<SpecType>[]} SpecSchema
  *
- * @typedef {DefinedNamedSpec[]} DefinedSpecSchema
+ * @typedef {DefinedNamedSpec<SpecType>[]} DefinedSpecSchema
  *
  * @typedef {BlankNamedSpec[]} BlankSpecSchema
  */
@@ -107,7 +125,7 @@
 /**
  * @template {ValueOf<GarmentTypes>} G
  * @typedef {{
- *   [S in G["SPEC_NAMES"][number]]: InstanceType<AbstractSpecType>;
+ *   [S in G["SPEC_NAMES"][number]]: SpecInstance<SpecType>;
  * }} SpecMap
  */
 
@@ -139,3 +157,5 @@
  *   collection?: Collection;
  * }} ActiveCollectionTask
  */
+
+/** @typedef {React.FC<SpecEditorProps<SpecType>>} SpecEditor */

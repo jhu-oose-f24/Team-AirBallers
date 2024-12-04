@@ -1,5 +1,3 @@
-"use client";
-
 import Button from "@/components/Button";
 import { RootContext } from "@/context/RootContext";
 import ProfileModal from "@/features/ProfileModal";

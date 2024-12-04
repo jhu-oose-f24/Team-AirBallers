@@ -1,5 +1,3 @@
-"use client";
-
 import css from "@/styles/Stitches.module.css";
 import clsx from "clsx";
 

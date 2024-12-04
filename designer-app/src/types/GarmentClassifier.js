@@ -1,4 +1,8 @@
-import { GarmentTypes } from "@/types/GarmentParser";
+import {
+  invalidInputError,
+  promptGenerationError,
+} from "@/responses/responses";
+import GarmentTypes from "@/types/GarmentTypes";
 import PromptGenerator from "@/types/PromptGenerator";
 import { assert } from "console";
 
@@ -7,9 +11,14 @@ export default class GarmentClassifier {
   /**
    * @param {string} userPrompt
    * @returns {Promise<ValueOf<GarmentTypes>>}
+   * @throws {ApiErrorResponse}
    */
   static async classify(userPrompt) {
     try {
+      if (typeof userPrompt !== "string" || !userPrompt.trim()) {
+        throw invalidInputError("User prompt must be a non-empty string");
+      }
+
       const garmentType = await PromptGenerator.generateFrom(
         PromptGenerator.ASSETS.CLASSIFY(),
         userPrompt,
@@ -26,7 +35,7 @@ export default class GarmentClassifier {
       return garmentClass;
     } catch (error) {
       console.error("Error classifying garment:", error);
-      throw error;
+      throw promptGenerationError(error);
     }
   }
 }

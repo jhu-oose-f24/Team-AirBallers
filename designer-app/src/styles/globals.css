@@ -68,9 +68,9 @@
 /* =========================== Tooltip =========================== */
 
 .tooltip {
-  --tooltip-bg: hsl(var(--primary-darkest));
-  --tooltip-text: hsl(var(--primary-lightest));
-  --tooltip-border: hsl(var(--primary-dark));
+  --tooltip-bg: theme(colors.primary.darkest);
+  --tooltip-text: theme(colors.primary.lightest);
+  --tooltip-border: theme(colors.primary.dark);
   --tooltip-x-pad: 0.8rem;
   --tooltip-y-pad: 0.4rem;
   --tooltip-radius: 0.6rem;
@@ -141,19 +141,4 @@
   @apply ![border-left-width:0px];
   @apply ![border-right-width:--arrow-height];
   @apply !border-r-[--tooltip-border];
-}
-
-.garment-puppet {
-  --scale: 0.9;
-  --root-unit: min(
-    calc(var(--scale) * 40vh / 500),
-    calc(var(--scale) * 1rem / 30)
-  );
-
-  @apply flex;
-  @apply h-fit w-fit aspect-square;
-  @apply border-[0.2rem] border-accent;
-  @apply my-auto rounded-[1rem];
-  @apply bg-background-main;
-  @apply transition-opacity duration-200 ease-in-out;
 }
