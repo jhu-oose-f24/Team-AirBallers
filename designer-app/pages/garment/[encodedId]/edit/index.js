@@ -1,4 +1,3 @@
-"use client";
 
 import GarmentPuppet from "@/features/GarmentPuppet";
 import GarmentSpecEditor from "@/features/GarmentSpecEditor";

@@ -1,5 +1,3 @@
-"use client";
-
 import Button from "@/components/Button";
 import InputField from "@/components/InputField";
 import Modal from "@/components/Modal";

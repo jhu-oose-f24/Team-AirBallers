@@ -1,4 +1,3 @@
-"use client";
 
 import randomExamplePrompt from "@/assets/examplePrompts";
 import Button from "@/components/Button";

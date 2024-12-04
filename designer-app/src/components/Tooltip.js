@@ -1,5 +1,3 @@
-"use client";
-
 import Tippy from "@tippyjs/react";
 import clsx from "clsx";
 import { useRef } from "react";

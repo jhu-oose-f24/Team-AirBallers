@@ -1,5 +1,3 @@
-"use client";
-
 import { RootContext } from "@/context/RootContext";
 import { pause } from "@/util/misc";
 import { ClickScrollPlugin, OverlayScrollbars } from "overlayscrollbars";

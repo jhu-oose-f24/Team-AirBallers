@@ -1,5 +1,3 @@
-"use client";
-
 import Stitches from "@/components/Stitches";
 import css from "@/styles/Button.module.css";
 import { pause } from "@/util/misc";

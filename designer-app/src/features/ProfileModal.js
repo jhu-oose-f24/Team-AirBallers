@@ -1,5 +1,3 @@
-"use client";
-
 import Button from "@/components/Button";
 import Modal from "@/components/Modal";
 import OverflowableText from "@/components/OverflowableText";
