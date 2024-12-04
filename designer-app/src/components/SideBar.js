@@ -1,5 +1,3 @@
-"use client";
-
 import Button from "@/components/Button";
 import CollectionPreview from "@/components/CollectionPreview";
 import ScrollContainer from "@/components/ScrollContainer";

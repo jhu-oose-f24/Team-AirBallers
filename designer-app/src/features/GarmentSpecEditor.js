@@ -33,18 +33,19 @@ const GarmentSpecEditor = (props) => {
 
   return (
     <div className={clsx("spec-editor", editorStack?.length && "shown")}>
-      <header>
-        <div className="pin" />
-        <span className="text-center w-full">Specifications</span>
-        <div className="pin" />
-      </header>
-
       <Stitches
         type="border"
         svgClass="border-stitch"
         pathClass="border-stitch-path"
         stitchWidth="0.18rem"
       />
+
+      <header>
+        <div className="pin" />
+        <span className="text-center w-full">Specifications</span>
+        <div className="pin" />
+      </header>
+
       <ScrollContainer>
         <div className="scroll-list">{editorStack}</div>
       </ScrollContainer>

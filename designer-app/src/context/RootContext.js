@@ -1,5 +1,3 @@
-"use client";
-
 import { useOnResize } from "@/util/hooks";
 import { createContext, useEffect, useRef, useState } from "react";
 

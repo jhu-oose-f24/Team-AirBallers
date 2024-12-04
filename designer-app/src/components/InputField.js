@@ -1,5 +1,3 @@
-"use client";
-
 import ScrollContainer from "@/components/ScrollContainer";
 import Stitches from "@/components/Stitches";
 import Tooltip from "@/components/Tooltip";

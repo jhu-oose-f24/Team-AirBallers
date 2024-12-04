@@ -321,8 +321,8 @@ body#edit .spec-editor[inert] .scroll-list {
   @apply opacity-60;
 }
 
-body#edit .spec-editor header,
-body#edit .spec-editor .scroll-list {
+body#edit .spec-editor.shown header,
+body#edit .spec-editor.shown .scroll-list {
   @apply transition-all duration-150 ease-in-out;
 }
 

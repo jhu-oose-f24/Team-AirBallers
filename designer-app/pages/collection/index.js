@@ -1,4 +1,3 @@
-"use client";
 
 import GarmentCard from "@/components/GarmentCard";
 import { RootContext } from "@/context/RootContext";
