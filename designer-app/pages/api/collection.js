@@ -1,22 +1,16 @@
-import { getServerSession } from "next-auth";
-import { default as authOptions } from "../api/auth/[...nextauth]";
+import ApiHandler from "@/util/ApiHandler";
 import prisma from "@/util/db";
+import { authMiddleware } from "@/util/middleware";
 
-export default async function handler(req, res) {
-  // @ts-ignore
-  const session = await getServerSession(req, res, authOptions);
+export default ApiHandler(authMiddleware)
+  .GET(async (req, res) => {
+    /** @ts-ignore @type {string} */
+    const userId = req.headers.userId;
 
-  if (!session) {
-    return res.status(401).json({ error: "Unauthorized" });
-  }
-
-  const userId = session.user.id;
-
-  if (req.method === "GET") {
     try {
       const collections = await prisma.collection.findMany({
         where: {
-          userId: userId,
+          userId,
         },
         include: {
           garments: true, // Include garments if needed
@@ -24,11 +18,9 @@ export default async function handler(req, res) {
       });
       return res.status(200).json(collections);
     } catch (err) {
-      return res.status(500).json({ error: "Failed to fetch collections", details: err });
+      return res
+        .status(500)
+        .json({ error: "Failed to fetch collections", details: err });
     }
-  }
-
-  // Handle other HTTP methods
-  res.setHeader("Allow", ["GET"]);
-  res.status(405).end(`Method ${req.method} Not Allowed`);
-}
+  })
+  .build();

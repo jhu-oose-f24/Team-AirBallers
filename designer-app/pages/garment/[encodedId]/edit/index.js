@@ -1,7 +1,6 @@
-
+import { RootContext } from "@/context/RootContext";
 import GarmentPuppet from "@/features/GarmentPuppet";
 import GarmentSpecEditor from "@/features/GarmentSpecEditor";
-import { RootContext } from "@/context/RootContext";
 import GarmentEncoder from "@/types/GarmentEncoder";
 import GarmentTypes from "@/types/GarmentTypes";
 import Shirt from "@/types/garments/Shirt";

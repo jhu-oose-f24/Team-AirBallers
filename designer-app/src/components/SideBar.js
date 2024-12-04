@@ -29,10 +29,10 @@ const SideBar = () => {
   }, [sideBarRef]);
 
   useEffect(() => {
-    axios
-      .get("/api/collection")
-      .then(({ data }) => setGarments(data.reverse())) // Reverse the order of garments here
-      .catch((err) => console.log(err));
+    // axios
+    //   .get("/api/collection")
+    //   .then(({ data }) => setGarments(data.reverse())) // Reverse the order of garments here
+    //   .catch((err) => console.log(err));
   }, []);
 
   async function hideOpenMenu() {

@@ -159,3 +159,38 @@
  */
 
 /** @typedef {React.FC<SpecEditorProps<SpecType>>} SpecEditor */
+
+/**
+ * @typedef {import("next").PageConfig | undefined} ApiConfig
+ *
+ * @typedef {(typeof import("@/util/ApiHandler").METHODS)[number]} ApiMethod
+ *
+ * @typedef {(
+ *   req: import("next").NextApiRequest,
+ *   res: import("next").NextApiResponse,
+ * ) => void | Promise<void>} ApiHandler
+ *
+ *
+ * @typedef {(handler: ApiHandler) => ApiHandlerBuilder} ApiHandlerSetter
+ *
+ * @typedef {{
+ *   [M in ApiMethod]: ApiHandler;
+ * } & {
+ *   set: (
+ *     builder: ApiHandlerBuilder,
+ *     method: ApiMethod,
+ *     handler: ApiHandler,
+ *   ) => ApiHandlerBuilder;
+ * }} ApiDefinedHandlers
+ *
+ *
+ * @typedef {{
+ *   [M in ApiMethod]: ApiHandlerSetter;
+ * } & {
+ *   build: () => ApiHandler;
+ *   buildWithConfig: (config: ApiConfig) => {
+ *     handler: ApiHandler;
+ *     config: ApiConfig;
+ *   };
+ * }} ApiHandlerBuilder
+ */
