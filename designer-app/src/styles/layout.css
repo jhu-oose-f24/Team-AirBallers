@@ -122,6 +122,7 @@ body.will-unload #__next {
 }
 
 .sidebar .collection-list {
+  @apply flex-1;
   @apply !-mx-[0.7rem];
 }
 

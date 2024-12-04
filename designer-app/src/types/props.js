@@ -167,6 +167,7 @@
 /**
  * @typedef {{
  *   itemName: string;
+ *   showMenu?: boolean;
  *   contextTitle: string;
  *   contextOptions: ContextMenuOption[];
  *   openMenuRef: React.MutableRefObject;
@@ -178,7 +179,11 @@
  * }} GridItemInfoProps
  */
 
-/** @typedef {{ garments: Garment[] }} CollectionPreviewProps */
+/**
+ * @typedef {{
+ *   collection: Collection & { garments: Garment[] };
+ * }} CollectionPreviewProps
+ */
 
 /** @typedef {{ garment: Garment }} GarmentCardProps */
 

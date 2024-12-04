@@ -14,13 +14,13 @@ import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 
 const SideBar = () => {
-  const { sideBarOpen, sideBarRef, setSideBarRef } = useContext(RootContext);
-  const { openMenuRef, activeTask, setActiveTask } = useContext(SideBarContext);
   const router = useRouter();
 
-  // TODO: refactor with collections
-  /** @type {UseState<Garment[]>} */
-  const [garments, setGarments] = useState([]);
+  const { sideBarOpen, sideBarRef, setSideBarRef } = useContext(RootContext);
+  const { openMenuRef, activeTask, setActiveTask } = useContext(SideBarContext);
+
+  /** @type {UseState<(Collection & { garments: Garment[] })[]>} */
+  const [collections, setCollections] = useState([]);
 
   useEffect(() => {
     if (sideBarRef?.classList.contains("closed")) {
@@ -29,10 +29,10 @@ const SideBar = () => {
   }, [sideBarRef]);
 
   useEffect(() => {
-    // axios
-    //   .get("/api/collection")
-    //   .then(({ data }) => setGarments(data.reverse())) // Reverse the order of garments here
-    //   .catch((err) => console.log(err));
+    axios
+      .get("/api/collections")
+      .then(({ data }) => setCollections(data.reverse())) // Reverse the order of garments here
+      .catch(console.log);
   }, []);
 
   async function hideOpenMenu() {
@@ -50,14 +50,9 @@ const SideBar = () => {
 
       <Stitches type="line" stitchWidth="0.17rem" svgClass="stitch-open" />
       <ScrollContainer className="collection-list" onScroll={hideOpenMenu}>
-        {/* TODO: create actual cards from collections */}
-        <CollectionPreview garments={garments?.slice(0, 5)} />
-        <CollectionPreview garments={garments?.slice(5, 7)} />
-        <CollectionPreview garments={garments?.slice(7, 15)} />
-        <CollectionPreview garments={garments?.slice(15, 40)} />
-        <CollectionPreview garments={garments?.slice(40, 43)} />
-        <CollectionPreview garments={garments?.slice(43, 48)} />
-        <CollectionPreview garments={garments?.slice(48)} />
+        {collections?.map((collection, idx) => (
+          <CollectionPreview key={idx} collection={collection} />
+        ))}
       </ScrollContainer>
       <Stitches type="line" stitchWidth="0.17rem" svgClass="stitch-close" />
 

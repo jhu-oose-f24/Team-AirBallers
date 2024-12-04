@@ -9,6 +9,7 @@ import { useState } from "react";
 const GridItemInfo = (props) => {
   const {
     itemName,
+    showMenu,
     contextTitle,
     contextOptions,
     openMenuRef,
@@ -45,29 +46,31 @@ const GridItemInfo = (props) => {
         ref={setNameRef}
       />
 
-      <ContextMenu
-        onShow={onMenuOpen}
-        onShown={(inst) => {
-          openMenuRef.current?.hide();
-          openMenuRef.current = inst;
-        }}
-        onHide={() => (openMenuRef.current = null)}
-        onHidden={onMenuClose}
-        title={contextTitle}
-        options={contextOptions}
-        appendTo={appendTo || "parent"}
-        placement={menuPlacement}
-      >
-        <Button
-          variant="hint"
-          className={css["ctx-menu-icon"]}
-          icon={<IconDotsVertical />}
-          borderRadius="100vmax"
-          fontSize="1.1rem"
-          xPad="0.2rem"
-          yPad="0.2rem"
-        />
-      </ContextMenu>
+      {showMenu && (
+        <ContextMenu
+          onShow={onMenuOpen}
+          onShown={(inst) => {
+            openMenuRef.current?.hide();
+            openMenuRef.current = inst;
+          }}
+          onHide={() => (openMenuRef.current = null)}
+          onHidden={onMenuClose}
+          title={contextTitle}
+          options={contextOptions}
+          appendTo={appendTo || "parent"}
+          placement={menuPlacement}
+        >
+          <Button
+            variant="hint"
+            className={css["ctx-menu-icon"]}
+            icon={<IconDotsVertical />}
+            borderRadius="100vmax"
+            fontSize="1.1rem"
+            xPad="0.2rem"
+            yPad="0.2rem"
+          />
+        </ContextMenu>
+      )}
     </div>
   );
 };
