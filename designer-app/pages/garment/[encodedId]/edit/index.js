@@ -7,7 +7,9 @@ import GarmentTypes from "@/types/GarmentTypes";
 import Shirt from "@/types/garments/Shirt";
 import { useBodyID } from "@/util/hooks";
 import { useRouter } from "next/router";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, createContext } from "react";
+
+const LastUpdatedContext = createContext(null);
 
 export default function Editor() {
   const { encodedId } = useRouter().query;
@@ -16,6 +18,8 @@ export default function Editor() {
 
   /** @type {UseState<GarmentInstance>} */
   const [parsedGarment, setParsedGarment] = useState(null);
+
+  const [lastUpdated, setLastUpdated] = useState(Date.now());
 
   useBodyID("edit");
 
@@ -50,3 +54,5 @@ export default function Editor() {
     </div>
   );
 }
+
+export const useLastUpdated = () => useContext(LastUpdatedContext);
