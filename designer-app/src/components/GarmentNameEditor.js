@@ -39,7 +39,7 @@ const GarmentNameEditor = (props) => {
       setNameCopied(false);
       nameFieldRef.current.focus();
     } else if (!garment?.name) {
-      garment.rename("Untitled");
+      garment?.rename("Untitled");
     }
     setEditingName(!editingName);
   }
@@ -109,7 +109,7 @@ const GarmentNameEditor = (props) => {
           readOnly={!editingName}
           tabIndex={!editingName ? -1 : undefined}
           onChange={(e) => {
-            garment.rename(e.target.value);
+            garment?.rename(e.target.value);
             setLastUpdated(Date.now());
           }}
           ref={nameFieldRef}
