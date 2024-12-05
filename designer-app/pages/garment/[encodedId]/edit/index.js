@@ -2,7 +2,7 @@ import EditorContextProvider from "@/context/EditorContext";
 import { RootContext } from "@/context/RootContext";
 import GarmentPuppet from "@/features/GarmentPuppet";
 import GarmentSpecEditor from "@/features/GarmentSpecEditor";
-import GarmentEncoder from "@/types/GarmentEncoder";
+import ItemToURL from "@/types/GarmentEncoder";
 import GarmentTypes from "@/types/GarmentTypes";
 import { useBodyID } from "@/util/hooks";
 import axios from "axios";
@@ -34,7 +34,7 @@ export default function Editor() {
 
     let garment = activeTask?.garment;
     if (!garment) {
-      const garmentId = GarmentEncoder.decode(encodedId);
+      const garmentId = ItemToURL.decode(encodedId);
 
       await axios
         .get(`/api/garment/${garmentId}`)

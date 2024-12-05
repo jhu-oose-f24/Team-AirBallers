@@ -2,7 +2,7 @@ import Button from "@/components/Button";
 import GarmentNameEditor from "@/components/GarmentNameEditor";
 import ShirtPuppet from "@/components/puppet/Shirt";
 import { EditorContext } from "@/context/EditorContext";
-import GarmentEncoder from "@/types/GarmentEncoder";
+import ItemToURL from "@/types/GarmentEncoder";
 import {
   IconCircleCheck,
   IconLoader2,
@@ -43,7 +43,7 @@ const GarmentPuppet = (props) => {
       if (typeof encodedId !== "string") return;
 
       setSaving(true);
-      const garmentId = GarmentEncoder.decode(encodedId);
+      const garmentId = ItemToURL.decode(encodedId);
       axios
         .put(`/api/garment/${garmentId}`, { garment: garment?.serialize() })
         .then(() => setLastSaved(new Date().toLocaleTimeString()))

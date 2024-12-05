@@ -2,8 +2,7 @@ import randomExamplePrompt from "@/assets/examplePrompts";
 import Button from "@/components/Button";
 import InputField from "@/components/InputField";
 import { RootContext } from "@/context/RootContext";
-import GarmentEncoder from "@/types/GarmentEncoder";
-import Shirt from "@/types/garments/Shirt";
+import ItemToURL from "@/types/GarmentEncoder";
 import { useBodyID } from "@/util/hooks";
 import {
   IconClothesRack,
@@ -41,10 +40,13 @@ export default function Create() {
       .then((res) => {
         /** @type {Garment} */
         const garment = res.data;
-        setActiveTask({ action: "edit", garment });
 
-        const garmentURL = GarmentEncoder.encode(garment);
-        router.replace(`garment/${garmentURL}/edit`);
+        if (garment) {
+          setActiveTask({ action: "edit", garment });
+
+          const garmentURL = ItemToURL.encode(garment.id);
+          router.replace(`garment/${garmentURL}/edit`);
+        }
       })
       .catch((err) => console.log(err))
       .finally(() => setGenerating(false));

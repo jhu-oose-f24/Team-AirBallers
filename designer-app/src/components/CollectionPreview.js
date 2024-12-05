@@ -2,22 +2,29 @@ import GridItemInfo from "@/components/GridItemInfo";
 import { RootContext } from "@/context/RootContext";
 import { SideBarContext } from "@/context/SideBarContext";
 import css from "@/styles/CollectionPreview.module.css";
+import ItemToURL from "@/types/GarmentEncoder";
 import { IconEdit, IconHanger, IconTrash } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 
 /** @param {CollectionPreviewProps} props */
 const CollectionPreview = (props) => {
   const { collection } = props;
 
+  const router = useRouter();
+
   const { sideBarRef } = useContext(RootContext);
   const { openMenuRef, setActiveTask } = useContext(SideBarContext);
 
-  const router = useRouter();
+  const [garments, setGarments] = useState([]);
+
+  useEffect(() => {
+    if (!collection) return;
+    setGarments([...collection.garments].reverse());
+  }, [collection]);
 
   function generatePreviews() {
     const previews = [];
-    const garments = collection?.garments || [];
 
     for (let garment of garments) {
       if (previews.length >= 4) break;
@@ -32,16 +39,13 @@ const CollectionPreview = (props) => {
         break;
       }
 
-      const imageUrl = garment.images?.slice(-1)?.[0].url;
+      const imageUrl = garment.images?.slice(-1)?.[0]?.url;
 
       previews.push(
         <div
           key={previews.length}
           className={css.preview}
-          style={{
-            // TODO: set url() from garment
-            backgroundImage: imageUrl && `url(${imageUrl})`,
-          }}
+          style={{ backgroundImage: imageUrl && `url(${imageUrl})` }}
         >
           {!imageUrl && <IconHanger className={css["image-unknown"]} />}
         </div>,
@@ -61,6 +65,13 @@ const CollectionPreview = (props) => {
 
   function onDeleteClick() {
     setActiveTask({ collection, action: "delete" });
+  }
+
+  function goToCollection() {
+    if (!collection?.id) return;
+
+    const encodedId = ItemToURL.encode(collection.id);
+    router.push(`/collection/${encodedId}`);
   }
 
   return (
@@ -85,7 +96,7 @@ const CollectionPreview = (props) => {
       <div
         className={css["garment-grid"]}
         // TODO: go to specific collection
-        onClick={() => router.push("/collection")}
+        onClick={goToCollection}
       >
         {generatePreviews()}
       </div>

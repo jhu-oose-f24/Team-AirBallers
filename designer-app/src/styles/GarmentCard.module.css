@@ -12,6 +12,7 @@
   @apply bg-background-main;
   @apply transition-[inherit];
   @apply cursor-pointer;
+  @apply overflow-hidden;
 }
 .garment-card .frame:hover {
   @apply !border-primary-dark;
@@ -25,7 +26,14 @@
 }
 
 .garment-card .frame .thumb {
-  /* TODO */
+  @apply flex justify-center items-center;
+  @apply bg-center bg-cover;
+  @apply w-full h-full;
+}
+.garment-card .frame .no-thumb {
+  @apply w-[60%] h-[60%];
+  @apply text-primary-dark stroke-[1.6];
+  @apply -scale-x-100;
 }
 
 .garment-card .frame .edit-icon {

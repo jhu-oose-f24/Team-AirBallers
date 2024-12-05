@@ -181,7 +181,7 @@
 
 /**
  * @typedef {{
- *   collection: Collection & { garments: Garment[] };
+ *   collection: CollectionWithGarments;
  * }} CollectionPreviewProps
  */
 

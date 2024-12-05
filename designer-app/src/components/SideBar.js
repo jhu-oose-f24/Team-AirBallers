@@ -19,7 +19,7 @@ const SideBar = () => {
   const { sideBarOpen, sideBarRef, setSideBarRef } = useContext(RootContext);
   const { openMenuRef, activeTask, setActiveTask } = useContext(SideBarContext);
 
-  /** @type {UseState<(Collection & { garments: Garment[] })[]>} */
+  /** @type {UseState<CollectionWithGarments[]>} */
   const [collections, setCollections] = useState([]);
 
   useEffect(() => {

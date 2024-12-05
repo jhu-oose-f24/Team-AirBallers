@@ -3,18 +3,18 @@ import base64url from "base64url";
 /** @type {BufferEncoding} */
 const RAW_ENCODING = "hex";
 
-export default class GarmentEncoder {
-  /** @param {Garment} garment */
-  static encode(garment) {
-    if (!garment?.id) return null;
+export default class ItemToURL {
+  /** @param {string} itemId */
+  static encode(itemId) {
+    if (!itemId) return null;
 
-    return base64url.encode(garment.id, RAW_ENCODING);
+    return base64url.encode(itemId, RAW_ENCODING);
   }
 
-  /** @param {string} garmentURL */
-  static decode(garmentURL) {
-    if (!garmentURL) return null;
+  /** @param {string} itemIdURL */
+  static decode(itemIdURL) {
+    if (!itemIdURL) return null;
 
-    return base64url.decode(garmentURL, RAW_ENCODING);
+    return base64url.decode(itemIdURL, RAW_ENCODING);
   }
 }

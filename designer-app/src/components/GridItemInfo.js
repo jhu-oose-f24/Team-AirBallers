@@ -9,7 +9,7 @@ import { useState } from "react";
 const GridItemInfo = (props) => {
   const {
     itemName,
-    showMenu,
+    showMenu = true,
     contextTitle,
     contextOptions,
     openMenuRef,
