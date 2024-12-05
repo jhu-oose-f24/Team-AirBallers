@@ -1,6 +1,7 @@
 import Button from "@/components/Button";
 import InputField from "@/components/InputField";
 import Tooltip from "@/components/Tooltip";
+import { EditorContext } from "@/context/EditorContext";
 import { RootContext } from "@/context/RootContext";
 import css from "@/styles/GarmentNameEditor.module.css";
 import { pause } from "@/util/misc";
@@ -18,6 +19,7 @@ const GarmentNameEditor = (props) => {
   const { garment } = props;
 
   const { bodyRef } = useContext(RootContext);
+  const [_, setLastUpdated] = useContext(EditorContext).updatedState;
 
   const [editingName, setEditingName] = useState(false);
   const [nameCopied, setNameCopied] = useState(false);
@@ -36,7 +38,7 @@ const GarmentNameEditor = (props) => {
     if (!editingName) {
       setNameCopied(false);
       nameFieldRef.current.focus();
-    } else if (!garment.name) {
+    } else if (!garment?.name) {
       garment.rename("Untitled");
     }
     setEditingName(!editingName);
@@ -45,7 +47,7 @@ const GarmentNameEditor = (props) => {
   async function copyToClipboard() {
     if (nameCopied || !garment) return;
 
-    navigator?.clipboard.writeText(garment.name);
+    navigator?.clipboard.writeText(garment?.name);
     setNameCopied(true);
     await pause(3300);
     setCopyIcon((icon) => {
@@ -78,7 +80,7 @@ const GarmentNameEditor = (props) => {
           <Button
             className={clsx(css["copy-name"], nameCopied && css.copied)}
             variant="hint"
-            label={garment.name}
+            label={garment?.name}
             icon={
               !editingName && (
                 <CopyIcon
@@ -101,11 +103,15 @@ const GarmentNameEditor = (props) => {
         </Tooltip>
         <InputField
           className={css["name-input"]}
-          value={garment?.name}
+          value={garment?.name || ""}
+          placeholder="Garment Name"
           width="100%"
           readOnly={!editingName}
           tabIndex={!editingName ? -1 : undefined}
-          onChange={(e) => garment.rename(e.target.value)}
+          onChange={(e) => {
+            garment.rename(e.target.value);
+            setLastUpdated(Date.now());
+          }}
           ref={nameFieldRef}
         />
       </span>
