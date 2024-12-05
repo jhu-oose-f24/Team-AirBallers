@@ -1,22 +1,32 @@
-
 import GarmentCard from "@/components/GarmentCard";
 import { RootContext } from "@/context/RootContext";
 import DeleteItemModal from "@/features/DeleteItemModal";
 import MoveGarmentModal from "@/features/MoveGarmentModal";
 import RenameItemModal from "@/features/RenameItemModal";
+import ItemToURL from "@/types/GarmentEncoder";
 import { useBodyID, useOnResize } from "@/util/hooks";
 import { pause } from "@/util/misc";
 import axios from "axios";
+import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 
 export default function CollectionView() {
-  const { sideBarOpen, setHeaderState, activeTask, setActiveTask } =
-    useContext(RootContext);
+  // prettier-ignore
+  const {
+    sideBarOpen,
+    setHeaderState,
+    activeTask,
+    setActiveTask,
+  } = useContext(RootContext);
+
+  const { encodedId } = useRouter().query;
 
   /** @type {UseState<HTMLElement>} */
   const [gridRef, setGridRef] = useState(null);
   const [numCols, setNumCols] = useState(-1);
 
+  /** @type {UseState<CollectionWithGarments>} */
+  const [collection, setCollection] = useState(null);
   const [garments, setGarments] = useState([]);
 
   useBodyID("collection-page");
@@ -35,16 +45,27 @@ export default function CollectionView() {
   }, [gridRef, sideBarOpen]);
 
   useEffect(() => {
-    setHeaderState({
-      title: "Garment Collection",
-      back: "/create",
-    });
+    if (typeof encodedId !== "string") return;
+
+    const collectionId = ItemToURL.decode(encodedId);
 
     axios
-      .get("/api/collection")
-      .then(({ data }) => setGarments(data.reverse()))
+      .get(`/api/collection/${collectionId}`)
+      .then((res) => {
+        /** @type {CollectionWithGarments} */
+        const collection = res.data;
+        if (!collection) return;
+
+        setHeaderState({
+          title: collection.name,
+          back: "/create",
+        });
+
+        setCollection(collection);
+        setGarments([...collection.garments].reverse());
+      })
       .catch((err) => console.log(err));
-  }, []);
+  }, [encodedId]);
 
   function calcGridColumns() {
     const firstCard = gridRef?.firstChild;
@@ -73,23 +94,16 @@ export default function CollectionView() {
       }}
       ref={setGridRef}
     >
-      {Array(20)
-        .fill({})
-        // TODO: get real garments
-        .map((garment, idx) => (
-          <GarmentCard
-            key={idx}
-            // @ts-ignore
-            garment={garment}
-          />
-        ))}
+      {garments?.map((garment, idx) => (
+        <GarmentCard key={idx} garment={garment} />
+      ))}
 
       <MoveGarmentModal activeTask={activeTask} setActiveTask={setActiveTask} />
 
       <RenameItemModal
         title="Rename Garment"
         inputLabel="Garment Name"
-        originalName="(Unknown)"
+        originalName={activeTask?.garment?.name}
         activeTask={activeTask}
         setActiveTask={setActiveTask}
         // TODO: save garment name
@@ -101,10 +115,9 @@ export default function CollectionView() {
         activeTask={activeTask}
         setActiveTask={setActiveTask}
       >
-        {/* TODO: get garment name */}
         <p>
-          The garment named <b>(Garment Name)</b> will be permanently deleted.
-          Are you sure?
+          The garment named <b>{activeTask?.garment?.name}</b> will be
+          permanently deleted. Are you sure?
         </p>
         <br />
       </DeleteItemModal>
