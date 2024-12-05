@@ -2,23 +2,23 @@ import GridItemInfo from "@/components/GridItemInfo";
 import { RootContext } from "@/context/RootContext";
 import { SideBarContext } from "@/context/SideBarContext";
 import css from "@/styles/CollectionPreview.module.css";
-import { IconEdit, IconTrash } from "@tabler/icons-react";
+import { IconEdit, IconHanger, IconTrash } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
 
 /** @param {CollectionPreviewProps} props */
 const CollectionPreview = (props) => {
-  const { garments } = props;
+  const { collection } = props;
 
   const { sideBarRef } = useContext(RootContext);
   const { openMenuRef, setActiveTask } = useContext(SideBarContext);
 
   const router = useRouter();
 
-  const collectionName = "Collection Name"; // TODO: from props
-
   function generatePreviews() {
     const previews = [];
+    const garments = collection?.garments;
+    if (!garments) return;
 
     for (let garment of garments) {
       if (previews.length >= 4) break;
@@ -33,15 +33,19 @@ const CollectionPreview = (props) => {
         break;
       }
 
+      const imageUrl = garment.images?.slice(-1)?.[0].url;
+
       previews.push(
         <div
           key={previews.length}
           className={css.preview}
           style={{
             // TODO: set url() from garment
-            backgroundImage: null,
+            backgroundImage: imageUrl && `url(${imageUrl})`,
           }}
-        />,
+        >
+          {!imageUrl && <IconHanger className={css["image-unknown"]} />}
+        </div>,
       );
     }
 
@@ -53,19 +57,18 @@ const CollectionPreview = (props) => {
   }
 
   function onRenameClick() {
-    // @ts-ignore TODO: set collection
-    setActiveTask({ collection: {}, action: "rename" });
+    setActiveTask({ collection, action: "rename" });
   }
 
   function onDeleteClick() {
-    // @ts-ignore TODO: set collection
-    setActiveTask({ collection: {}, action: "delete" });
+    setActiveTask({ collection, action: "delete" });
   }
 
   return (
     <div className={css["preview-card"]}>
       <GridItemInfo
-        itemName={collectionName}
+        itemName={collection?.name}
+        showMenu={collection?.editable}
         contextTitle="Collection Options"
         contextOptions={[
           { label: "Rename", icon: <IconEdit />, action: onRenameClick },

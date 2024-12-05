@@ -13,35 +13,39 @@ import {
 import clsx from "clsx";
 import { useContext, useRef, useState } from "react";
 
+/** @param {{ garment: GarmentInstance }} props */
 const GarmentNameEditor = (props) => {
+  const { garment } = props;
+
   const { bodyRef } = useContext(RootContext);
 
   const [editingName, setEditingName] = useState(false);
   const [nameCopied, setNameCopied] = useState(false);
-  const [newName, setNewName] = useState("Garment Name");
   /** @type {UseState<HTMLElement>} */
   const [copyIcon, setCopyIcon] = useState(null);
   /** @type {UseState<HTMLElement>} */
   const [copyButton, setCopyButton] = useState(null);
-  /** @type {React.MutableRefObject<HTMLElement>} */
+  /** @type {React.MutableRefObject<HTMLInputElement>} */
   const nameFieldRef = useRef(null);
 
   const CopyIcon = nameCopied ? IconCircleCheckFilled : IconCopy;
 
   function toggleEditMode() {
+    if (!nameFieldRef.current) return;
+
     if (!editingName) {
       setNameCopied(false);
-      nameFieldRef.current?.focus();
-    } else if (!newName) {
-      setNewName("Untitled");
+      nameFieldRef.current.focus();
+    } else if (!garment.name) {
+      garment.rename("Untitled");
     }
     setEditingName(!editingName);
   }
 
   async function copyToClipboard() {
-    if (nameCopied) return;
+    if (nameCopied || !garment) return;
 
-    navigator?.clipboard.writeText(newName);
+    navigator?.clipboard.writeText(garment.name);
     setNameCopied(true);
     await pause(3300);
     setCopyIcon((icon) => {
@@ -74,7 +78,7 @@ const GarmentNameEditor = (props) => {
           <Button
             className={clsx(css["copy-name"], nameCopied && css.copied)}
             variant="hint"
-            label={newName}
+            label={garment.name}
             icon={
               !editingName && (
                 <CopyIcon
@@ -97,11 +101,11 @@ const GarmentNameEditor = (props) => {
         </Tooltip>
         <InputField
           className={css["name-input"]}
-          value={newName}
+          value={garment?.name}
           width="100%"
           readOnly={!editingName}
           tabIndex={!editingName ? -1 : undefined}
-          onChange={(e) => setNewName(e.target.value)}
+          onChange={(e) => garment.rename(e.target.value)}
           ref={nameFieldRef}
         />
       </span>

@@ -22,7 +22,7 @@ const GarmentPuppet = (props) => {
 
   return (
     <div className="garment-preview">
-      <GarmentNameEditor />
+      <GarmentNameEditor garment={garment} />
 
       <div className="puppet-box">
         {Puppet && <Puppet specs={garment?.specMap()} />}
