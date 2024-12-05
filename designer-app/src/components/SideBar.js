@@ -35,16 +35,16 @@ const SideBar = () => {
       .catch(console.log);
   }, []);
 
+  /** @param {string} name */
   async function createCollection(name) {
-    try {
-      const { data } = await axios.post("/api/collection", { name });
-      setCollections((prev) => [data, ...prev]);
-    } catch (err) {
-      console.error("Error creating collection:", err);
-    }
+    axios
+      .post("/api/collection/create", { name })
+      .then((res) => {
+        const newCollection = res.data;
+        setCollections((prev) => [newCollection, ...prev]);
+      })
+      .catch(console.log);
   }
-
-
 
   async function hideOpenMenu() {
     const lastOpen = openMenuRef.current;

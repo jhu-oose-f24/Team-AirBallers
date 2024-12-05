@@ -17,8 +17,7 @@ const CollectionPreview = (props) => {
 
   function generatePreviews() {
     const previews = [];
-    const garments = collection?.garments;
-    if (!garments) return;
+    const garments = collection?.garments || [];
 
     for (let garment of garments) {
       if (previews.length >= 4) break;

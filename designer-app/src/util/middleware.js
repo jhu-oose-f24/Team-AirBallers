@@ -8,8 +8,6 @@ import ApiHandler from "@/util/ApiHandler";
 export const authMiddleware = async (req, res) => {
   const session = await getServerSession(req, res, authOptions);
 
-  console.log(session, req.headers);
-
   if (!session) {
     return res.status(401).json({ error: "Unauthorized" });
   }
