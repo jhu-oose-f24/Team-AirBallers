@@ -35,6 +35,17 @@ const SideBar = () => {
       .catch(console.log);
   }, []);
 
+  async function createCollection(name) {
+    try {
+      const { data } = await axios.post("/api/collection", { name });
+      setCollections((prev) => [data, ...prev]);
+    } catch (err) {
+      console.error("Error creating collection:", err);
+    }
+  }
+
+
+
   async function hideOpenMenu() {
     const lastOpen = openMenuRef.current;
     await pause(100);
@@ -74,6 +85,10 @@ const SideBar = () => {
           width="100%"
           size="sm"
           // TODO: onClick: modal to create collection
+          onClick={() => {
+            const name = prompt("Enter Collection Name:");
+            if (name) createCollection(name);
+          }}
         />
       </div>
 
