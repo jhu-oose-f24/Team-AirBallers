@@ -42,9 +42,10 @@ export default function Create() {
         const garment = res.data;
 
         if (garment) {
-          setActiveTask({ action: "edit", garment });
-
           const garmentURL = ItemToURL.encode(garment.id);
+          if (!garmentURL) return;
+
+          setActiveTask({ action: "edit", garment });
           router.replace(`garment/${garmentURL}/edit`);
         }
       })

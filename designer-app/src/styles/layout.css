@@ -59,6 +59,19 @@ body.will-unload #__next {
   @apply !stroke-[2.8];
 }
 
+.app-header .title-link.loading [class*="label"] {
+  @apply !text-transparent;
+  @apply relative;
+  @apply transition-none;
+}
+.app-header .title-link.loading [class*="label"]:after {
+  @apply content-[""];
+  @apply absolute inset-x-0 inset-y-[15%];
+  @apply bg-primary-darkest/30;
+  @apply rounded-[0.3rem];
+  @apply animate-pulse [animation-duration:1s];
+}
+
 .app-header .action-button {
   @apply w-auto h-full aspect-square;
   @apply transition-all duration-150 ease-in-out;
@@ -124,6 +137,14 @@ body.will-unload #__next {
 .sidebar .collection-list {
   @apply flex-1;
   @apply !-mx-[0.7rem];
+}
+
+.sidebar .sign-in-for-collections {
+  @apply flex flex-col justify-center text-center;
+  @apply p-[1rem] gap-[1.5rem];
+  @apply h-full w-full rounded-[1rem];
+  @apply text-[1.4rem] text-primary-dark font-medium;
+  @apply bg-primary-dark/20;
 }
 
 .sidebar .collection-list > [data-overlayscrollbars-contents] {
@@ -253,7 +274,14 @@ body#create .edit-input {
 /* ========================== Editor Page ========================== */
 
 body#edit .edit-layout {
-  @apply min-w-min gap-[1rem];
+  @apply min-w-min gap-[1.5rem];
+}
+
+body#edit .edit-layout > * {
+  @apply transition-opacity duration-200 ease-in-out;
+}
+body#edit .edit-layout[inert] > *:not(.garment-invalid) {
+  @apply opacity-0;
 }
 
 body#edit .garment-preview {

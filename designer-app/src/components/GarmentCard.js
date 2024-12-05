@@ -24,25 +24,24 @@ const GarmentCard = (props) => {
   const imageUrl = garment?.images?.slice(-1)?.[0]?.url;
 
   function onMoveClick() {
-    // @ts-ignore TODO: set collection
-    setActiveTask({ garment: {}, action: "move" });
+    if (garment?.id) setActiveTask({ garment, action: "move" });
   }
 
   function onRenameClick() {
-    // @ts-ignore TODO: set collection
-    setActiveTask({ garment: {}, action: "rename" });
+    if (garment?.id) setActiveTask({ garment, action: "rename" });
   }
 
   function onDeleteClick() {
-    // @ts-ignore TODO: set collection
-    setActiveTask({ garment: {}, action: "delete" });
+    if (garment?.id) setActiveTask({ garment, action: "delete" });
   }
 
   function goToEditGarment() {
     if (!garment?.id) return;
 
-    const encodedId = ItemToURL.encode(garment.id);
-    router.push(`/garment/${encodedId}/edit`);
+    const garmentURL = ItemToURL.encode(garment.id);
+    if (!garmentURL) return;
+
+    router.push(`/garment/${garmentURL}/edit`);
   }
 
   return (

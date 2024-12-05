@@ -34,7 +34,7 @@ export default function CollectionView() {
   useOnResize(() => calcGridColumns(), [gridRef]);
 
   useEffect(() => {
-    if (!gridRef) return;
+    if (!collection || !gridRef) return;
 
     if (numCols < 0) {
       const delaySeconds = getComputedStyle(gridRef).transitionDuration;
@@ -42,12 +42,15 @@ export default function CollectionView() {
     } else {
       calcGridColumns();
     }
-  }, [gridRef, sideBarOpen]);
+  }, [collection, gridRef, sideBarOpen]);
 
   useEffect(() => {
+    setHeaderState({ back: "/create" });
+
     if (typeof encodedId !== "string") return;
 
     const collectionId = ItemToURL.decode(encodedId);
+    if (!collectionId) return;
 
     axios
       .get(`/api/collection/${collectionId}`)
@@ -64,7 +67,7 @@ export default function CollectionView() {
         setCollection(collection);
         setGarments([...collection.garments].reverse());
       })
-      .catch((err) => console.log(err));
+      .catch(console.log);
   }, [encodedId]);
 
   function calcGridColumns() {

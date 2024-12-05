@@ -70,8 +70,10 @@ const CollectionPreview = (props) => {
   function goToCollection() {
     if (!collection?.id) return;
 
-    const encodedId = ItemToURL.encode(collection.id);
-    router.push(`/collection/${encodedId}`);
+    const collectionURL = ItemToURL.encode(collection.id);
+    if (!collectionURL) return;
+
+    router.push(`/collection/${collectionURL}`);
   }
 
   return (

@@ -42,8 +42,10 @@ const GarmentPuppet = (props) => {
     debounceUpdateRef.current = setTimeout(() => {
       if (typeof encodedId !== "string") return;
 
-      setSaving(true);
       const garmentId = ItemToURL.decode(encodedId);
+      if (!garmentId) return;
+
+      setSaving(true);
       axios
         .put(`/api/garment/${garmentId}`, { garment: garment?.serialize() })
         .then(() => setLastSaved(new Date().toLocaleTimeString()))

@@ -16,6 +16,9 @@ export default function Editor() {
 
   /** @type {UseState<GarmentInstance>} */
   const [parsedGarment, setParsedGarment] = useState(null);
+  const [validGarment, setValidGarment] = useState(undefined);
+
+  console.log(parsedGarment);
 
   useBodyID("edit");
 
@@ -36,19 +39,32 @@ export default function Editor() {
     if (!garment) {
       const garmentId = ItemToURL.decode(encodedId);
 
-      await axios
-        .get(`/api/garment/${garmentId}`)
-        .then((res) => (garment = res.data));
-
-      setActiveTask({ action: "edit", garment });
+      if (garmentId) {
+        await axios
+          .get(`/api/garment/${garmentId}`)
+          .then((res) => {
+            garment = res.data;
+            setActiveTask({ action: "edit", garment });
+          })
+          .catch(console.log);
+      }
     }
 
-    setParsedGarment(GarmentTypes[garment?.type]?.from(garment));
+    if (garment) {
+      setParsedGarment(GarmentTypes[garment?.type]?.from(garment));
+      setValidGarment(true);
+    } else {
+      setValidGarment(false);
+    }
   }
 
   return (
     <EditorContextProvider>
-      <div className="edit-layout">
+      <div
+        className="edit-layout"
+        // @ts-ignore
+        inert={validGarment ? undefined : ""}
+      >
         <GarmentPuppet garment={parsedGarment} />
 
         <GarmentSpecEditor specs={parsedGarment?.specs} />

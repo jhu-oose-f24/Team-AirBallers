@@ -10,11 +10,15 @@ import { pause } from "@/util/misc";
 import { IconHanger, IconPlus } from "@tabler/icons-react";
 import axios from "axios";
 import clsx from "clsx";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 
 const SideBar = () => {
   const router = useRouter();
+
+  const session = useSession();
+  const signedIn = session?.status === "authenticated";
 
   const { sideBarOpen, sideBarRef, setSideBarRef } = useContext(RootContext);
   const { openMenuRef, activeTask, setActiveTask } = useContext(SideBarContext);
@@ -29,11 +33,13 @@ const SideBar = () => {
   }, [sideBarRef]);
 
   useEffect(() => {
+    if (!signedIn) return;
+
     axios
       .get("/api/collections")
       .then(({ data }) => setCollections(data.reverse())) // Reverse the order of garments here
       .catch(console.log);
-  }, []);
+  }, [signedIn]);
 
   /** @param {string} name */
   async function createCollection(name) {
@@ -64,6 +70,14 @@ const SideBar = () => {
         {collections?.map((collection, idx) => (
           <CollectionPreview key={idx} collection={collection} />
         ))}
+        {!signedIn && (
+          <div className="sign-in-for-collections">
+            <span className="text-primary-darker/80">Nothing Here!</span>
+            <span className="text-[1.3rem] font-normal">
+              Sign in to save your creations and manage collections
+            </span>
+          </div>
+        )}
       </ScrollContainer>
       <Stitches type="line" stitchWidth="0.17rem" svgClass="stitch-close" />
 
@@ -89,6 +103,7 @@ const SideBar = () => {
             const name = prompt("Enter Collection Name:");
             if (name) createCollection(name);
           }}
+          disabled={!signedIn}
         />
       </div>
 
