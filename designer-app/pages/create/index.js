@@ -5,7 +5,6 @@ import { RootContext } from "@/context/RootContext";
 import GarmentEncoder from "@/types/GarmentEncoder";
 import Shirt from "@/types/garments/Shirt";
 import { useBodyID } from "@/util/hooks";
-import { pause } from "@/util/misc";
 import {
   IconClothesRack,
   IconHanger2,
@@ -13,7 +12,7 @@ import {
   IconShirtFilled,
   IconSparkles,
 } from "@tabler/icons-react";
-// import axios from "axios";
+import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 
@@ -36,20 +35,12 @@ export default function Create() {
   function createGarment() {
     if (generating) return;
 
-    // Testing flow from home to edit page
-
-    /** @ts-ignore @type {Garment} */
-    const garment = new Shirt().serialize();
-    garment.id = "674b7e80e94e6a3a2e256970"; // example MongoDB id
-
     setGenerating(true);
-    pause(1000)
-      .then(() => {
-        // axios
-        // .post("/api/prompt", { prompt })
-        // .then(({ data }) => {
-        // /** @type {Garment} */
-        // const garment = data.garment;
+    axios
+      .post("/api/garment/create", { prompt })
+      .then((res) => {
+        /** @type {Garment} */
+        const garment = res.data;
         setActiveTask({ action: "edit", garment });
 
         const garmentURL = GarmentEncoder.encode(garment);
