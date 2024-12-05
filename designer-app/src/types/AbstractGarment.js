@@ -28,9 +28,15 @@ export default class AbstractGarment {
 
   /** @param {NamedSpec["spec"]} spec */
   static parseSpec(spec) {
+    let parsed = spec;
+
+    if (typeof spec === "string") {
+      parsed = JSON.parse(spec);
+    }
+
     /** @type {typeof AbstractSpecType} */
-    const SpecType = SpecTypes[spec?.["type"]];
-    return SpecType?.from(spec);
+    const SpecType = SpecTypes[parsed?.["type"]];
+    return SpecType?.from(parsed);
   }
 
   /**
@@ -72,7 +78,6 @@ export default class AbstractGarment {
     this.name = name;
   }
 
-  /** @returns {Partial<Garment>} */
   serialize() {
     const { type, name, specs, prompts, images } = this;
 

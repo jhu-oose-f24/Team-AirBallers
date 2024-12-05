@@ -2,9 +2,13 @@ import GarmentClassifier from "@/types/GarmentClassifier";
 import SpecificationGenerator from "@/types/SpecificationGenerator";
 import ApiHandler from "@/util/ApiHandler";
 import prisma from "@/util/db";
+import { authMiddleware } from "@/util/middleware";
 
-export default ApiHandler()
+export default ApiHandler(authMiddleware)
   .POST(async (req, res) => {
+    /** @ts-ignore @type {string} */
+    const userId = req.headers.userId;
+
     /** @type {string} */ // TODO: use class
     const userPrompt = req.body?.prompt;
 
@@ -20,13 +24,24 @@ export default ApiHandler()
       generatedGarment.parseValues(JSON.parse(specValues));
       generatedGarment.addPrompt(userPrompt);
 
-      // TODO: different users
-      let [user] = await prisma.user.findMany();
+      let user = await prisma.user.findFirst({ where: { id: userId } });
 
-      // TODO: different collections
-      let [collection] = await prisma.collection.findMany({
-        where: { userId: user.id },
+      let collection = await prisma.collection.findFirst({
+        where: {
+          AND: [{ userId: user.id }, { name: "Drafts" }],
+        },
       });
+
+      if (!collection) {
+        // TODO: initialize default Drafts elsewhere
+        collection = await prisma.collection.create({
+          data: {
+            userId: user.id,
+            name: "Drafts",
+            editable: false,
+          },
+        });
+      }
 
       const garment = await prisma.garment.create({
         data: {
@@ -35,7 +50,16 @@ export default ApiHandler()
         },
       });
 
-      res.status(200).json({ garment });
+      await prisma.collection.update({
+        where: { id: collection.id },
+        data: {
+          garments: {
+            connect: { id: garment.id },
+          },
+        },
+      });
+
+      res.status(200).json(garment);
     } catch (err) {
       res.status(500).json(err);
       console.error("Error creating prompt:", err);

@@ -271,12 +271,22 @@ body#edit .puppet-box {
 
   --size: calc(var(--root-unit) * 950);
 
+  @apply relative;
   @apply flex box-content;
   @apply h-[--size] w-[--size] aspect-square;
   @apply border-[0.2rem] border-accent;
   @apply rounded-[1rem];
   @apply bg-background-main;
   @apply transition-opacity duration-200 ease-in-out;
+}
+
+body#edit .puppet-box .last-updated {
+  @apply absolute top-[0.5rem] right-[0.5rem];
+  @apply flex justify-end items-center gap-[0.5rem];
+  @apply font-medium text-secondary;
+}
+body#edit .puppet-box .last-updated.saving {
+  @apply text-primary-darker;
 }
 
 body#edit .puppet > svg path:not([style*="fill: none"]),

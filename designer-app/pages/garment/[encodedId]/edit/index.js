@@ -1,10 +1,11 @@
+import EditorContextProvider from "@/context/EditorContext";
 import { RootContext } from "@/context/RootContext";
 import GarmentPuppet from "@/features/GarmentPuppet";
 import GarmentSpecEditor from "@/features/GarmentSpecEditor";
 import GarmentEncoder from "@/types/GarmentEncoder";
 import GarmentTypes from "@/types/GarmentTypes";
-import Shirt from "@/types/garments/Shirt";
 import { useBodyID } from "@/util/hooks";
+import axios from "axios";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 
@@ -25,27 +26,33 @@ export default function Editor() {
   }, []);
 
   useEffect(() => {
+    parseGarment();
+  }, [encodedId, activeTask]);
+
+  async function parseGarment() {
     if (typeof encodedId !== "string") return;
 
     let garment = activeTask?.garment;
-    if (!activeTask?.garment) {
-      // testing with example garment
-      /** @ts-ignore @type {Garment} */
-      const garment = new Shirt().serialize();
-      garment.id = GarmentEncoder.decode(encodedId);
-      // TODO: re-fetch garment (from url) on refresh
+    if (!garment) {
+      const garmentId = GarmentEncoder.decode(encodedId);
+
+      await axios
+        .get(`/api/garment/${garmentId}`)
+        .then((res) => (garment = res.data));
 
       setActiveTask({ action: "edit", garment });
     }
 
     setParsedGarment(GarmentTypes[garment?.type]?.from(garment));
-  }, [encodedId, activeTask]);
+  }
 
   return (
-    <div className="edit-layout">
-      <GarmentPuppet garment={parsedGarment} />
+    <EditorContextProvider>
+      <div className="edit-layout">
+        <GarmentPuppet garment={parsedGarment} />
 
-      <GarmentSpecEditor specs={parsedGarment?.specs} />
-    </div>
+        <GarmentSpecEditor specs={parsedGarment?.specs} />
+      </div>
+    </EditorContextProvider>
   );
 }
