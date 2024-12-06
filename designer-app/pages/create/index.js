@@ -12,6 +12,7 @@ import {
   IconSparkles,
 } from "@tabler/icons-react";
 import axios from "axios";
+import Head from "next/head";
 import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 
@@ -22,6 +23,7 @@ export default function Create() {
 
   const [examplePrompt, setExamplePrompt] = useState("");
   const [prompt, setPrompt] = useState("");
+  const [promptErr, setPromptErr] = useState("");
   const [generating, setGenerating] = useState(false);
 
   useBodyID("create");
@@ -34,27 +36,31 @@ export default function Create() {
   function createGarment() {
     if (generating) return;
 
+    setPromptErr("");
     setGenerating(true);
     axios
       .post("/api/garment/create", { prompt })
       .then((res) => {
         /** @type {Garment} */
         const garment = res.data;
+        if (!garment) return;
 
-        if (garment) {
-          const garmentURL = ItemToURL.encode(garment.id);
-          if (!garmentURL) return;
+        const garmentURL = ItemToURL.encode(garment.id);
+        if (!garmentURL) return;
 
-          setActiveTask({ action: "edit", garment });
-          router.replace(`garment/${garmentURL}/edit`);
-        }
+        setActiveTask({ action: "edit", garment });
+        router.replace(`garment/${garmentURL}/edit`);
       })
-      .catch((err) => console.log(err))
+      .catch(({ response }) => setPromptErr(response?.data?.message))
       .finally(() => setGenerating(false));
   }
 
   return (
     <div className="create-layout">
+      <Head>
+        <title>Create | Designer App</title>
+      </Head>
+
       <div className="garment-img">
         <div className="garment-placeholder">
           <IconHanger2 className="garment-icon hanger" />
@@ -72,6 +78,7 @@ export default function Create() {
           placeholder={examplePrompt}
           iconLeft={<IconSearch />}
           value={prompt}
+          error={promptErr}
           onChange={(e) => setPrompt(e.target.value)}
         />
         <Button

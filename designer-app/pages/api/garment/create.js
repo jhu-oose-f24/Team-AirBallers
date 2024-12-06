@@ -28,7 +28,7 @@ export default ApiHandler(authMiddleware)
 
       let collection = await prisma.collection.findFirst({
         where: {
-          AND: [{ userId: user.id }, { name: "Drafts" }],
+          AND: [{ userId: user.id }, { name: "Drafts" }, { editable: false }],
         },
       });
 

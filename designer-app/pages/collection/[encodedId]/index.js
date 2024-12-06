@@ -8,6 +8,7 @@ import GarmentTypes from "@/types/GarmentTypes";
 import { useBodyID, useOnResize } from "@/util/hooks";
 import { pause } from "@/util/misc";
 import axios from "axios";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 
@@ -126,6 +127,10 @@ export default function CollectionView() {
       }}
       ref={setGridRef}
     >
+      <Head>
+        <title>{collection?.name} | Designer App</title>
+      </Head>
+
       {garments?.map((garment, idx) => (
         <GarmentCard key={idx} garment={garment} />
       ))}

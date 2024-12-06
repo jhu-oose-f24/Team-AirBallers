@@ -4,6 +4,7 @@ import SelectField from "@/components/SelectField";
 import { pause } from "@/util/misc";
 import { IconCheck, IconHanger } from "@tabler/icons-react";
 import axios from "axios";
+import Head from "next/head";
 import { useEffect, useState } from "react";
 
 /** @param {GarmentMoveModalProps} props */
@@ -37,6 +38,7 @@ const MoveGarmentModal = (props) => {
       .then((res) => {
         /** @type {CollectionWithGarmentCount[]} */
         const collections = res.data;
+        if (!collections) return;
 
         setCollections(
           collections.reduce((map, collection) => {
@@ -84,6 +86,10 @@ const MoveGarmentModal = (props) => {
       className="move-garment"
       openState={[isOpen, closeMove]}
     >
+      <Head>
+        <title>Move Garment | Designer App</title>
+      </Head>
+
       <p className="text-center mx-[0.8rem]">
         Garment to be moved:
         <br />

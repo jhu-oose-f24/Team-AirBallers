@@ -20,11 +20,7 @@ export default class SpecificationGenerator {
    * @throws {ApiErrorResponse}
    */
   static async createFrom(description, schema) {
-    if (
-      !description ||
-      typeof description !== "string" ||
-      description.trim() === ""
-    ) {
+    if (typeof description !== "string" || !description.trim()) {
       throw invalidInputError("Description must be a non-empty string");
     }
 
