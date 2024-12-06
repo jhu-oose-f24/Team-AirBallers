@@ -87,7 +87,9 @@ export default function CollectionView() {
         });
 
         setCollection(collection);
-        setGarments([...collection.garments].reverse());
+
+        const garments = collection.garments || [];
+        setGarments(garments.reverse());
       })
       .catch(console.log);
   }

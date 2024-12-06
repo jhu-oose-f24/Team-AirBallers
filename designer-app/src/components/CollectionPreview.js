@@ -19,8 +19,8 @@ const CollectionPreview = (props) => {
   const [garments, setGarments] = useState([]);
 
   useEffect(() => {
-    if (!collection) return;
-    setGarments([...collection.garments].reverse());
+    const newGarments = collection?.garments || [];
+    setGarments([...newGarments].reverse());
   }, [collection]);
 
   function generatePreviews() {
