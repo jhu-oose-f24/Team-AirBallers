@@ -18,8 +18,6 @@ export default function Editor() {
   const [parsedGarment, setParsedGarment] = useState(null);
   const [validGarment, setValidGarment] = useState(undefined);
 
-  console.log(parsedGarment);
-
   useBodyID("edit");
 
   useEffect(() => {
