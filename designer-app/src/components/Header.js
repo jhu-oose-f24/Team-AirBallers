@@ -51,7 +51,11 @@ const Header = () => {
   }
 
   return (
-    <header className="app-header">
+    <header
+      className="app-header"
+      // @ts-ignore
+      inert={profileOpen ? "" : undefined}
+    >
       <Button
         variant="hint"
         className="action-button"

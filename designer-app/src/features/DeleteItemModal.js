@@ -1,21 +1,45 @@
 import Button from "@/components/Button";
 import Modal from "@/components/Modal";
+import { pause } from "@/util/misc";
 import { dangerColor, dangerPalette } from "@/util/tint";
 import { IconAlertCircle } from "@tabler/icons-react";
+import { useEffect, useState } from "react";
 
 /** @param {ItemDeleteModalProps} props */
 const DeleteItemModal = (props) => {
-  const { children, title, activeTask, setActiveTask } = props;
+  const { children, title, activeTask, setActiveTask, onConfirmDelete } = props;
 
-  function cancel() {
+  const actionDelete = activeTask?.action === "delete";
+  const [isOpen, setIsOpen] = useState(actionDelete);
+  const [deleting, setDeleting] = useState(false);
+
+  useEffect(() => {
+    if (actionDelete) setIsOpen(true);
+  }, [activeTask]);
+
+  async function closeDelete() {
+    setIsOpen(false);
+    await pause(500);
     setActiveTask(null);
+  }
+
+  async function deleteItem() {
+    setDeleting(true);
+    const saved = await onConfirmDelete?.();
+    setDeleting(false);
+
+    if (saved) {
+      closeDelete();
+    } else {
+      // TODO: shake button
+    }
   }
 
   return (
     <Modal
       title={title}
       className="delete-item"
-      openState={[activeTask?.action === "delete", cancel]}
+      openState={[isOpen, closeDelete]}
     >
       <span className="confirm-delete-msg" style={dangerPalette}>
         <IconAlertCircle height="1.6rem" stroke={2.7} />
@@ -32,14 +56,15 @@ const DeleteItemModal = (props) => {
           xPad="1.6rem"
           yPad="0.3rem"
           width="60%"
-          onClick={cancel}
+          onClick={closeDelete}
         />
         <Button
           tint={dangerColor}
           label="Delete"
           yPad="0.3rem"
           width="40%"
-          // TODO: onClick
+          onClick={deleteItem}
+          loading={deleting}
         />
       </span>
     </Modal>

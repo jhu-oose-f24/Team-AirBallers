@@ -22,6 +22,8 @@ const SideBar = () => {
 
   const { sideBarOpen, sideBarRef, setSideBarRef } = useContext(RootContext);
   const { openMenuRef, activeTask, setActiveTask } = useContext(SideBarContext);
+  /** @ts-ignore @type {CollectionWithGarments} */
+  const activeCollection = activeTask?.collection;
 
   /** @type {UseState<CollectionWithGarments[]>} */
   const [collections, setCollections] = useState([]);
@@ -35,11 +37,15 @@ const SideBar = () => {
   useEffect(() => {
     if (!signedIn) return;
 
+    fetchCollections();
+  }, [signedIn]);
+
+  async function fetchCollections() {
     axios
       .get("/api/collections")
-      .then(({ data }) => setCollections(data.reverse())) // Reverse the order of garments here
+      .then(({ data }) => setCollections(data.reverse()))
       .catch(console.log);
-  }, [signedIn]);
+  }
 
   /** @param {string} name */
   async function createCollection(name) {
@@ -56,6 +62,27 @@ const SideBar = () => {
     const lastOpen = openMenuRef.current;
     await pause(100);
     lastOpen?.state.isShown && lastOpen?.hide();
+  }
+
+  function saveRenamedCollection(newName = "Untitled") {
+    if (!activeCollection?.id) return false;
+
+    return axios
+      .put(`/api/collection/${activeCollection.id}`, {
+        ...activeCollection,
+        name: newName,
+      })
+      .then(() => (fetchCollections(), true))
+      .catch((err) => (console.log(err), false));
+  }
+
+  function deleteCollection() {
+    if (!activeCollection?.id) return false;
+
+    return axios
+      .delete(`/api/collection/${activeCollection.id}`)
+      .then(() => (fetchCollections(), true))
+      .catch((err) => (console.log(err), false));
   }
 
   return (
@@ -91,7 +118,6 @@ const SideBar = () => {
           width="100%"
           size="sm"
           onClick={() => router.replace("/create")}
-          // TODO: onClick: redirect to create new garment
         />
         <Button
           icon={<IconPlus />}
@@ -110,26 +136,25 @@ const SideBar = () => {
       <RenameItemModal
         title="Rename Collection"
         inputLabel="Collection Name"
-        originalName="(Unknown)"
+        originalName={activeCollection?.name}
         activeTask={activeTask}
         setActiveTask={setActiveTask}
-        // TODO: save collection name
-        onSaveClick={null}
+        onSaveClick={saveRenamedCollection}
       />
 
       <DeleteItemModal
         title="Delete Collection"
         activeTask={activeTask}
         setActiveTask={setActiveTask}
+        onConfirmDelete={deleteCollection}
       >
-        {/* TODO: get collection name and # garments */}
         <p>
-          The <b>(Collection Name)</b> collection will be permanently deleted
-          along with the following contents:
+          The <b>{activeCollection?.name}</b> collection will be permanently
+          deleted along with the following contents:
         </p>
         <ul>
           <li>
-            <b>(Number)</b> Garments
+            <b>{activeCollection?.garments?.length}</b> Garments
           </li>
         </ul>
         <br />

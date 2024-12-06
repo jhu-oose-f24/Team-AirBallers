@@ -133,8 +133,10 @@
  * @typedef {import("@prisma/client").User} User
  *
  * @typedef {import("@prisma/client").Collection} Collection
- * 
+ *
  * @typedef {Collection & { garments: Garment[] }} CollectionWithGarments
+ *
+ * @typedef {Collection & { numGarments: number }} CollectionWithGarmentCount
  *
  * @typedef {import("@prisma/client").Garment} Garment
  *

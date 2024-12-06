@@ -4,6 +4,7 @@ import DeleteItemModal from "@/features/DeleteItemModal";
 import MoveGarmentModal from "@/features/MoveGarmentModal";
 import RenameItemModal from "@/features/RenameItemModal";
 import ItemToURL from "@/types/GarmentEncoder";
+import GarmentTypes from "@/types/GarmentTypes";
 import { useBodyID, useOnResize } from "@/util/hooks";
 import { pause } from "@/util/misc";
 import axios from "axios";
@@ -47,6 +48,27 @@ export default function CollectionView() {
   useEffect(() => {
     setHeaderState({ back: "/create" });
 
+    fetchCollection();
+  }, [encodedId]);
+
+  function calcGridColumns() {
+    const firstCard = gridRef?.firstChild;
+    if (!(firstCard instanceof HTMLElement)) return;
+
+    const gridWidth = gridRef.clientWidth;
+
+    const cardWidth = firstCard.clientWidth;
+    const gridStyle = getComputedStyle(gridRef);
+    const gridGap = parseInt(gridStyle?.columnGap);
+    const gridPad = parseInt(gridStyle?.paddingInline);
+    const gridSpace = gridWidth - 2 * gridPad;
+
+    const dividedWidth = (gridSpace + gridGap) / (cardWidth + gridGap);
+
+    setNumCols(Math.floor(dividedWidth));
+  }
+
+  function fetchCollection() {
     if (typeof encodedId !== "string") return;
 
     const collectionId = ItemToURL.decode(encodedId);
@@ -68,23 +90,28 @@ export default function CollectionView() {
         setGarments([...collection.garments].reverse());
       })
       .catch(console.log);
-  }, [encodedId]);
+  }
 
-  function calcGridColumns() {
-    const firstCard = gridRef?.firstChild;
-    if (!(firstCard instanceof HTMLElement)) return;
+  function saveRenamedGarment(newName = "Untitled") {
+    const garment = activeTask?.garment;
+    const updated = GarmentTypes[garment?.type]?.from(garment);
+    if (!updated || !garment?.id) return false;
 
-    const gridWidth = gridRef.clientWidth;
+    updated.rename(newName);
+    return axios
+      .put(`/api/garment/${garment.id}`, { garment: updated.serialize() })
+      .then(() => (fetchCollection(), true))
+      .catch((err) => (console.log(err), false));
+  }
 
-    const cardWidth = firstCard.clientWidth;
-    const gridStyle = getComputedStyle(gridRef);
-    const gridGap = parseInt(gridStyle?.columnGap);
-    const gridPad = parseInt(gridStyle?.paddingInline);
-    const gridSpace = gridWidth - 2 * gridPad;
+  function deleteGarment() {
+    const garment = activeTask?.garment;
+    if (!garment?.id) return false;
 
-    const dividedWidth = (gridSpace + gridGap) / (cardWidth + gridGap);
-
-    setNumCols(Math.floor(dividedWidth));
+    return axios
+      .delete(`/api/garment/${garment.id}`)
+      .then(() => (fetchCollection(), true))
+      .catch((err) => (console.log(err), false));
   }
 
   return (
@@ -101,7 +128,11 @@ export default function CollectionView() {
         <GarmentCard key={idx} garment={garment} />
       ))}
 
-      <MoveGarmentModal activeTask={activeTask} setActiveTask={setActiveTask} />
+      <MoveGarmentModal
+        activeTask={activeTask}
+        setActiveTask={setActiveTask}
+        onMove={fetchCollection}
+      />
 
       <RenameItemModal
         title="Rename Garment"
@@ -109,16 +140,16 @@ export default function CollectionView() {
         originalName={activeTask?.garment?.name}
         activeTask={activeTask}
         setActiveTask={setActiveTask}
-        // TODO: save garment name
-        onSaveClick={null}
+        onSaveClick={saveRenamedGarment}
       />
 
       <DeleteItemModal
         title="Delete Garment"
         activeTask={activeTask}
         setActiveTask={setActiveTask}
+        onConfirmDelete={deleteGarment}
       >
-        <p>
+        <p className="text-center">
           The garment named <b>{activeTask?.garment?.name}</b> will be
           permanently deleted. Are you sure?
         </p>

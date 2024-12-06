@@ -1,63 +1,103 @@
 import Button from "@/components/Button";
 import Modal from "@/components/Modal";
 import SelectField from "@/components/SelectField";
-import { IconHanger } from "@tabler/icons-react";
-import { useState } from "react";
+import { pause } from "@/util/misc";
+import { IconCheck, IconHanger } from "@tabler/icons-react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
-/**
- * @type {{
- *   [k: string]: Partial<Collection & { numItems: number }>;
- * }}
- */
-const collections = {
-  19264975926139: {
-    name: "Collection 1",
-    numItems: 17,
-  },
-  198498162912414: {
-    name: "Drafts",
-    numItems: 1,
-  },
-  6726198491254134: {
-    name: "Other Stuff",
-    numItems: 5,
-  },
-};
-
-/** @param {ItemActionModalProps} props */
+/** @param {GarmentMoveModalProps} props */
 const MoveGarmentModal = (props) => {
-  const { activeTask, setActiveTask } = props;
+  const { activeTask, setActiveTask, onMove } = props;
 
+  const actionMove = activeTask?.action === "move";
+  const oldCollectionId = activeTask?.garment?.collectionId;
+
+  /** @type {UseState<{ [K: string]: CollectionWithGarmentCount }>} */
+  const [collections, setCollections] = useState({});
   /** @type {UseState<string>} */
-  const [newCollection, setNewCollection] = useState("");
+  const [newCollectionId, setNewCollectionId] = useState(oldCollectionId);
+  const [isOpen, setIsOpen] = useState(actionMove);
+  const [garmentMoved, setGarmentMoved] = useState(false);
+  const [moving, setMoving] = useState(false);
 
-  const original = "198498162912414";
-  const diffCollection = newCollection && newCollection !== original;
+  const diffCollection = newCollectionId !== oldCollectionId;
 
-  function cancel() {
+  useEffect(() => {
+    setNewCollectionId(oldCollectionId);
+  }, [oldCollectionId]);
+
+  useEffect(() => {
+    if (!actionMove) return;
+
+    setIsOpen(true);
+    setGarmentMoved(false);
+    axios
+      .get("/api/collections/garment-count")
+      .then((res) => {
+        /** @type {CollectionWithGarmentCount[]} */
+        const collections = res.data;
+
+        setCollections(
+          collections.reduce((map, collection) => {
+            map[collection?.id] = collection;
+            return map;
+          }, {}),
+        );
+      })
+      .catch(console.log);
+  }, [activeTask]);
+
+  async function closeMove() {
+    setIsOpen(false);
+    await pause(500);
     setActiveTask(null);
+  }
+
+  async function moveGarment() {
+    const garment = activeTask?.garment;
+    if (!garment) return;
+
+    setMoving(true);
+    const moved = await axios
+      .put(`/api/garment/${garment.id}/move`, {
+        oldCollectionId,
+        newCollectionId,
+      })
+      .then(() => (onMove?.(), true))
+      .catch(() => false);
+
+    setMoving(false);
+
+    if (moved) {
+      setGarmentMoved(true);
+      await pause(1000);
+      closeMove();
+    } else {
+      // TODO: shake button
+    }
   }
 
   return (
     <Modal
       title="Move Garment"
       className="move-garment"
-      openState={[activeTask?.action === "move", cancel]}
+      openState={[isOpen, closeMove]}
     >
       <p className="text-center mx-[0.8rem]">
         Garment to be moved:
         <br />
-        <b>(Garment Name)</b>
+        <b>{activeTask?.garment?.name}</b>
       </p>
 
       <p className="prev-collection flex mx-[0.8rem]">
         From:
         <span className="name">
-          {collections[original]?.name}
+          {collections?.[oldCollectionId]?.name}
           <span className="num-items">
             {diffCollection
-              ? collections[original]?.numItems - 1
-              : collections[original]?.numItems}
+              ? collections?.[oldCollectionId]?.numGarments - 1
+              : collections?.[oldCollectionId]?.numGarments}
             <IconHanger className="-scale-x-100" stroke={2.4} />
           </span>
         </span>
@@ -65,26 +105,26 @@ const MoveGarmentModal = (props) => {
 
       <SelectField
         className="collection-select-field"
-        options={Object.entries(collections).map(([value, collection]) => ({
-          value,
+        options={Object.entries(collections).map(([id, collection]) => ({
+          value: id,
           label: collection.name,
-          selected: value === original,
+          selected: id === oldCollectionId,
           render: (
             <>
               <span>{collection.name}</span>
 
-              {collection.numItems > 0 && (
+              {collection.numGarments > 0 && (
                 <span className="num-items">
-                  {collection.numItems}
+                  {collection.numGarments}
                   <IconHanger className="-scale-x-100" stroke={2.4} />
                 </span>
               )}
             </>
           ),
         }))}
-        value={newCollection}
+        value={newCollectionId}
         placeholder="Select new collection"
-        onChange={(e) => setNewCollection(e.target.value)}
+        onChange={(e) => setNewCollectionId(e.target.value)}
       />
 
       <p
@@ -93,9 +133,9 @@ const MoveGarmentModal = (props) => {
       >
         To:
         <span className="name">
-          {collections[newCollection]?.name}
+          {collections?.[newCollectionId]?.name}
           <span className="num-items">
-            {collections[newCollection]?.numItems + 1}
+            {collections?.[newCollectionId]?.numGarments + 1}
             <IconHanger className="-scale-x-100" stroke={2.4} />
           </span>
         </span>
@@ -108,14 +148,16 @@ const MoveGarmentModal = (props) => {
           label="Cancel"
           xPad="1.6rem"
           yPad="0.3rem"
-          onClick={cancel}
+          onClick={closeMove}
         />
         <Button
-          label="Move"
+          label={garmentMoved ? "Moved" : "Move"}
+          icon={garmentMoved && <IconCheck className="!stroke-[2.6]" />}
           yPad="0.3rem"
           width="100%"
+          onClick={moveGarment}
           disabled={!diffCollection}
-          // TODO: onClick
+          loading={moving}
         />
       </span>
     </Modal>
