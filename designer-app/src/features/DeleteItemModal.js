@@ -3,6 +3,7 @@ import Modal from "@/components/Modal";
 import { pause } from "@/util/misc";
 import { dangerColor, dangerPalette } from "@/util/tint";
 import { IconAlertCircle } from "@tabler/icons-react";
+import Head from "next/head";
 import { useEffect, useState } from "react";
 
 /** @param {ItemDeleteModalProps} props */
@@ -41,6 +42,10 @@ const DeleteItemModal = (props) => {
       className="delete-item"
       openState={[isOpen, closeDelete]}
     >
+      <Head>
+        <title>{title} | Designer App</title>
+      </Head>
+
       <span className="confirm-delete-msg" style={dangerPalette}>
         <IconAlertCircle height="1.6rem" stroke={2.7} />
         This action cannot be undone!

@@ -12,6 +12,7 @@ import {
   IconSparkles,
 } from "@tabler/icons-react";
 import axios from "axios";
+import Head from "next/head";
 import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 
@@ -55,6 +56,10 @@ export default function Create() {
 
   return (
     <div className="create-layout">
+      <Head>
+        <title>Create | Designer App</title>
+      </Head>
+
       <div className="garment-img">
         <div className="garment-placeholder">
           <IconHanger2 className="garment-icon hanger" />

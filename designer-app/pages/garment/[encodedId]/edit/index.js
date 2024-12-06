@@ -6,6 +6,7 @@ import ItemToURL from "@/types/GarmentEncoder";
 import GarmentTypes from "@/types/GarmentTypes";
 import { useBodyID } from "@/util/hooks";
 import axios from "axios";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 
@@ -63,6 +64,10 @@ export default function Editor() {
         // @ts-ignore
         inert={validGarment ? undefined : ""}
       >
+        <Head>
+          <title>Editing Garment: {parsedGarment?.name} | Designer App</title>
+        </Head>
+
         <GarmentPuppet garment={parsedGarment} />
 
         <GarmentSpecEditor specs={parsedGarment?.specs} />

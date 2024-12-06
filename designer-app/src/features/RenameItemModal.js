@@ -3,6 +3,7 @@ import InputField from "@/components/InputField";
 import Modal from "@/components/Modal";
 import { pause } from "@/util/misc";
 import { IconCheck } from "@tabler/icons-react";
+import Head from "next/head";
 import { useEffect, useState } from "react";
 
 /** @param {ItemRenameModalProps} props */
@@ -59,6 +60,9 @@ const RenameItemModal = (props) => {
       className="rename-item"
       openState={[isOpen, closeRename]}
     >
+      <Head>
+        <title>{title} | Designer App</title>
+      </Head>
       <InputField
         className="item-rename-field"
         label={inputLabel}
