@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="b" viewBox="0 0 250 250">
+    <defs>
+        <style>
+            .d{stroke-linecap:round}.d,.e{stroke:#000;stroke-width:10px}.d{stroke-linejoin:round}.d,.g{fill:#b3b3b3}.e{stroke-miterlimit:10;fill:none}
+        </style>
+    </defs>
+    <g id="c">
+        <path d="M200 28.01S175.17 9.2 125 9.2 50 28.01 50 28.01C33.85 62.25 25.02 87.03 25.02 87.03s-1.53 13.2 80.31 13.2l28.9 28.9c81.84 0 90.75-42.1 90.75-42.1S216.15 62.25 200 28.01" class="d"/>
+        <path d="M49.51 61.19s19.89-28.9 75.1-28.94c55.7-.04 75.88 28.94 75.88 28.94" class="d"/>
+        <path d="M109.261 135.976 145 100.239l25.569 25.569-35.738 35.737z" class="g"/>
+        <path d="M109.71 135.8h36v105h-36z" class="g"/>
+        <path d="M109.71 240.8V135.98l35.74-35.74" style="stroke:#000;stroke-width:10px;stroke-linejoin:round;fill:#b3b3b3"/>
+        <path d="M52.04 27.24s-21.33 36.19 52.96 73l-25.93 57.25C3.58 118.87 27.05 80.26 27.05 80.26l24.98-53.02ZM197.96 27.24s21.33 36.19-52.96 73l25.93 57.25c75.49-38.61 52.02-77.23 52.02-77.23l-24.98-53.02Z" class="d"/>
+        <rect width="8" height="8" x="126.1" y="183.11" class="e" rx="4" ry="4"/>
+        <rect width="8" height="8" x="126.1" y="148.45" class="e" rx="4" ry="4"/>
+        <rect width="8" height="8" x="126.1" y="217.77" class="e" rx="4" ry="4"/>
+        <path d="M0 0h250v250H0z" style="fill:none"/>
+    </g>
+</svg>

@@ -1,3 +1,4 @@
+import GarmentTypes from "@/types/GarmentTypes";
 import axios from "axios";
 import { readFileSync } from "fs";
 import path from "path";
@@ -27,8 +28,12 @@ export default class PromptGenerator {
     SPEC: (schemaStr = "") => {
       return resolveAsset("specPrompt").replace("JSON_SCHEMA", schemaStr);
     },
-    // TODO: insert synamic list of garment types to pick from
-    CLASSIFIER: () => resolveAsset("garmentClassifierPrompt"),
+    CLASSIFY: () => {
+      return resolveAsset("classifyPrompt").replace(
+        "GARMENT_TYPES",
+        JSON.stringify(Object.keys(GarmentTypes), null, 2),
+      );
+    },
   };
 
   /**

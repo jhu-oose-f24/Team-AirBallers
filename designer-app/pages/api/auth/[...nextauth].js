@@ -24,6 +24,17 @@ export default NextAuth.default({
         token.id = user.id;
         token.accessToken = account.access_token;
         token.provider = account.provider;
+
+        if (isNewUser) {
+          await prisma.collection.create({
+            data: {
+              userId: user.id,
+              name: "Drafts",
+              editable: false,
+            },
+          })
+          .catch(console.log);
+        }
       }
 
       // Return previous token if no updates

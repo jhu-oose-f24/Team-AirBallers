@@ -1,11 +1,9 @@
-"use client";
-
 import ScrollContainer from "@/components/ScrollContainer";
 import Stitches from "@/components/Stitches";
 import Tooltip from "@/components/Tooltip";
+import { RootContext } from "@/context/RootContext";
 import css from "@/styles/InputField.module.css";
-import { useBodyRef } from "@/util/hooks";
-import { paletteFrom } from "@/util/tint";
+import { dangerPalette } from "@/util/tint";
 import {
   IconAlertCircleFilled,
   IconEye,
@@ -13,7 +11,13 @@ import {
   IconLock,
 } from "@tabler/icons-react";
 import clsx from "clsx";
-import { forwardRef, useEffect, useImperativeHandle, useState } from "react";
+import {
+  forwardRef,
+  useContext,
+  useEffect,
+  useImperativeHandle,
+  useState,
+} from "react";
 
 /** @type {ForwardRef<InputFieldProps, HTMLElement>} */
 const InputField = forwardRef((props, ref) => {
@@ -33,6 +37,7 @@ const InputField = forwardRef((props, ref) => {
 
     onChange,
     disabled,
+    tabIndex,
     readOnly,
     error,
 
@@ -45,10 +50,9 @@ const InputField = forwardRef((props, ref) => {
     style,
   } = props;
 
-  const documentBody = useBodyRef();
+  const { bodyRef } = useContext(RootContext);
 
   const [pwVisible, setPwVisible] = useState(false);
-
   /** @type {UseState<HTMLElement>} */
   const [labelRef, setLabelRef] = useState(null);
   /** @type {UseState<HTMLElement>} */
@@ -111,7 +115,7 @@ const InputField = forwardRef((props, ref) => {
   return (
     <div
       className={clsx(css["input-wrapper"], className)}
-      style={{ width, ...style, ...paletteFrom(error && "red") }}
+      style={{ width, ...style, ...(error && dangerPalette) }}
       ref={setRootRef}
     >
       {label &&
@@ -156,6 +160,7 @@ const InputField = forwardRef((props, ref) => {
                 autoComplete={autoComplete}
                 disabled={disabled}
                 readOnly={readOnly}
+                tabIndex={tabIndex}
                 ref={setFieldRef}
               />
             </ScrollContainer>
@@ -175,14 +180,13 @@ const InputField = forwardRef((props, ref) => {
               <Tooltip
                 disabled={!rootRef}
                 content={error}
-                appendTo={documentBody}
+                appendTo={bodyRef}
                 placement="top-end"
-                trigger="mouseenter click"
                 offset={getTooltipOffset}
                 onCreate={(inst) => {
                   if (!inst?.popper) return;
 
-                  const palette = paletteFrom("red");
+                  const palette = { ...dangerPalette };
                   for (let colorVar in palette) {
                     inst.popper.style.setProperty(colorVar, palette[colorVar]);
                   }

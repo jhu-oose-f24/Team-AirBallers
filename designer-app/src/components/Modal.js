@@ -1,5 +1,3 @@
-"use client";
-
 import ClothButton from "@/components/ClothButton";
 import ScrollContainer from "@/components/ScrollContainer";
 import Stitches from "@/components/Stitches";

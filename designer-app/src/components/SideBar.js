@@ -1,5 +1,3 @@
-"use client";
-
 import Button from "@/components/Button";
 import CollectionPreview from "@/components/CollectionPreview";
 import ScrollContainer from "@/components/ScrollContainer";
@@ -12,17 +10,23 @@ import { pause } from "@/util/misc";
 import { IconHanger, IconPlus } from "@tabler/icons-react";
 import axios from "axios";
 import clsx from "clsx";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 
 const SideBar = () => {
-  const { sideBarOpen, sideBarRef, setSideBarRef } = useContext(RootContext);
-  const { openMenuRef, activeTask, setActiveTask } = useContext(SideBarContext);
   const router = useRouter();
 
-  // TODO: refactor with collections
-  /** @type {UseState<Garment[]>} */
-  const [garments, setGarments] = useState([]);
+  const session = useSession();
+  const signedIn = session?.status === "authenticated";
+
+  const { sideBarOpen, sideBarRef, setSideBarRef } = useContext(RootContext);
+  const { openMenuRef, activeTask, setActiveTask } = useContext(SideBarContext);
+  /** @ts-ignore @type {CollectionWithGarments} */
+  const activeCollection = activeTask?.collection;
+
+  /** @type {UseState<CollectionWithGarments[]>} */
+  const [collections, setCollections] = useState([]);
 
   useEffect(() => {
     if (sideBarRef?.classList.contains("closed")) {
@@ -31,16 +35,54 @@ const SideBar = () => {
   }, [sideBarRef]);
 
   useEffect(() => {
+    if (!signedIn) return;
+
+    fetchCollections();
+  }, [signedIn]);
+
+  async function fetchCollections() {
     axios
-      .get("/api/collection")
-      .then(({ data }) => setGarments(data.reverse())) // Reverse the order of garments here
-      .catch((err) => console.log(err));
-  }, []);
+      .get("/api/collections")
+      .then(({ data }) => setCollections(data.reverse()))
+      .catch(console.log);
+  }
+
+  /** @param {string} name */
+  async function createCollection(name) {
+    axios
+      .post("/api/collection/create", { name })
+      .then((res) => {
+        const newCollection = res.data;
+        setCollections((prev) => [newCollection, ...prev]);
+      })
+      .catch(console.log);
+  }
 
   async function hideOpenMenu() {
     const lastOpen = openMenuRef.current;
     await pause(100);
     lastOpen?.state.isShown && lastOpen?.hide();
+  }
+
+  function saveRenamedCollection(newName = "Untitled") {
+    if (!activeCollection?.id) return false;
+
+    return axios
+      .put(`/api/collection/${activeCollection.id}`, {
+        ...activeCollection,
+        name: newName,
+      })
+      .then(() => (fetchCollections(), true))
+      .catch((err) => (console.log(err), false));
+  }
+
+  function deleteCollection() {
+    if (!activeCollection?.id) return false;
+
+    return axios
+      .delete(`/api/collection/${activeCollection.id}`)
+      .then(() => (fetchCollections(), true))
+      .catch((err) => (console.log(err), false));
   }
 
   return (
@@ -52,27 +94,30 @@ const SideBar = () => {
 
       <Stitches type="line" stitchWidth="0.17rem" svgClass="stitch-open" />
       <ScrollContainer className="collection-list" onScroll={hideOpenMenu}>
-        {/* TODO: create actual cards from collections */}
-        <CollectionPreview garments={garments?.slice(0, 5)} />
-        <CollectionPreview garments={garments?.slice(5, 7)} />
-        <CollectionPreview garments={garments?.slice(7, 15)} />
-        <CollectionPreview garments={garments?.slice(15, 40)} />
-        <CollectionPreview garments={garments?.slice(40, 43)} />
-        <CollectionPreview garments={garments?.slice(43, 48)} />
-        <CollectionPreview garments={garments?.slice(48)} />
+        {collections?.map((collection, idx) => (
+          <CollectionPreview key={idx} collection={collection} />
+        ))}
+        {!signedIn && (
+          <div className="sign-in-for-collections">
+            <span className="text-primary-darker/80">Nothing Here!</span>
+            <span className="text-[1.3rem] font-normal">
+              Sign in to save your creations and manage collections
+            </span>
+          </div>
+        )}
       </ScrollContainer>
       <Stitches type="line" stitchWidth="0.17rem" svgClass="stitch-close" />
 
       <div className="flex flex-col gap-[0.6rem]">
         <Button
           variant="secondary"
-          icon={<IconHanger />}
+          icon={<IconHanger className="-scale-x-[1]" />}
           label="New Garment"
           align="left"
           xPad="1.1rem"
           width="100%"
           size="sm"
-          // TODO: onClick: redirect to create new garment
+          onClick={() => router.replace("/create")}
         />
         <Button
           icon={<IconPlus />}
@@ -80,32 +125,36 @@ const SideBar = () => {
           width="100%"
           size="sm"
           // TODO: onClick: modal to create collection
+          onClick={() => {
+            const name = prompt("Enter Collection Name:");
+            if (name) createCollection(name);
+          }}
+          disabled={!signedIn}
         />
       </div>
 
       <RenameItemModal
         title="Rename Collection"
         inputLabel="Collection Name"
-        originalName="(Unknown)"
+        originalName={activeCollection?.name}
         activeTask={activeTask}
         setActiveTask={setActiveTask}
-        // TODO: save collection name
-        onSaveClick={null}
+        onSaveClick={saveRenamedCollection}
       />
 
       <DeleteItemModal
         title="Delete Collection"
         activeTask={activeTask}
         setActiveTask={setActiveTask}
+        onConfirmDelete={deleteCollection}
       >
-        {/* TODO: get collection name and # garments */}
         <p>
-          The <b>(Collection Name)</b> collection will be permanently deleted
-          along with the following contents:
+          The <b>{activeCollection?.name}</b> collection will be permanently
+          deleted along with the following contents:
         </p>
         <ul>
           <li>
-            <b>(Number)</b> Garments
+            <b>{activeCollection?.garments?.length}</b> Garments
           </li>
         </ul>
         <br />

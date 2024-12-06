@@ -4,6 +4,16 @@ import StringSpec from "@/types/StringSpec";
 import { GarmentType } from "@prisma/client";
 
 export default class Pants extends AbstractGarment {
+  static SPEC_NAMES = /** @type {const} */ ([
+    "Style",
+    "Rise",
+    "Closure Type",
+    "Color",
+    "Fabric",
+    "Pattern",
+    "Graphic",
+  ]);
+
   /** @type {BlankSpecSchema} */
   static SCHEMA = [
     {
@@ -56,7 +66,19 @@ export default class Pants extends AbstractGarment {
     { name: "Graphic", spec: StringSpec.defineSchema() },
   ];
 
-  constructor() {
-    super(GarmentType.Pants, "Untitled Pants", Pants.SCHEMA);
+  constructor(
+    type = GarmentType.Pants,
+    name = "Untitled Pants",
+    schema = Pants.SCHEMA,
+    prompts = [],
+    images = [],
+  ) {
+    super(type, name, schema, prompts, images);
+  }
+
+  /** @returns {SpecMap<typeof Pants>} */
+  specMap() {
+    // @ts-ignore
+    return super.specMap();
   }
 }

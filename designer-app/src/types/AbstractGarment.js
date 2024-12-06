@@ -1,20 +1,12 @@
 import AbstractSpecType from "@/types/AbstractSpecType";
-import EnumSpec from "@/types/EnumSpec";
-import MeasurementSpec from "@/types/MeasurementSpec";
-import StringSpec from "@/types/StringSpec";
+import SpecTypes from "@/types/SpecTypes";
 import { GarmentType } from "@prisma/client";
 
 /** @abstract */
 export default class AbstractGarment {
-  static SPEC_TYPES = {
-    MeasurementSpec,
-    EnumSpec,
-    StringSpec,
-    // add more here
-  };
+  type;
 
   name;
-  type;
   specs;
   prompts;
   images;
@@ -36,9 +28,15 @@ export default class AbstractGarment {
 
   /** @param {NamedSpec["spec"]} spec */
   static parseSpec(spec) {
+    let parsed = spec;
+
+    if (typeof spec === "string") {
+      parsed = JSON.parse(spec);
+    }
+
     /** @type {typeof AbstractSpecType} */
-    const SpecType = AbstractGarment.SPEC_TYPES[spec?.["class"]];
-    return SpecType?.from(spec);
+    const SpecType = SpecTypes[parsed?.["type"]];
+    return SpecType?.from(parsed);
   }
 
   /**
@@ -52,14 +50,14 @@ export default class AbstractGarment {
     }));
   }
 
-  /** @param {Garment} obj */
+  /** @param {Partial<Garment>} obj */
   static from(obj) {
     const { type, name, specs, prompts, images } = obj;
 
     return new this(type, name, JSON.parse(specs), prompts, images);
   }
 
-  /** @param {object} specValues */
+  /** @param {{ [k: string]: any }} specValues */
   parseValues(specValues) {
     this.specs = this.specs.map(({ name, spec }) => {
       spec.setValue(specValues[name]);
@@ -95,6 +93,13 @@ export default class AbstractGarment {
       prompts,
       images,
     };
+  }
+
+  specMap() {
+    return this.specs.reduce((prev, spec) => {
+      prev[spec.name] = spec.spec;
+      return prev;
+    }, {});
   }
 
   getReadableSpecs() {

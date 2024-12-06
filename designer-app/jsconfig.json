@@ -3,7 +3,8 @@
     "module": "Preserve",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@pages/*": ["./pages/*"]
     },
     "jsx": "preserve",
     "allowJs": true,

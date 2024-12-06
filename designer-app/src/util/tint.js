@@ -1,4 +1,6 @@
 import chroma from "chroma-js";
+import colors from "tailwindcss/colors";
+
 /**
  * @param {number} h - Hue
  * @param {number} s - Saturation
@@ -38,3 +40,12 @@ export function paletteFrom(tint) {
     "--primary-input-placeholder": HSL(hue, 0.55, 0.45),
   };
 }
+
+/** @param {function(typeof colors): CSSColor} predicate */
+export function paletteFromTailwind(predicate) {
+  return paletteFrom(predicate?.(colors));
+}
+
+/** @type {CSSColor} */
+export const dangerColor = colors.rose[400];
+export const dangerPalette = paletteFrom(dangerColor);

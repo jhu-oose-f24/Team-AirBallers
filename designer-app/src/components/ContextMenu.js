@@ -1,7 +1,7 @@
 import Tooltip from "@/components/Tooltip";
 import css from "@/styles/ContextMenu.module.css";
 import { pause } from "@/util/misc";
-import { paletteFrom } from "@/util/tint";
+import { dangerPalette } from "@/util/tint";
 import { IconQuestionMark } from "@tabler/icons-react";
 import clsx from "clsx";
 import React, { useEffect, useRef, useState } from "react";
@@ -34,7 +34,7 @@ const ContextMenu = (props) => {
           headerRef.current?.focus();
         }}
         onKeyDown={optionKeyDown}
-        style={{ ...paletteFrom(option.destructive && "red") }}
+        style={option.destructive && dangerPalette}
         tabIndex={0}
       >
         {option.icon || <IconQuestionMark opacity={0} />}

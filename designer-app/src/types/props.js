@@ -23,6 +23,7 @@
  *   onClick?: React.MouseEventHandler;
  *   loading?: boolean;
  *   disabled?: boolean;
+ *   tabIndex?: React.HTMLAttributes["tabIndex"];
  *   label?: string;
  *   icon?: JSX.Element;
  *   image?: string;
@@ -31,6 +32,7 @@
  *   width?: React.CSSProperties["width"];
  *   stretch?: boolean;
  *   align?: React.CSSProperties["justifyContent"];
+ *   reverse?: boolean;
  *   size?: "xs" | "sm" | "lg";
  *   fontSize?: React.CSSProperties["fontSize"];
  *   xPad?: React.CSSProperties["paddingInline"];
@@ -68,6 +70,7 @@
  *   width?: string;
  *   onChange?: React.InputHTMLAttributes["onChange"];
  *   disabled?: boolean;
+ *   tabIndex?: React.HTMLAttributes["tabIndex"];
  *   error?: string;
  *   style?: React.CSSProperties;
  * }} GeneralInputProps
@@ -164,6 +167,7 @@
 /**
  * @typedef {{
  *   itemName: string;
+ *   showMenu?: boolean;
  *   contextTitle: string;
  *   contextOptions: ContextMenuOption[];
  *   openMenuRef: React.MutableRefObject;
@@ -175,7 +179,11 @@
  * }} GridItemInfoProps
  */
 
-/** @typedef {{ garments: Garment[] }} CollectionPreviewProps */
+/**
+ * @typedef {{
+ *   collection: CollectionWithGarments;
+ * }} CollectionPreviewProps
+ */
 
 /** @typedef {{ garment: Garment }} GarmentCardProps */
 
@@ -203,13 +211,8 @@
 
 /**
  * @typedef {{
- *   activeTask: ActiveTask;
- *   setActiveTask: SetState<ActiveTask>;
- * }} ItemActionModalProps
- */
-
-/**
- * @typedef {ItemActionModalProps & {
+ *   activeTask: ActiveGarmentTask | ActiveCollectionTask;
+ *   setActiveTask: SetState<ActiveGarmentTask | ActiveCollectionTask>;
  *   title: string;
  * }} DynamicItemActionModalProps
  */
@@ -217,6 +220,7 @@
 /**
  * @typedef {DynamicItemActionModalProps & {
  *   children?: React.ReactNode;
+ *   onConfirmDelete: () => boolean | Promise<boolean>;
  * }} ItemDeleteModalProps
  */
 
@@ -224,6 +228,26 @@
  * @typedef {DynamicItemActionModalProps & {
  *   inputLabel: string;
  *   originalName: string;
- *   onSaveClick: React.MouseEventHandler;
+ *   onSaveClick: (name: string) => boolean | Promise<boolean>;
  * }} ItemRenameModalProps
+ */
+
+/**
+ * @typedef {{
+ *   activeTask: ActiveGarmentTask;
+ *   setActiveTask: SetState<ActiveGarmentTask>;
+ *   onMove?: function;
+ * }} GarmentMoveModalProps
+ */
+
+/**
+ * @template {ValueOf<GarmentTypes>} T
+ * @typedef {{
+ *   specs: SpecMap<T>;
+ * }} PuppetProps
+ */
+
+/**
+ * @template {SpecType} T
+ * @typedef {DefinedNamedSpec<T>} SpecEditorProps
  */

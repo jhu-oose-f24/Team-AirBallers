@@ -23,7 +23,7 @@
  */
 
 /**
- * @template T
+ * @template {object} T
  * @typedef {T[keyof T]} ValueOf
  */
 
@@ -69,39 +69,74 @@
  */
 
 /**
- * @typedef {(typeof import("@/types/AbstractSpecType"))["default"]} AbstractSpecType
+ * @typedef {import("@/types/AbstractSpecType")["default"]} AbstractSpecType
  *
+ * @typedef {import("@/types/AbstractGarment")["default"]} AbstractGarment
  *
+ * @typedef {import("@/types/GarmentTypes")["default"]} GarmentTypes
+ *
+ * @typedef {import("@/types/SpecTypes")["default"]} SpecTypes
+ *
+ * @typedef {ValueOf<SpecTypes>} SpecType
+ *
+ * @typedef {InstanceType<AbstractGarment>} GarmentInstance
+ */
+
+/**
+ * @template {SpecType} T
+ * @typedef {InstanceType<T>} SpecInstance
+ */
+
+/**
  * @typedef {ReturnType<AbstractSpecType["defineSchema"]>} BlankAbstractSpec
- *
- * @typedef {{
- *   name: string;
- *   spec: InstanceType<AbstractSpecType> | BlankAbstractSpec | string;
- * }} NamedSpec
- *
  *
  * @typedef {{
  *   name: string;
  *   spec: BlankAbstractSpec;
  * }} BlankNamedSpec
- *
+ */
+
+/**
+ * @template {SpecType} [T=SpecType] Default is `SpecType`
  * @typedef {{
  *   name: string;
- *   spec: InstanceType<AbstractSpecType>;
+ *   spec: SpecInstance<T> | BlankAbstractSpec | string;
+ * }} NamedSpec
+ */
+
+/**
+ * @template {SpecType} [T=SpecType] Default is `SpecType`
+ * @typedef {{
+ *   name: string;
+ *   spec: SpecInstance<T>;
  * }} DefinedNamedSpec
+ */
+
+/**
  *
  *
- * @typedef {NamedSpec[]} SpecSchema
+ * @typedef {NamedSpec<SpecType>[]} SpecSchema
  *
- * @typedef {DefinedNamedSpec[]} DefinedSpecSchema
+ * @typedef {DefinedNamedSpec<SpecType>[]} DefinedSpecSchema
  *
  * @typedef {BlankNamedSpec[]} BlankSpecSchema
+ */
+
+/**
+ * @template {ValueOf<GarmentTypes>} G
+ * @typedef {{
+ *   [S in G["SPEC_NAMES"][number]]: SpecInstance<SpecType>;
+ * }} SpecMap
  */
 
 /**
  * @typedef {import("@prisma/client").User} User
  *
  * @typedef {import("@prisma/client").Collection} Collection
+ *
+ * @typedef {Collection & { garments: Garment[] }} CollectionWithGarments
+ *
+ * @typedef {Collection & { numGarments: number }} CollectionWithGarmentCount
  *
  * @typedef {import("@prisma/client").Garment} Garment
  *
@@ -115,9 +150,51 @@
 /** @typedef {React.MutableRefObject<import("tippy.js").Instance>} TooltipRef */
 
 /**
- * @typedef {{ action?: "move" | "rename" | "delete" }} ActiveTask
+ * @typedef {{
+ *   action?: "move" | "edit" | "rename" | "delete";
+ *   garment?: Garment;
+ * }} ActiveGarmentTask
  *
- * @typedef {ActiveTask & { garment?: Garment }} ActiveGarmentTask
  *
- * @typedef {ActiveTask & { collection?: Collection }} ActiveCollectionTask
+ * @typedef {{
+ *   action?: "rename" | "delete";
+ *   collection?: Collection;
+ * }} ActiveCollectionTask
+ */
+
+/** @typedef {React.FC<SpecEditorProps<SpecType>>} SpecEditor */
+
+/**
+ * @typedef {import("next").PageConfig | undefined} ApiConfig
+ *
+ * @typedef {(typeof import("@/util/ApiHandler").METHODS)[number]} ApiMethod
+ *
+ * @typedef {(
+ *   req: import("next").NextApiRequest,
+ *   res: import("next").NextApiResponse,
+ * ) => void | Promise<void>} ApiHandler
+ *
+ *
+ * @typedef {(handler: ApiHandler) => ApiHandlerBuilder} ApiHandlerSetter
+ *
+ * @typedef {{
+ *   [M in ApiMethod]: ApiHandler;
+ * } & {
+ *   set: (
+ *     builder: ApiHandlerBuilder,
+ *     method: ApiMethod,
+ *     handler: ApiHandler,
+ *   ) => ApiHandlerBuilder;
+ * }} ApiDefinedHandlers
+ *
+ *
+ * @typedef {{
+ *   [M in ApiMethod]: ApiHandlerSetter;
+ * } & {
+ *   build: () => ApiHandler;
+ *   buildWithConfig: (config: ApiConfig) => {
+ *     handler: ApiHandler;
+ *     config: ApiConfig;
+ *   };
+ * }} ApiHandlerBuilder
  */
