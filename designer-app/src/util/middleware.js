@@ -1,8 +1,6 @@
 import { default as authOptions } from "@pages/api/auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
 
-import ApiHandler from "@/util/ApiHandler";
-
 // @ts-ignore
 /** @type {ApiHandler} */
 export const authMiddleware = async (req, res) => {
