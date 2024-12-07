@@ -7,21 +7,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// Represents the current User of the application; Provided by next-auth
 model User {
-  // Provided by next-auth
   id            String       @id @default(auto()) @map("_id") @db.ObjectId
   name          String?
   email         String?      @unique
   emailVerified DateTime?
   image         String?
-  accounts      Account[]
-  sessions      Session[]
-  // Added for designer-app
-  collections   Collection[]
+  accounts      Account[]     // NextAuth: All Linked accounts
+  sessions      Session[]     // NextAuth: All currently active sessions
+  collections   Collection[]  // Added for designer-app: the user's Collections
 }
 
+// Represents an account linked to the user; Provided by next-auth
 model Account {
-  // Provided by next-auth
   id                String   @id @default(auto()) @map("_id") @db.ObjectId
   userId            String   @db.ObjectId
   type              String
@@ -41,25 +40,27 @@ model Account {
   @@unique([provider, providerAccountId])
 }
 
+// Represents a user's collection of garments
 model Collection {
   id        String    @id @default(auto()) @map("_id") @db.ObjectId
   garments  Garment[]
   name      String
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  editable  Boolean   @default(false)
+  editable  Boolean   @default(false)     // Indicates if the collection can be edited
   // Relation to User
   user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String    @db.ObjectId
 }
 
+// Represents an individual garment in a collection
 model Garment {
   id           String          @id @default(auto()) @map("_id") @db.ObjectId
   type         GarmentType
   name         String
-  specs        String
-  prompts      GarmentPrompt[]
-  images       GarmentImage[]
+  specs        String           // JSON string of structured specs
+  prompts      GarmentPrompt[]  // History of prompts used to create the garment
+  images       GarmentImage[]   // All the images related to each garment
   createdAt    DateTime        @default(now())
   updatedAt    DateTime        @updatedAt
   // Relation to Collection
@@ -67,21 +68,25 @@ model Garment {
   collectionId String          @db.ObjectId
 }
 
+// Represents a text prompt used to generate a garment
 type GarmentPrompt {
   text      String
   createdAt DateTime @default(now())
 }
 
+// Represents an image of a garment
 type GarmentImage {
   url       String
   createdAt DateTime @default(now())
 }
 
+// Enum for garment types
 enum GarmentType {
   Shirt
   Pants
 }
 
+// Represents a session for the user
 model Session {
   id      String   @id @default(auto()) @map("_id") @db.ObjectId
   userId  String   @db.ObjectId
