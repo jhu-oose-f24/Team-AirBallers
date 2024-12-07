@@ -1,39 +1,4 @@
-/**
- * @typedef {import("next").PageConfig | undefined} ApiConfig
- *
- * @typedef {(typeof METHODS)[number]} ApiMethod
- *
- * @typedef {(
- *   req: import("next").NextApiRequest,
- *   res: import("next").NextApiResponse,
- * ) => void | Promise<void>} ApiHandler
- *
- *
- * @typedef {(handler: ApiHandler) => ApiHandlerBuilder} ApiHandlerSetter
- *
- * @typedef {{
- *   [M in ApiMethod]: ApiHandler;
- * } & {
- *   set: (
- *     builder: ApiHandlerBuilder,
- *     method: ApiMethod,
- *     handler: ApiHandler,
- *   ) => ApiHandlerBuilder;
- * }} ApiDefinedHandlers
- *
- *
- * @typedef {{
- *   [M in ApiMethod]: ApiHandlerSetter;
- * } & {
- *   build: () => ApiHandler;
- *   buildWithConfig: (config: ApiConfig) => {
- *     handler: ApiHandler;
- *     config: ApiConfig;
- *   };
- * }} ApiHandlerBuilder
- */
-
-const METHODS = /** @type {const} */ ([
+export const METHODS = /** @type {const} */ ([
   "GET",
   "POST",
   "PUT",
@@ -43,11 +8,8 @@ const METHODS = /** @type {const} */ ([
   "OPTIONS",
 ]);
 
-// TODO: define middleware ?
-// app.use(cors({ credentials: true }));
-// app.use(helmet());
-
-export default function ApiHandler() {
+/** @param {ApiHandler} middleware */
+export default function ApiHandler(middleware = null) {
   /** @ts-ignore @type {ApiDefinedHandlers} */
   const handlers = {
     set(builder, method, handler) {
@@ -59,7 +21,7 @@ export default function ApiHandler() {
   /** @ts-ignore @type {ApiHandlerBuilder} */
   const routeBuilder = {
     build() {
-      return async (req, res) => {
+      const handler = async (req, res) => {
         /** @type {ApiHandler} */
         const handler = handlers[req.method];
 
@@ -67,8 +29,11 @@ export default function ApiHandler() {
           res.status(405).json({ error: `Method ${req.method} not allowed` });
           return;
         }
+        await middleware?.(req, res);
         await handler?.(req, res);
       };
+
+      return handler;
     },
 
     buildWithConfig(config = undefined) {

@@ -167,6 +167,7 @@
 /**
  * @typedef {{
  *   itemName: string;
+ *   showMenu?: boolean;
  *   contextTitle: string;
  *   contextOptions: ContextMenuOption[];
  *   openMenuRef: React.MutableRefObject;
@@ -178,7 +179,11 @@
  * }} GridItemInfoProps
  */
 
-/** @typedef {{ garments: Garment[] }} CollectionPreviewProps */
+/**
+ * @typedef {{
+ *   collection: CollectionWithGarments;
+ * }} CollectionPreviewProps
+ */
 
 /** @typedef {{ garment: Garment }} GarmentCardProps */
 
@@ -208,11 +213,6 @@
  * @typedef {{
  *   activeTask: ActiveGarmentTask | ActiveCollectionTask;
  *   setActiveTask: SetState<ActiveGarmentTask | ActiveCollectionTask>;
- * }} ItemActionModalProps
- */
-
-/**
- * @typedef {ItemActionModalProps & {
  *   title: string;
  * }} DynamicItemActionModalProps
  */
@@ -220,6 +220,7 @@
 /**
  * @typedef {DynamicItemActionModalProps & {
  *   children?: React.ReactNode;
+ *   onConfirmDelete: () => boolean | Promise<boolean>;
  * }} ItemDeleteModalProps
  */
 
@@ -227,8 +228,16 @@
  * @typedef {DynamicItemActionModalProps & {
  *   inputLabel: string;
  *   originalName: string;
- *   onSaveClick: React.MouseEventHandler;
+ *   onSaveClick: (name: string) => boolean | Promise<boolean>;
  * }} ItemRenameModalProps
+ */
+
+/**
+ * @typedef {{
+ *   activeTask: ActiveGarmentTask;
+ *   setActiveTask: SetState<ActiveGarmentTask>;
+ *   onMove?: function;
+ * }} GarmentMoveModalProps
  */
 
 /**

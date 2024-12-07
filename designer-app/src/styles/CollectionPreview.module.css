@@ -29,3 +29,8 @@
   @apply -ml-[0.2rem];
   @apply z-10;
 }
+
+.garment-grid .preview .image-unknown {
+  @apply -scale-x-100 w-[75%] h-[75%];
+  @apply text-primary-darker;
+}

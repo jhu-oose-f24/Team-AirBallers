@@ -51,7 +51,11 @@ const Header = () => {
   }
 
   return (
-    <header className="app-header">
+    <header
+      className="app-header"
+      // @ts-ignore
+      inert={profileOpen ? "" : undefined}
+    >
       <Button
         variant="hint"
         className="action-button"
@@ -63,18 +67,16 @@ const Header = () => {
         stretch
       />
 
-      {title && (
-        <Button
-          variant="hint"
-          className={clsx("title-link", back && "back")}
-          icon={back && <IconChevronLeft stroke={2.8} />}
-          label={title}
-          onClick={() => back && router.push(back)}
-          fontSize="1.8rem"
-          xPad={back && "0.3rem"}
-          stretch
-        />
-      )}
+      <Button
+        variant="hint"
+        className={clsx("title-link", back && "back", !title && "loading")}
+        icon={back && <IconChevronLeft stroke={2.8} />}
+        label={title || "----------------"}
+        onClick={() => back && router.push(back)}
+        fontSize="1.8rem"
+        xPad={back && "0.3rem"}
+        stretch
+      />
 
       {signedIn && (
         <Button

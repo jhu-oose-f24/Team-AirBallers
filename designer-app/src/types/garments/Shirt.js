@@ -63,8 +63,14 @@ export default class Shirt extends AbstractGarment {
     { name: "Graphic", spec: StringSpec.defineSchema() },
   ];
 
-  constructor() {
-    super(GarmentType.Shirt, "Untitled Shirt", Shirt.SCHEMA);
+  constructor(
+    type = GarmentType.Shirt,
+    name = "Untitled Shirt",
+    schema = Shirt.SCHEMA,
+    prompts = [],
+    images = [],
+  ) {
+    super(type, name, schema, prompts, images);
   }
 
   /** @returns {SpecMap<typeof Shirt>} */

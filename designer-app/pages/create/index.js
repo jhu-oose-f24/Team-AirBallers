@@ -1,12 +1,9 @@
-
 import randomExamplePrompt from "@/assets/examplePrompts";
 import Button from "@/components/Button";
 import InputField from "@/components/InputField";
 import { RootContext } from "@/context/RootContext";
-import GarmentEncoder from "@/types/GarmentEncoder";
-import Shirt from "@/types/garments/Shirt";
+import ItemToURL from "@/types/GarmentEncoder";
 import { useBodyID } from "@/util/hooks";
-import { pause } from "@/util/misc";
 import {
   IconClothesRack,
   IconHanger2,
@@ -14,17 +11,19 @@ import {
   IconShirtFilled,
   IconSparkles,
 } from "@tabler/icons-react";
-// import axios from "axios";
+import axios from "axios";
+import Head from "next/head";
 import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 
 export default function Create() {
   const router = useRouter();
-  
+
   const { setHeaderState, setActiveTask } = useContext(RootContext);
 
   const [examplePrompt, setExamplePrompt] = useState("");
   const [prompt, setPrompt] = useState("");
+  const [promptErr, setPromptErr] = useState("");
   const [generating, setGenerating] = useState(false);
 
   useBodyID("create");
@@ -37,31 +36,31 @@ export default function Create() {
   function createGarment() {
     if (generating) return;
 
-    // Testing flow from home to edit page
-
-    /** @ts-ignore @type {Garment} */
-    const garment = new Shirt().serialize();
-    garment.id = "674b7e80e94e6a3a2e256970"; // example MongoDB id
-
+    setPromptErr("");
     setGenerating(true);
-    pause(1000)
-      .then(() => {
-        // axios
-        // .post("/api/prompt", { prompt })
-        // .then(({ data }) => {
-        // /** @type {Garment} */
-        // const garment = data.garment;
-        setActiveTask({ action: "edit", garment });
+    axios
+      .post("/api/garment/create", { prompt })
+      .then((res) => {
+        /** @type {Garment} */
+        const garment = res.data;
+        if (!garment) return;
 
-        const garmentURL = GarmentEncoder.encode(garment);
+        const garmentURL = ItemToURL.encode(garment.id);
+        if (!garmentURL) return;
+
+        setActiveTask({ action: "edit", garment });
         router.replace(`garment/${garmentURL}/edit`);
       })
-      .catch((err) => console.log(err))
+      .catch(({ response }) => setPromptErr(response?.data?.message))
       .finally(() => setGenerating(false));
   }
 
   return (
     <div className="create-layout">
+      <Head>
+        <title>Create | Designer App</title>
+      </Head>
+
       <div className="garment-img">
         <div className="garment-placeholder">
           <IconHanger2 className="garment-icon hanger" />
@@ -79,6 +78,7 @@ export default function Create() {
           placeholder={examplePrompt}
           iconLeft={<IconSearch />}
           value={prompt}
+          error={promptErr}
           onChange={(e) => setPrompt(e.target.value)}
         />
         <Button

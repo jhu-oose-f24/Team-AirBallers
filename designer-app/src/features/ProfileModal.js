@@ -5,6 +5,7 @@ import Tooltip from "@/components/Tooltip";
 import { RootContext } from "@/context/RootContext";
 import { IconBrandGoogleFilled, IconUserCircle } from "@tabler/icons-react";
 import { getProviders, signOut, useSession } from "next-auth/react";
+import Head from "next/head";
 import { useContext, useEffect, useState } from "react";
 
 /** @type {{ [k in OAuthProvider]?: TablerIcon }} */
@@ -42,6 +43,10 @@ const ProfileModal = (props) => {
       offset="4rem"
       openState={[profileOpen, setProfileOpen]}
     >
+      <Head>
+        <title>Profile | Designer App</title>
+      </Head>
+
       <div className="profile-summary">
         <div className="pfp-wrapper">
           {user?.image ? (

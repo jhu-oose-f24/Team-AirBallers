@@ -1,11 +1,12 @@
-
+import EditorContextProvider from "@/context/EditorContext";
+import { RootContext } from "@/context/RootContext";
 import GarmentPuppet from "@/features/GarmentPuppet";
 import GarmentSpecEditor from "@/features/GarmentSpecEditor";
-import { RootContext } from "@/context/RootContext";
-import GarmentEncoder from "@/types/GarmentEncoder";
+import ItemToURL from "@/types/GarmentEncoder";
 import GarmentTypes from "@/types/GarmentTypes";
-import Shirt from "@/types/garments/Shirt";
 import { useBodyID } from "@/util/hooks";
+import axios from "axios";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 
@@ -16,6 +17,7 @@ export default function Editor() {
 
   /** @type {UseState<GarmentInstance>} */
   const [parsedGarment, setParsedGarment] = useState(null);
+  const [validGarment, setValidGarment] = useState(undefined);
 
   useBodyID("edit");
 
@@ -26,27 +28,50 @@ export default function Editor() {
   }, []);
 
   useEffect(() => {
+    parseGarment();
+  }, [encodedId, activeTask]);
+
+  async function parseGarment() {
     if (typeof encodedId !== "string") return;
 
     let garment = activeTask?.garment;
-    if (!activeTask?.garment) {
-      // testing with example garment
-      /** @ts-ignore @type {Garment} */
-      const garment = new Shirt().serialize();
-      garment.id = GarmentEncoder.decode(encodedId);
-      // TODO: re-fetch garment (from url) on refresh
+    if (!garment) {
+      const garmentId = ItemToURL.decode(encodedId);
 
-      setActiveTask({ action: "edit", garment });
+      if (garmentId) {
+        await axios
+          .get(`/api/garment/${garmentId}`)
+          .then((res) => {
+            garment = res.data;
+            setActiveTask({ action: "edit", garment });
+          })
+          .catch(console.log);
+      }
     }
 
-    setParsedGarment(GarmentTypes[garment?.type]?.from(garment));
-  }, [encodedId, activeTask]);
+    if (garment) {
+      setParsedGarment(GarmentTypes[garment?.type]?.from(garment));
+      setValidGarment(true);
+    } else {
+      setValidGarment(false);
+    }
+  }
 
   return (
-    <div className="edit-layout">
-      <GarmentPuppet garment={parsedGarment} />
+    <EditorContextProvider>
+      <div
+        className="edit-layout"
+        // @ts-ignore
+        inert={validGarment ? undefined : ""}
+      >
+        <Head>
+          <title>Editing Garment: {parsedGarment?.name} | Designer App</title>
+        </Head>
 
-      <GarmentSpecEditor specs={parsedGarment?.specs} />
-    </div>
+        <GarmentPuppet garment={parsedGarment} />
+
+        <GarmentSpecEditor specs={parsedGarment?.specs} />
+      </div>
+    </EditorContextProvider>
   );
 }

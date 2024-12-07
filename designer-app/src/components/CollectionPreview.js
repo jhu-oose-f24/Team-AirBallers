@@ -2,20 +2,26 @@ import GridItemInfo from "@/components/GridItemInfo";
 import { RootContext } from "@/context/RootContext";
 import { SideBarContext } from "@/context/SideBarContext";
 import css from "@/styles/CollectionPreview.module.css";
-import { IconEdit, IconTrash } from "@tabler/icons-react";
+import ItemToURL from "@/types/GarmentEncoder";
+import { IconEdit, IconHanger, IconTrash } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 
 /** @param {CollectionPreviewProps} props */
 const CollectionPreview = (props) => {
-  const { garments } = props;
+  const { collection } = props;
+
+  const router = useRouter();
 
   const { sideBarRef } = useContext(RootContext);
   const { openMenuRef, setActiveTask } = useContext(SideBarContext);
 
-  const router = useRouter();
+  const [garments, setGarments] = useState([]);
 
-  const collectionName = "Collection Name"; // TODO: from props
+  useEffect(() => {
+    const newGarments = collection?.garments || [];
+    setGarments([...newGarments].reverse());
+  }, [collection]);
 
   function generatePreviews() {
     const previews = [];
@@ -33,15 +39,16 @@ const CollectionPreview = (props) => {
         break;
       }
 
+      const imageUrl = garment.images?.slice(-1)?.[0]?.url;
+
       previews.push(
         <div
           key={previews.length}
           className={css.preview}
-          style={{
-            // TODO: set url() from garment
-            backgroundImage: null,
-          }}
-        />,
+          style={{ backgroundImage: imageUrl && `url(${imageUrl})` }}
+        >
+          {!imageUrl && <IconHanger className={css["image-unknown"]} />}
+        </div>,
       );
     }
 
@@ -53,19 +60,27 @@ const CollectionPreview = (props) => {
   }
 
   function onRenameClick() {
-    // @ts-ignore TODO: set collection
-    setActiveTask({ collection: {}, action: "rename" });
+    setActiveTask({ collection, action: "rename" });
   }
 
   function onDeleteClick() {
-    // @ts-ignore TODO: set collection
-    setActiveTask({ collection: {}, action: "delete" });
+    setActiveTask({ collection, action: "delete" });
+  }
+
+  function goToCollection() {
+    if (!collection?.id) return;
+
+    const collectionURL = ItemToURL.encode(collection.id);
+    if (!collectionURL) return;
+
+    router.push(`/collection/${collectionURL}`);
   }
 
   return (
     <div className={css["preview-card"]}>
       <GridItemInfo
-        itemName={collectionName}
+        itemName={collection?.name}
+        showMenu={collection?.editable}
         contextTitle="Collection Options"
         contextOptions={[
           { label: "Rename", icon: <IconEdit />, action: onRenameClick },
@@ -83,7 +98,7 @@ const CollectionPreview = (props) => {
       <div
         className={css["garment-grid"]}
         // TODO: go to specific collection
-        onClick={() => router.push("/collection")}
+        onClick={goToCollection}
       >
         {generatePreviews()}
       </div>

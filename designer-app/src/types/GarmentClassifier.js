@@ -1,10 +1,6 @@
-import {
-  invalidInputError,
-  promptGenerationError,
-} from "@/responses/responses";
+import { classificationError, invalidInputError } from "@/responses/responses";
 import GarmentTypes from "@/types/GarmentTypes";
 import PromptGenerator from "@/types/PromptGenerator";
-import { assert } from "console";
 
 /** @hideconstructor */
 export default class GarmentClassifier {
@@ -24,18 +20,16 @@ export default class GarmentClassifier {
         userPrompt,
       );
 
-      assert(garmentType, "No applicable garment type");
-
+      /** @type {ValueOf<GarmentTypes>} */
       const garmentClass = GarmentTypes[garmentType];
-      assert(
-        garmentClass !== undefined,
-        `${garmentType} not a valid garment type`,
-      );
+      if (!garmentClass?.SCHEMA) {
+        throw new Error("Garment type unknown");
+      }
 
       return garmentClass;
     } catch (error) {
       console.error("Error classifying garment:", error);
-      throw promptGenerationError(error);
+      throw classificationError(error);
     }
   }
 }
