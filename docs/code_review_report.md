@@ -43,3 +43,7 @@ There is very clear and detailed documentation on how to run the code.
 ### Eric
 
 - Enhanced the schema.prisma file with detailed comments to improve clarity and facilitate smoother understanding of relationships between classes. Ensured that naming conventions and style remained consistent between models.
+
+### Nicolas
+
+- I refactored the authentication handling logic to streamline user validation and session management. The updated code follows a modular approach, separating authentication concerns into reusable utilities and middleware functions. This ensures consistency across all routes and APIs that require user authentication. By centralizing these concerns, I reduced duplication and made the authentication flow more maintainable. Enhanced documentation including usage examples and expected request/response formats and potential error codes.
