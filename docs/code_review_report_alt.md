@@ -39,3 +39,7 @@ There is very clear and detailed documentation on how to run the code.
 - Refactor garment classifier and edit flow to be robust to variation in LLM output. OpenAI is fed and returns stringified JSON schemas that are much more stable and can be reliably parsed directly, removing the need for complex parsing and handling of edge cases, instead relying on pre-defined garment spec schemas (used in editor), and a list of garment instances to select from (classification).
 
 - 
+
+### Eric
+
+- Enhanced the schema.prisma file with detailed comments to improve clarity and facilitate smoother understanding of relationships between classes. Ensured that naming conventions and style remained consistent between models.
