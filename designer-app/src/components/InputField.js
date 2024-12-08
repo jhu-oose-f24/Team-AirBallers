@@ -3,7 +3,12 @@ import Stitches from "@/components/Stitches";
 import Tooltip from "@/components/Tooltip";
 import { RootContext } from "@/context/RootContext";
 import css from "@/styles/InputField.module.css";
-import { dangerPalette } from "@/util/tint";
+import {
+  dangerColor,
+  dangerPalette,
+  paletteFrom,
+  setTooltipPalette,
+} from "@/util/tint";
 import {
   IconAlertCircleFilled,
   IconEye,
@@ -47,6 +52,7 @@ const InputField = forwardRef((props, ref) => {
     textArea,
     wrapText,
 
+    tint,
     style,
   } = props;
 
@@ -115,7 +121,11 @@ const InputField = forwardRef((props, ref) => {
   return (
     <div
       className={clsx(css["input-wrapper"], className)}
-      style={{ width, ...style, ...(error && dangerPalette) }}
+      style={{
+        width,
+        ...style,
+        ...(error ? dangerPalette : paletteFrom(tint)),
+      }}
       ref={setRootRef}
     >
       {label &&
@@ -183,14 +193,7 @@ const InputField = forwardRef((props, ref) => {
                 appendTo={bodyRef}
                 placement="top-end"
                 offset={getTooltipOffset}
-                onCreate={(inst) => {
-                  if (!inst?.popper) return;
-
-                  const palette = { ...dangerPalette };
-                  for (let colorVar in palette) {
-                    inst.popper.style.setProperty(colorVar, palette[colorVar]);
-                  }
-                }}
+                onMount={(inst) => setTooltipPalette(inst, dangerColor)}
               >
                 <IconAlertCircleFilled
                   className="cursor-pointer"

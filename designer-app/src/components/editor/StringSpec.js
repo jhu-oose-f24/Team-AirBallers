@@ -1,10 +1,10 @@
-import SelectField from "@/components/SelectField";
+import InputField from "@/components/InputField";
 import { EditorContext } from "@/context/EditorContext";
-import EnumSpec from "@/types/EnumSpec";
+import StringSpec from "@/types/StringSpec";
 import { useContext, useState } from "react";
 
-/** @param {SpecEditorProps<typeof EnumSpec>} props */
-const EnumSpecEditor = (props) => {
+/** @param {SpecEditorProps<typeof StringSpec>} props */
+const StringSpecEditor = (props) => {
   const { name, spec } = props;
 
   const [_, setLastUpdated] = useContext(EditorContext).updatedState;
@@ -12,13 +12,10 @@ const EnumSpecEditor = (props) => {
   const [value, setValue] = useState(spec?.value);
 
   return (
-    <SelectField
+    <InputField
       label={name}
-      options={spec?.possibleValues.map((option) => ({
-        value: option,
-        label: option,
-      }))}
       value={value}
+      placeholder="None"
       onChange={(e) => {
         spec?.setValue(e.target.value);
         setValue(e.target.value);
@@ -28,4 +25,4 @@ const EnumSpecEditor = (props) => {
   );
 };
 
-export default EnumSpecEditor;
+export default StringSpecEditor;

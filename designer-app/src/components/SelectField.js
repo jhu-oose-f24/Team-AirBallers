@@ -4,6 +4,7 @@ import Tooltip from "@/components/Tooltip";
 import { RootContext } from "@/context/RootContext";
 import css from "@/styles/SelectField.module.css";
 import { pause } from "@/util/misc";
+import { setTooltipPalette } from "@/util/tint";
 import { IconChevronDown } from "@tabler/icons-react";
 import clsx from "clsx";
 import {
@@ -17,7 +18,7 @@ import {
 
 /** @type {ForwardRef<SelectFieldProps, HTMLElement>} */
 const SelectField = forwardRef((props, ref) => {
-  const { options = [], value, onChange, ...otherProps } = props;
+  const { options = [], value, onChange, tint, ...otherProps } = props;
 
   const { bodyRef } = useContext(RootContext);
 
@@ -176,7 +177,10 @@ const SelectField = forwardRef((props, ref) => {
       interactive
       placement="bottom"
       onCreate={(inst) => (dropdownRef.current = inst)}
-      onShow={() => setOptionsOpen(true)}
+      onShow={(inst) => {
+        setTooltipPalette(inst, tint);
+        setOptionsOpen(true);
+      }}
       onHide={() => setOptionsOpen(false)}
       arrow={false}
       maxWidth={dropdownWidth && `${dropdownWidth}px`}
@@ -195,6 +199,7 @@ const SelectField = forwardRef((props, ref) => {
           iconRight={<IconChevronDown className={css["select-arrow"]} />}
           value={parsedOptions[value]?.label || ""}
           readOnly
+          tint={tint}
           {...otherProps}
           ref={fieldRef}
         />
