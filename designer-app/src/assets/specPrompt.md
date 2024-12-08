@@ -8,6 +8,8 @@ The given JSON schema is a list of specs, each of which is associated with a nam
 
 - A StringSpec represents a string, with 'minLength' and 'maxLength' values constraining the length of the string.
 
+- A ColorSpec represents a color in hex string format, an example being #ffffff.
+
 Return a JSON object mapping the spec names to their generated values.
 
 JSON schema:
