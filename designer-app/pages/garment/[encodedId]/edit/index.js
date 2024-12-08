@@ -18,6 +18,7 @@ export default function Editor() {
   /** @type {UseState<GarmentInstance>} */
   const [parsedGarment, setParsedGarment] = useState(null);
   const [validGarment, setValidGarment] = useState(undefined);
+  const [lastUpdate, setLastUpdate] = useState(null);
 
   useBodyID("edit");
 
@@ -50,6 +51,7 @@ export default function Editor() {
     }
 
     if (garment) {
+      setLastUpdate(new Date(garment?.updatedAt));
       setParsedGarment(GarmentTypes[garment?.type]?.from(garment));
       setValidGarment(true);
     } else {
@@ -68,7 +70,7 @@ export default function Editor() {
           <title>Editing Garment: {parsedGarment?.name} | Designer App</title>
         </Head>
 
-        <GarmentPuppet garment={parsedGarment} />
+        <GarmentPuppet updatedAt={lastUpdate} garment={parsedGarment} />
 
         <GarmentSpecEditor specs={parsedGarment?.specs} />
       </div>
