@@ -1,15 +1,16 @@
 # Team-AirBallers
 
-## DEPLOYMENT:
-The latest deployment of Designer-App is live at: https://designer-app-orcin.vercel.app/
-
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-The Designer-App (final name TBD) allows you to use AI to generate and be creative with garments given a simple prompt. You can visualize the clothing and edit them as well. Your creations are saved in collections, which can be customized and organized to your liking.
+The Designer-App (final name TBD) allows you to use AI to generate and be creative with garments given a simple prompt. Our app uses Google OAuth for sign-in, making joining as a new user very simple. Once you create clothing, you can visualize them as well as edit them interactively. Your creations are saved in collections, which can be customized and organized to your liking.
 
 The frontend is designed with figma. Here's a snippet of the components used:
 
 ![](https://github.com/user-attachments/assets/b1fb76fb-4381-4eac-882e-27e7fd88c65e)
+
+## Deployment:
+
+The latest deployment of Designer-App is live at: https://designer-app-orcin.vercel.app/
 
 ## Install Node.js and Yarn (if not already installed)
 
