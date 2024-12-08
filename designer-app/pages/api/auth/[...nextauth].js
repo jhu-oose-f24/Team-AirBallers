@@ -18,15 +18,19 @@ export default NextAuth.default({
   secret: process.env.NEXTAUTH_SECRET,
 
   callbacks: {
-    async jwt({ token, user, account, profile, isNewUser }) {
-      // Initial sign in
-      if (account && user) {
-        token.id = user.id;
-        token.accessToken = account.access_token;
-        token.provider = account.provider;
+    // params: user, account, profile, email, credentials
+    async signIn({ user }) {
+      const draftsCount = await prisma.collection
+        .count({
+          where: {
+            AND: [{ userId: user.id }, { name: "Drafts" }, { editable: false }],
+          },
+        })
+        .catch(console.log);
 
-        if (isNewUser) {
-          await prisma.collection.create({
+      if (!draftsCount) {
+        await prisma.collection
+          .create({
             data: {
               userId: user.id,
               name: "Drafts",
@@ -34,7 +38,18 @@ export default NextAuth.default({
             },
           })
           .catch(console.log);
-        }
+      }
+
+      return true;
+    },
+
+    // params: token, user, account, profile, isNewUser
+    async jwt({ token, user, account }) {
+      // Initial sign in
+      if (account && user) {
+        token.id = user.id;
+        token.accessToken = account.access_token;
+        token.provider = account.provider;
       }
 
       // Return previous token if no updates

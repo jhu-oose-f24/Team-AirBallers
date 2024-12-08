@@ -33,7 +33,6 @@ export default ApiHandler(authMiddleware)
       });
 
       if (!collection) {
-        // TODO: initialize default Drafts elsewhere
         collection = await prisma.collection.create({
           data: {
             userId: user.id,
