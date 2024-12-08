@@ -12,7 +12,7 @@ import {
   IconPencil,
 } from "@tabler/icons-react";
 import clsx from "clsx";
-import { useContext, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 
 /** @param {{ garment: GarmentInstance }} props */
 const GarmentNameEditor = (props) => {
@@ -21,6 +21,7 @@ const GarmentNameEditor = (props) => {
   const { bodyRef } = useContext(RootContext);
   const [_, setLastUpdated] = useContext(EditorContext).updatedState;
 
+  const [newName, setNewName] = useState("");
   const [editingName, setEditingName] = useState(false);
   const [nameCopied, setNameCopied] = useState(false);
   /** @type {UseState<HTMLElement>} */
@@ -32,14 +33,23 @@ const GarmentNameEditor = (props) => {
 
   const CopyIcon = nameCopied ? IconCircleCheckFilled : IconCopy;
 
+  useEffect(() => {
+    if (!garment) return;
+
+    setNewName(garment?.name);
+  }, [garment]);
+
   function toggleEditMode() {
     if (!nameFieldRef.current) return;
 
-    if (!editingName) {
+    if (editingName) {
+      if (garment?.name !== newName) {
+        garment?.rename(newName || "Untitled");
+        setLastUpdated(Date.now());
+      }
+    } else {
       setNameCopied(false);
       nameFieldRef.current.focus();
-    } else if (!garment?.name) {
-      garment?.rename("Untitled");
     }
     setEditingName(!editingName);
   }
@@ -103,15 +113,12 @@ const GarmentNameEditor = (props) => {
         </Tooltip>
         <InputField
           className={css["name-input"]}
-          value={garment?.name || ""}
+          value={newName || ""}
           placeholder="Garment Name"
           width="100%"
           readOnly={!editingName}
           tabIndex={!editingName ? -1 : undefined}
-          onChange={(e) => {
-            garment?.rename(e.target.value);
-            setLastUpdated(Date.now());
-          }}
+          onChange={(e) => setNewName(e.target.value)}
           ref={nameFieldRef}
         />
       </span>

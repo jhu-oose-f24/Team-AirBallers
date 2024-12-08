@@ -142,3 +142,27 @@
   @apply ![border-right-width:--arrow-height];
   @apply !border-r-[--tooltip-border];
 }
+
+/* ======================== Color Picker ========================= */
+
+.color-picker.react-colorful {
+  @apply h-[15rem] w-[15rem];
+  @apply p-[1rem] gap-[1.5rem];
+}
+
+.color-picker .react-colorful__hue {
+  @apply h-[1.5rem];
+}
+.color-picker .react-colorful__saturation,
+.color-picker .react-colorful__hue {
+  @apply rounded-[0.8rem];
+  @apply border-[0.2rem] border-primary-lightest;
+  @apply outline outline-[0.25rem] outline-primary-dark;
+}
+
+.color-picker [class$="pointer"] {
+  @apply w-[1.8rem] h-[1.8rem];
+  @apply border-[0.2rem] border-primary-lightest;
+  @apply outline outline-[0.2rem] outline-primary-darkest;
+  @apply shadow-primary-darkest;
+}

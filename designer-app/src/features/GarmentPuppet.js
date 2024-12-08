@@ -19,20 +19,24 @@ const Puppets = {
   Pants: null, // TODO
 };
 
-/** @param {{ garment: GarmentInstance }} props */
+/** @param {{ garment: GarmentInstance; updatedAt: Date }} props */
 const GarmentPuppet = (props) => {
-  const { garment } = props;
+  const { garment, updatedAt } = props;
 
   const { encodedId } = useRouter().query;
 
   const [lastUpdated, _] = useContext(EditorContext).updatedState;
 
   const [saving, setSaving] = useState(false);
-  const [lastSaved, setLastSaved] = useState("");
+  const [lastSaved, setLastSaved] = useState(formatSaveDate(updatedAt));
   const debounceUpdateRef = useRef(null);
 
   /** @type {ValueOf<Puppets>} */
   const Puppet = Puppets[garment?.type];
+
+  useEffect(() => {
+    if (updatedAt) setLastSaved(formatSaveDate(updatedAt));
+  }, [updatedAt]);
 
   useEffect(() => {
     if (!lastUpdated || !garment) {
@@ -48,13 +52,31 @@ const GarmentPuppet = (props) => {
       setSaving(true);
       axios
         .put(`/api/garment/${garmentId}`, { garment: garment?.serialize() })
-        .then(() => setLastSaved(new Date().toLocaleTimeString()))
+        .then(() => setLastSaved(formatSaveDate(new Date())))
         .catch(console.log)
         .finally(() => setSaving(false));
     }, 1000);
 
     return () => clearTimeout(debounceUpdateRef.current);
   }, [lastUpdated]);
+
+  /** @param {Date} date */
+  function formatSaveDate(date) {
+    const day = date?.toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+    });
+
+    const time = date?.toLocaleTimeString("en-US", {
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+    });
+
+    if (!day || !time) return "";
+
+    return `${day} at ${time}`;
+  }
 
   return (
     <div className="garment-preview">
@@ -63,7 +85,7 @@ const GarmentPuppet = (props) => {
       <div className="puppet-box">
         <div className={clsx("last-updated", saving && "saving")}>
           <span>
-            {saving ? "Saving" : lastSaved && `Updated at ${lastSaved}`}
+            {saving ? "Saving" : lastSaved && `Last saved ${lastSaved}`}
           </span>
 
           {saving ? (

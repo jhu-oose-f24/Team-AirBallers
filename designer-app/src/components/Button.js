@@ -108,7 +108,7 @@ const Button = forwardRef((props, ref) => {
             "--primary-active-fill": bgColor,
           }),
           ...(variant === "hint" && {
-            "--primary-light": "var(--background-alt)",
+            "--primary-light": bgColor || "var(--background-alt)",
             "--primary-lighter": "transparent",
           }),
 

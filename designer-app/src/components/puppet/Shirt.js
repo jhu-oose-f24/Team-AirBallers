@@ -1,6 +1,7 @@
 import ShirtSVG from "@/assets/shirt/shirt.svg";
 import css from "@/styles/puppet/Shirt.module.css";
 import Shirt from "@/types/garments/Shirt";
+import chroma from "chroma-js";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
 
@@ -28,6 +29,34 @@ const ShirtPuppet = (props) => {
     return import(`@/assets/shirt/${asset}.svg`).catch(console.log);
   }
 
+  function calcAccentColor(color) {
+    if (!chroma.valid(color)) return "#aaa";
+    const [h, s, l] = chroma(color).hsl();
+    const accentL = l > 0.4 ? l - 0.14 : l + 0.14;
+
+    return chroma.hsl(h, s, accentL).hex("rgb");
+  }
+
+  /** @returns {React.CSSProperties} */
+  function getColorStyles() {
+    const mainColor = specs.Color.value;
+    const neckColor = specs["Neck Color"].value;
+    const sleeveColor = specs["Sleeve Color"].value;
+
+    return {
+      // @ts-ignore
+
+      "--main-color": mainColor,
+      "--main-outline": calcAccentColor(mainColor),
+
+      "--neck-color": neckColor,
+      "--neck-outline": calcAccentColor(neckColor),
+
+      "--sleeve-color": sleeveColor,
+      "--sleeve-outline": calcAccentColor(sleeveColor),
+    };
+  }
+
   return (
     <div
       className={clsx(
@@ -35,6 +64,7 @@ const ShirtPuppet = (props) => {
         css["shirt-puppet"],
         !(sleeve || neck) && "opacity-0",
       )}
+      style={{ ...getColorStyles() }}
     >
       {sleeve && (
         <SleeveSVG

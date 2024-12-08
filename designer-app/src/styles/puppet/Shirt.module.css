@@ -3,6 +3,8 @@
   --main-outline: theme(colors.teal.500);
   --neck-color: theme(colors.cyan.700);
   --neck-outline: theme(colors.cyan.900);
+  --sleeve-color: theme(colors.teal.200);
+  --sleeve-outline: theme(colors.teal.500);
 
   --x-pad: calc(var(--root-unit) * 285);
 
@@ -56,12 +58,15 @@
   @apply z-20;
 }
 
-.shirt-puppet .shirt,
-.shirt-puppet .sleeve {
+.shirt-puppet .shirt {
   @apply fill-[--main-color];
   @apply stroke-[--main-outline];
 }
 .shirt-puppet .neck {
   @apply fill-[--neck-color];
   @apply stroke-[--neck-outline];
+}
+.shirt-puppet .sleeve {
+  @apply fill-[--sleeve-color];
+  @apply stroke-[--sleeve-outline];
 }

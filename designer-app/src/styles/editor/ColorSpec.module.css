@@ -1,0 +1,47 @@
+.spec-editor {
+  @apply flex justify-between items-center;
+  @apply gap-[0.5rem];
+  @apply h-fit;
+}
+
+.spec-label {
+  @apply w-full;
+  @apply text-ellipsis overflow-hidden whitespace-nowrap;
+  @apply text-[1.1rem] font-medium;
+}
+
+.color-preview {
+  @apply h-[3rem] w-auto aspect-square;
+  @apply rounded-[1rem] border-[0.28rem];
+  @apply outline-[0px];
+}
+.spec-editor.light .color-preview {
+  @apply border-primary-light;
+}
+.spec-editor.dark .color-preview {
+  @apply border-primary-darkest;
+}
+.color-preview:focus-visible {
+  @apply shadow-none;
+  @apply outline outline-[0.25rem] outline-primary-darker;
+  @apply -outline-offset-[0.1rem];
+  @apply !border-primary-lightest;
+}
+
+.color-picker {
+  --tooltip-bg: theme(colors.primary.lightest) !important;
+  --tooltip-text: theme(colors.primary.darkest) !important;
+  --tooltip-border: theme(colors.primary.darker) !important;
+
+  --tooltip-border-width: 0.25rem;
+  --tooltip-x-pad: var(--tooltip-border-width) !important;
+  --tooltip-y-pad: var(--tooltip-border-width) !important;
+  --tooltip-radius: calc(
+    var(--list-radius) + var(--tooltip-border-width)
+  ) !important;
+
+  --list-radius: 1.4rem;
+
+  @apply relative;
+  @apply shadow-foreground/20 shadow-[0_0.6rem_1rem_0];
+}

@@ -1,15 +1,19 @@
+import ColorSpecEditor from "@/components/editor/ColorSpec";
 import EnumSpecEditor from "@/components/editor/EnumSpec";
+import StringSpecEditor from "@/components/editor/StringSpec";
 import ScrollContainer from "@/components/ScrollContainer";
 import Stitches from "@/components/Stitches";
 import { RootContext } from "@/context/RootContext";
 import clsx from "clsx";
 import { useContext, useEffect, useState } from "react";
+import "react-colorful";
 
 /** @type {{ [K in keyof SpecTypes]: SpecEditor }} */
 const Editors = {
-  EnumSpec: EnumSpecEditor,
   MeasurementSpec: null, // TODO
-  StringSpec: null, // TODO
+  EnumSpec: EnumSpecEditor,
+  StringSpec: StringSpecEditor,
+  ColorSpec: ColorSpecEditor,
 };
 
 /** @param {{ specs: DefinedSpecSchema }} props */

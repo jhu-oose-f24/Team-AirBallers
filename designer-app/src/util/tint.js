@@ -19,7 +19,7 @@ export function paletteFrom(tint) {
   if (!chroma.valid(tint)) {
     return {};
   }
-  const hue = chroma(tint).hsl()[0];
+  const hue = Math.round(chroma(tint).hsl()[0]);
 
   return {
     // @ts-ignore
@@ -44,6 +44,38 @@ export function paletteFrom(tint) {
 /** @param {function(typeof colors): CSSColor} predicate */
 export function paletteFromTailwind(predicate) {
   return paletteFrom(predicate?.(colors));
+}
+
+/**
+ * @param {TooltipInst} inst
+ * @param {CSSColor} color
+ */
+export function setTooltipPalette(inst, color) {
+  if (!inst?.popper) return;
+
+  const varDefs = {
+    "--hue": undefined,
+    "--primary": undefined,
+    "--primary-darkest": undefined,
+    "--primary-darker": undefined,
+    "--primary-dark": undefined,
+    "--primary-medium": undefined,
+    "--primary-light": undefined,
+    "--primary-lighter": undefined,
+    "--primary-lightest": undefined,
+    "--primary-active-fill": undefined,
+    "--primary-input-text": undefined,
+    "--primary-input-placeholder": undefined,
+  };
+
+  const palette = paletteFrom(color);
+  for (let colorVar in varDefs) {
+    if (palette[colorVar]) {
+      inst.popper.style.setProperty(colorVar, palette[colorVar]);
+    } else {
+      inst.popper.style.removeProperty(colorVar);
+    }
+  }
 }
 
 /** @type {CSSColor} */
