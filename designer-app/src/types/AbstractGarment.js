@@ -4,6 +4,12 @@ import { GarmentType } from "@prisma/client";
 
 /** @abstract */
 export default class AbstractGarment {
+  /** @type {readonly string[]} */
+  static SPEC_NAMES = [];
+
+  /** @type {BlankSpecSchema} */
+  static SCHEMA = [];
+
   type;
 
   name;
@@ -21,7 +27,7 @@ export default class AbstractGarment {
   constructor(type, name, schema, prompts = [], images = []) {
     this.type = type;
     this.name = name;
-    this.specs = AbstractGarment.parseSpecs(schema);
+    this.specs = this.parseSpecs(schema);
     this.prompts = prompts;
     this.images = images;
   }
@@ -39,22 +45,34 @@ export default class AbstractGarment {
     return SpecType?.from(parsed);
   }
 
-  /**
-   * @param {SpecSchema} schema
-   * @returns {DefinedSpecSchema}
-   */
-  static parseSpecs(schema) {
-    return schema.map(({ name, spec }) => ({
-      name,
-      spec: AbstractGarment.parseSpec(spec),
-    }));
-  }
-
   /** @param {Partial<Garment>} obj */
   static from(obj) {
     const { type, name, specs, prompts, images } = obj;
 
     return new this(type, name, JSON.parse(specs), prompts, images);
+  }
+
+  /**
+   * @param {SpecSchema} schema
+   * @returns {DefinedSpecSchema}
+   */
+  parseSpecs(schema) {
+    // @ts-ignore
+    const mainSchema = this.constructor?.SCHEMA;
+
+    const mainSpecMap = this.specMap(mainSchema);
+    const specMap = this.specMap(schema);
+
+    return Object.entries(mainSpecMap).map(([name, spec]) => {
+      /** @type {SpecInstance} */
+      const parsedSpec = AbstractGarment.parseSpec(spec);
+      parsedSpec.setValue(AbstractGarment.parseSpec(specMap[name])?.value);
+
+      return {
+        name,
+        spec: parsedSpec,
+      };
+    });
   }
 
   /** @param {{ [k: string]: any }} specValues */
@@ -95,8 +113,9 @@ export default class AbstractGarment {
     };
   }
 
-  specMap() {
-    return this.specs.reduce((prev, spec) => {
+  /** @param {SpecSchema} specs */
+  specMap(specs = this.specs) {
+    return specs.reduce((prev, spec) => {
       prev[spec.name] = spec.spec;
       return prev;
     }, {});

@@ -83,7 +83,7 @@
  */
 
 /**
- * @template {SpecType} T
+ * @template {SpecType} [T=SpecType] Default is `SpecType`
  * @typedef {InstanceType<T>} SpecInstance
  */
 
@@ -147,7 +147,11 @@
  * @typedef {import("@prisma/client").GarmentType} GarmentType
  */
 
-/** @typedef {React.MutableRefObject<import("tippy.js").Instance>} TooltipRef */
+/**
+ * @typedef {import("tippy.js").Instance} TooltipInst
+ *
+ * @typedef {React.MutableRefObject<TooltipInst>} TooltipRef
+ */
 
 /**
  * @typedef {{

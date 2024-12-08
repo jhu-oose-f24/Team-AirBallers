@@ -1,4 +1,5 @@
 import AbstractGarment from "@/types/AbstractGarment";
+import ColorSpec from "@/types/ColorSpec";
 import EnumSpec from "@/types/EnumSpec";
 import StringSpec from "@/types/StringSpec";
 import { GarmentType } from "@prisma/client";
@@ -40,7 +41,7 @@ export default class Pants extends AbstractGarment {
         "elastic",
       ]),
     },
-    { name: "Color", spec: StringSpec.defineSchema() },
+    { name: "Color", spec: ColorSpec.defineSchema("#aaa") },
     {
       name: "Fabric",
       spec: EnumSpec.defineSchema([
@@ -77,8 +78,8 @@ export default class Pants extends AbstractGarment {
   }
 
   /** @returns {SpecMap<typeof Pants>} */
-  specMap() {
+  specMap(specs = this.specs) {
     // @ts-ignore
-    return super.specMap();
+    return super.specMap(specs);
   }
 }

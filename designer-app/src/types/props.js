@@ -72,6 +72,7 @@
  *   disabled?: boolean;
  *   tabIndex?: React.HTMLAttributes["tabIndex"];
  *   error?: string;
+ *   tint?: CSSColor;
  *   style?: React.CSSProperties;
  * }} GeneralInputProps
  */
