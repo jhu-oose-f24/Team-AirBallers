@@ -20,24 +20,32 @@ export default NextAuth.default({
   callbacks: {
     // params: user, account, profile, email, credentials
     async signIn({ user }) {
-      const draftsCount = await prisma.collection
-        .count({
-          where: {
-            AND: [{ userId: user.id }, { name: "Drafts" }, { editable: false }],
-          },
-        })
-        .catch(console.log);
+      const userId = user.id;
 
-      if (!draftsCount) {
-        await prisma.collection
-          .create({
-            data: {
-              userId: user.id,
-              name: "Drafts",
-              editable: false,
+      if (userId) {
+        const draftsCount = await prisma.collection
+          .count({
+            where: {
+              AND: [
+                { userId: userId },
+                { name: "Drafts" },
+                { editable: false },
+              ],
             },
           })
           .catch(console.log);
+
+        if (!draftsCount) {
+          await prisma.collection
+            .create({
+              data: {
+                userId: userId,
+                name: "Drafts",
+                editable: false,
+              },
+            })
+            .catch(console.log);
+        }
       }
 
       return true;
