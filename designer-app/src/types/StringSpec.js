@@ -18,7 +18,7 @@ export default class StringSpec extends AbstractSpecType {
   constructor(options = {}, value = undefined) {
     const { minLength = 0, maxLength = Number.MAX_SAFE_INTEGER } = options;
 
-    super("string", "");
+    super("StringSpec", "string", "");
 
     this.minLength = minLength;
     this.maxLength = maxLength;

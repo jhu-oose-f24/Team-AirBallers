@@ -31,7 +31,7 @@ export default class MeasurementSpec extends AbstractSpecType {
    * @override
    */
   constructor(unit, range, value = 0) {
-    super("number", 0);
+    super("MeasurementSpec", "number", 0);
 
     this.unit = unit;
     this.range = range;

@@ -14,7 +14,7 @@ export default class EnumSpec extends AbstractSpecType {
    * @override
    */
   constructor(possibleValues, value = undefined) {
-    super("string", possibleValues[0]);
+    super("EnumSpec", "string", possibleValues[0]);
     this.possibleValues = possibleValues;
 
     this.setValue(value);

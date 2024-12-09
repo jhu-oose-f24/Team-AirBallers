@@ -3,7 +3,6 @@
  * @template V
  */
 export default class AbstractSpecType {
-  /** @type {keyof SpecTypes} */
   type;
 
   value;
@@ -11,13 +10,14 @@ export default class AbstractSpecType {
   valueType;
 
   /**
+   * @param {keyof SpecTypes} type
    * @param {string} valueType
    * @param {V} defaultValue
    * @param {any[]} otherParams
    */
-  constructor(valueType, defaultValue, ...otherParams) {
+  constructor(type, valueType, defaultValue, ...otherParams) {
     // @ts-ignore
-    this.type = this.constructor.name;
+    this.type = type;
     this.valueType = valueType;
     this.default = defaultValue;
   }
@@ -40,7 +40,7 @@ export default class AbstractSpecType {
 
   /** @param {...any} params */
   static defineSchema(...params) {
-    return new this("undefined", undefined, ...params).getSchema();
+    return new this(undefined, "undefined", undefined, ...params).getSchema();
   }
 
   /** @param {V} value */

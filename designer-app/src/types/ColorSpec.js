@@ -12,7 +12,7 @@ export default class ColorSpec extends AbstractSpecType {
    * @override
    */
   constructor(value = undefined, defaultColor = "#000") {
-    super("string", defaultColor);
+    super("ColorSpec", "string", defaultColor);
 
     this.setValue(value);
   }
