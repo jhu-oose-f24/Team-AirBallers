@@ -21,15 +21,25 @@ import clsx from "clsx";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useRef, useState } from "react";
 
+/** @typedef {{ url: string, createdAt: string }} GarmentImage */
+
+/** @typedef {{
+  garment: GarmentInstance;
+  updatedAt: Date;
+  isGenerating?: boolean;
+  visualizationUrl?: string;
+  onGenerateVisualization?: () => void;
+}} GarmentPuppetProps */
+
 /** @type {{ [K in GarmentType]: React.FC<PuppetProps<?>> }} */
 const Puppets = {
   Shirt: ShirtPuppet,
   Pants: PantsPuppet,
 };
 
-/** @param {{ garment: GarmentInstance; updatedAt: Date }} props */
+/** @param {GarmentPuppetProps} props */
 const GarmentPuppet = (props) => {
-  const { garment, updatedAt } = props;
+  const { garment, updatedAt, isGenerating, visualizationUrl, onGenerateVisualization } = props;
 
   const { encodedId } = useRouter().query;
 
@@ -41,6 +51,7 @@ const GarmentPuppet = (props) => {
   const [visualizing, setVisualizing] = useState(false);
   const [lastSaved, setLastSaved] = useState(formatSaveDate(updatedAt));
   const debounceUpdateRef = useRef(null);
+  const pollIntervalRef = useRef(null);
 
   const [viewingGallery, setViewingGallery] = useState(false);
   const [currImageIdx, setCurrImageIdx] = useState(-1);
@@ -104,28 +115,67 @@ const GarmentPuppet = (props) => {
     return `${day} at ${time}`;
   }
 
-  function visualize() {
+  async function visualize() {
     if (typeof encodedId !== "string") return;
 
     const garmentId = ItemToURL.decode(encodedId);
     if (!garmentId) return;
 
     setVisualizing(true);
-    axios
-      .patch(`/api/garment/${garmentId}/visualize`)
-      .then((res) => {
-        /** @type {GarmentImage["url"]} */
-        const url = res.data;
-        garment.addImage(url);
+    try {
+      // Start the visualization process
+      const response = await axios.patch(`/api/garment/${garmentId}/visualize`);
+      
+      if (response.status === 202) {
+        // Start polling for updates
+        pollIntervalRef.current = setInterval(async () => {
+          const statusRes = await axios.get(`/api/garment/${garmentId}`);
+          const updatedGarment = statusRes.data;
+          
+          if (updatedGarment.images?.length > (garment?.images?.length || 0)) {
+            // New image has been generated
+            clearInterval(pollIntervalRef.current);
+            setVisualizing(false);
+            setViewingGallery(true);
+            
+            // Update local state with new image
+            const newImage = {
+              url: updatedGarment.images[0].url,
+              createdAt: new Date().toISOString()
+            };
+            
+            // Update images array
+            const newImages = [newImage, ...(images || [])];
+            setImages(newImages);
+            setCurrImageIdx(0);
+            
+            // Update the parent component's state
+            setLastUpdated(Date.now());
+          }
+        }, 5000);
 
-        setViewingGallery(true);
-        setLastUpdated(Date.now());
-        setImages([...garment.images].reverse());
-        setCurrImageIdx(0);
-      })
-      .catch(console.log)
-      .finally(() => setVisualizing(false));
+        // Stop polling after 5 minutes
+        setTimeout(() => {
+          if (pollIntervalRef.current) {
+            clearInterval(pollIntervalRef.current);
+            setVisualizing(false);
+          }
+        }, 300000);
+      }
+    } catch (error) {
+      console.error('Error starting visualization:', error);
+      setVisualizing(false);
+    }
   }
+
+  // Cleanup polling on unmount
+  useEffect(() => {
+    return () => {
+      if (pollIntervalRef.current) {
+        clearInterval(pollIntervalRef.current);
+      }
+    };
+  }, []);
 
   return (
     <div className="garment-preview">
@@ -206,11 +256,11 @@ const GarmentPuppet = (props) => {
       <div className="flex gap-[0.6rem]">
         <Button
           tint="aquamarine"
-          label="Visualize"
-          icon={<IconSparkles />}
+          label={visualizing ? "Generating..." : "Visualize"}
+          icon={visualizing ? <IconLoader2 className="animate-spin" /> : <IconSparkles />}
           width="100%"
           onClick={visualize}
-          loading={visualizing}
+          disabled={visualizing}
         />
         {!!images?.length && (
           <Button

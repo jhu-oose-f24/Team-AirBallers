@@ -9,7 +9,6 @@ export default ApiHandler(authMiddleware)
   .PATCH(async (req, res) => {
     /** @ts-ignore @type {string} */
     const userId = req.headers.userId;
-
     /** @ts-ignore @type {string} */
     const { garmentId } = req.query;
 
@@ -19,27 +18,51 @@ export default ApiHandler(authMiddleware)
         return res.status(403).json({ message: "Content Not Accessible" });
       }
 
-      let garment = await prisma.garment.findFirst({
-        where: { id: garmentId },
+      // Start the generation process asynchronously
+      generateVisualization(garmentId);
+
+      // Return immediately with 202 Accepted
+      return res.status(202).json({ 
+        status: "processing",
+        message: "Visualization generation started",
+        garmentId 
       });
-
-      const readableSpecs = GarmentTypes[garment?.type]
-        ?.from(garment)
-        ?.getReadableSpecs();
-
-      const generated = await ImageGenerator.createFrom(readableSpecs);
-
-      const newImage = generated?.images?.[0]?.url;
-      if (!newImage) {
-        return res
-          .status(403)
-          .json({ message: "Failed to generate visualization" });
-      }
-
-      res.status(200).json(newImage);
     } catch (err) {
       res.status(500).json(err);
-      console.error("Error generating visualization:", err);
+      console.error("Error initiating visualization:", err);
     }
   })
   .build();
+
+async function generateVisualization(garmentId) {
+  try {
+    const garment = await prisma.garment.findFirst({
+      where: { id: garmentId },
+    });
+
+    const readableSpecs = GarmentTypes[garment?.type]
+      ?.from(garment)
+      ?.getReadableSpecs();
+
+    const generated = await ImageGenerator.createFrom(readableSpecs);
+    const newImage = generated?.images?.[0]?.url;
+
+    if (newImage) {
+      await prisma.garment.update({
+        where: { id: garmentId },
+        data: {
+          images: {
+            push: {
+              url: newImage,
+              createdAt: new Date().toISOString()
+            }
+          }
+        }
+      });
+    }
+  } catch (error) {
+    console.error("Error in generation process:", error);
+  }
+}
+
+  
