@@ -55,17 +55,17 @@ model Collection {
 
 // Represents an individual garment in a collection
 model Garment {
-  id               String          @id @default(auto()) @map("_id") @db.ObjectId
-  type             GarmentType
-  name             String
-  specs            String
-  prompts          GarmentPrompt[]
-  images           GarmentImage[]
-  visualizationUrl String?
-  createdAt        DateTime        @default(now())
-  updatedAt        DateTime        @updatedAt
-  collection       Collection      @relation(fields: [collectionId], references: [id], onDelete: Cascade)
-  collectionId     String          @db.ObjectId
+  id           String          @id @default(auto()) @map("_id") @db.ObjectId
+  type         GarmentType
+  name         String
+  specs        String           // JSON string of structured specs
+  prompts      GarmentPrompt[]  // History of prompts used to create the garment
+  images       GarmentImage[]   // All the images related to each garment
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+  // Relation to Collection
+  collection   Collection      @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+  collectionId String          @db.ObjectId
 }
 
 // Represents a text prompt used to generate a garment
@@ -77,7 +77,7 @@ type GarmentPrompt {
 // Represents an image of a garment
 type GarmentImage {
   url       String
-  createdAt String
+  createdAt DateTime
 }
 
 // Enum for garment types
