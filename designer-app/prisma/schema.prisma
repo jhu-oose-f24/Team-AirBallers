@@ -61,6 +61,7 @@ model Garment {
   specs        String           // JSON string of structured specs
   prompts      GarmentPrompt[]  // History of prompts used to create the garment
   images       GarmentImage[]   // All the images related to each garment
+  visualizationUrl String?
   createdAt    DateTime        @default(now())
   updatedAt    DateTime        @updatedAt
   // Relation to Collection
