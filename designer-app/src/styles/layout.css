@@ -306,11 +306,38 @@ body#edit .puppet-box {
   @apply rounded-[1rem];
   @apply bg-background-main;
   @apply transition-opacity duration-200 ease-in-out;
+  @apply overflow-hidden;
+}
+body#edit .puppet-box:has(.gallery-box.viewing) {
+  @apply border-primary-darkest;
+}
+
+body#edit .puppet-box .gallery-box {
+  @apply absolute;
+  @apply w-full h-auto aspect-square;
+  @apply top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
+  @apply transition-opacity duration-200 ease-in-out;
+  @apply bg-accent opacity-0;
+  @apply z-50;
+}
+body#edit .puppet-box .gallery-box.viewing {
+  @apply opacity-100;
+}
+
+body#edit .gallery-box img {
+  @apply w-full h-full;
+  @apply object-cover;
+}
+
+body#edit .gallery-box .img-gen-date {
+  @apply absolute top-[0.4rem] right-[0.4rem];
+  @apply w-[1.7rem] h-[1.7rem] p-[0.15rem];
+  @apply rounded-[1rem] bg-background-main;
+  @apply stroke-secondary stroke-[2.4];
 }
 
 body#edit .puppet-box .last-updated {
   @apply absolute top-[0.5rem] right-[0.5rem];
-  @apply flex justify-end items-center gap-[0.5rem];
   @apply font-medium text-secondary;
 }
 body#edit .puppet-box .last-updated.saving {
