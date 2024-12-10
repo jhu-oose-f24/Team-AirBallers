@@ -52,10 +52,13 @@ async function generateVisualization(garmentId) {
         where: { id: garmentId },
         data: {
           images: {
-            push: {
-              url: newImage,
-              createdAt: new Date().toISOString()
-            }
+            set: [
+              ...(garment.images || []),
+              {
+                url: newImage,
+                createdAt: new Date().toISOString()
+              }
+            ]
           }
         }
       });
