@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="b" viewBox="0 0 367 149">
+    <defs>
+        <style>
+            .d,.e{fill:#ccc;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:10px}.e{fill:#fff}
+        </style>
+    </defs>
+    <g id="c">
+        <path d="M5 43V5h357v38" class="d"/>
+        <path d="M45 5h18v38H45zm260 0h18v38h-18z" class="d"/>
+        <path d="M112 44h120" class="e"/>
+        <path d="M162 5h43v107.47c0 17.4-14.13 31.53-31.53 31.53H162z" class="d"/>
+        <circle cx="183.5" cy="26.5" r="4.5" class="e"/>
+    </g>
+</svg>

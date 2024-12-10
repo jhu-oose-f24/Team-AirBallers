@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="b" viewBox="0 0 242.59 682.5">
+    <defs>
+        <style>
+            .d{fill:#ccc;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:10px}
+        </style>
+    </defs>
+    <g id="c">
+        <path d="M0 5h242.59v672.5H0z" style="fill:none"/>
+        <path d="M22.59 5v446.34l40 139.37v86.79h120v-56.35l30-178.34V5m-52.37 672.5v-61.67m-51.74 61.67v-67.02M90.64 677.5v-72.38" class="d"/>
+        <path d="M212.65 391.34c0 168.04 0 249.07-40 249.07-60.62 0-120 4.11-120 4.11-47.2 7.11-30-194.33-30-291.71" class="d"/>
+    </g>
+</svg>
