@@ -24,7 +24,16 @@ const ColorSpecEditor = (props) => {
 
   return (
     <div className={clsx(css["spec-editor"], borderClass())}>
-      <span className={css["spec-label"]}>{name}</span>
+      <span
+        className={css["spec-label"]}
+        onClick={(e) => {
+          /** @ts-ignore @type {HTMLElement} */
+          const btn = e.target.nextSibling;
+          btn.focus();
+        }}
+      >
+        {name}
+      </span>
 
       <Tooltip
         className={css["color-picker"]}
