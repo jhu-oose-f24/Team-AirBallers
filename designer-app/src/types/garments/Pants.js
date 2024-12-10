@@ -33,11 +33,7 @@ export default class Pants extends AbstractGarment {
     },
     {
       name: "Closure Type",
-      spec: EnumSpec.defineSchema([
-        "button",
-        "drawstring",
-        "elastic",
-      ]),
+      spec: EnumSpec.defineSchema(["button", "drawstring", "elastic"]),
     },
     { name: "Color", spec: ColorSpec.defineSchema("#fff") },
     {

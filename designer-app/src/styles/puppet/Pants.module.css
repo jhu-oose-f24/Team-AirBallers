@@ -3,12 +3,12 @@
   --main-outline: theme(colors.teal.500);
 
   --x-pad: calc(var(--root-unit) * 285);
-  --y-offset: calc(var(--root-unit) * 315);
+  --y-offset: calc(var(--root-unit) * 335);
 
   @apply flex relative;
   @apply h-fit w-max;
   @apply mx-[--x-pad] my-auto;
-  @apply scale-[0.98] -translate-y-[--y-offset];
+  @apply -translate-y-[--y-offset];
   @apply transition-[inherit];
 }
 
