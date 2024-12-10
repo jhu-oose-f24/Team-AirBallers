@@ -316,6 +316,9 @@ body#edit .puppet-box .last-updated {
 body#edit .puppet-box .last-updated.saving {
   @apply text-primary-darker;
 }
+body#edit .puppet-box .last-updated:not(.saving):not(:hover) span {
+  @apply hidden;
+}
 
 body#edit .puppet > svg path:not([style*="fill: none"]),
 body#edit .puppet > svg line:not([style*="fill: none"]),
@@ -352,7 +355,7 @@ body#edit .spec-editor header .pin {
 }
 
 body#edit .spec-editor .scroll-list {
-  @apply flex flex-col gap-[0.5rem];
+  @apply flex flex-col gap-[1rem];
   @apply px-[1rem] pb-[1.5rem];
 }
 body#edit .spec-editor[inert] header,

@@ -23,7 +23,15 @@
   --size: calc(100% + 2px);
 
   @apply transition-all duration-100 ease-in-out;
-  /* @apply pr-[1rem]; */
+}
+.dropdown .options-wrapper:has([class*="scrollbar-handle"]:hover),
+.dropdown .options-wrapper:has([class*="scrollbar-handle"]:active) {
+  @apply pr-[1.1rem];
+}
+
+.dropdown [class*="scrollbar-handle"] {
+  --scrollbar-color-hover: theme(colors.primary.light/90%) !important;
+  --scrollbar-color-active: theme(colors.primary.lighter) !important;
 }
 
 .dropdown .options-wrapper [data-overlayscrollbars-viewport] {
@@ -42,7 +50,7 @@
 .dropdown .rounded-mask {
   @apply sticky -inset-x-[2px] -inset-y-[1px];
   @apply shrink-0 w-[--size] h-[--size];
-  @apply outline outline-[1rem] outline-primary-light;
+  @apply outline outline-[1.1rem] outline-primary-darker;
   @apply rounded-[--list-radius] -m-[100%];
   @apply pointer-events-none;
   @apply z-50;

@@ -70,3 +70,7 @@
   @apply fill-[--sleeve-color];
   @apply stroke-[--sleeve-outline];
 }
+.shirt-puppet .sleeve.SvgSleeveless {
+  @apply fill-[--main-color];
+  @apply stroke-[--main-outline];
+}

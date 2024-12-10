@@ -1,0 +1,63 @@
+.pants-puppet {
+  --main-color: theme(colors.teal.200);
+  --main-outline: theme(colors.teal.500);
+
+  --x-pad: calc(var(--root-unit) * 285);
+  --y-offset: calc(var(--root-unit) * 315);
+
+  @apply flex relative;
+  @apply h-fit w-max;
+  @apply mx-[--x-pad] my-auto;
+  @apply scale-[0.98] -translate-y-[--y-offset];
+  @apply transition-[inherit];
+}
+
+.pants-puppet .base {
+  --width: calc(var(--root-unit) * 378);
+
+  @apply origin-bottom;
+  @apply w-[--width] h-fit mt-auto;
+}
+
+.pants-puppet .closure {
+  --width: calc(var(--root-unit) * 357);
+
+  @apply origin-top;
+  @apply absolute w-[--width] h-fit;
+  @apply left-1/2 -translate-x-1/2;
+  @apply z-20;
+}
+
+.pants-puppet .pockets {
+  --width: calc(var(--root-unit) * 380);
+  --y-offset: calc(var(--root-unit) * 75);
+
+  @apply origin-bottom;
+  @apply absolute left-1/2 -bottom-[--y-offset];
+  @apply -translate-x-1/2 w-[--width] h-fit;
+  @apply z-10;
+}
+
+.pants-puppet .leg {
+  --width: calc(var(--root-unit) * 240);
+  --x-offset: calc(var(--root-unit) * 18);
+  --y-offset: calc(100% - var(--root-unit) * 5);
+
+  @apply origin-top;
+  @apply absolute top-[--y-offset];
+  @apply w-[--width];
+}
+.pants-puppet .leg.left {
+  @apply -left-[--x-offset];
+  @apply rotate-[2deg];
+}
+.pants-puppet .leg.right {
+  @apply -right-[--x-offset];
+  @apply -rotate-[2deg];
+  @apply -scale-x-100;
+}
+
+.pants-puppet * {
+  @apply fill-[--main-color];
+  @apply !stroke-[--main-outline];
+}

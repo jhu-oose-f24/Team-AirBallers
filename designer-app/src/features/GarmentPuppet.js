@@ -1,5 +1,6 @@
 import Button from "@/components/Button";
 import GarmentNameEditor from "@/components/GarmentNameEditor";
+import PantsPuppet from "@/components/puppet/Pants";
 import ShirtPuppet from "@/components/puppet/Shirt";
 import { EditorContext } from "@/context/EditorContext";
 import ItemToURL from "@/types/GarmentEncoder";
@@ -16,7 +17,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 /** @type {{ [K in GarmentType]: React.FC<PuppetProps<?>> }} */
 const Puppets = {
   Shirt: ShirtPuppet,
-  Pants: null, // TODO
+  Pants: PantsPuppet,
 };
 
 /** @param {{ garment: GarmentInstance; updatedAt: Date }} props */
@@ -25,9 +26,11 @@ const GarmentPuppet = (props) => {
 
   const { encodedId } = useRouter().query;
 
-  const [lastUpdated, _] = useContext(EditorContext).updatedState;
+  const { updatedState } = useContext(EditorContext);
+  const [lastUpdated, setLastUpdated] = updatedState;
 
   const [saving, setSaving] = useState(false);
+  const [visualizing, setVisualizing] = useState(false);
   const [lastSaved, setLastSaved] = useState(formatSaveDate(updatedAt));
   const debounceUpdateRef = useRef(null);
 
@@ -78,6 +81,25 @@ const GarmentPuppet = (props) => {
     return `${day} at ${time}`;
   }
 
+  function visualize() {
+    if (typeof encodedId !== "string") return;
+
+    const garmentId = ItemToURL.decode(encodedId);
+    if (!garmentId) return;
+
+    setVisualizing(true);
+    axios
+      .patch(`/api/garment/${garmentId}/visualize`)
+      .then((res) => {
+        /** @type {GarmentImage["url"]} */
+        const url = res.data;
+        garment.addImage(url);
+        setLastUpdated(Date.now());
+      })
+      .catch(console.log)
+      .finally(() => setVisualizing(false));
+  }
+
   return (
     <div className="garment-preview">
       <GarmentNameEditor garment={garment} />
@@ -103,6 +125,8 @@ const GarmentPuppet = (props) => {
         label="Visualize"
         icon={<IconSparkles />}
         width="100%"
+        onClick={visualize}
+        loading={visualizing}
       />
     </div>
   );

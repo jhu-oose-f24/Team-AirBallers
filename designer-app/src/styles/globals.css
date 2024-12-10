@@ -27,6 +27,10 @@
   --scrollbar-track-padding: 0.3rem;
   --scrollbar-width: 0.9rem;
 
+  --scrollbar-color: theme(colors.primary.darker/50%);
+  --scrollbar-color-hover: theme(colors.primary.darker/65%);
+  --scrollbar-color-active: theme(colors.primary.darker);
+
   @apply !transition-all !duration-100 !ease-in-out;
   @apply !cursor-default;
 }
@@ -46,14 +50,14 @@
 }
 
 .os-scrollbar-handle {
-  @apply !bg-primary-darker/50;
+  @apply !bg-[--scrollbar-color];
   @apply [transition:inherit];
 }
 .os-scrollbar:has(:hover) .os-scrollbar-handle {
-  @apply !bg-primary-darker/65;
+  @apply !bg-[--scrollbar-color-hover];
 }
 .os-scrollbar:has(:active) .os-scrollbar-handle {
-  @apply !bg-primary-darker;
+  @apply !bg-[--scrollbar-color-active];
 }
 
 .os-scrollbar:not(:has(.os-scrollbar-handle:hover))
@@ -147,7 +151,7 @@
 
 .color-picker.react-colorful {
   @apply h-[15rem] w-[15rem];
-  @apply p-[1rem] gap-[1.5rem];
+  @apply p-[0.5rem] gap-[1.5rem];
 }
 
 .color-picker .react-colorful__hue {
@@ -165,4 +169,5 @@
   @apply border-[0.2rem] border-primary-lightest;
   @apply outline outline-[0.2rem] outline-primary-darkest;
   @apply shadow-primary-darkest;
+  @apply cursor-pointer;
 }

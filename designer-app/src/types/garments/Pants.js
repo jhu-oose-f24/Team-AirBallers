@@ -20,12 +20,11 @@ export default class Pants extends AbstractGarment {
     {
       name: "Style",
       spec: EnumSpec.defineSchema([
-        "jeans",
-        "chinos",
-        "cargo",
-        "sweatpants",
-        "trousers",
-        "shorts",
+        "straight-cut",
+        "skinny",
+        "boot-cut",
+        "wide-leg",
+        "jogger",
       ]),
     },
     {
@@ -35,13 +34,12 @@ export default class Pants extends AbstractGarment {
     {
       name: "Closure Type",
       spec: EnumSpec.defineSchema([
-        "zipper",
         "button",
         "drawstring",
         "elastic",
       ]),
     },
-    { name: "Color", spec: ColorSpec.defineSchema("#aaa") },
+    { name: "Color", spec: ColorSpec.defineSchema("#fff") },
     {
       name: "Fabric",
       spec: EnumSpec.defineSchema([
