@@ -54,7 +54,7 @@ async function generateVisualization(garmentId) {
           images: {
             push: {
               url: newImage,
-              createdAt: new Date().toISOString()
+              createdAt: new Date()
             }
           }
         }
