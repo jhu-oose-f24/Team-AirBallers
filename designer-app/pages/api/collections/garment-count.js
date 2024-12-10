@@ -10,7 +10,12 @@ export default ApiHandler(authMiddleware)
     try {
       let rawCollections = await prisma.collection.findMany({
         where: { userId },
-        include: {
+        select: {
+          id: true,
+          name: true,
+          userId: true,
+          createdAt: true,
+          updatedAt: true,
           _count: {
             select: { garments: true },
           },
