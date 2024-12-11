@@ -40,13 +40,8 @@ const GarmentPuppet = (props) => {
 
   const [saving, setSaving] = useState(false);
   const [lastSaved, setLastSaved] = useState(formatSaveDate(updatedAt));
-  const debounceUpdateRef = useRef(null);
-
   const [visualizing, setVisualizing] = useState(false);
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [visualizationUrl, setVisualizationUrl] = useState(null);
-  const pollIntervalRef = useRef(null);
-  const pollInterval = 5000;
+  const debounceUpdateRef = useRef(null);
 
   const [viewingGallery, setViewingGallery] = useState(false);
   const [currImageIdx, setCurrImageIdx] = useState(-1);
@@ -64,8 +59,6 @@ const GarmentPuppet = (props) => {
 
     setImages([...garment.images].reverse());
     setCurrImageIdx(0);
-
-    return () => clearInterval(pollIntervalRef.current);
   }, [garment]);
 
   useEffect(() => {
@@ -179,7 +172,7 @@ const GarmentPuppet = (props) => {
           // @ts-ignore
           inert={viewingGallery ? undefined : ""}
         >
-          <img src={currImage?.url} />
+          {viewingGallery && <img src={currImage?.url} />}
 
           {currImageIdx + 1 < images?.length && (
             <Tooltip
