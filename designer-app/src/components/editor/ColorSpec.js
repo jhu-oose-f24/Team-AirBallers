@@ -1,5 +1,6 @@
 import Tooltip from "@/components/Tooltip";
 import { EditorContext } from "@/context/EditorContext";
+import { RootContext } from "@/context/RootContext";
 import css from "@/styles/editor/ColorSpec.module.css";
 import ColorSpec from "@/types/ColorSpec";
 import chroma from "chroma-js";
@@ -11,6 +12,7 @@ import { HexColorPicker } from "react-colorful";
 const ColorSpecEditor = (props) => {
   const { name, spec } = props;
 
+  const { bodyRef } = useContext(RootContext);
   const [_, setLastUpdated] = useContext(EditorContext).updatedState;
 
   const [color, setColor] = useState(spec?.value);
@@ -53,6 +55,7 @@ const ColorSpecEditor = (props) => {
         interactive
         visible={showPicker}
         placement="top-end"
+        appendTo={bodyRef}
         trigger={undefined}
         arrow={false}
         delay={0}

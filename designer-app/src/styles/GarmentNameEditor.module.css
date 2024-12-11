@@ -11,6 +11,10 @@
 .copy-name:not(.copied):not(:hover) > :not(:focus-visible) [class*="icon"] {
   @apply !hidden;
 }
+
+.copy-name:hover:not(:active) [class*="content"] {
+  @apply !bg-primary-dark/10;
+}
 .copy-name:hover [class*="content"],
 .copy-name > :focus-visible [class*="content"] {
   @apply flex-row-reverse;

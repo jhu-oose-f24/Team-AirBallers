@@ -39,7 +39,7 @@
   @apply -rotate-[30deg];
   @apply -scale-x-100;
 }
-.shirt-puppet .sleeve.SvgSleeveless {
+.shirt-puppet .sleeve.sleeveless {
   --width: calc(var(--root-unit) * 52);
   --x-offset: 0px;
   --y-offset: calc(var(--root-unit) * 50);
@@ -70,7 +70,7 @@
   @apply fill-[--sleeve-color];
   @apply stroke-[--sleeve-outline];
 }
-.shirt-puppet .sleeve.SvgSleeveless {
+.shirt-puppet .sleeve.sleeveless {
   @apply fill-[--main-color];
   @apply stroke-[--main-outline];
 }

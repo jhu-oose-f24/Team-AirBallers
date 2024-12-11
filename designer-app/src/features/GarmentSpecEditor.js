@@ -46,7 +46,7 @@ const GarmentSpecEditor = (props) => {
 
       <header>
         <div className="pin" />
-        <span className="text-center w-full">Specifications</span>
+        <span className="title">Specifications</span>
         <div className="pin" />
       </header>
 

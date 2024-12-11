@@ -11,6 +11,9 @@ const ShirtPuppet = (props) => {
 
   const [neck, setNeck] = useState(null);
   const [sleeve, setSleeve] = useState(null);
+  const [sleeveless, setSleeveless] = useState(
+    specs?.["Sleeve Length"]?.value === "sleeveless",
+  );
 
   /** @type {typeof ShirtSVG} */
   const NeckSVG = neck?.default;
@@ -22,6 +25,7 @@ const ShirtPuppet = (props) => {
 
     getSVG(specs["Sleeve Length"].value).then(setSleeve);
     getSVG(specs["Neck Style"].value).then(setNeck);
+    setSleeveless(specs?.["Sleeve Length"]?.value === "sleeveless");
   }, [specs]);
 
   /** @param {string} asset */
@@ -68,12 +72,12 @@ const ShirtPuppet = (props) => {
     >
       {sleeve && (
         <SleeveSVG
-          className={clsx(css.sleeve, css.left, css[SleeveSVG?.name])}
+          className={clsx(css.sleeve, css.left, sleeveless && css.sleeveless)}
         />
       )}
       {sleeve && (
         <SleeveSVG
-          className={clsx(css.sleeve, css.right, css[SleeveSVG?.name])}
+          className={clsx(css.sleeve, css.right, sleeveless && css.sleeveless)}
         />
       )}
       <ShirtSVG className={css.shirt} />
