@@ -242,6 +242,13 @@
  */
 
 /**
+ * @typedef {{
+ *   openState: UseState<boolean>;
+ *   onCreate?: SetState<CollectionWithGarments[]>;
+ * }} CollectionCreateModalProps
+ */
+
+/**
  * @template {ValueOf<GarmentTypes>} T
  * @typedef {{
  *   specs: SpecMap<T>;

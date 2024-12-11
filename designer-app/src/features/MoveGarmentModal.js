@@ -67,7 +67,7 @@ const MoveGarmentModal = (props) => {
         newCollectionId,
       })
       .then(() => (onMove?.(), true))
-      .catch(() => false);
+      .catch((err) => (console.log(err), false));
 
     setMoving(false);
 

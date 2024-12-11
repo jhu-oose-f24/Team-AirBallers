@@ -4,6 +4,7 @@ import ScrollContainer from "@/components/ScrollContainer";
 import Stitches from "@/components/Stitches";
 import { RootContext } from "@/context/RootContext";
 import { SideBarContext } from "@/context/SideBarContext";
+import CreateCollectionModal from "@/features/CreateCollectionModal";
 import DeleteItemModal from "@/features/DeleteItemModal";
 import RenameItemModal from "@/features/RenameItemModal";
 import { pause } from "@/util/misc";
@@ -24,9 +25,11 @@ const SideBar = () => {
   const { openMenuRef, activeTask, setActiveTask } = useContext(SideBarContext);
   /** @ts-ignore @type {CollectionWithGarments} */
   const activeCollection = activeTask?.collection;
+  const numGarments = activeCollection?.garments?.length || 0;
 
   /** @type {UseState<CollectionWithGarments[]>} */
   const [collections, setCollections] = useState([]);
+  const [createCollectionOpen, setCreateCollectionOpen] = useState(false);
 
   useEffect(() => {
     if (sideBarRef?.classList.contains("closed")) {
@@ -44,17 +47,6 @@ const SideBar = () => {
     axios
       .get("/api/collections")
       .then(({ data }) => setCollections(data.reverse()))
-      .catch(console.log);
-  }
-
-  /** @param {string} name */
-  async function createCollection(name) {
-    axios
-      .post("/api/collection/create", { name })
-      .then((res) => {
-        const newCollection = res.data;
-        setCollections((prev) => [newCollection, ...prev]);
-      })
       .catch(console.log);
   }
 
@@ -124,14 +116,15 @@ const SideBar = () => {
           label="New Collection"
           width="100%"
           size="sm"
-          // TODO: onClick: modal to create collection
-          onClick={() => {
-            const name = prompt("Enter Collection Name:");
-            if (name) createCollection(name);
-          }}
+          onClick={() => setCreateCollectionOpen(true)}
           disabled={!signedIn}
         />
       </div>
+
+      <CreateCollectionModal
+        openState={[createCollectionOpen, setCreateCollectionOpen]}
+        onCreate={setCollections}
+      />
 
       <RenameItemModal
         title="Rename Collection"
@@ -152,12 +145,11 @@ const SideBar = () => {
           The <b>{activeCollection?.name}</b> collection will be permanently
           deleted along with the following contents:
         </p>
-        <ul>
+        <ul className="py-0 mb-[0.8rem]">
           <li>
-            <b>{activeCollection?.garments?.length}</b> Garments
+            <b>{numGarments}</b> {numGarments === 1 ? "Garment" : "Garments"}
           </li>
         </ul>
-        <br />
       </DeleteItemModal>
     </div>
   );

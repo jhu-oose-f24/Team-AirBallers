@@ -72,7 +72,7 @@ const Header = () => {
         className={clsx("title-link", back && "back", !title && "loading")}
         icon={back && <IconChevronLeft stroke={2.8} />}
         label={title || "----------------"}
-        onClick={() => back && router.push(back)}
+        onClick={() => router.push(back || "/create")}
         fontSize="1.8rem"
         xPad={back && "0.3rem"}
         stretch

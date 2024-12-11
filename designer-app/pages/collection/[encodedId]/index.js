@@ -156,11 +156,10 @@ export default function CollectionView() {
         setActiveTask={setActiveTask}
         onConfirmDelete={deleteGarment}
       >
-        <p className="text-center">
+        <p className="text-center mb-[0.6rem]">
           The garment named <b>{activeTask?.garment?.name}</b> will be
           permanently deleted. Are you sure?
         </p>
-        <br />
       </DeleteItemModal>
     </div>
   );
