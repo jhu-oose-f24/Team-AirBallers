@@ -9,13 +9,10 @@ export default ApiHandler(authMiddleware)
 
     try {
       const collections = await prisma.collection.findMany({
-        where: {
-          userId,
-        },
-        include: {
-          garments: true
-        }
+        where: { userId },
+        include: { garments: true },
       });
+
       return res.status(200).json(collections);
     } catch (err) {
       return res

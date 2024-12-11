@@ -3,8 +3,8 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
-// @ts-ignore
-export default NextAuth.default({
+/** @type {import("next-auth").AuthOptions} */
+export const authOptions = {
   providers: [
     // @ts-ignore
     GoogleProvider.default({
@@ -57,6 +57,7 @@ export default NextAuth.default({
       if (account && user) {
         token.id = user.id;
         token.accessToken = account.access_token;
+        // @ts-ignore
         token.provider = account.provider;
       }
 
@@ -76,4 +77,7 @@ export default NextAuth.default({
   session: {
     strategy: "jwt",
   },
-});
+}
+
+// @ts-ignore
+export default NextAuth.default(authOptions);
