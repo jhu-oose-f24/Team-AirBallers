@@ -6,6 +6,7 @@ import Tooltip from "@/components/Tooltip";
 import { EditorContext } from "@/context/EditorContext";
 import { RootContext } from "@/context/RootContext";
 import ItemToURL from "@/types/GarmentEncoder";
+import { pause } from "@/util/misc";
 import {
   IconArrowBackUp,
   IconChevronLeft,
@@ -38,9 +39,14 @@ const GarmentPuppet = (props) => {
   const [lastUpdated, setLastUpdated] = updatedState;
 
   const [saving, setSaving] = useState(false);
-  const [visualizing, setVisualizing] = useState(false);
   const [lastSaved, setLastSaved] = useState(formatSaveDate(updatedAt));
   const debounceUpdateRef = useRef(null);
+
+  const [visualizing, setVisualizing] = useState(false);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [visualizationUrl, setVisualizationUrl] = useState(null);
+  const pollIntervalRef = useRef(null);
+  const pollInterval = 5000;
 
   const [viewingGallery, setViewingGallery] = useState(false);
   const [currImageIdx, setCurrImageIdx] = useState(-1);
@@ -58,6 +64,8 @@ const GarmentPuppet = (props) => {
 
     setImages([...garment.images].reverse());
     setCurrImageIdx(0);
+
+    return () => clearInterval(pollIntervalRef.current);
   }, [garment]);
 
   useEffect(() => {
@@ -104,7 +112,7 @@ const GarmentPuppet = (props) => {
     return `${day} at ${time}`;
   }
 
-  function visualize() {
+  async function visualize() {
     if (typeof encodedId !== "string") return;
 
     const garmentId = ItemToURL.decode(encodedId);
@@ -113,18 +121,36 @@ const GarmentPuppet = (props) => {
     setVisualizing(true);
     axios
       .patch(`/api/garment/${garmentId}/visualize`)
-      .then((res) => {
-        /** @type {GarmentImage["url"]} */
-        const url = res.data;
-        garment.addImage(url);
+      .then((res) => watchVisualization(res, garmentId))
+      .catch(console.log);
+  }
 
-        setViewingGallery(true);
-        setLastUpdated(Date.now());
-        setImages([...garment.images].reverse());
-        setCurrImageIdx(0);
-      })
-      .catch(console.log)
-      .finally(() => setVisualizing(false));
+  /**
+   * @param {import("axios").AxiosResponse} res
+   * @param {string} garmentId
+   */
+  async function watchVisualization(res, garmentId) {
+    let status = res.status;
+    let updatedGarment = null;
+
+    while (status === 202) {
+      await pause(5000);
+
+      const res = await axios.get(`/api/garment/${garmentId}/visualize`);
+      status = res.status;
+
+      if (status === 200) {
+        updatedGarment = res.data;
+      }
+    }
+
+    garment.images = updatedGarment?.images || [];
+    setImages([...garment.images].reverse());
+
+    setLastUpdated(Date.now());
+    setViewingGallery(true);
+    setCurrImageIdx(0);
+    setVisualizing(false);
   }
 
   return (
