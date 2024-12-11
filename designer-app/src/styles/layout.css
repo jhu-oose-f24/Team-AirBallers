@@ -200,6 +200,11 @@ body.will-unload #__next {
   .app-header .title-link {
     @apply ml-0;
   }
+
+  .sidebar {
+    @apply !-ml-[--sidebar-width];
+    @apply !invisible;
+  }
 }
 
 /* ========================== Create Page ========================== */
@@ -359,17 +364,21 @@ body#edit .puppet > svg polyline:not([style*="fill: none"]) {
 }
 
 body#edit .spec-editor {
+  --editor-width: min(50vw, 25rem);
+
   @apply relative;
   @apply flex flex-col;
-  @apply w-[min(50vw,25rem)] bg-primary-lightest;
+  @apply w-[--editor-width] bg-primary-lightest;
   @apply border-primary-light/50 border-[0.18rem];
+  @apply transition-[width,opacity] duration-200 ease-in-out;
   @apply p-[0.5rem] rounded-[1rem];
+  @apply overflow-hidden;
 }
 
 body#edit .spec-editor header {
   @apply flex justify-between items-center;
   @apply text-[1.5rem] font-medium text-primary-darkest;
-  @apply px-[1rem] py-[0.5rem];
+  @apply px-[1rem] py-[0.5rem] gap-[1rem];
 }
 
 body#edit .spec-editor header .pin {
@@ -379,6 +388,11 @@ body#edit .spec-editor header .pin {
   @apply bg-gradient-[160deg];
   @apply from-primary-lighter from-50%;
   @apply to-primary-dark to-50%;
+}
+
+body#edit .spec-editor header .title {
+  @apply text-center w-full;
+  @apply text-ellipsis overflow-hidden whitespace-nowrap;
 }
 
 body#edit .spec-editor .scroll-list {
@@ -403,6 +417,22 @@ body#edit .spec-editor .border-stitch {
 body#edit .spec-editor .border-stitch-path {
   @apply [rx:0.4rem];
   @apply stroke-primary-dark/80;
+}
+
+/* Breakpoints */
+
+@media screen(max-lg) {
+  body#edit .spec-editor {
+    --editor-width: max(32vw, 18rem);
+  }
+}
+
+@media screen(max-md) {
+  body#edit .spec-editor {
+    @apply !w-0 !-ml-[2.75rem];
+    @apply invisible;
+    @apply opacity-0;
+  }
 }
 
 /* ======================== Collection Page ======================== */

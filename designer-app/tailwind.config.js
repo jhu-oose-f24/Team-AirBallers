@@ -53,6 +53,12 @@ export default {
         "max-sm": {
           max: defaultTheme.screens.sm,
         },
+        "max-md": {
+          max: defaultTheme.screens.md,
+        },
+        "max-lg": {
+          max: defaultTheme.screens.lg,
+        },
       },
     },
   },
